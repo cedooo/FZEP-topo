@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="300">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			[Bindable]
+			public var tit:String ;
+			[Bindable]
+			public var imgName:String ;
+		]]>
+	</fx:Script>
+		<mx:Image id="imgVisitor" source="assets/{imgName}" x="18" y="9" width="64"/>
+		<s:Label id="lblUserName" text="{tit}" x="18" y="77"  width="64" />
+</s:Group>

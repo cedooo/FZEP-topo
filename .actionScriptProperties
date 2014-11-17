@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<actionScriptProperties analytics="false" mainApplicationPath="Main.mxml" projectUUID="7ea9fa3d-651e-4bbb-926e-ca9c4e9cdf0e" version="11">
+  <compiler additionalCompilerArguments="-services &quot;G:\apache-tomcat-6.0.41\webapps\fuzhou\WEB-INF\flex\services-config.xml&quot; -locale en_US" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderLocation="G:/apache-tomcat-6.0.41/webapps/fuzhou/topo/fx" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" useFlashSDK="false" verifyDigests="true" warn="true">
+    <compilerSourcePath/>
+    <libraryPath defaultLinkType="0">
+      <libraryPathEntry kind="4" path="">
+        <excludedEntries>
+          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/flex.swc" useDefaultLinkType="false"/>
+          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/core.swc" useDefaultLinkType="false"/>
+        </excludedEntries>
+      </libraryPathEntry>
+      <libraryPathEntry kind="1" linkType="1" path="libs"/>
+      <libraryPathEntry kind="3" linkType="1" path="/itims-web-fshare/bin-debug/itims-web-fshare.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LIB_LOCATION}/version4libs/Common"/>
+      <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LIB_LOCATION}/version4libs/FlexProject"/>
+      <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LIB_LOCATION}/version4libs/FlexProject_Extended"/>
+      <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LOCALE_LOCATION}"/>
+      <libraryPathEntry kind="1" linkType="1" path="${DCD_LIB_LOCATION}"/>
+      <libraryPathEntry kind="1" linkType="1" path="${DCD_LOCALE_LOCATION}"/>
+      <libraryPathEntry kind="3" linkType="1" path="${DCD_FIBER_LOCATION}/fiber.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="1" linkType="1" path="${DCD_FIBER_LOCALE_LOCATION}"/>
+      <libraryPathEntry kind="3" linkType="1" path="${DCD_FIBER_LOCATION}/playerfds.swc" useDefaultLinkType="false"/>
+    </libraryPath>
+    <sourceAttachmentPath/>
+  </compiler>
+  <theme themeIsDefault="false" themeIsSDK="true" themeLocation="${SDK_THEMES_DIR}/samples/themes/spark_sage"/>
+  <applications>
+    <application path="StressTest.mxml"/>
+    <application path="Main.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/smpo.mxml"/>
+    <application path="testBK.mxml"/>
+  </applications>
+  <modules/>
+  <workers/>
+  <buildCSSFiles/>
+  <flashCatalyst validateFlashCatalystCompatibility="false"/>
+</actionScriptProperties>

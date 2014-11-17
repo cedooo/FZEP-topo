@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:services="services.*"
+			   minWidth="955" minHeight="600">
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			
+			protected function getStudents():void
+			{
+				getStudentsResult.token = test.getStudents();
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:CallResponder id="getStudentsResult"/>
+		<services:Test id="test"
+					   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+					   showBusyCursor="true"/>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<mx:DataGrid dataProvider="{getStudentsResult.lastResult}" creationComplete="getStudents()">
+		<mx:columns>
+			<mx:DataGridColumn dataField="no" headerText="学号"></mx:DataGridColumn>
+			<mx:DataGridColumn dataField="name" headerText="姓名"></mx:DataGridColumn>
+			<mx:DataGridColumn dataField="age" headerText="年龄"></mx:DataGridColumn>
+		</mx:columns>
+	</mx:DataGrid>
+</s:Application>
