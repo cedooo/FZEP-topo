@@ -8,21 +8,21 @@
 		<![CDATA[
 			import mx.controls.Alert;
 			
-			protected function getStudents():void
+			protected function getS():void
 			{
-				getStudentsResult.token = test.getStudents();
+				getStudentsResult.token = getStudents.getStudents();
 			}
 			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<s:CallResponder id="getStudentsResult"/>
-		<services:Test id="test"
+		<services:Test id="getStudents"
 					   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 					   showBusyCursor="true"/>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<mx:DataGrid dataProvider="{getStudentsResult.lastResult}" creationComplete="getStudents()">
+	<mx:DataGrid dataProvider="{getStudentsResult.lastResult}" creationComplete="getS()">
 		<mx:columns>
 			<mx:DataGridColumn dataField="no" headerText="学号"></mx:DataGridColumn>
 			<mx:DataGridColumn dataField="name" headerText="姓名"></mx:DataGridColumn>

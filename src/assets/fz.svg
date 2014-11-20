@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-flat-20030114.dtd">
+<!-- Created by SVGDeveloper 1.0 -->
+<svg width="1376" height="666" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<pattern id="Mesh" width="100" height="100" patternUnits="userSpaceOnUse" patternContentUnits="userSpaceOnUse">
+<g>
+<defs>
+<linearGradient id="blue_Light" x1="0%" y1="100%" x2="0%" y2="0%" gradientUnits="objectBoundingBox" spreadMethod="pad">
+<stop offset="0" stop-color="#c0ffff" stop-opacity="1" />
+<stop offset="0.5" stop-color="#000080" />
+<stop offset="1" stop-color="#c0ffff" stop-opacity="1" />
+</linearGradient>
+<linearGradient id="blue_Dark" x1="0%" y1="100%" x2="0%" y2="0%" gradientUnits="objectBoundingBox" spreadMethod="pad">
+<stop offset="0" stop-color="#000080" stop-opacity="1" />
+<stop offset="0.5" stop-color="#c0ffff" />
+<stop offset="1" stop-color="#000080" stop-opacity="1" />
+</linearGradient>
+</defs>
+<path id="LDL" stroke="none" fill="url(#blue_Light)" fill-opacity="1" d="M11.7899 38.6043 C14.8813 26.7425 28.1047 10.1709 49.8879 10.1709 C71.6709 10.1709 85.3606 27.9304 87.8407 38.6104 C87.8407 38.6104 93.2809 40.3555 99.867 40.3231 L99.867 0 L-0.425 0 L-0.425 40.3231 C6.13032 40.227 11.7899 38.6043 11.7899 38.6043 zM-0.42483 60.4626 L-0.42483 100 L99.7417 100 L99.7836 60.4176 C93.0028 60.3915 87.7366 62.1923 87.7366 62.1923 C83.6131 74.4504 72.0165 89.7037 50.0543 89.7037 C28.0921 89.7037 15.9939 75.1814 11.8718 62.3174 C11.8718 62.3174 6.23366 60.4607 -0.425 60.4627 z" />
+<path id="DLD" stroke="none" fill="url(#blue_Dark)" fill-opacity="1" d="M61.8929 12.1344 C71.2717 39.2707 93.2809 40.5459 99.7836 40.3962 L99.7836 60.4044 C93.2809 60.4055 70.8966 62.0053 62.143 87.6409 C54.2648 90.2672 45.1358 89.6419 37.6328 87.6409 C30.0047 66.2571 14.098 61.0297 -0.40799 60.4044 L-0.433 40.3962 C6.19475 40.3962 28.504 39.1457 37.8829 12.0094 C44.7608 9.50835 55.3902 9.3833 61.8929 12.1345 z" />
+</g>
+</pattern>
+<linearGradient id="linearGradient">
+<stop stop-color="#CC6633" offset="0" />
+<stop stop-color="#FFFFFF" offset="1" />
+</linearGradient>
+</defs>
+<image x="-76" y="65" width="1213" height="679" xlink:href="C:\Users\cedo\Desktop\fuzhou.png" transform="matrix(1,0,0,1,78,-64)" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" />
+<path d="M-107 66L-90 102L-82 128C-82 128 -76 146 -75 148C-74 150 -60 177 -60 177L-39 194L-26 207L-2 224L86 180L112 171L151 172C155 170 156 178 156 178L156 187L187 186L172 77L160 35L148 0L59 -1L-9 0L-8 38C-13 38 -114 63 -107 66Z" fill="none" stroke="#0066FF" stroke-opacity="1" stroke-width="1.25" stroke-dasharray="1,1" transform="matrix(1,0,0,1,290,18)" xmlns="http://www.w3.org/2000/svg" />
+</svg>

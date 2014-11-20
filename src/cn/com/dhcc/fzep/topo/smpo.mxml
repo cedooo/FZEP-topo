@@ -66,6 +66,7 @@
 				var eqip:Equipment = new Equipment();
 				eqip.imgName = "wireless-router.png";
 				eqip.tit = "路由器A";
+				eqip.eleId = "12";
 				var equipFC:FlexComponent = new FlexComponent("rut", eqip);
 				equipFC.draggable = true;
 				equipFC.x = 50;
@@ -74,7 +75,8 @@
 				sceneMgr.addEntity(equipFC);
 				var eqip2:Equipment = new Equipment();
 				eqip2.imgName = "wireless-router.png";
-				eqip2.tit = "路由器Bsdafsdfasf";
+				eqip2.tit = "路由器Bsdf";
+				eqip2.eleId = "22";
 				var equipFC2:FlexComponent = new FlexComponent("rut2", eqip2);
 				equipFC2.draggable = true;
 				equipFC2.x = 100;

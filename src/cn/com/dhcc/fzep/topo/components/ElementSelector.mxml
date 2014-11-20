@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:services="services.*"
+		  creationComplete="creationCompleteHandler();" >
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.rpc.CallResponder;
+			[Bindable]
+			public var selectedItem:Function;    
+			[Bindable]
+			public var getResult:CallResponder;
+			[Bindable]
+			public var refreshSelectorData:Function;
+			[Bindable]
+			public var args:Array;
+			[Bindable]
+			public var showField:String;
+
+			import mx.collections.ArrayList;
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
+			
+			private function creationCompleteHandler():void {
+				destlist.dataProvider = new ArrayList([]);
+				refreshSelectorData(args);
+			}
+			
+			/**
+			 * 全选
+			 */
+			protected function selectAll_clickHandler(event:MouseEvent):void
+			{
+				var objs:Object = srclist.dataProvider; 
+				var info:String = "选择了" + objs.length + "个对象";
+				Alert.show("确认全选？", info, Alert.YES | Alert.NO, this,doSelectAll);
+			}
+			private function doSelectAll(event:CloseEvent):void {
+				if(event.detail == Alert.YES)
+				{
+					var objs:Object = srclist.dataProvider; 
+					for (var i:int = 0; i < objs.length; i++) 
+					{
+						destlist.dataProvider.addItem(objs[i]);			
+					}		
+					srclist.dataProvider.removeAll();
+					
+				}
+			}
+			/**
+			 * 全部清除
+			 */
+			protected function diselectAll_clickHandler(event:MouseEvent):void
+			{
+				Alert.show("", "确认全部清除？", Alert.YES | Alert.NO, this, doDeselectAll);
+			}
+			private function doDeselectAll(event:CloseEvent):void {
+				if(event.detail == Alert.YES)
+				{
+					destlist.dataProvider.removeAll();
+					refreshSelectorData(args);
+				}
+			}
+			
+			/**
+			 * 创建图
+			 */
+			protected function creat_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			/**
+			 * 确定选择的数组
+			 */
+			protected function confm_clickHandler(event:MouseEvent):void
+			{
+				//var objs:Object = destlist.dataProvider;
+				//Alert.show(String(objs));
+				selectedItem(destlist.dataProvider);
+			}
+			/**
+			 * 测试用
+			 */
+			protected function test_clickHandler(event:MouseEvent):void
+			{
+				var objs:Object = getResult.lastResult;
+				var s:String = "jie";
+				Alert.show(s , "区");
+				
+			}
+			
+			protected function closePanel_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				this.width = -1;
+				this.visible = false;
+			}
+			
+		]]>
+	</fx:Script>
+	
+		<s:Panel  title="(拖动)选择展示项目"  dropShadowVisible="false">
+			<s:layout>
+				<s:HorizontalLayout paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5"/>
+			</s:layout>
+			
+			<s:VGroup width="50%">
+				<s:Label text="可选"/>
+				<s:Button id="selectAll" click="selectAll_clickHandler(event)">
+					<fx:String>全选</fx:String>
+				</s:Button>
+				
+				<!-- Both drag initiator and drop target -->
+				<s:List id="srclist" width="100%" allowMultipleSelection="true" dragEnabled="true"
+						dragMoveEnabled="true" dropEnabled="true" height="400" 
+						dataProvider="{getResult.lastResult}" labelField="{showField}"
+						 />
+			</s:VGroup>
+			
+			<s:VGroup width="50%">
+				<s:Label text="展示"/>
+				<s:Button id="diselectAll" click="diselectAll_clickHandler(event)">
+					<fx:String>清空</fx:String>
+				</s:Button>
+				<!-- Both drag initiator and drop target -->
+				<s:List id="destlist" width="100%" allowMultipleSelection="false" dragEnabled="true"
+						dragMoveEnabled="true" dropEnabled="true" height="400" labelField="{showField}"/>
+			</s:VGroup>
+			<s:VGroup>
+				<s:Label text="操作"/>
+				<s:Button id="confm" click="confm_clickHandler(event)">
+					<fx:String>确定</fx:String>
+				</s:Button>
+				<s:Button >
+					<fx:String>取消</fx:String>
+				</s:Button>
+				<s:Label text="测试"/>
+				<s:Button id="test" click="test_clickHandler(event)">
+					<fx:String>数据</fx:String>
+				</s:Button>
+				<s:Button id="creat" click="creat_clickHandler(event)">
+					<fx:String>创建 </fx:String>
+				</s:Button>
+			</s:VGroup>
+		</s:Panel>
+	<!--
+	<s:Button x="{this.width}" id="closePanel" click="closePanel_clickHandler(event)">
+		<fx:String>关闭</fx:String>
+	</s:Button>
+	-->
+</s:Group>

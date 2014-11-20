@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:cedo="cn.com.dhcc.fzep.topo.components.*"
+			   xmlns:xtreme="xtreme.core.*"
+			   xmlns:services="services.*"
+			   minWidth="955" minHeight="600" applicationComplete="applicationComplete()"
+			   >
+		<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		@namespace xtreme "xtreme.core.*";
+	</fx:Style>
+	<fx:Declarations>
+		<s:CallResponder id="getListByAreaResult"/>
+		<services:SiteSchema id="siteSchema"
+							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							 showBusyCursor="true"/>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flash.ux.core.Console;
+			
+			import mx.collections.IList;
+			import mx.containers.Panel;
+			import mx.controls.Alert;
+			import mx.controls.Label;
+			import mx.controls.TextInput;
+			import mx.events.FlexEvent;
+			import mx.managers.CursorManager;
+			import mx.managers.PopUpManager;
+			
+			import cn.com.dhcc.fzep.topo.components.Equipment;
+			
+			import xtreme.core.Root;
+			import xtreme.scene.SceneManager;
+			import xtreme.scene.entity.Entity;
+			import xtreme.scene.entity.shapes.FlexComponent;
+			[Bindable]
+			public var siteId:Array = ['1'];
+			public var dSelectWidth:int;
+			private function applicationComplete() : void
+			{
+				stage.align = StageAlign.TOP_LEFT;
+				stage.scaleMode = StageScaleMode.NO_SCALE;
+				stage.quality = StageQuality.HIGH;
+				this.contextMenu.hideBuiltInItems();
+				var console:Console = Console.instance;
+				if (console == null)
+					console = new Console(stage);
+				view.getRoot().layerManager.enableContextMenu();
+				view.registerBuildInCommand(console);
+				view.getRoot().navigationView.visible = true;
+				
+				dSelectWidth = operGroup.width;
+			}
+			
+			public function clearup() : void
+			{
+				// 清空场景
+				Root.instance.sceneManager.clearScene();
+			}
+			
+			private function addEquip(arr:IList):void {
+				for (var i:int = 0; i < arr.length; i++) 
+				{
+					//Alert.show(String(arr.getItemAt(i)));
+					var sceneMgr:SceneManager = Root.instance.sceneManager;
+					var areaO:Object = arr.getItemAt(i);
+					var fcName:String  = "e" + areaO.siteId;
+					var fc:Entity = sceneMgr.getEntity(fcName);
+					if(fc==null){
+						var equip:Equipment = new Equipment();
+						equip.tit = areaO.siteName;
+						equip.eleId = areaO.siteId;
+						equip.imgName = "sitemap.png";
+						var equipFC:FlexComponent = new FlexComponent(fcName, equip);
+						equipFC.draggable = true;
+						equipFC.x = 0;
+						equipFC.y = 70*(i+1);
+						equipFC.width = 100;
+						equipFC.height = 100;
+						sceneMgr.addEntity(equipFC);
+					}
+				}
+			}
+			
+			protected function getListByArea(args:Array):void
+			{
+				var arg0:String = args[0];
+				getListByAreaResult.token = siteSchema.getListByArea(arg0);
+			}
+			
+			
+			
+			protected function hide_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				if(operGroup.visible){
+					operGroup.width = -1;
+					operGroup.visible = false;
+				}else{
+					operGroup.width = dSelectWidth;
+					operGroup.visible = true;
+				}
+			}
+						
+			
+			
+		]]>
+	</fx:Script>
+		
+	<s:layout>
+		<s:HorizontalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0" >
+		</s:HorizontalLayout>
+	</s:layout>
+	
+	<s:VGroup id="operGroup" height="100%" gap="0" >	
+		<cedo:ElementSelector selectedItem="addEquip" getResult="{getListByAreaResult}" showField="siteName" refreshSelectorData="getListByArea" args="{siteId}" ></cedo:ElementSelector>
+	</s:VGroup>
+	<s:VGroup id="hide" width="10" height="100%" gap="0"
+			  click="hide_clickHandler(event)" opaqueBackground="0xe8e8e8">
+	</s:VGroup>
+		
+		<s:Group width="100%" height="100%" x="0" y="0" >
+			<!--creationComplete="group1_creationCompleteHandler(event)"  >-->
+			<xtreme:XtremeComponent name="view" id="view" width="100%" height="100%" />
+		</s:Group>
+		
+</s:Application>

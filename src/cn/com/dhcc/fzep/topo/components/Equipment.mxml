@@ -1,18 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="300">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="300" creationComplete="init()"
+		 contextMenu="{cm}">
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import mx.controls.Alert;
+			[Bindable] 
+			private var cm:ContextMenu; 
+			
 			[Bindable]
 			public var tit:String ;
 			[Bindable]
 			public var imgName:String ;
+			[Bindable]
+			public var eleId:String;    
+			
+			//初始化函数   
+			private function init():void{
+				//设定监听source_txa组件的点击函数
+				var cmi:ContextMenuItem = new ContextMenuItem("查看详情", true); 
+				cmi.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, contextMenuItem_menuItemSelect); 
+				cm = new ContextMenu(); 
+				cm.hideBuiltInItems(); 
+				cm.customItems = [cmi]; 
+			}
+			private function contextMenuItem_menuItemSelect(evt:ContextMenuEvent):void { 
+				Alert.show(this.eleId);
+			}
 		]]>
 	</fx:Script>
-		<mx:Image id="imgVisitor" source="assets/{imgName}" x="18" y="9" width="64"/>
-		<s:Label id="lblUserName" text="{tit}" x="18" y="77"  width="64" />
+	
+		<mx:Image id="imgVisitor" source="assets/{imgName}" x="18" y="9" width="48" height="48"/>
+		<s:Label id="lblUserName" text="{tit}" x="18" y="55"  width="64" fontSize="12"  fontWeight="bold"/>
 </s:Group>

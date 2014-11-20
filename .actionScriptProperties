@@ -23,12 +23,15 @@
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
-  <theme themeIsDefault="false" themeIsSDK="true" themeLocation="${SDK_THEMES_DIR}/samples/themes/spark_sage"/>
+  <theme themeIsDefault="false" themeIsSDK="true" themeLocation="${SDK_THEMES_DIR}/samples/themes/spark_sky"/>
   <applications>
-    <application path="StressTest.mxml"/>
-    <application path="Main.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/schema/SiteSchema.mxml"/>
+    <application path="test/popMenu.mxml"/>
+    <application path="test/StressTest.mxml"/>
+    <application path="test/PopUpButton.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/schema/AreaSchema.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/smpo.mxml"/>
-    <application path="testBK.mxml"/>
+    <application path="test/testBK.mxml"/>
   </applications>
   <modules/>
   <workers/>
