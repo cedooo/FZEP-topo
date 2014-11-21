@@ -18,6 +18,26 @@
 							fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 							showBusyCursor="true"/>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<s:TitleWindow id="showInfoWin" width="280" title="详细信息" close="showInfoWin_closeHandler(event)" >
+			<mx:DataGrid id="headerAreaInfo" showHeaders="false" rowCount="4" width="25%" 
+						 borderVisible="false" textAlign="right">
+				<mx:dataProvider>
+					<fx:Object name="名        称" />
+					<fx:Object name="负  责  人" />
+					<fx:Object name="联系电话" />
+					<fx:Object name="备        注" />
+				</mx:dataProvider>
+				<mx:columns >
+					<mx:DataGridColumn dataField="name" />
+				</mx:columns>
+			</mx:DataGrid>
+			<mx:DataGrid id="areaInfoGrid" x="{headerAreaInfo.width}" showHeaders="false" rowCount="4" width="75%"
+						borderVisible="false">
+				<mx:columns>
+					<mx:DataGridColumn dataField="name" wordWrap="true" />
+				</mx:columns>
+			</mx:DataGrid>
+		</s:TitleWindow>
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
@@ -25,15 +45,19 @@
 			
 			import mx.collections.IList;
 			import mx.controls.Alert;
+			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
 			
-			import cn.com.dhcc.fzep.topo.components.Equipment;
+			import cn.com.dhcc.fzep.topo.components.AreaComponent;
+			
+			import valueObjects.Area;
 			
 			import xtreme.core.Root;
 			import xtreme.scene.SceneManager;
 			import xtreme.scene.entity.Entity;
-			import xtreme.scene.entity.shapes.DynamicConnector;
 			import xtreme.scene.entity.shapes.FlexComponent;
+			
 			protected function refreshSelectorData(args:Array):void
 			{
 				getAllAreaResult.token = areaSchema.getAllArea();
@@ -64,38 +88,16 @@
 			}
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{
-				// TODO Auto-generated method stub
+				/*
 				clearup();
-				
 				var sceneMgr:SceneManager = Root.instance.sceneManager;
-				var eqip:Equipment = new Equipment();
-				eqip.imgName = "wireless-router.png";
-				eqip.tit = "路由器A";
-				eqip.eleId = "12";
-				var equipFC:FlexComponent = new FlexComponent("rut", eqip);
-				equipFC.draggable = true;
-				equipFC.x = 180;
-				equipFC.y = 180;
-				equipFC.width = 100;
-				equipFC.height = 100;
-				sceneMgr.addEntity(equipFC);
-				var eqip2:Equipment = new Equipment();
-				eqip2.imgName = "wireless-router.png";
-				eqip2.tit = "路由器B";
-				eqip2.eleId = "22";
-				var equipFC2:FlexComponent = new FlexComponent("rut2", eqip2);
-				equipFC2.draggable = true;
-				equipFC2.x = 300;
-				equipFC2.y = 300;
-				equipFC2.width = 100;
-				equipFC2.height = 100;
-				sceneMgr.addEntity(equipFC2);
 				// 建立连接线
 				var connector:DynamicConnector = new DynamicConnector("dc1");
 				connector.lineThickness = 2;
 				connector.lineColor = 0x3CB371;
 				connector.connect(equipFC2.centerAnchor, equipFC.centerAnchor);
 				sceneMgr.addEntity(connector);
+				*/
 			}
 			
 			[Embed(source="assets/fz.svg")] 
@@ -106,23 +108,38 @@
 			{
 				getAllAreaResult.token = areaSchema.getAllArea();
 			}
+			public function show(area:Area):void{
+				var arayCol:Array = new Array(
+					//{name: area.areaId},
+					{name: area.areaName},
+					{name: area.connactName},
+					{name: area.connactNumber},
+					{name: area.descp}
+				);
+				showInfoWin.title = area.areaName;    
+				PopUpManager.addPopUp(showInfoWin, this, true);  
+				PopUpManager.centerPopUp(showInfoWin);  
+				areaInfoGrid.dataProvider = arayCol;
+			}
+			/**
+			 * 关闭信息展示弹出窗口
+			 */
+			protected function showInfoWin_closeHandler(event:CloseEvent):void { 
+				PopUpManager.removePopUp(showInfoWin);   
+			}   
 			private function addEquip(arr:IList):void {
-				//Alert.show("" + arr.length);
-				//clearup();
 				for (var i:int = 0; i < arr.length; i++) 
 				{
-					//Alert.show(String(arr.getItemAt(i)));
 					var sceneMgr:SceneManager = Root.instance.sceneManager;
 					var areaO:Object = arr.getItemAt(i);
 					var fcName:String  = "e" + areaO.areaId;
 					var fc:Entity = sceneMgr.getEntity(fcName);
 					if(fc==null){
-					//Alert.show(String(areaO.areaId));
-					var equip:Equipment = new Equipment();
-						equip.tit = areaO.areaName;
-						equip.eleId = areaO.areaId;
-						equip.imgName = "area.png";
-						var equipFC:FlexComponent = new FlexComponent(fcName, equip);
+						var are:AreaComponent = new AreaComponent();
+						are.imgName = "area.png";
+						are.doShowArea = show;
+						are.area = areaO as Area;
+						var equipFC:FlexComponent = new FlexComponent(fcName, are);
 						equipFC.draggable = true;
 						equipFC.x = 600;
 						equipFC.y = 70*(i+1);
@@ -134,11 +151,6 @@
 			}
 		]]>
 	</fx:Script>
-	<!--
-	<cedo:Equipment imgName="wireless-router.png" tit="无线路由器" />
-	<cedo:Equipment imgName="wireless-router.png" tit="chen东无线路由器无线路由器无线路由器" x="100" />
-	<cedo:Equipment imgName="wireless-router.png" tit="chen东" x="200"/>
-	-->
 	<!--
 	<s:BorderContainer backgroundImage="@Embed(source='/assets/fuzhou.png')"
 					   backgroundImageFillMode="scale"

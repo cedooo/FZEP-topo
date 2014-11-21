@@ -8,19 +8,20 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import valueObjects.Site;
+			import valueObjects.Area;
 			
 			[Bindable]
-			public var doShowSite:Function;
+			public var doShowArea:Function;
 			[Bindable]
 			public var imgName:String = "area.png";
 			[Bindable]
-			public var site:Site;
+			public var area:Area;
 			
 			[Bindable] 
 			private var cm:ContextMenu; 
 			private function showInfo(evt:ContextMenuEvent):void{
-				doShowSite(this.site);
+				//Alert.show('showInfo');
+				doShowArea(this.area);
 			}
 			//初始化函数   
 			private function init():void{
@@ -37,5 +38,5 @@
 	</fx:Script>
 	
 	<mx:Image id="imgVisitor" source="assets/{imgName}" x="18" y="9" width="48" height="48"/>
-	<s:Label id="lblUserName" text="{site.siteName}" x="18" y="55"  width="64" fontSize="12"  fontWeight="bold"/>
+	<s:Label id="lblUserName" text="{area.areaName}" x="18" y="55"  width="64" fontSize="12"  fontWeight="bold"/>
 </s:Group>
