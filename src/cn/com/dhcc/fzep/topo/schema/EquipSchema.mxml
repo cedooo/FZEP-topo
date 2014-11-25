@@ -13,10 +13,6 @@
 		@namespace xtreme "xtreme.core.*";
 	</fx:Style>
 	<fx:Declarations>
-		<s:CallResponder id="getListByAreaResult"/>
-		<services:SiteSchema id="siteSchema"
-							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
-							 showBusyCursor="true"/>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 		<s:TitleWindow id="showInfoWin" width="280" title="详细信息" close="showInfoWin_closeHandler(event)" >
 				<mx:DataGrid id="headerAreaInfo" showHeaders="false" rowCount="5" width="25%" 
@@ -39,6 +35,10 @@
 					</mx:columns>
 				</mx:DataGrid>
 		</s:TitleWindow>
+		<s:CallResponder id="getListBySiteResult"/>
+		<services:EquipSchema id="equipSchema"
+							  fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							  showBusyCursor="true"/>
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
@@ -51,7 +51,7 @@
 			import mx.managers.PopUpManager;
 			
 			import cn.com.dhcc.fzep.topo.TopoXMLUtils;
-			import cn.com.dhcc.fzep.topo.components.SiteComponent;
+			import cn.com.dhcc.fzep.topo.components.EquipmentComponent;
 			
 			import valueObjects.Site;
 			
@@ -60,7 +60,7 @@
 			import xtreme.scene.entity.Entity;
 			import xtreme.scene.entity.shapes.FlexComponent;
 			[Bindable]
-			public var siteId:Array = ['1'];
+			public var siteId:Array = ['3'];
 			public var dSelectWidth:int;
 			private function applicationComplete() : void
 			{
@@ -90,13 +90,13 @@
 					//Alert.show(String(arr.getItemAt(i)));
 					var sceneMgr:SceneManager = Root.instance.sceneManager;
 					var siteO:Object = arr.getItemAt(i);
-					var fcName:String  = "site" + siteO.siteId;
+					var fcName:String  = "equip" + siteO.siteId;
 					var fc:Entity = sceneMgr.getEntity(fcName);
 					if(fc==null){
-						var site:SiteComponent = new SiteComponent();
-						site.site = siteO as Site;
-						site.doShowSite = show;
-						var equipFC:FlexComponent = new FlexComponent(fcName, site);
+						var equip:EquipmentComponent = new EquipmentComponent();
+						equip.site = siteO as Site;
+						equip.doShowSite = show;
+						var equipFC:FlexComponent = new FlexComponent(fcName, equip);
 						equipFC.draggable = true;
 						equipFC.x = 0;
 						equipFC.y = 70*(i+1);
@@ -108,13 +108,13 @@
 			}
 			/**
 			 * 得到站点列表
+			
 			 */
-			protected function getListByArea(args:Array):void
+			protected function getListBySite(args:Array):void
 			{
 				var arg0:String = args[0];
-				getListByAreaResult.token = siteSchema.getListByArea(arg0);
+				getListBySiteResult.token = equipSchema.getListBySite(arg0);
 			}
-			
 			
 			public function show(site:Site):void{
 				//Alert.show( site.siteName + site.siteAdress +  site.connactName +  site.connactNumber +  site.descp);
@@ -140,7 +140,6 @@
 			
 			protected function hide_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
 				if(operGroup.visible){
 					operGroup.width = -1;
 					operGroup.visible = false;
@@ -168,6 +167,26 @@
 				
 			}
 			
+			/**
+			 * 切换类别
+			 */
+			protected function equipType_clickHandler(event:MouseEvent):void
+			{
+				var curBtn:mx.controls.Button = event.currentTarget as mx.controls.Button;
+				var btns:Array = toolBar.getChildren();
+				for (var i:int = 0; i < btns.length; i++) 
+				{
+					var btn:mx.controls.Button = btns[i] as mx.controls.Button;
+					if(curBtn.id != btn.id){
+						btn.selected = false;
+					}
+				}
+				
+				//btn.
+				//btn.selected = true;
+				//Alert.show(btn.label);
+			}
+			
 		]]>
 	</fx:Script>
 		
@@ -177,7 +196,19 @@
 	</s:layout>
 	
 	<s:VGroup id="operGroup" height="100%" gap="0" >	
-		<cedo:ElementSelector selectedItem="addEquip" getResult="{getListByAreaResult}" showField="siteName" refreshSelectorData="getListByArea" args="{siteId}" ></cedo:ElementSelector>
+		<mx:VBox id="vBox" verticalAlign="middle" horizontalAlign="center"   width="{operGroup.width}" >
+			<mx:ToolBar id="toolBar" percentWidth="100" 
+						minWidth="18" verticalGap="0" horizontalGap="0" >
+				<mx:Button id="l3switch" emphasized="true" toggle="true" selected="true"  label="三层交换机"  click="equipType_clickHandler(event)" />
+				<mx:Button id="l2switch" emphasized="true" toggle="true"   label="二层交换机"  click="equipType_clickHandler(event)" />
+				<mx:Button id="zbBtn" emphasized="true" toggle="true"   label="载波"  click="equipType_clickHandler(event)" />
+				<mx:Button id="gprsbtn" emphasized="true" toggle="true"   label="GPRS"  click="equipType_clickHandler(event)" />
+				<mx:Button id="cableBtn" emphasized="true" toggle="true"   label="光缆"  click="equipType_clickHandler(event)" />
+				<mx:Button id="onuBtn" emphasized="true" toggle="true"   label="ONU"  click="equipType_clickHandler(event)" />
+				<mx:Button id="oltBtn" emphasized="true" toggle="true"   label="OLT"  click="equipType_clickHandler(event)" />
+			</mx:ToolBar>
+		</mx:VBox>
+		<cedo:ElementSelector selectedItem="addEquip" getResult="{getListBySiteResult}" showField="showName" refreshSelectorData="getListBySite" args="{siteId}" ></cedo:ElementSelector>
 	</s:VGroup>
 	<s:VGroup id="hide" width="10" height="100%" gap="0"
 			  click="hide_clickHandler(event)" opaqueBackground="0xe8e8e8">

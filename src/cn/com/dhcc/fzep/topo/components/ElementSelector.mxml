@@ -38,7 +38,11 @@
 			{
 				var objs:Object = srclist.dataProvider; 
 				var info:String = "选择了" + objs.length + "个对象";
-				Alert.show("确认全选？", info, Alert.YES | Alert.NO, this,doSelectAll);
+				if(objs.length>0){
+					Alert.show("确认全选？", info, Alert.YES | Alert.NO, this,doSelectAll);
+				}else{
+					Alert.show("", "未选中任何对象", Alert.YES , this);
+				}
 			}
 			private function doSelectAll(event:CloseEvent):void {
 				if(event.detail == Alert.YES)

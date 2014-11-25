@@ -32,7 +32,7 @@
 				</mx:columns>
 			</mx:DataGrid>
 			<mx:DataGrid id="areaInfoGrid" x="{headerAreaInfo.width}" showHeaders="false" rowCount="4" width="75%"
-						borderVisible="false">
+					borderVisible="false">
 				<mx:columns>
 					<mx:DataGridColumn dataField="name" wordWrap="true" />
 				</mx:columns>

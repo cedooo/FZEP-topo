@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+        layout="vertical"
+        verticalAlign="top"
+        backgroundColor="white">
+
+    <mx:Array id="images">
+        <mx:Object label="Button" />
+        <mx:Object label="ButtonBar" />
+        <mx:Object label="CheckBox" />
+        <mx:Object label="ColorPicker" />
+        <mx:Object label="ComboBox" />
+        <mx:Object label="DataGrid" />
+        <mx:Object label="DateChooser" />
+        <mx:Object label="DateField" />
+        <mx:Object label="HorizontalList" />
+        <mx:Object label="HRule" />
+        <mx:Object label="HSlider" />
+        <mx:Object label="Image" />
+        <mx:Object label="Label" />
+        <mx:Object label="LinkBar" />
+        <mx:Object label="LinkButton" />
+        <mx:Object label="List" />
+        <mx:Object label="Menu" />
+        <mx:Object label="MenuBar" />
+        <mx:Object label="NumericStepper" />
+        <mx:Object label="ProgressBar" />
+        <mx:Object label="RadioButton" />
+        <mx:Object label="RadioButtonGroup" />
+        <mx:Object label="RichTextEditor" />
+        <mx:Object label="Spacer" />
+        <mx:Object label="SWFLoader" />
+        <mx:Object label="TabBar" />
+        <mx:Object label="Text" />
+        <mx:Object label="TextArea" />
+        <mx:Object label="TextInput" />
+        <mx:Object label="TileList" />
+        <mx:Object label="Tree" />
+        <mx:Object label="VideoDisplay" />
+        <mx:Object label="VRule" />
+        <mx:Object label="VScrollBar" />
+        <mx:Object label="VSlider" />
+    </mx:Array>
+
+    <mx:ApplicationControlBar dock="true">
+        <mx:Form styleName="plain">
+            <mx:FormItem label="percentWidth:">
+                <mx:HSlider id="slider"
+                        minimum="0"
+                        maximum="100"
+                        value="35"
+                        liveDragging="true"
+                        snapInterval="1"
+                        tickInterval="10"
+                        dataTipPrecision="0" />
+            </mx:FormItem>
+        </mx:Form>
+    </mx:ApplicationControlBar>
+
+    <mx:VBox id="vBox"
+            verticalAlign="middle"
+            horizontalAlign="center"
+            backgroundColor="black"
+            backgroundAlpha="0.1"
+            width="100%"
+            height="200">
+        <mx:ToolBar id="toolBar"
+                 percentWidth="{slider.value}"
+                 backgroundColor="haloSilver"
+                 minWidth="18">
+            <mx:Repeater id="imgRepeater"
+                    dataProvider="{images}">
+                <mx:Image id="img"
+                        source="assets/{imgRepeater.currentItem.label}.png"
+                        toolTip="{imgRepeater.currentItem.label}" />
+            </mx:Repeater>
+        </mx:ToolBar>
+    </mx:VBox>
+
+</mx:Application>
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Minified using disk
+Page Caching using disk (enhanced) (request URI contains query)
+Database Caching using disk
+Object Caching 61/148 objects using disk
+
+Served from: blog.minidx.com @ 2014-11-25 10:46:17 -->

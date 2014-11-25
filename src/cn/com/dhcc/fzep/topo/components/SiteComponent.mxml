@@ -13,7 +13,7 @@
 			[Bindable]
 			public var doShowSite:Function;
 			[Bindable]
-			public var imgName:String = "area.png";
+			public var imgName:String = "tower_48.png";
 			[Bindable]
 			public var site:Site;
 			
@@ -25,9 +25,9 @@
 			//初始化函数   
 			private function init():void{
 				//设定监听source_txa组件的点击函数
-				var cmi:ContextMenuItem = new ContextMenuItem("区域详情", true); 
+				var cmi:ContextMenuItem = new ContextMenuItem("站点详情", true); 
 				cmi.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, showInfo);
-				var cmi2:ContextMenuItem = new ContextMenuItem("跳转到科大GIS", true); 
+				var cmi2:ContextMenuItem = new ContextMenuItem("转到科大GIS", true); 
 				cmi2.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, showInfo);
 				cm = new ContextMenu(); 
 				cm.hideBuiltInItems(); 
@@ -36,6 +36,6 @@
 		]]>
 	</fx:Script>
 	
-	<mx:Image id="imgVisitor" source="assets/{imgName}" x="18" y="9" width="48" height="48"/>
-	<s:Label id="lblUserName" text="{site.siteName}" x="18" y="55"  width="64" fontSize="12"  fontWeight="bold"/>
+	<mx:Image id="imgVisitor" source="assets/{imgName}" x="26" y="9" width="48" height="48"/>
+	<s:Label id="lblUserName" text="{site.siteName}" y="60"  textAlign="center" width="100%" fontSize="12"  fontWeight="bold"/>
 </s:Group>
