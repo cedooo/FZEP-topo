@@ -15,7 +15,7 @@
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 		<s:TitleWindow id="showInfoWin" width="280" title="详细信息" close="showInfoWin_closeHandler(event)" >
-				<mx:DataGrid id="headerAreaInfo" showHeaders="false" rowCount="5" width="25%" 
+				<mx:DataGrid id="headerShowInfo" showHeaders="false" width="30%" 
 							 borderVisible="false" textAlign="right">
 					<mx:dataProvider>
 						<fx:Object name="名        称" />
@@ -28,32 +28,51 @@
 						<mx:DataGridColumn dataField="name" fontWeight="normal" />
 					</mx:columns>
 				</mx:DataGrid>
-				<mx:DataGrid id="siteInfoGrid" x="{headerAreaInfo.width}" showHeaders="false" rowCount="5" width="75%"
+				<mx:DataGrid id="equipInfoGrid" x="{headerShowInfo.width}" showHeaders="false" width="75%"
 							 borderVisible="false">
 					<mx:columns>
 						<mx:DataGridColumn dataField="name" wordWrap="true"  />
 					</mx:columns>
 				</mx:DataGrid>
 		</s:TitleWindow>
-		<s:CallResponder id="getListBySiteResult"/>
 		<services:EquipSchema id="equipSchema"
 							  fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 							  showBusyCursor="true"/>
+		<s:CallResponder id="list2LayerSwitchResult"/>
+		<s:CallResponder id="list3LayerSwitchResult"/>
+		<s:CallResponder id="listCableResult"/>
+		<s:CallResponder id="listCarrierResult"/>
+		<s:CallResponder id="listGPRSResult"/>
+		<s:CallResponder id="listOLTResult"/>
+		<s:CallResponder id="listONUResult"/>
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
 			import flash.ux.core.Console;
 			
+			import mx.collections.ArrayList;
 			import mx.collections.IList;
 			import mx.controls.Alert;
+			import mx.core.UIComponent;
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
 			
 			import cn.com.dhcc.fzep.topo.TopoXMLUtils;
-			import cn.com.dhcc.fzep.topo.components.EquipmentComponent;
+			import cn.com.dhcc.fzep.topo.components.CarrierComponent;
+			import cn.com.dhcc.fzep.topo.components.ElementSelector;
+			import cn.com.dhcc.fzep.topo.components.GPRSComponent;
+			import cn.com.dhcc.fzep.topo.components.OLTComponent;
+			import cn.com.dhcc.fzep.topo.components.ONUComponent;
+			import cn.com.dhcc.fzep.topo.components.ThreeLayerSwitchComponent;
+			import cn.com.dhcc.fzep.topo.components.TwoLayerSwitchComponent;
 			
-			import valueObjects.Site;
+			import valueObjects.Carrier;
+			import valueObjects.GPRS;
+			import valueObjects.OLT;
+			import valueObjects.ONU;
+			import valueObjects.ThreeLayerSwitch;
+			import valueObjects.TwoLayerSwitch;
 			
 			import xtreme.core.Root;
 			import xtreme.scene.SceneManager;
@@ -89,13 +108,49 @@
 				{
 					//Alert.show(String(arr.getItemAt(i)));
 					var sceneMgr:SceneManager = Root.instance.sceneManager;
-					var siteO:Object = arr.getItemAt(i);
-					var fcName:String  = "equip" + siteO.siteId;
+					var equipO:Object = arr.getItemAt(i);
+					var equipType:String = "";
+					var equip:UIComponent;
+					if(equipO is ThreeLayerSwitch){
+						equipType = "l3layerSwitch";
+						var equips:ThreeLayerSwitchComponent = new ThreeLayerSwitchComponent();
+						equips.l3switch = equipO as ThreeLayerSwitch;
+						equips.doShow = showL3Switch;
+						equip = equips;
+					}else if(equipO is TwoLayerSwitch){
+						equipType = "l2layerSwitch";
+						var equip2c:TwoLayerSwitchComponent = new TwoLayerSwitchComponent();
+						equip2c.l2switch = equipO as TwoLayerSwitch;
+						equip2c.doShow = showL2Switch;
+						equip = equip2c;
+					}else if(equipO is ONU){
+						equipType = "onu";
+						var equipONUc:ONUComponent = new ONUComponent();
+						equipONUc.onu = equipO as ONU;
+						equipONUc.doShow = showONU;
+						equip = equipONUc;
+					}else if(equipO is OLT){
+						equipType = "olt";
+						var equipOLTc:OLTComponent = new OLTComponent();
+						equipOLTc.olt = equipO as OLT;
+						equipOLTc.doShow = showOLT;
+						equip = equipOLTc;
+					}else if(equipO is GPRS){
+						equipType = "gprs";
+						var equipGprsc:GPRSComponent = new GPRSComponent();
+						equipGprsc.gprs = equipO as GPRS;
+						equipGprsc.doShow = showGprs;
+						equip = equipGprsc;
+					}else if(equipO is Carrier){
+						equipType = "carrier";
+						var equipCarrierc:CarrierComponent = new CarrierComponent();
+						equipCarrierc.carrier = equipO as Carrier;
+						equipCarrierc.doShow = showCarrier;
+						equip = equipCarrierc;
+					}
+					var fcName:String  = "equip_" + equipType + "_" + equipO.siteId;
 					var fc:Entity = sceneMgr.getEntity(fcName);
 					if(fc==null){
-						var equip:EquipmentComponent = new EquipmentComponent();
-						equip.site = siteO as Site;
-						equip.doShowSite = show;
 						var equipFC:FlexComponent = new FlexComponent(fcName, equip);
 						equipFC.draggable = true;
 						equipFC.x = 0;
@@ -106,31 +161,164 @@
 					}
 				}
 			}
+			
 			/**
-			 * 得到站点列表
-			
+			 * 显示3层交换机信息
 			 */
-			protected function getListBySite(args:Array):void
-			{
-				var arg0:String = args[0];
-				getListBySiteResult.token = equipSchema.getListBySite(arg0);
-			}
-			
-			public function show(site:Site):void{
+			public function showL3Switch(l3switch:ThreeLayerSwitch):void{
 				//Alert.show( site.siteName + site.siteAdress +  site.connactName +  site.connactNumber +  site.descp);
-				showInfoWin.title = site.siteName;    
-				
+				showInfoWin.title = l3switch.switchName;  
 				PopUpManager.addPopUp(showInfoWin, this, true);  
 				PopUpManager.centerPopUp(showInfoWin);  
-				siteInfoGrid.dataProvider = new Array(
-					//{name: area.areaId},
-					{name: site.siteName },
-					{name: site.siteAdress},
-					{name: site.connactName},
-					{name: site.connactNumber},
-					{name: site.descp}
+				headerShowInfo.dataProvider = new Array(
+					{name: "设备名称"},
+					{name: "安装地点"},
+					{name: "施工单位"},
+					{name: "IP地址"},
+					{name: "端口号"},
+					{name: "型号规格"},
+					{name: "备注"}
+				);
+				equipInfoGrid.dataProvider = new Array(
+					{name: l3switch.switchName},
+					{name: l3switch.installationSite},
+					{name: l3switch.constructionUnit},
+					{name: l3switch.ip},
+					{name: l3switch.portNumber},
+					{name: l3switch.typeSpecification},
+					{name: l3switch.descp}
 				);
 			}
+			/**
+			 * 显示2层交换机信息
+			 */
+			public function showL2Switch(l2switch:TwoLayerSwitch):void{
+				//Alert.show( site.siteName + site.siteAdress +  site.connactName +  site.connactNumber +  site.descp);
+				showInfoWin.title = l2switch.switchName;  
+				PopUpManager.addPopUp(showInfoWin, this, true);  
+				PopUpManager.centerPopUp(showInfoWin);  
+				headerShowInfo.dataProvider = new Array(
+					{name: "设备名称"},
+					{name: "安装地点"},
+					{name: "施工单位"},
+					{name: "所属子网"},
+					{name: "端口号"},
+					{name: "型号规格"},
+					{name: "备注"}
+				);
+				equipInfoGrid.dataProvider = new Array(
+					{name: l2switch.switchName},
+					{name: l2switch.installationSite},
+					{name: l2switch.constructionUnit},
+					{name: l2switch.subNetwork},
+					{name: l2switch.portNumber},
+					{name: l2switch.typeSpecification},
+					{name: l2switch.descp}
+				);
+			}
+			/**
+			 * 显示ONU信息
+			 */
+			public function showONU(onu:ONU):void{
+				//Alert.show( site.siteName + site.siteAdress +  site.connactName +  site.connactNumber +  site.descp);
+				showInfoWin.title = onu.installationSite; 
+				PopUpManager.addPopUp(showInfoWin, this, true);  
+				PopUpManager.centerPopUp(showInfoWin);  
+				headerShowInfo.dataProvider = new Array(
+					{name: "安装地点"},
+					{name: "施工单位"},
+					{name: "VPN实例"},
+					{name: "OSPF进程号"},
+					{name: "型号规格"},
+					{name: "备注"}
+				);
+				equipInfoGrid.dataProvider = new Array(
+					{name: onu.installationSite},
+					{name: onu.constructionUnit},
+					{name: onu.vpnNumber},
+					{name: onu.ospfNumber},
+					{name: onu.typeSpecification},
+					{name: onu.descp}
+				);
+			}
+			/**
+			 * 显示OLT信息
+			 */
+			public function showOLT(olt:OLT):void{
+				//Alert.show( site.siteName + site.siteAdress +  site.connactName +  site.connactNumber +  site.descp);
+				showInfoWin.title = olt.installationSite; 
+				PopUpManager.addPopUp(showInfoWin, this, true);  
+				PopUpManager.centerPopUp(showInfoWin);  
+				headerShowInfo.dataProvider = new Array(
+					{name: "安装地点"},
+					{name: "施工单位"},
+					{name: "VPN实例"},
+					{name: "OSPF进程号"},
+					{name: "型号规格"},
+					{name: "备注"}
+				);
+				equipInfoGrid.dataProvider = new Array(
+					{name: olt.installationSite},
+					{name: olt.constructionUnit},
+					{name: olt.vpnNumber},
+					{name: olt.oSPFNumber},
+					{name: olt.typeSpecification},
+					{name: olt.descp}
+				);
+			}
+			
+			/**
+			 * 显示OLT信息
+			 */
+			public function showGprs(gprs:GPRS):void{
+				//Alert.show( site.siteName + site.siteAdress +  site.connactName +  site.connactNumber +  site.descp);
+				showInfoWin.title = gprs.installationSite; 
+				PopUpManager.addPopUp(showInfoWin, this, true);  
+				PopUpManager.centerPopUp(showInfoWin);  
+				headerShowInfo.dataProvider = new Array(
+					{name: "安装地点"},
+					{name: "施工单位"},
+					{name: "运营商"},
+					{name: "IP地址"},
+					{name: "型号规格"},
+					{name: "备注"}
+				);
+				equipInfoGrid.dataProvider = new Array(
+					{name: gprs.installationSite},
+					{name: gprs.constructionUnit},
+					{name: gprs.pperators},
+					{name: gprs.ip},
+					{name: gprs.typeSpecification},
+					{name: gprs.descp}
+				);
+			}
+			
+			/**
+			 * 显示OLT信息
+			 */
+			public function showCarrier(carrier:Carrier):void{
+				//Alert.show( site.siteName + site.siteAdress +  site.connactName +  site.connactNumber +  site.descp);
+				showInfoWin.title = carrier.installationSite; 
+				PopUpManager.addPopUp(showInfoWin, this, true);  
+				PopUpManager.centerPopUp(showInfoWin);  
+				headerShowInfo.dataProvider = new Array(
+					{name: "安装地点"},
+					{name: "施工单位"},
+					{name: "主载波地址"},
+					{name: "IP地址"},
+					{name: "型号规格"},
+					{name: "备注"}
+				);
+				equipInfoGrid.dataProvider = new Array(
+					{name: carrier.installationSite},
+					{name: carrier.constructionUnit},
+					{name: carrier.installationLocation},
+					{name: carrier.ip},
+					{name: carrier.typeSpecification},
+					{name: carrier.descp}
+				);
+			}
+			
 			/**
 			 * 关闭信息展示弹出窗口
 			 */
@@ -181,10 +369,88 @@
 						btn.selected = false;
 					}
 				}
+				selector.destlist.dataProvider = new ArrayList([]);
+				if(curBtn.id == "l3switchBtn"){
+					selector.getResult = list3LayerSwitchResult;
+					selector.showField = "switchName";
+					selector.refreshSelectorData = list3LayerSwitch;
+					list3LayerSwitch(siteId);
+				}else if(curBtn.id == "l2switchBtn"){
+					selector.getResult = list2LayerSwitchResult;
+					selector.showField = "switchName";
+					selector.refreshSelectorData = list2LayerSwitch;
+					list2LayerSwitch(siteId);
+				}else if(curBtn.id == "carrierBtn"){
+					selector.getResult = listCarrierResult;
+					selector.showField = "installationSite";
+					selector.refreshSelectorData = listCarrier;
+					listCarrier(siteId);
+				}else if(curBtn.id == "onuBtn"){
+					selector.getResult = listONUResult;
+					selector.showField = "showName";
+					selector.refreshSelectorData = listONU;
+					listONU(siteId);
+				}else if(curBtn.id == "gprsbtn"){
+					selector.getResult = listGPRSResult;
+					selector.showField = "installationSite";
+					selector.refreshSelectorData = listGPRS;
+					listGPRS(siteId);
+				}else if(curBtn.id == "oltBtn"){
+					selector.getResult = listOLTResult;
+					selector.showField = "installationSite";
+					selector.refreshSelectorData = listOLT;
+					listOLT(siteId);
+				}
 				
-				//btn.
-				//btn.selected = true;
-				//Alert.show(btn.label);
+			}
+			
+			
+			protected function list2LayerSwitch(args:Array):void
+			{
+				var arg0:String = args[0];
+				list2LayerSwitchResult.token = equipSchema.list2LayerSwitch(arg0);
+			}
+			
+			
+			protected function list3LayerSwitch(args:Array):void
+			{
+				var arg0:String = args[0];
+				list3LayerSwitchResult.token = equipSchema.list3LayerSwitch(arg0);
+			}
+			
+			
+			protected function listCable(args:Array):void
+			{
+				var arg0:String = args[0];
+				listCableResult.token = equipSchema.listCable(arg0);
+			}
+			
+			
+			protected function listCarrier(args:Array):void
+			{
+				var arg0:String = args[0];
+				listCarrierResult.token = equipSchema.listCarrier(arg0);
+			}
+			
+			
+			protected function listGPRS(args:Array):void
+			{
+				var arg0:String = args[0];
+				listGPRSResult.token = equipSchema.listGPRS(arg0);
+			}
+			
+			
+			protected function listOLT(args:Array):void
+			{
+				var arg0:String = args[0];
+				listOLTResult.token = equipSchema.listOLT(arg0);
+			}
+			
+			
+			protected function listONU(args:Array):void
+			{
+				var arg0:String = args[0];
+				listONUResult.token = equipSchema.listONU(arg0);
 			}
 			
 		]]>
@@ -197,18 +463,18 @@
 	
 	<s:VGroup id="operGroup" height="100%" gap="0" >	
 		<mx:VBox id="vBox" verticalAlign="middle" horizontalAlign="center"   width="{operGroup.width}" >
-			<mx:ToolBar id="toolBar" percentWidth="100" 
-						minWidth="18" verticalGap="0" horizontalGap="0" >
-				<mx:Button id="l3switch" emphasized="true" toggle="true" selected="true"  label="三层交换机"  click="equipType_clickHandler(event)" />
-				<mx:Button id="l2switch" emphasized="true" toggle="true"   label="二层交换机"  click="equipType_clickHandler(event)" />
-				<mx:Button id="zbBtn" emphasized="true" toggle="true"   label="载波"  click="equipType_clickHandler(event)" />
+			<mx:ToolBar id="toolBar" percentWidth="100"  textAlign="center" minWidth="18" verticalGap="0" horizontalGap="0" >
+				<mx:Button id="l3switchBtn" emphasized="true" toggle="true" selected="true"  label="三层交换机"  click="equipType_clickHandler(event)" />
+				<mx:Button id="l2switchBtn" emphasized="true" toggle="true"   label="二层交换机"  click="equipType_clickHandler(event)" />
+				<mx:Button id="carrierBtn" emphasized="true" toggle="true"   label="载波"  click="equipType_clickHandler(event)" />
 				<mx:Button id="gprsbtn" emphasized="true" toggle="true"   label="GPRS"  click="equipType_clickHandler(event)" />
-				<mx:Button id="cableBtn" emphasized="true" toggle="true"   label="光缆"  click="equipType_clickHandler(event)" />
+				<!--<mx:Button id="cableBtn" emphasized="true" toggle="true"   label="光缆"  click="equipType_clickHandler(event)" />-->
 				<mx:Button id="onuBtn" emphasized="true" toggle="true"   label="ONU"  click="equipType_clickHandler(event)" />
 				<mx:Button id="oltBtn" emphasized="true" toggle="true"   label="OLT"  click="equipType_clickHandler(event)" />
 			</mx:ToolBar>
 		</mx:VBox>
-		<cedo:ElementSelector selectedItem="addEquip" getResult="{getListBySiteResult}" showField="showName" refreshSelectorData="getListBySite" args="{siteId}" ></cedo:ElementSelector>
+		<cedo:ElementSelector id="selector" selectedItem="addEquip" getResult="{list3LayerSwitchResult}" showField="switchName" refreshSelectorData="list3LayerSwitch" args="{siteId}" ></cedo:ElementSelector>
+		
 	</s:VGroup>
 	<s:VGroup id="hide" width="10" height="100%" gap="0"
 			  click="hide_clickHandler(event)" opaqueBackground="0xe8e8e8">
