@@ -168,19 +168,6 @@
     <annotation name="ServiceTypeGroup">
       <item name="ServiceBackendType">BlazeDS</item>
     </annotation>
-    <function name="getListBySite" return-type="Equipment[]">
-      <annotation name="analyze group">
-        <item name="analyzed">true</item>
-      </annotation>
-      <annotation name="original signature">
-        <item name="inputParams">string</item>
-        <item name="returnType">Equipment</item>
-      </annotation>
-      <annotation name="ValidProperties">
-        <item name="propertySpecifier">showName</item>
-      </annotation>
-      <parameter name="arg0" type="string"/>
-    </function>
     <function name="listOLT" return-type="OLT[]">
       <annotation name="analyze group">
         <item name="analyzed">true</item>
@@ -218,6 +205,16 @@
       <annotation name="original signature">
         <item name="inputParams">string</item>
         <item name="returnType">TwoLayerSwitch</item>
+      </annotation>
+      <parameter name="arg0" type="string"/>
+    </function>
+    <function name="getListBySite" return-type="Equipment[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">string</item>
+        <item name="returnType">Equipment</item>
       </annotation>
       <parameter name="arg0" type="string"/>
     </function>
@@ -261,7 +258,7 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">Dummy,EquipSchema</item>
+      <item name="service">EquipSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
@@ -273,12 +270,13 @@
     <property name="projectId" type="string"/>
     <property name="vlanId" type="string"/>
     <property name="vpnNumber" type="string"/>
+    <property name="oltName" type="string"/>
     <property name="oSPFNumber" type="string"/>
     <property name="descp" type="string"/>
-    <property name="lookbackLocation" type="string"/>
     <property name="typeSpecification" type="string"/>
-    <property name="showName" type="string"/>
+    <property name="lookbackLocation" type="string"/>
     <property name="siteId" type="string"/>
+    <property name="showName" type="string"/>
     <property name="oltId" type="string"/>
     <property name="delFlg" type="string"/>
   </entity>
@@ -291,7 +289,7 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">Dummy,EquipSchema</item>
+      <item name="service">EquipSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
@@ -306,9 +304,9 @@
     <property name="flow" type="string"/>
     <property name="projectId" type="string"/>
     <property name="VLANID" type="string"/>
-    <property name="vLanDescp" type="string"/>
     <property name="ownedBusiness" type="string"/>
     <property name="switchId" type="string"/>
+    <property name="vlanDescp" type="string"/>
     <property name="switchType" type="string"/>
     <property name="descp" type="string"/>
     <property name="subNetwork" type="string"/>
@@ -327,13 +325,10 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">Dummy,EquipSchema</item>
+      <item name="service">EquipSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
-    </annotation>
-    <annotation name="getListBySite">
-      <item name="propertySpecifier">showName</item>
     </annotation>
     <property name="showName" type="string"/>
   </entity>
@@ -346,7 +341,7 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">Dummy,EquipSchema</item>
+      <item name="service">EquipSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
@@ -359,10 +354,11 @@
     <property name="ip" type="string"/>
     <property name="descp" type="string"/>
     <property name="typeSpecification" type="string"/>
-    <property name="siteId" type="string"/>
     <property name="showName" type="string"/>
+    <property name="siteId" type="string"/>
     <property name="carrierId" type="string"/>
     <property name="delFlg" type="string"/>
+    <property name="carrierName" type="string"/>
     <property name="debugging" type="string"/>
     <property name="installationLocation" type="string"/>
   </entity>
@@ -375,7 +371,7 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">Dummy,EquipSchema</item>
+      <item name="service">EquipSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
@@ -385,13 +381,14 @@
     <property name="installationSite" type="string"/>
     <property name="runTime" type="string"/>
     <property name="projectId" type="string"/>
-    <property name="vlanId" type="string"/>
     <property name="onuId" type="string"/>
+    <property name="vlanId" type="string"/>
     <property name="vpnNumber" type="string"/>
     <property name="descp" type="string"/>
     <property name="typeSpecification" type="string"/>
-    <property name="showName" type="string"/>
     <property name="siteId" type="string"/>
+    <property name="showName" type="string"/>
+    <property name="onuName" type="string"/>
     <property name="delFlg" type="string"/>
     <property name="ospfNumber" type="string"/>
   </entity>
@@ -404,7 +401,7 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">Dummy,EquipSchema</item>
+      <item name="service">EquipSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
@@ -414,8 +411,8 @@
     <property name="constructionUnit" type="string"/>
     <property name="fibreCoreNumber" type="string"/>
     <property name="runTime" type="string"/>
-    <property name="cableName" type="string"/>
     <property name="cableType" type="string"/>
+    <property name="cableName" type="string"/>
     <property name="descp" type="string"/>
     <property name="layingType" type="string"/>
     <property name="showName" type="string"/>
@@ -433,7 +430,7 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">Dummy,EquipSchema</item>
+      <item name="service">EquipSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
@@ -447,13 +444,13 @@
     <property name="flow" type="string"/>
     <property name="projectId" type="string"/>
     <property name="vlanId" type="string"/>
-    <property name="switchId" type="string"/>
     <property name="ip" type="string"/>
+    <property name="switchId" type="string"/>
     <property name="vlanDescp" type="string"/>
     <property name="descp" type="string"/>
     <property name="typeSpecification" type="string"/>
-    <property name="siteId" type="string"/>
     <property name="showName" type="string"/>
+    <property name="siteId" type="string"/>
     <property name="delFlg" type="string"/>
   </entity>
   <entity name="GPRS">
@@ -465,7 +462,7 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">Dummy,EquipSchema</item>
+      <item name="service">EquipSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
@@ -476,13 +473,14 @@
     <property name="manufacturers" type="string"/>
     <property name="installationSite" type="string"/>
     <property name="runTime" type="string"/>
+    <property name="gprsName" type="string"/>
     <property name="projectId" type="string"/>
     <property name="pperators" type="string"/>
     <property name="ip" type="string"/>
     <property name="descp" type="string"/>
     <property name="typeSpecification" type="string"/>
-    <property name="siteId" type="string"/>
     <property name="showName" type="string"/>
+    <property name="siteId" type="string"/>
     <property name="delFlg" type="string"/>
     <property name="debugging" type="string"/>
     <property name="cardNumber" type="string"/>

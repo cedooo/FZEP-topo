@@ -67,13 +67,13 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
     private var _internal_flow : String;
     private var _internal_projectId : String;
     private var _internal_vlanId : String;
-    private var _internal_switchId : String;
     private var _internal_ip : String;
+    private var _internal_switchId : String;
     private var _internal_vlanDescp : String;
     private var _internal_descp : String;
     private var _internal_typeSpecification : String;
-    private var _internal_siteId : String;
     private var _internal_showName : String;
+    private var _internal_siteId : String;
     private var _internal_delFlg : String;
 
     private static var emptyArray:Array = new Array();
@@ -153,15 +153,15 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
     }
 
     [Bindable(event="propertyChange")]
-    public function get switchId() : String
-    {
-        return _internal_switchId;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get ip() : String
     {
         return _internal_ip;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get switchId() : String
+    {
+        return _internal_switchId;
     }
 
     [Bindable(event="propertyChange")]
@@ -183,15 +183,15 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
     }
 
     [Bindable(event="propertyChange")]
-    public function get siteId() : String
-    {
-        return _internal_siteId;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get showName() : String
     {
         return _internal_showName;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get siteId() : String
+    {
+        return _internal_siteId;
     }
 
     [Bindable(event="propertyChange")]
@@ -298,16 +298,6 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         }
     }
 
-    public function set switchId(value:String) : void
-    {
-        var oldValue:String = _internal_switchId;
-        if (oldValue !== value)
-        {
-            _internal_switchId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "switchId", oldValue, _internal_switchId));
-        }
-    }
-
     public function set ip(value:String) : void
     {
         var oldValue:String = _internal_ip;
@@ -315,6 +305,16 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         {
             _internal_ip = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "ip", oldValue, _internal_ip));
+        }
+    }
+
+    public function set switchId(value:String) : void
+    {
+        var oldValue:String = _internal_switchId;
+        if (oldValue !== value)
+        {
+            _internal_switchId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "switchId", oldValue, _internal_switchId));
         }
     }
 
@@ -348,16 +348,6 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         }
     }
 
-    public function set siteId(value:String) : void
-    {
-        var oldValue:String = _internal_siteId;
-        if (oldValue !== value)
-        {
-            _internal_siteId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteId", oldValue, _internal_siteId));
-        }
-    }
-
     public function set showName(value:String) : void
     {
         var oldValue:String = _internal_showName;
@@ -365,6 +355,16 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         {
             _internal_showName = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "showName", oldValue, _internal_showName));
+        }
+    }
+
+    public function set siteId(value:String) : void
+    {
+        var oldValue:String = _internal_siteId;
+        if (oldValue !== value)
+        {
+            _internal_siteId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteId", oldValue, _internal_siteId));
         }
     }
 

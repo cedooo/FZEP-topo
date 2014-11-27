@@ -37,5 +37,5 @@
 	</fx:Script>
 	
 	<mx:Image id="imgVisitor" source="assets/{imgName}" x="26" y="9" width="48" height="48"/>
-	<s:Label id="lblUserName" text="{olt.installationSite}" y="60"  textAlign="center" width="100%" fontSize="12"  fontWeight="bold"/>
+	<s:Label id="lblUserName" text="{olt.oltName}" y="60"  textAlign="center" width="100%" fontSize="12"  fontWeight="bold"/>
 </s:Group>

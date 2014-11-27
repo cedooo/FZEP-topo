@@ -34,11 +34,11 @@ internal class _Super_EquipSchema extends com.adobe.fiber.services.wrapper.Remot
         _serviceControl = new mx.rpc.remoting.RemoteObject();
 
         // initialize RemoteClass alias for all entities returned by functions of this service
-        valueObjects.Equipment._initRemoteClassAlias();
         valueObjects.OLT._initRemoteClassAlias();
         valueObjects.ThreeLayerSwitch._initRemoteClassAlias();
         valueObjects.ONU._initRemoteClassAlias();
         valueObjects.TwoLayerSwitch._initRemoteClassAlias();
+        valueObjects.Equipment._initRemoteClassAlias();
         valueObjects.Cable._initRemoteClassAlias();
         valueObjects.GPRS._initRemoteClassAlias();
         valueObjects.Carrier._initRemoteClassAlias();
@@ -46,9 +46,6 @@ internal class _Super_EquipSchema extends com.adobe.fiber.services.wrapper.Remot
         var operations:Object = new Object();
         var operation:mx.rpc.remoting.Operation;
 
-        operation = new mx.rpc.remoting.Operation(null, "getListBySite");
-         operation.resultElementType = valueObjects.Equipment;
-        operations["getListBySite"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "listOLT");
          operation.resultElementType = valueObjects.OLT;
         operations["listOLT"] = operation;
@@ -61,6 +58,9 @@ internal class _Super_EquipSchema extends com.adobe.fiber.services.wrapper.Remot
         operation = new mx.rpc.remoting.Operation(null, "list2LayerSwitch");
          operation.resultElementType = valueObjects.TwoLayerSwitch;
         operations["list2LayerSwitch"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "getListBySite");
+         operation.resultElementType = valueObjects.Equipment;
+        operations["getListBySite"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "listCable");
          operation.resultElementType = valueObjects.Cable;
         operations["listCable"] = operation;
@@ -87,24 +87,6 @@ internal class _Super_EquipSchema extends com.adobe.fiber.services.wrapper.Remot
     }
     
 
-    /**
-      * This method is a generated wrapper used to call the 'getListBySite' operation. It returns an mx.rpc.AsyncToken whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
-      * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
-      *
-      * @see mx.rpc.AsyncToken
-      * @see mx.rpc.CallResponder 
-      *
-      * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
-      */
-    public function getListBySite(arg0:String) : mx.rpc.AsyncToken
-    {
-        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getListBySite");
-		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0) ;
-        return _internal_token;
-    }
-     
     /**
       * This method is a generated wrapper used to call the 'listOLT' operation. It returns an mx.rpc.AsyncToken whose 
       * result property will be populated with the result of the operation when the server response is received. 
@@ -173,6 +155,24 @@ internal class _Super_EquipSchema extends com.adobe.fiber.services.wrapper.Remot
     public function list2LayerSwitch(arg0:String) : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("list2LayerSwitch");
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0) ;
+        return _internal_token;
+    }
+     
+    /**
+      * This method is a generated wrapper used to call the 'getListBySite' operation. It returns an mx.rpc.AsyncToken whose 
+      * result property will be populated with the result of the operation when the server response is received. 
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
+      *
+      * @see mx.rpc.AsyncToken
+      * @see mx.rpc.CallResponder 
+      *
+      * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
+      */
+    public function getListBySite(arg0:String) : mx.rpc.AsyncToken
+    {
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getListBySite");
 		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0) ;
         return _internal_token;
     }

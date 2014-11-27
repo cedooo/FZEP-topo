@@ -221,7 +221,7 @@
 			 */
 			public function showONU(onu:ONU):void{
 				//Alert.show( site.siteName + site.siteAdress +  site.connactName +  site.connactNumber +  site.descp);
-				showInfoWin.title = onu.installationSite; 
+				showInfoWin.title = onu.onuName; 
 				PopUpManager.addPopUp(showInfoWin, this, true);  
 				PopUpManager.centerPopUp(showInfoWin);  
 				headerShowInfo.dataProvider = new Array(
@@ -246,7 +246,7 @@
 			 */
 			public function showOLT(olt:OLT):void{
 				//Alert.show( site.siteName + site.siteAdress +  site.connactName +  site.connactNumber +  site.descp);
-				showInfoWin.title = olt.installationSite; 
+				showInfoWin.title = olt.oltName; 
 				PopUpManager.addPopUp(showInfoWin, this, true);  
 				PopUpManager.centerPopUp(showInfoWin);  
 				headerShowInfo.dataProvider = new Array(
@@ -272,7 +272,7 @@
 			 */
 			public function showGprs(gprs:GPRS):void{
 				//Alert.show( site.siteName + site.siteAdress +  site.connactName +  site.connactNumber +  site.descp);
-				showInfoWin.title = gprs.installationSite; 
+				showInfoWin.title = gprs.gprsName; 
 				PopUpManager.addPopUp(showInfoWin, this, true);  
 				PopUpManager.centerPopUp(showInfoWin);  
 				headerShowInfo.dataProvider = new Array(
@@ -298,7 +298,7 @@
 			 */
 			public function showCarrier(carrier:Carrier):void{
 				//Alert.show( site.siteName + site.siteAdress +  site.connactName +  site.connactNumber +  site.descp);
-				showInfoWin.title = carrier.installationSite; 
+				showInfoWin.title = carrier.carrierName; 
 				PopUpManager.addPopUp(showInfoWin, this, true);  
 				PopUpManager.centerPopUp(showInfoWin);  
 				headerShowInfo.dataProvider = new Array(
@@ -382,22 +382,22 @@
 					list2LayerSwitch(siteId);
 				}else if(curBtn.id == "carrierBtn"){
 					selector.getResult = listCarrierResult;
-					selector.showField = "installationSite";
+					selector.showField = "carrierName";
 					selector.refreshSelectorData = listCarrier;
 					listCarrier(siteId);
 				}else if(curBtn.id == "onuBtn"){
 					selector.getResult = listONUResult;
-					selector.showField = "showName";
+					selector.showField = "onuName";
 					selector.refreshSelectorData = listONU;
 					listONU(siteId);
 				}else if(curBtn.id == "gprsbtn"){
 					selector.getResult = listGPRSResult;
-					selector.showField = "installationSite";
+					selector.showField = "gprsName";
 					selector.refreshSelectorData = listGPRS;
 					listGPRS(siteId);
 				}else if(curBtn.id == "oltBtn"){
 					selector.getResult = listOLTResult;
-					selector.showField = "installationSite";
+					selector.showField = "oltName";
 					selector.refreshSelectorData = listOLT;
 					listOLT(siteId);
 				}

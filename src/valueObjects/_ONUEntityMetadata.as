@@ -20,14 +20,14 @@ internal class _ONUEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "onuId", "vpnNumber", "descp", "typeSpecification", "showName", "siteId", "delFlg", "ospfNumber");
+    model_internal static var allProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "onuId", "vlanId", "vpnNumber", "descp", "typeSpecification", "siteId", "showName", "onuName", "delFlg", "ospfNumber");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "onuId", "vpnNumber", "descp", "typeSpecification", "showName", "siteId", "delFlg", "ospfNumber");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "onuId", "vlanId", "vpnNumber", "descp", "typeSpecification", "siteId", "showName", "onuName", "delFlg", "ospfNumber");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "onuId", "vpnNumber", "descp", "typeSpecification", "showName", "siteId", "delFlg", "ospfNumber");
+    model_internal static var dataProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "onuId", "vlanId", "vpnNumber", "descp", "typeSpecification", "siteId", "showName", "onuName", "delFlg", "ospfNumber");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "onuId", "vpnNumber", "descp", "typeSpecification", "showName", "siteId", "delFlg", "ospfNumber");
+    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "onuId", "vlanId", "vpnNumber", "descp", "typeSpecification", "siteId", "showName", "onuName", "delFlg", "ospfNumber");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -52,13 +52,14 @@ internal class _ONUEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
             model_internal::dependentsOnMap["installationSite"] = new Array();
             model_internal::dependentsOnMap["runTime"] = new Array();
             model_internal::dependentsOnMap["projectId"] = new Array();
-            model_internal::dependentsOnMap["vlanId"] = new Array();
             model_internal::dependentsOnMap["onuId"] = new Array();
+            model_internal::dependentsOnMap["vlanId"] = new Array();
             model_internal::dependentsOnMap["vpnNumber"] = new Array();
             model_internal::dependentsOnMap["descp"] = new Array();
             model_internal::dependentsOnMap["typeSpecification"] = new Array();
-            model_internal::dependentsOnMap["showName"] = new Array();
             model_internal::dependentsOnMap["siteId"] = new Array();
+            model_internal::dependentsOnMap["showName"] = new Array();
+            model_internal::dependentsOnMap["onuName"] = new Array();
             model_internal::dependentsOnMap["delFlg"] = new Array();
             model_internal::dependentsOnMap["ospfNumber"] = new Array();
 
@@ -73,13 +74,14 @@ internal class _ONUEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
         model_internal::propertyTypeMap["installationSite"] = "String";
         model_internal::propertyTypeMap["runTime"] = "String";
         model_internal::propertyTypeMap["projectId"] = "String";
-        model_internal::propertyTypeMap["vlanId"] = "String";
         model_internal::propertyTypeMap["onuId"] = "String";
+        model_internal::propertyTypeMap["vlanId"] = "String";
         model_internal::propertyTypeMap["vpnNumber"] = "String";
         model_internal::propertyTypeMap["descp"] = "String";
         model_internal::propertyTypeMap["typeSpecification"] = "String";
-        model_internal::propertyTypeMap["showName"] = "String";
         model_internal::propertyTypeMap["siteId"] = "String";
+        model_internal::propertyTypeMap["showName"] = "String";
+        model_internal::propertyTypeMap["onuName"] = "String";
         model_internal::propertyTypeMap["delFlg"] = "String";
         model_internal::propertyTypeMap["ospfNumber"] = "String";
 
@@ -341,13 +343,13 @@ internal class _ONUEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     }
 
     [Bindable(event="propertyChange")]
-    public function get isVlanIdAvailable():Boolean
+    public function get isOnuIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isOnuIdAvailable():Boolean
+    public function get isVlanIdAvailable():Boolean
     {
         return true;
     }
@@ -371,13 +373,19 @@ internal class _ONUEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     }
 
     [Bindable(event="propertyChange")]
+    public function get isSiteIdAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get isShowNameAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSiteIdAvailable():Boolean
+    public function get isOnuNameAvailable():Boolean
     {
         return true;
     }
@@ -435,13 +443,13 @@ internal class _ONUEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     }
 
     [Bindable(event="propertyChange")]   
-    public function get vlanIdStyle():com.adobe.fiber.styles.Style
+    public function get onuIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get onuIdStyle():com.adobe.fiber.styles.Style
+    public function get vlanIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
@@ -465,13 +473,19 @@ internal class _ONUEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     }
 
     [Bindable(event="propertyChange")]   
+    public function get siteIdStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
     public function get showNameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get siteIdStyle():com.adobe.fiber.styles.Style
+    public function get onuNameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

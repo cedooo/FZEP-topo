@@ -68,9 +68,9 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     private var _internal_flow : String;
     private var _internal_projectId : String;
     private var _internal_VLANID : String;
-    private var _internal_vLanDescp : String;
     private var _internal_ownedBusiness : String;
     private var _internal_switchId : String;
+    private var _internal_vlanDescp : String;
     private var _internal_switchType : String;
     private var _internal_descp : String;
     private var _internal_subNetwork : String;
@@ -163,12 +163,6 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     }
 
     [Bindable(event="propertyChange")]
-    public function get vLanDescp() : String
-    {
-        return _internal_vLanDescp;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get ownedBusiness() : String
     {
         return _internal_ownedBusiness;
@@ -178,6 +172,12 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     public function get switchId() : String
     {
         return _internal_switchId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get vlanDescp() : String
+    {
+        return _internal_vlanDescp;
     }
 
     [Bindable(event="propertyChange")]
@@ -336,16 +336,6 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         }
     }
 
-    public function set vLanDescp(value:String) : void
-    {
-        var oldValue:String = _internal_vLanDescp;
-        if (oldValue !== value)
-        {
-            _internal_vLanDescp = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "vLanDescp", oldValue, _internal_vLanDescp));
-        }
-    }
-
     public function set ownedBusiness(value:String) : void
     {
         var oldValue:String = _internal_ownedBusiness;
@@ -363,6 +353,16 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         {
             _internal_switchId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "switchId", oldValue, _internal_switchId));
+        }
+    }
+
+    public function set vlanDescp(value:String) : void
+    {
+        var oldValue:String = _internal_vlanDescp;
+        if (oldValue !== value)
+        {
+            _internal_vlanDescp = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "vlanDescp", oldValue, _internal_vlanDescp));
         }
     }
 
