@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:cedo="cn.com.dhcc.fzep.topo.components.*"
+			   xmlns:xtreme="xtreme.core.*"
+			   xmlns:services="services.*"
+			   minWidth="955" minHeight="600" applicationComplete="applicationComplete()" >
+	<fx:Declarations>
+		<s:CallResponder id="getSchemaResult" result="getSchemaResult_resultHandler(event)" fault="getSchemaResult_faultHandler(event)"/>
+		<services:ShowSchema id="showSchema"
+							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							 showBusyCursor="true"/>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<s:TitleWindow id="showInfoWin" width="280" title="详细信息" close="showInfoWin_closeHandler(event)" >
+			<mx:DataGrid id="headerShowInfo" showHeaders="false" width="30%" 
+						 borderVisible="false" textAlign="right">
+				<mx:dataProvider>
+					<fx:Object name="名        称" />
+					<fx:Object name="地        址" />
+					<fx:Object name="负  责  人" />
+					<fx:Object name="联系电话" />
+					<fx:Object name="备        注" />
+				</mx:dataProvider>
+				<mx:columns >
+					<mx:DataGridColumn dataField="name" fontWeight="normal" />
+				</mx:columns>
+			</mx:DataGrid>
+			<mx:DataGrid id="equipInfoGrid" x="{headerShowInfo.width}" showHeaders="false" width="75%"
+						 borderVisible="false">
+				<mx:columns>
+					<mx:DataGridColumn dataField="name" wordWrap="true"  />
+				</mx:columns>
+			</mx:DataGrid>
+		</s:TitleWindow>
+		<s:CallResponder id="getCarrierResult" result="getCarrierResult_resultHandler(event)"/>
+		<s:CallResponder id="getGPRSResult" result="getGPRSResult_resultHandler(event)"/>
+		<s:CallResponder id="getOLTResult" result="getOLTResult_resultHandler(event)"/>
+		<s:CallResponder id="getONUResult" result="getONUResult_resultHandler(event)"/>
+		<s:CallResponder id="getThreeLayerSwitchResult" result="getThreeLayerSwitchResult_resultHandler(event)"/>
+		<s:CallResponder id="getTwoLayerSwitchResult" result="getTwoLayerSwitchResult_resultHandler(event)"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.serialization.json.JSON;
+			
+			import flash.ux.core.Console;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.utils.ObjectUtil;
+			
+			import cn.com.dhcc.fzep.topo.components.EquipmentComponent;
+			import cn.com.dhcc.fzep.topo.poao.SchemaElementsInfo;
+			
+			import valueObjects.Carrier;
+			import valueObjects.GPRS;
+			import valueObjects.OLT;
+			import valueObjects.ONU;
+			import valueObjects.Schema;
+			import valueObjects.ThreeLayerSwitch;
+			import valueObjects.TwoLayerSwitch;
+			
+			import xtreme.core.Root;
+			import xtreme.scene.SceneManager;
+			import xtreme.scene.entity.shapes.FlexComponent;
+			
+			private function applicationComplete() : void
+			{
+				getSchema(schemaID);
+				
+				stage.align = StageAlign.TOP_LEFT;
+				stage.scaleMode = StageScaleMode.NO_SCALE;
+				stage.quality = StageQuality.HIGH;
+				this.contextMenu.hideBuiltInItems();
+				var console:Console = Console.instance;
+				if (console == null)
+					console = new Console(stage);
+				view.getRoot().layerManager.enableContextMenu();
+				view.registerBuildInCommand(console);
+				view.getRoot().navigationView.visible = true;
+				
+				
+			}
+			public function clearup() : void
+			{
+				// 清空场景
+				Root.instance.sceneManager.clearScene();
+			}
+			[Bindable]
+			public var schemaID:String = "6";
+			[Bindable]
+			public var schemaType:String = null;
+			[Bindable]
+			public var siteID:String = null;
+			
+			protected function getSchema(arg0:String):void
+			{
+				getSchemaResult.token = showSchema.getSchema(arg0);
+			}
+			
+			protected function loadSchema(data:String):void {
+				clearup();
+				//get the raw JSON data and cast to String  
+				var rawData:String = String(data);  
+				
+				//decode the data to ActionScript using the JSON API  
+				//in this case, the JSON data is a serialize Array of Objects.  
+				var arr:Array = (JSON.decode(rawData) as Array);  
+				
+				//create a new ArrayCollection passing the de-serialized Array  
+				//ArrayCollections work better as DataProviders, as they can  
+				//be watched for changes.  
+				var dp:ArrayCollection = new ArrayCollection(arr);  
+				
+				var sceneMgr:SceneManager = Root.instance.sceneManager;
+				//Alert.show(String(dp.length));
+				
+				for (var i:int = 0; i < dp.length; i++) 
+				{
+					var obj:Object =  dp.getItemAt(i);
+					var seInfo:SchemaElementsInfo = new SchemaElementsInfo();
+					seInfo.id = obj.id;
+					seInfo.imgPath = obj.imgPath;
+					seInfo.showName = obj.showName;
+					seInfo.type = obj.type;
+					seInfo.x = obj.x;
+					seInfo.y = obj.y;
+					
+					var eCom:EquipmentComponent = new EquipmentComponent();
+					eCom.imgName = seInfo.imgPath;
+					eCom.eleInfo = seInfo;
+					eCom.doShow = doShowEquipment;
+					var eid:String = seInfo.type + seInfo.id;
+					var equipFC:FlexComponent = new FlexComponent(eid, eCom);
+					equipFC.draggable = false;
+					equipFC.x = seInfo.x;
+					equipFC.y = seInfo.y;
+					equipFC.width = 100;
+					equipFC.height = 100;
+					sceneMgr.addEntity(equipFC);
+				}
+			}
+			
+			protected function getSchemaResult_resultHandler(event:ResultEvent):void
+			{
+				var schema:Schema = event.result  as Schema;
+				schemaName.text = schema.schemaName;
+				loadSchema(schema.schemaData);
+			}
+			
+			protected function getSchemaResult_faultHandler(event:FaultEvent):void
+			{
+				Alert.show("无法获取视图数据。","出错啦！");
+			}
+			protected function doShowEquipment(info:SchemaElementsInfo):void{
+				if(ObjectUtil.getClassInfo(Carrier).name == info.type){
+					getCarrier(info.id);
+				}else if(ObjectUtil.getClassInfo(GPRS).name == info.type){
+					getGPRS(info.id);
+				}else if(ObjectUtil.getClassInfo(OLT).name == info.type){
+					getOLT(info.id);
+				}else if(ObjectUtil.getClassInfo(ONU).name == info.type){
+					getONU(info.id);
+				}else if(ObjectUtil.getClassInfo(TwoLayerSwitch).name == info.type){
+					getThreeLayerSwitch(info.id);
+				}else if(ObjectUtil.getClassInfo(ThreeLayerSwitch).name == info.type){
+					getThreeLayerSwitch(info.id);
+				}
+			}
+			/**
+			* 关闭信息展示弹出窗口
+			*/
+			protected function showInfoWin_closeHandler(event:CloseEvent):void { 
+				PopUpManager.removePopUp(showInfoWin);   
+			}  
+			
+			protected function getCarrier(arg0:String):void
+			{
+				getCarrierResult.token = showSchema.getCarrier(arg0);
+			}
+			
+			
+			protected function getGPRS(arg0:String):void
+			{
+				getGPRSResult.token = showSchema.getGPRS(arg0);
+			}
+			
+			
+			protected function getOLT(arg0:String):void
+			{
+				getOLTResult.token = showSchema.getOLT(arg0);
+			}
+			
+			
+			protected function getONU(arg0:String):void
+			{
+				getONUResult.token = showSchema.getONU(arg0);
+			}
+			
+			
+			protected function getThreeLayerSwitch(arg0:String):void
+			{
+				getThreeLayerSwitchResult.token = showSchema.getThreeLayerSwitch(arg0);
+			}
+			
+			
+			protected function getTwoLayerSwitch(arg0:String):void
+			{
+				getTwoLayerSwitchResult.token = showSchema.getTwoLayerSwitch(arg0);
+			}
+			
+			
+			protected function getCarrierResult_resultHandler(event:ResultEvent):void
+			{
+				var carrier:Carrier = event.result as Carrier;
+				showInfoWin.title = carrier.carrierName; 
+				PopUpManager.addPopUp(showInfoWin, this, true);  
+				PopUpManager.centerPopUp(showInfoWin);  
+				headerShowInfo.dataProvider = new Array(
+					{name: "安装地点"},
+					{name: "施工单位"},
+					{name: "主载波地址"},
+					{name: "IP地址"},
+					{name: "型号规格"},
+					{name: "备注"}
+				);
+				equipInfoGrid.dataProvider = new Array(
+					{name: carrier.installationSite},
+					{name: carrier.constructionUnit},
+					{name: carrier.installationLocation},
+					{name: carrier.ip},
+					{name: carrier.typeSpecification},
+					{name: carrier.descp}
+				);
+			}
+			
+			protected function getGPRSResult_resultHandler(event:ResultEvent):void
+			{
+				
+				var gprs:GPRS = event.result as GPRS;
+				showInfoWin.title = gprs.gprsName; 
+				PopUpManager.addPopUp(showInfoWin, this, true);  
+				PopUpManager.centerPopUp(showInfoWin);  
+				headerShowInfo.dataProvider = new Array(
+					{name: "安装地点"},
+					{name: "施工单位"},
+					{name: "运营商"},
+					{name: "IP地址"},
+					{name: "型号规格"},
+					{name: "备注"}
+				);
+				equipInfoGrid.dataProvider = new Array(
+					{name: gprs.installationSite},
+					{name: gprs.constructionUnit},
+					{name: gprs.pperators},
+					{name: gprs.ip},
+					{name: gprs.typeSpecification},
+					{name: gprs.descp}
+				);
+			}
+			
+			protected function getOLTResult_resultHandler(event:ResultEvent):void
+			{
+				var olt:OLT = event.result as OLT;
+				showInfoWin.title = olt.oltName; 
+				PopUpManager.addPopUp(showInfoWin, this, true);  
+				PopUpManager.centerPopUp(showInfoWin);  
+				headerShowInfo.dataProvider = new Array(
+					{name: "安装地点"},
+					{name: "施工单位"},
+					{name: "VPN实例"},
+					{name: "OSPF进程号"},
+					{name: "型号规格"},
+					{name: "备注"}
+				);
+				equipInfoGrid.dataProvider = new Array(
+					{name: olt.installationSite},
+					{name: olt.constructionUnit},
+					{name: olt.vpnNumber},
+					{name: olt.oSPFNumber},
+					{name: olt.typeSpecification},
+					{name: olt.descp}
+				);
+				
+			}
+			
+			protected function getONUResult_resultHandler(event:ResultEvent):void
+			{
+				var onu:ONU = event.result as ONU;
+				showInfoWin.title = onu.onuName; 
+				PopUpManager.addPopUp(showInfoWin, this, true);  
+				PopUpManager.centerPopUp(showInfoWin);  
+				headerShowInfo.dataProvider = new Array(
+					{name: "安装地点"},
+					{name: "施工单位"},
+					{name: "VPN实例"},
+					{name: "OSPF进程号"},
+					{name: "型号规格"},
+					{name: "备注"}
+				);
+				equipInfoGrid.dataProvider = new Array(
+					{name: onu.installationSite},
+					{name: onu.constructionUnit},
+					{name: onu.vpnNumber},
+					{name: onu.ospfNumber},
+					{name: onu.typeSpecification},
+					{name: onu.descp}
+				);
+			}
+			
+			protected function getThreeLayerSwitchResult_resultHandler(event:ResultEvent):void
+			{
+				var l3switch:ThreeLayerSwitch = event.result as ThreeLayerSwitch;
+				showInfoWin.title = l3switch.switchName;  
+				PopUpManager.addPopUp(showInfoWin, this, true);  
+				PopUpManager.centerPopUp(showInfoWin);  
+				headerShowInfo.dataProvider = new Array(
+					{name: "设备名称"},
+					{name: "安装地点"},
+					{name: "施工单位"},
+					{name: "IP地址"},
+					{name: "端口号"},
+					{name: "型号规格"},
+					{name: "备注"}
+				);
+				equipInfoGrid.dataProvider = new Array(
+					{name: l3switch.switchName},
+					{name: l3switch.installationSite},
+					{name: l3switch.constructionUnit},
+					{name: l3switch.ip},
+					{name: l3switch.portNumber},
+					{name: l3switch.typeSpecification},
+					{name: l3switch.descp}
+				);
+				
+			}
+			
+			protected function getTwoLayerSwitchResult_resultHandler(event:ResultEvent):void
+			{
+				var l2switch:TwoLayerSwitch = event.result as TwoLayerSwitch;
+				showInfoWin.title = l2switch.switchName;  
+				PopUpManager.addPopUp(showInfoWin, this, true);  
+				PopUpManager.centerPopUp(showInfoWin);  
+				headerShowInfo.dataProvider = new Array(
+					{name: "设备名称"},
+					{name: "安装地点"},
+					{name: "施工单位"},
+					{name: "所属子网"},
+					{name: "端口号"},
+					{name: "型号规格"},
+					{name: "备注"}
+				);
+				equipInfoGrid.dataProvider = new Array(
+					{name: l2switch.switchName},
+					{name: l2switch.installationSite},
+					{name: l2switch.constructionUnit},
+					{name: l2switch.subNetwork},
+					{name: l2switch.portNumber},
+					{name: l2switch.typeSpecification},
+					{name: l2switch.descp}
+				);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Group width="100%" height="100%" x="0" y="0" >
+		<s:Label id="schemaName" text="视图名称" fontSize="22">		
+		</s:Label>
+		<xtreme:XtremeComponent name="view" id="view" width="100%" height="100%" />
+	</s:Group>
+</s:Application>

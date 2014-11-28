@@ -65,9 +65,9 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     private var _internal_installationSite : String;
     private var _internal_switchName : String;
     private var _internal_runTime : String;
-    private var _internal_flow : String;
     private var _internal_projectId : String;
     private var _internal_VLANID : String;
+    private var _internal_flow : String;
     private var _internal_ownedBusiness : String;
     private var _internal_switchId : String;
     private var _internal_vlanDescp : String;
@@ -145,12 +145,6 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     }
 
     [Bindable(event="propertyChange")]
-    public function get flow() : String
-    {
-        return _internal_flow;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get projectId() : String
     {
         return _internal_projectId;
@@ -160,6 +154,12 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     public function get VLANID() : String
     {
         return _internal_VLANID;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get flow() : String
+    {
+        return _internal_flow;
     }
 
     [Bindable(event="propertyChange")]
@@ -306,16 +306,6 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         }
     }
 
-    public function set flow(value:String) : void
-    {
-        var oldValue:String = _internal_flow;
-        if (oldValue !== value)
-        {
-            _internal_flow = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "flow", oldValue, _internal_flow));
-        }
-    }
-
     public function set projectId(value:String) : void
     {
         var oldValue:String = _internal_projectId;
@@ -333,6 +323,16 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         {
             _internal_VLANID = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "VLANID", oldValue, _internal_VLANID));
+        }
+    }
+
+    public function set flow(value:String) : void
+    {
+        var oldValue:String = _internal_flow;
+        if (oldValue !== value)
+        {
+            _internal_flow = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "flow", oldValue, _internal_flow));
         }
     }
 

@@ -50,7 +50,7 @@
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
 			
-			import cn.com.dhcc.fzep.topo.TopoXMLUtils;
+			import cn.com.dhcc.fzep.topo.utils.TopoXMLUtils;
 			import cn.com.dhcc.fzep.topo.components.SiteComponent;
 			
 			import valueObjects.Site;

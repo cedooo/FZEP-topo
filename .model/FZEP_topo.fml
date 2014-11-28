@@ -3,49 +3,6 @@
   <annotation name="ActionScriptGeneration">
     <item name="FullyQualifyReferences">true</item>
   </annotation>
-  <service name="Test">
-    <annotation name="ActionScriptGeneration">
-      <item name="ServiceType">RemoteObject</item>
-      <item name="Package">services</item>
-      <item name="Destination">test</item>
-    </annotation>
-    <annotation name="ServiceConfig">
-      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
-      <item name="contextRoot">/fuzhou</item>
-      <item name="rootUrl">http://localhost:8080/fuzhou</item>
-      <item name="LINKED_FILE"></item>
-      <item name="ABSOLUTE_ENDPOINT">http://localhost:8080/fuzhou/messagebroker/amf</item>
-    </annotation>
-    <annotation name="ServiceTypeGroup">
-      <item name="ServiceBackendType">BlazeDS</item>
-    </annotation>
-    <function name="getStudents" return-type="Student[]">
-      <annotation name="analyze group">
-        <item name="analyzed">true</item>
-      </annotation>
-      <annotation name="original signature">
-        <item name="returnType">Student</item>
-      </annotation>
-    </function>
-  </service>
-  <entity name="Student">
-    <annotation name="EntityProperties">
-      <item name="EntityOriginalName">Student</item>
-    </annotation>
-    <annotation name="ServerProperties">
-      <item name="RemoteClass">cn.com.dhcc.fzep.topo.service.Student</item>
-      <item name="IncludeRemoteClass">nonempty</item>
-    </annotation>
-    <annotation name="service Group">
-      <item name="service">Test,TestDummy</item>
-    </annotation>
-    <annotation name="ActionScriptGeneration">
-      <item name="Package">valueObjects</item>
-    </annotation>
-    <property name="no" type="string"/>
-    <property name="age" type="integer"/>
-    <property name="name" type="string"/>
-  </entity>
   <service name="AreaSchema">
     <annotation name="ActionScriptGeneration">
       <item name="ServiceType">RemoteObject</item>
@@ -176,6 +133,9 @@
         <item name="inputParams">string</item>
         <item name="returnType">OLT</item>
       </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">constructionUnit,manufacturers,installationSite,runTime,projectId,vlanId,vpnNumber,oSPFNumber,oltName,descp,lookbackLocation,typeSpecification,showName,siteId,oltId,delFlg</item>
+      </annotation>
       <parameter name="arg0" type="string"/>
     </function>
     <function name="list3LayerSwitch" return-type="ThreeLayerSwitch[]">
@@ -185,6 +145,9 @@
       <annotation name="original signature">
         <item name="inputParams">string</item>
         <item name="returnType">ThreeLayerSwitch</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">portNumber,constructionUnit,manufacturers,installationSite,switchName,runTime,flow,projectId,vlanId,ip,switchId,vlanDescp,descp,typeSpecification,siteId,showName,delFlg</item>
       </annotation>
       <parameter name="arg0" type="string"/>
     </function>
@@ -196,6 +159,9 @@
         <item name="inputParams">string</item>
         <item name="returnType">ONU</item>
       </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">constructionUnit,manufacturers,installationSite,runTime,projectId,vlanId,onuId,vpnNumber,descp,typeSpecification,siteId,showName,delFlg,onuName,ospfNumber</item>
+      </annotation>
       <parameter name="arg0" type="string"/>
     </function>
     <function name="list2LayerSwitch" return-type="TwoLayerSwitch[]">
@@ -205,6 +171,9 @@
       <annotation name="original signature">
         <item name="inputParams">string</item>
         <item name="returnType">TwoLayerSwitch</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">terminalName,portNumber,constructionUnit,manufacturers,installationSite,switchName,runTime,VLANID,projectId,flow,ownedBusiness,switchId,vlanDescp,switchType,subNetwork,descp,typeSpecification,siteId,showName,delFlg,debugging</item>
       </annotation>
       <parameter name="arg0" type="string"/>
     </function>
@@ -218,6 +187,17 @@
       </annotation>
       <parameter name="arg0" type="string"/>
     </function>
+    <function name="saveSchema" return-type="boolean">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">string,string</item>
+        <item name="returnType">boolean</item>
+      </annotation>
+      <parameter name="arg0" type="string"/>
+      <parameter name="arg1" type="string"/>
+    </function>
     <function name="listCable" return-type="Cable[]">
       <annotation name="analyze group">
         <item name="analyzed">true</item>
@@ -225,6 +205,9 @@
       <annotation name="original signature">
         <item name="inputParams">string</item>
         <item name="returnType">Cable</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">cableStartId,cableId,constructionUnit,fibreCoreNumber,runTime,cableName,cableType,descp,layingType,showName,delFlg,cableLength,bizType,cableEndId</item>
       </annotation>
       <parameter name="arg0" type="string"/>
     </function>
@@ -236,6 +219,9 @@
         <item name="inputParams">string</item>
         <item name="returnType">GPRS</item>
       </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">gprsId,constructionUnit,technologyType,manufacturers,installationSite,runTime,gprsName,projectId,pperators,ip,descp,typeSpecification,showName,siteId,delFlg,debugging,cardNumber</item>
+      </annotation>
       <parameter name="arg0" type="string"/>
     </function>
     <function name="listCarrier" return-type="Carrier[]">
@@ -245,6 +231,144 @@
       <annotation name="original signature">
         <item name="inputParams">string</item>
         <item name="returnType">Carrier</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">constructionUnit,manufacturers,installationSite,runTime,projectId,ip,descp,typeSpecification,siteId,showName,carrierId,delFlg,carrierName,debugging,installationLocation</item>
+      </annotation>
+      <parameter name="arg0" type="string"/>
+    </function>
+  </service>
+  <entity name="Equipment">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Equipment</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">cn.com.dhcc.fzep.topo.pojo.Equipment</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">EquipSchema,EquipSchemaDummy</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="showName" type="string"/>
+  </entity>
+  <entity name="Cable">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Cable</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">cn.com.dhcc.fzep.topo.pojo.Cable</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">EquipSchema,Dummy</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <annotation name="listCable">
+      <item name="propertySpecifier">cableStartId,cableId,constructionUnit,fibreCoreNumber,runTime,cableName,cableType,descp,layingType,showName,delFlg,cableLength,bizType,cableEndId</item>
+    </annotation>
+    <property name="cableStartId" type="string"/>
+    <property name="cableId" type="string"/>
+    <property name="constructionUnit" type="string"/>
+    <property name="fibreCoreNumber" type="string"/>
+    <property name="runTime" type="string"/>
+    <property name="cableName" type="string"/>
+    <property name="cableType" type="string"/>
+    <property name="descp" type="string"/>
+    <property name="layingType" type="string"/>
+    <property name="showName" type="string"/>
+    <property name="delFlg" type="string"/>
+    <property name="cableLength" type="string"/>
+    <property name="bizType" type="string"/>
+    <property name="cableEndId" type="string"/>
+  </entity>
+  <service name="ShowSchema">
+    <annotation name="ActionScriptGeneration">
+      <item name="ServiceType">RemoteObject</item>
+      <item name="Package">services</item>
+      <item name="Destination">ShowSchema</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="contextRoot">/fuzhou</item>
+      <item name="rootUrl">http://localhost:8080/fuzhou</item>
+      <item name="LINKED_FILE"></item>
+      <item name="ABSOLUTE_ENDPOINT">http://localhost:8080/fuzhou/messagebroker/amf</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">BlazeDS</item>
+    </annotation>
+    <function name="getThreeLayerSwitch" return-type="ThreeLayerSwitch">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">string</item>
+        <item name="returnType">ThreeLayerSwitch</item>
+      </annotation>
+      <parameter name="arg0" type="string"/>
+    </function>
+    <function name="getCarrier" return-type="Carrier">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">string</item>
+        <item name="returnType">Carrier</item>
+      </annotation>
+      <parameter name="arg0" type="string"/>
+    </function>
+    <function name="getOLT" return-type="OLT">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">string</item>
+        <item name="returnType">OLT</item>
+      </annotation>
+      <parameter name="arg0" type="string"/>
+    </function>
+    <function name="getGPRS" return-type="GPRS">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">string</item>
+        <item name="returnType">GPRS</item>
+      </annotation>
+      <parameter name="arg0" type="string"/>
+    </function>
+    <function name="getONU" return-type="ONU">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">string</item>
+        <item name="returnType">ONU</item>
+      </annotation>
+      <parameter name="arg0" type="string"/>
+    </function>
+    <function name="getSchema" return-type="Schema">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">string</item>
+        <item name="returnType">Schema</item>
+      </annotation>
+      <parameter name="arg0" type="string"/>
+    </function>
+    <function name="getTwoLayerSwitch" return-type="TwoLayerSwitch">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">string</item>
+        <item name="returnType">TwoLayerSwitch</item>
       </annotation>
       <parameter name="arg0" type="string"/>
     </function>
@@ -258,10 +382,13 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">EquipSchema</item>
+      <item name="service">ShowSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
+    </annotation>
+    <annotation name="listOLT">
+      <item name="propertySpecifier">constructionUnit,manufacturers,installationSite,runTime,projectId,vlanId,vpnNumber,oSPFNumber,oltName,descp,lookbackLocation,typeSpecification,showName,siteId,oltId,delFlg</item>
     </annotation>
     <property name="constructionUnit" type="string"/>
     <property name="manufacturers" type="string"/>
@@ -273,10 +400,10 @@
     <property name="oltName" type="string"/>
     <property name="oSPFNumber" type="string"/>
     <property name="descp" type="string"/>
-    <property name="typeSpecification" type="string"/>
     <property name="lookbackLocation" type="string"/>
-    <property name="siteId" type="string"/>
+    <property name="typeSpecification" type="string"/>
     <property name="showName" type="string"/>
+    <property name="siteId" type="string"/>
     <property name="oltId" type="string"/>
     <property name="delFlg" type="string"/>
   </entity>
@@ -289,10 +416,13 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">EquipSchema</item>
+      <item name="service">ShowSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
+    </annotation>
+    <annotation name="list2LayerSwitch">
+      <item name="propertySpecifier">terminalName,portNumber,constructionUnit,manufacturers,installationSite,switchName,runTime,VLANID,projectId,flow,ownedBusiness,switchId,vlanDescp,switchType,subNetwork,descp,typeSpecification,siteId,showName,delFlg,debugging</item>
     </annotation>
     <property name="terminalName" type="string"/>
     <property name="portNumber" type="string"/>
@@ -301,9 +431,9 @@
     <property name="installationSite" type="string"/>
     <property name="switchName" type="string"/>
     <property name="runTime" type="string"/>
-    <property name="flow" type="string"/>
     <property name="projectId" type="string"/>
     <property name="VLANID" type="string"/>
+    <property name="flow" type="string"/>
     <property name="ownedBusiness" type="string"/>
     <property name="switchId" type="string"/>
     <property name="vlanDescp" type="string"/>
@@ -316,22 +446,6 @@
     <property name="delFlg" type="string"/>
     <property name="debugging" type="string"/>
   </entity>
-  <entity name="Equipment">
-    <annotation name="EntityProperties">
-      <item name="EntityOriginalName">Equipment</item>
-    </annotation>
-    <annotation name="ServerProperties">
-      <item name="RemoteClass">cn.com.dhcc.fzep.topo.pojo.Equipment</item>
-      <item name="IncludeRemoteClass">nonempty</item>
-    </annotation>
-    <annotation name="service Group">
-      <item name="service">EquipSchema</item>
-    </annotation>
-    <annotation name="ActionScriptGeneration">
-      <item name="Package">valueObjects</item>
-    </annotation>
-    <property name="showName" type="string"/>
-  </entity>
   <entity name="Carrier">
     <annotation name="EntityProperties">
       <item name="EntityOriginalName">Carrier</item>
@@ -341,10 +455,13 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">EquipSchema</item>
+      <item name="service">ShowSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
+    </annotation>
+    <annotation name="listCarrier">
+      <item name="propertySpecifier">constructionUnit,manufacturers,installationSite,runTime,projectId,ip,descp,typeSpecification,siteId,showName,carrierId,delFlg,carrierName,debugging,installationLocation</item>
     </annotation>
     <property name="constructionUnit" type="string"/>
     <property name="manufacturers" type="string"/>
@@ -371,55 +488,51 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">EquipSchema</item>
+      <item name="service">ShowSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
+    </annotation>
+    <annotation name="listONU">
+      <item name="propertySpecifier">constructionUnit,manufacturers,installationSite,runTime,projectId,vlanId,onuId,vpnNumber,descp,typeSpecification,siteId,showName,delFlg,onuName,ospfNumber</item>
     </annotation>
     <property name="constructionUnit" type="string"/>
     <property name="manufacturers" type="string"/>
     <property name="installationSite" type="string"/>
     <property name="runTime" type="string"/>
     <property name="projectId" type="string"/>
-    <property name="onuId" type="string"/>
     <property name="vlanId" type="string"/>
+    <property name="onuId" type="string"/>
     <property name="vpnNumber" type="string"/>
     <property name="descp" type="string"/>
     <property name="typeSpecification" type="string"/>
-    <property name="siteId" type="string"/>
     <property name="showName" type="string"/>
+    <property name="siteId" type="string"/>
     <property name="onuName" type="string"/>
     <property name="delFlg" type="string"/>
     <property name="ospfNumber" type="string"/>
   </entity>
-  <entity name="Cable">
+  <entity name="Schema">
     <annotation name="EntityProperties">
-      <item name="EntityOriginalName">Cable</item>
+      <item name="EntityOriginalName">Schema</item>
     </annotation>
     <annotation name="ServerProperties">
-      <item name="RemoteClass">cn.com.dhcc.fzep.topo.pojo.Cable</item>
+      <item name="RemoteClass">cn.com.dhcc.fzep.topo.pojo.Schema</item>
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">EquipSchema</item>
+      <item name="service">ShowSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
     </annotation>
-    <property name="cableStartId" type="string"/>
-    <property name="cableId" type="string"/>
-    <property name="constructionUnit" type="string"/>
-    <property name="fibreCoreNumber" type="string"/>
-    <property name="runTime" type="string"/>
-    <property name="cableType" type="string"/>
-    <property name="cableName" type="string"/>
-    <property name="descp" type="string"/>
-    <property name="layingType" type="string"/>
-    <property name="showName" type="string"/>
-    <property name="delFlg" type="string"/>
-    <property name="bizType" type="string"/>
-    <property name="cableLength" type="string"/>
-    <property name="cableEndId" type="string"/>
+    <property name="schemaType" type="string"/>
+    <property name="schemaName" type="string"/>
+    <property name="schemaAddTime" type="string"/>
+    <property name="schemaId" type="string"/>
+    <property name="schemaData" type="string"/>
+    <property name="schemaDelTime" type="string"/>
+    <property name="schemaNote" type="string"/>
   </entity>
   <entity name="ThreeLayerSwitch">
     <annotation name="EntityProperties">
@@ -430,10 +543,13 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">EquipSchema</item>
+      <item name="service">ShowSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
+    </annotation>
+    <annotation name="list3LayerSwitch">
+      <item name="propertySpecifier">portNumber,constructionUnit,manufacturers,installationSite,switchName,runTime,flow,projectId,vlanId,ip,switchId,vlanDescp,descp,typeSpecification,siteId,showName,delFlg</item>
     </annotation>
     <property name="portNumber" type="string"/>
     <property name="constructionUnit" type="string"/>
@@ -441,8 +557,8 @@
     <property name="installationSite" type="string"/>
     <property name="switchName" type="string"/>
     <property name="runTime" type="string"/>
-    <property name="flow" type="string"/>
     <property name="projectId" type="string"/>
+    <property name="flow" type="string"/>
     <property name="vlanId" type="string"/>
     <property name="ip" type="string"/>
     <property name="switchId" type="string"/>
@@ -462,25 +578,28 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">EquipSchema</item>
+      <item name="service">ShowSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
     </annotation>
-    <property name="constructionUnit" type="string"/>
+    <annotation name="listGPRS">
+      <item name="propertySpecifier">gprsId,constructionUnit,technologyType,manufacturers,installationSite,runTime,gprsName,projectId,pperators,ip,descp,typeSpecification,showName,siteId,delFlg,debugging,cardNumber</item>
+    </annotation>
     <property name="gprsId" type="string"/>
+    <property name="constructionUnit" type="string"/>
     <property name="technologyType" type="string"/>
     <property name="manufacturers" type="string"/>
     <property name="installationSite" type="string"/>
-    <property name="runTime" type="string"/>
     <property name="gprsName" type="string"/>
+    <property name="runTime" type="string"/>
     <property name="projectId" type="string"/>
     <property name="pperators" type="string"/>
     <property name="ip" type="string"/>
     <property name="descp" type="string"/>
     <property name="typeSpecification" type="string"/>
-    <property name="showName" type="string"/>
     <property name="siteId" type="string"/>
+    <property name="showName" type="string"/>
     <property name="delFlg" type="string"/>
     <property name="debugging" type="string"/>
     <property name="cardNumber" type="string"/>

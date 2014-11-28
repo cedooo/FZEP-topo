@@ -45,6 +45,7 @@
 		<s:CallResponder id="listGPRSResult"/>
 		<s:CallResponder id="listOLTResult"/>
 		<s:CallResponder id="listONUResult"/>
+		<s:CallResponder id="saveSchemaResult" result="saveSchemaResult_resultHandler(event)"/>
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
@@ -57,8 +58,8 @@
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
+			import mx.rpc.events.ResultEvent;
 			
-			import cn.com.dhcc.fzep.topo.TopoXMLUtils;
 			import cn.com.dhcc.fzep.topo.components.CarrierComponent;
 			import cn.com.dhcc.fzep.topo.components.ElementSelector;
 			import cn.com.dhcc.fzep.topo.components.GPRSComponent;
@@ -66,6 +67,7 @@
 			import cn.com.dhcc.fzep.topo.components.ONUComponent;
 			import cn.com.dhcc.fzep.topo.components.ThreeLayerSwitchComponent;
 			import cn.com.dhcc.fzep.topo.components.TwoLayerSwitchComponent;
+			import cn.com.dhcc.fzep.topo.utils.TopoXMLUtils;
 			
 			import valueObjects.Carrier;
 			import valueObjects.GPRS;
@@ -343,8 +345,8 @@
 			protected function saveSchema_clickHandler(event:MouseEvent):void
 			{
 				var sceneMgr:SceneManager = Root.instance.sceneManager;
-				var xmlStr:String = TopoXMLUtils.generateXML(sceneMgr.entityList());
-				Alert.show(xmlStr);
+				var xmlStr:String = TopoXMLUtils.generateJSON(sceneMgr.entityList());
+				saveSchema2("6", xmlStr);
 			}
 			/**
 			 * 搜索光缆图
@@ -451,6 +453,17 @@
 			{
 				var arg0:String = args[0];
 				listONUResult.token = equipSchema.listONU(arg0);
+			}
+			
+			
+			protected function saveSchema2(arg0:String,arg1:String):void
+			{
+				saveSchemaResult.token = equipSchema.saveSchema(arg0, arg1);
+			}
+			
+			protected function saveSchemaResult_resultHandler(event:ResultEvent):void
+			{
+				Alert.show(event.result == true?"保存成功":"保存失败", "执行结果");
 			}
 			
 		]]>

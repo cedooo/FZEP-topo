@@ -1,6 +1,6 @@
 /**
  * This is a generated class and is not intended for modification.  To customize behavior
- * of this value object you may modify the generated sub-class of this class - Student.as.
+ * of this value object you may modify the generated sub-class of this class - Schema.as.
  */
 
 package valueObjects
@@ -20,20 +20,20 @@ import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 use namespace model_internal;
 
 [ExcludeClass]
-public class _Super_Student extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
+public class _Super_Schema extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
         try
         {
-            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.service.Student") == null)
+            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.pojo.Schema") == null)
             {
-                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.service.Student", cz);
+                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.Schema", cz);
             }
         }
         catch (e:Error)
         {
-            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.service.Student", cz);
+            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.Schema", cz);
         }
     }
 
@@ -41,7 +41,7 @@ public class _Super_Student extends flash.events.EventDispatcher implements com.
     {
     }
 
-    model_internal var _dminternal_model : _StudentEntityMetadata;
+    model_internal var _dminternal_model : _SchemaEntityMetadata;
     model_internal var _changedObjects:mx.collections.ArrayCollection = new ArrayCollection();
 
     public function getChangedObjects() : Array
@@ -58,9 +58,13 @@ public class _Super_Student extends flash.events.EventDispatcher implements com.
     /**
      * properties
      */
-    private var _internal_no : String;
-    private var _internal_age : int;
-    private var _internal_name : String;
+    private var _internal_schemaType : String;
+    private var _internal_schemaName : String;
+    private var _internal_schemaAddTime : String;
+    private var _internal_schemaId : String;
+    private var _internal_schemaData : String;
+    private var _internal_schemaDelTime : String;
+    private var _internal_schemaNote : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -72,9 +76,9 @@ public class _Super_Student extends flash.events.EventDispatcher implements com.
 
     model_internal var _changeWatcherArray:Array = new Array();
 
-    public function _Super_Student()
+    public function _Super_Schema()
     {
-        _model = new _StudentEntityMetadata(this);
+        _model = new _SchemaEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
 
@@ -85,21 +89,45 @@ public class _Super_Student extends flash.events.EventDispatcher implements com.
      */
 
     [Bindable(event="propertyChange")]
-    public function get no() : String
+    public function get schemaType() : String
     {
-        return _internal_no;
+        return _internal_schemaType;
     }
 
     [Bindable(event="propertyChange")]
-    public function get age() : int
+    public function get schemaName() : String
     {
-        return _internal_age;
+        return _internal_schemaName;
     }
 
     [Bindable(event="propertyChange")]
-    public function get name() : String
+    public function get schemaAddTime() : String
     {
-        return _internal_name;
+        return _internal_schemaAddTime;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get schemaId() : String
+    {
+        return _internal_schemaId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get schemaData() : String
+    {
+        return _internal_schemaData;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get schemaDelTime() : String
+    {
+        return _internal_schemaDelTime;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get schemaNote() : String
+    {
+        return _internal_schemaNote;
     }
 
     public function clearAssociations() : void
@@ -110,33 +138,73 @@ public class _Super_Student extends flash.events.EventDispatcher implements com.
      * data/source property setters
      */
 
-    public function set no(value:String) : void
+    public function set schemaType(value:String) : void
     {
-        var oldValue:String = _internal_no;
+        var oldValue:String = _internal_schemaType;
         if (oldValue !== value)
         {
-            _internal_no = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "no", oldValue, _internal_no));
+            _internal_schemaType = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaType", oldValue, _internal_schemaType));
         }
     }
 
-    public function set age(value:int) : void
+    public function set schemaName(value:String) : void
     {
-        var oldValue:int = _internal_age;
+        var oldValue:String = _internal_schemaName;
         if (oldValue !== value)
         {
-            _internal_age = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "age", oldValue, _internal_age));
+            _internal_schemaName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaName", oldValue, _internal_schemaName));
         }
     }
 
-    public function set name(value:String) : void
+    public function set schemaAddTime(value:String) : void
     {
-        var oldValue:String = _internal_name;
+        var oldValue:String = _internal_schemaAddTime;
         if (oldValue !== value)
         {
-            _internal_name = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "name", oldValue, _internal_name));
+            _internal_schemaAddTime = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaAddTime", oldValue, _internal_schemaAddTime));
+        }
+    }
+
+    public function set schemaId(value:String) : void
+    {
+        var oldValue:String = _internal_schemaId;
+        if (oldValue !== value)
+        {
+            _internal_schemaId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaId", oldValue, _internal_schemaId));
+        }
+    }
+
+    public function set schemaData(value:String) : void
+    {
+        var oldValue:String = _internal_schemaData;
+        if (oldValue !== value)
+        {
+            _internal_schemaData = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaData", oldValue, _internal_schemaData));
+        }
+    }
+
+    public function set schemaDelTime(value:String) : void
+    {
+        var oldValue:String = _internal_schemaDelTime;
+        if (oldValue !== value)
+        {
+            _internal_schemaDelTime = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaDelTime", oldValue, _internal_schemaDelTime));
+        }
+    }
+
+    public function set schemaNote(value:String) : void
+    {
+        var oldValue:String = _internal_schemaNote;
+        if (oldValue !== value)
+        {
+            _internal_schemaNote = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaNote", oldValue, _internal_schemaNote));
         }
     }
 
@@ -200,14 +268,14 @@ public class _Super_Student extends flash.events.EventDispatcher implements com.
 
     [Transient]
     [Bindable(event="propertyChange")]
-    public function get _model() : _StudentEntityMetadata
+    public function get _model() : _SchemaEntityMetadata
     {
         return model_internal::_dminternal_model;
     }
 
-    public function set _model(value : _StudentEntityMetadata) : void
+    public function set _model(value : _SchemaEntityMetadata) : void
     {
-        var oldValue : _StudentEntityMetadata = model_internal::_dminternal_model;
+        var oldValue : _SchemaEntityMetadata = model_internal::_dminternal_model;
         if (oldValue !== value)
         {
             model_internal::_dminternal_model = value;

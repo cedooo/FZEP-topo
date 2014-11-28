@@ -63,13 +63,13 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
     private var _internal_installationSite : String;
     private var _internal_runTime : String;
     private var _internal_projectId : String;
-    private var _internal_onuId : String;
     private var _internal_vlanId : String;
+    private var _internal_onuId : String;
     private var _internal_vpnNumber : String;
     private var _internal_descp : String;
     private var _internal_typeSpecification : String;
-    private var _internal_siteId : String;
     private var _internal_showName : String;
+    private var _internal_siteId : String;
     private var _internal_onuName : String;
     private var _internal_delFlg : String;
     private var _internal_ospfNumber : String;
@@ -127,15 +127,15 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
     }
 
     [Bindable(event="propertyChange")]
-    public function get onuId() : String
-    {
-        return _internal_onuId;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get vlanId() : String
     {
         return _internal_vlanId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get onuId() : String
+    {
+        return _internal_onuId;
     }
 
     [Bindable(event="propertyChange")]
@@ -157,15 +157,15 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
     }
 
     [Bindable(event="propertyChange")]
-    public function get siteId() : String
-    {
-        return _internal_siteId;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get showName() : String
     {
         return _internal_showName;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get siteId() : String
+    {
+        return _internal_siteId;
     }
 
     [Bindable(event="propertyChange")]
@@ -244,16 +244,6 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
         }
     }
 
-    public function set onuId(value:String) : void
-    {
-        var oldValue:String = _internal_onuId;
-        if (oldValue !== value)
-        {
-            _internal_onuId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "onuId", oldValue, _internal_onuId));
-        }
-    }
-
     public function set vlanId(value:String) : void
     {
         var oldValue:String = _internal_vlanId;
@@ -261,6 +251,16 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
         {
             _internal_vlanId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "vlanId", oldValue, _internal_vlanId));
+        }
+    }
+
+    public function set onuId(value:String) : void
+    {
+        var oldValue:String = _internal_onuId;
+        if (oldValue !== value)
+        {
+            _internal_onuId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "onuId", oldValue, _internal_onuId));
         }
     }
 
@@ -294,16 +294,6 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
         }
     }
 
-    public function set siteId(value:String) : void
-    {
-        var oldValue:String = _internal_siteId;
-        if (oldValue !== value)
-        {
-            _internal_siteId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteId", oldValue, _internal_siteId));
-        }
-    }
-
     public function set showName(value:String) : void
     {
         var oldValue:String = _internal_showName;
@@ -311,6 +301,16 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
         {
             _internal_showName = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "showName", oldValue, _internal_showName));
+        }
+    }
+
+    public function set siteId(value:String) : void
+    {
+        var oldValue:String = _internal_siteId;
+        if (oldValue !== value)
+        {
+            _internal_siteId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteId", oldValue, _internal_siteId));
         }
     }
 

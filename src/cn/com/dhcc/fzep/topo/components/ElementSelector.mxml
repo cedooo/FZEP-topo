@@ -84,9 +84,8 @@
 			 */
 			protected function confm_clickHandler(event:MouseEvent):void
 			{
-				//var objs:Object = destlist.dataProvider;
-				//Alert.show(String(objs));
 				selectedItem(destlist.dataProvider);
+				destlist.dataProvider = new ArrayList([]);
 			}
 			/**
 			 * 测试用

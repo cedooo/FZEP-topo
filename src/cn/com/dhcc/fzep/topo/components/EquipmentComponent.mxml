@@ -8,19 +8,19 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import valueObjects.Site;
+			import cn.com.dhcc.fzep.topo.poao.SchemaElementsInfo;
 			
-			[Bindable]
-			public var doShowSite:Function;
+   			[Bindable]
+			public var doShow:Function;
 			[Bindable]
 			public var imgName:String = "equip/switch.png";
 			[Bindable]
-			public var site:Site;
+			public var eleInfo:SchemaElementsInfo;
 			
 			[Bindable] 
 			private var cm:ContextMenu; 
 			private function showInfo(evt:ContextMenuEvent):void{
-				doShowSite(this.site);
+				doShow(this.eleInfo);
 			}
 			//初始化函数   
 			private function init():void{
@@ -36,6 +36,6 @@
 		]]>
 	</fx:Script>
 	
-	<mx:Image id="imgVisitor" source="assets/{imgName}" x="26" y="9" width="48" height="48"/>
-	<s:Label id="lblUserName" text="{site.siteName}" y="60"  textAlign="center" width="100%" fontSize="12"  fontWeight="bold"/>
+	<mx:Image id="imgVisitor" source="{imgName}" x="26" y="9" width="48" height="48"/>
+	<s:Label id="lblUserName" text="{eleInfo.showName}" y="60"  textAlign="center" width="100%" fontSize="12"  fontWeight="bold"/>
 </s:Group>
