@@ -65,15 +65,15 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     private var _internal_installationSite : String;
     private var _internal_switchName : String;
     private var _internal_runTime : String;
-    private var _internal_projectId : String;
     private var _internal_VLANID : String;
     private var _internal_flow : String;
+    private var _internal_projectId : String;
     private var _internal_ownedBusiness : String;
     private var _internal_switchId : String;
     private var _internal_vlanDescp : String;
     private var _internal_switchType : String;
-    private var _internal_descp : String;
     private var _internal_subNetwork : String;
+    private var _internal_descp : String;
     private var _internal_typeSpecification : String;
     private var _internal_showName : String;
     private var _internal_siteId : String;
@@ -145,12 +145,6 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     }
 
     [Bindable(event="propertyChange")]
-    public function get projectId() : String
-    {
-        return _internal_projectId;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get VLANID() : String
     {
         return _internal_VLANID;
@@ -160,6 +154,12 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     public function get flow() : String
     {
         return _internal_flow;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get projectId() : String
+    {
+        return _internal_projectId;
     }
 
     [Bindable(event="propertyChange")]
@@ -187,15 +187,15 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     }
 
     [Bindable(event="propertyChange")]
-    public function get descp() : String
-    {
-        return _internal_descp;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get subNetwork() : String
     {
         return _internal_subNetwork;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get descp() : String
+    {
+        return _internal_descp;
     }
 
     [Bindable(event="propertyChange")]
@@ -306,16 +306,6 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         }
     }
 
-    public function set projectId(value:String) : void
-    {
-        var oldValue:String = _internal_projectId;
-        if (oldValue !== value)
-        {
-            _internal_projectId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "projectId", oldValue, _internal_projectId));
-        }
-    }
-
     public function set VLANID(value:String) : void
     {
         var oldValue:String = _internal_VLANID;
@@ -333,6 +323,16 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         {
             _internal_flow = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "flow", oldValue, _internal_flow));
+        }
+    }
+
+    public function set projectId(value:String) : void
+    {
+        var oldValue:String = _internal_projectId;
+        if (oldValue !== value)
+        {
+            _internal_projectId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "projectId", oldValue, _internal_projectId));
         }
     }
 
@@ -376,16 +376,6 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         }
     }
 
-    public function set descp(value:String) : void
-    {
-        var oldValue:String = _internal_descp;
-        if (oldValue !== value)
-        {
-            _internal_descp = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "descp", oldValue, _internal_descp));
-        }
-    }
-
     public function set subNetwork(value:String) : void
     {
         var oldValue:String = _internal_subNetwork;
@@ -393,6 +383,16 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         {
             _internal_subNetwork = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "subNetwork", oldValue, _internal_subNetwork));
+        }
+    }
+
+    public function set descp(value:String) : void
+    {
+        var oldValue:String = _internal_descp;
+        if (oldValue !== value)
+        {
+            _internal_descp = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "descp", oldValue, _internal_descp));
         }
     }
 

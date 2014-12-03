@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Simple example to demonstrate the Halo Tree control. -->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:services="services.*"
+			     creationComplete="init()">
+	
+	<fx:Declarations>
+		<s:CallResponder id="getAllAreaResult" result="getAllAreaResult_resultHandler(event)"/>
+		<services:AreaSchema id="areaSchema"
+							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							 showBusyCursor="true"/>
+		<s:CallResponder id="getRootNodeResult" result="getRootNodeResult_resultHandler(event)"/>
+		<services:SchemaTree id="schemaTree2"
+							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							 showBusyCursor="true"/>
+		<s:CallResponder id="getListByAreaResult" result="getListByAreaResult_resultHandler(event)"/>
+		<services:SiteSchema id="siteSchema"
+							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							 showBusyCursor="true"/>
+		<s:CallResponder id="getListSchemaBySiteIDResult" result="getListSchemaBySiteIDResult_resultHandler(event)"/>
+		<s:CallResponder id="getListCustomerSchemaResult" result="getListSchemaBySiteIDResult_resultHandler(event)"/>
+		<s:CallResponder id="deleteSchemaResult" result="deleteSchemaResult_resultHandler(event)"/>
+	</fx:Declarations>
+	<fx:Style>
+		@namespace services "services.*";
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+	</fx:Style>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.controls.Label;
+			import mx.events.CloseEvent;
+			import mx.events.TreeEvent;
+			import mx.rpc.events.ResultEvent;
+			
+			import spark.components.Button;
+			import spark.components.Label;
+			
+			import valueObjects.Area;
+			import valueObjects.Schema;
+			import valueObjects.SchemaTreeNode;
+			import valueObjects.Site;
+			
+			[Bindable]
+			public var selectedNode:XML;
+			[Bindable] 
+			private var cm:ContextMenu; 
+			private function showInfo():void{
+				
+			}
+			//初始化函数   
+			private function init():void{
+				cm = new ContextMenu(); 
+				cm.hideBuiltInItems(); 
+				//设定监听source_txa组件的点击函数
+				var cmi:ContextMenuItem = new ContextMenuItem("添加子图", true); 
+				cmi.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, showInfo);
+				cm.customItems.push(cmi);
+				var cmi2:ContextMenuItem = new ContextMenuItem("查看", true); 
+				cmi2.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, showInfo);
+				cm.customItems.push(cmi2);
+				var cmi3:ContextMenuItem = new ContextMenuItem("编辑", true); 
+				cmi3.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, showInfo);
+				cm.customItems.push(cmi3);
+				
+				schemaTree.contextMenu = cm;
+				getRootNode();
+				
+				
+			}
+			[Bindable]
+			private var treeData:ArrayCollection = new ArrayCollection();
+			[Bindable]
+			private var selected:SchemaTreeNode;
+			[Bindable]
+			private var emptyData:ArrayCollection = new ArrayCollection();
+			
+			protected function getAllArea():void
+			{
+				getAllAreaResult.token = areaSchema.getAllArea();
+			}
+			
+			protected function getAllAreaResult_resultHandler(event:ResultEvent):void
+			{
+				var arrayList:ArrayCollection=new ArrayCollection();				
+				arrayList = event.result as ArrayCollection;
+				var arrayNode:ArrayCollection=new ArrayCollection();
+				for (var i:int = 0; i < arrayList.length; i++) 
+				{
+					var areaNode:SchemaTreeNode = new SchemaTreeNode();
+					var area:Area = arrayList[i] as Area;
+					areaNode.name = area.areaName;
+					areaNode.children = emptyData;
+					areaNode.type = "area";
+					areaNode.id = area.areaId;
+					arrayNode.addItem(areaNode);
+					
+				}
+				selected.children = arrayNode;
+				treeData.itemUpdated(selected, true, true);
+			}
+			
+			protected function schemaTree_itemOpenHandler(event:TreeEvent):void
+			{
+				selected = event.item as SchemaTreeNode;
+				if(event.item.type == "levelSchema"){
+					getAllArea();
+				}else if(event.item.type == "area"){
+					getListByArea(selected.id);
+				}else if(event.item.type == "site"){
+					getListSchemaBySiteID(selected.id);
+				}else if(event.item.type == "customerSchema"){
+					getListCustomerSchema();
+				}
+			}
+			
+			protected function getRootNode():void
+			{
+				getRootNodeResult.token = schemaTree2.getRootNode();
+				enable(['refresh']);    //设置可用操作
+			}
+			
+			protected function getRootNodeResult_resultHandler(event:ResultEvent):void
+			{
+				treeData = event.result as ArrayCollection;
+			}
+			
+			
+			protected function getListByArea(arg0:String):void
+			{
+				getListByAreaResult.token = siteSchema.getListByArea(arg0);
+			}
+			
+			protected function getListByAreaResult_resultHandler(event:ResultEvent):void
+			{
+				var arrayList:ArrayCollection=new ArrayCollection();				
+				arrayList = event.result as ArrayCollection;
+				var arrayNode:ArrayCollection=new ArrayCollection();
+				for (var i:int = 0; i < arrayList.length; i++) 
+				{
+					var siteNode:SchemaTreeNode = new SchemaTreeNode();
+					var site:Site = arrayList[i] as Site;
+					siteNode.name = site.siteName;
+					siteNode.children = emptyData;
+					siteNode.type = "site";
+					siteNode.id = site.siteId;
+					arrayNode.addItem(siteNode);
+					
+				}
+				selected.children = arrayNode;
+				treeData.itemUpdated(selected, true, true);
+				
+			}
+			
+			
+			protected function getListSchemaBySiteID(arg0:String):void
+			{
+				getListSchemaBySiteIDResult.token = schemaTree2.getListSchemaBySiteID(arg0);
+			}
+			
+			protected function getListSchemaBySiteIDResult_resultHandler(event:ResultEvent):void
+			{
+				var arrayList:ArrayCollection=new ArrayCollection();				
+				arrayList = event.result as ArrayCollection;
+				var arrayNode:ArrayCollection=new ArrayCollection();
+				for (var i:int = 0; i < arrayList.length; i++) 
+				{
+					var siteNode:SchemaTreeNode = new SchemaTreeNode();
+					var schema:Schema = arrayList[i] as Schema;
+					siteNode.name = schema.schemaName;
+					//siteNode.children = emptyData;
+					siteNode.type = "schema";
+					siteNode.id = schema.schemaId;
+					arrayNode.addItem(siteNode);
+					
+				}
+				selected.children = arrayNode;
+				treeData.itemUpdated(selected, true, true);
+			}
+			
+			
+			protected function getListCustomerSchema():void
+			{
+				getListCustomerSchemaResult.token = schemaTree2.getListCustomerSchema();
+			}
+			
+			protected function schemaTree_clickHandler(event:MouseEvent):void
+			{
+				var item:SchemaTreeNode = schemaTree.selectedItem as SchemaTreeNode;
+				//Alert.show(String(item.type));
+				if(item.type == "schema"){
+					enable(['refresh','del', 'edit']);
+				}else if(item.type == "site"){
+					enable(['refresh','add']);
+				}else if(item.type == "customerSchema"){
+					enable(['refresh','add']);
+				}else {
+					enable(['refresh']);
+				}
+			}
+			protected function enable(enable:Array):void{
+				//Alert.show(String(enable));
+				var operBt:Array = schmaOperBtns.getChildren();
+				for (var i:int = 0; i < operBt.length; i++) 
+				{
+					var btn:Image = operBt[i] as Image;
+					btn.buttonMode = false;
+					btn.mouseEnabled = false;
+					//btn.opaqueBackground = "0xfbe18e"; 
+					btn.alpha = 0.3;
+					
+					for (var j:int = 0; j < enable.length; j++) 
+					{
+						if(btn.id == enable[j]){
+							btn.buttonMode = true;
+							btn.mouseEnabled = true;
+							//btn.opaqueBackground = null; 
+							btn.alpha = 1;
+							break;
+						}
+					}
+				}
+				
+			}
+			
+			protected function deleteSchema(arg0:String):void
+			{
+				deleteSchemaResult.token = schemaTree2.deleteSchema(arg0);
+			}
+			
+			protected function add_clickHandler(event:MouseEvent):void
+			{
+				var item:SchemaTreeNode = schemaTree.selectedItem as SchemaTreeNode;
+				var allURL:String = root.loaderInfo.url;
+				var reg:RegExp = /(\/+)/;
+				var regR:Array = allURL.split(reg);
+				var basePath:String = regR[0] + regR[1] + regR[2] + regR[3] + regR[4] + regR[5];
+				if(item.type == "site"){
+					openWindow(basePath + "topo/addView.jsp?siteID="+item.id,"添加站点视图"); 
+				}else if(item.type == "customerSchema"){
+					openWindow(basePath + "topo/addView.jsp","添加站点视图"); 
+				}else {
+					Alert.show("非法操作","操作无效");
+				}
+				
+			}
+			
+			protected function del_clickHandler(event:MouseEvent):void
+			{
+				Alert.show("删除后不可恢复，确认删除？","删除", Alert.YES | Alert.NO , this , doDelete);
+			}
+			
+			private function doDelete(event:CloseEvent):void {
+				if(event.detail == Alert.YES)
+				{
+					var item:SchemaTreeNode = schemaTree.selectedItem as SchemaTreeNode;
+					if(item.type == "schema"){
+						deleteSchema(item.id);
+					}
+				}
+			}
+			
+			protected function deleteSchemaResult_resultHandler(event:ResultEvent):void
+			{
+				Alert.show(event.result?"删除成功":"删除失败", "删除结果");
+				getRootNode();
+			}
+			
+			
+			private function openWindow(pageUrl:String,pageName:String):void{ 
+				var jsString:String=""; 
+				jsString+=" var screenWidth = screen.availWidth, screenHeight = screen.availHeight;"; 
+				jsString+=" var args = 'toolbar=no, menubar=no,channelmode=yes, scrollbars=no,resizable=yes,location=yes, status=no';";        
+				//打开全屏的新窗口 
+				jsString+=" var win = window.open('"+pageUrl+"','"+pageName+"',args);"; 
+				jsString+=" if(win){"; 
+				jsString+="    win.resizeTo(screenWidth,screenHeight);"; 
+				jsString+="    win.outerWidth = screenWidth;"; 
+				jsString+="    win.outerHeight = screenHeight;"; 
+				jsString+="    win.moveTo(0,0);"; 
+				jsString+=" }"; 
+				ExternalInterface.call("function(){"+jsString+"}"); 
+			}  
+			
+			protected function schemaTree_doubleClickHandler(event:MouseEvent):void
+			{
+				var item:SchemaTreeNode = schemaTree.selectedItem as SchemaTreeNode;
+				var btn:Button = new Button();
+				btn.label = item.name;
+				btn.visible = true;
+				rightAreaContent.addElement(btn);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	
+	<s:Panel title="展示图"
+			 width="100%" height="100%"
+			 horizontalCenter="0" verticalCenter="0">
+		<s:VGroup left="10" right="10" top="10" bottom="10" >
+			<mx:HBox id="schmaOperBtns">
+				<mx:Image id="refresh" click="getRootNode()"  source="@Embed(source='assets/btn_refresh_16_2.png')"  buttonMode="true"  toolTip="刷新"/>
+				<mx:Image id="add" click="add_clickHandler(event)" source="@Embed(source='assets/btn_add_16_3.png')" buttonMode="true"  toolTip="添加"/>
+				<mx:Image id="del" click="del_clickHandler(event)" source="@Embed(source='assets/btn_del_16.png')" buttonMode="true"  toolTip="删除"/>
+				<mx:Image id="edit"  source="@Embed(source='assets/btn_edit_16.png')" buttonMode="true"  toolTip="修改"/>
+			</mx:HBox>
+			<mx:HDividedBox width="100%" height="100%" >
+				<mx:Tree  id="schemaTree" width="20%" height="100%" labelField="name" itemOpen="schemaTree_itemOpenHandler(event)"
+						 showRoot="true" dataProvider="{treeData}" click="schemaTree_clickHandler(event)" doubleClickEnabled="true" doubleClick="schemaTree_doubleClickHandler(event)" />
+				<s:BorderContainer id="rightArea" height="100%" width="80%">
+					<s:layout>
+						<s:VerticalLayout>
+						</s:VerticalLayout>
+					</s:layout>
+					<s:BorderContainer id="rightAreaBtns" width="100%" height="26" borderVisible="false">
+						<mx:HBox id="saveOperBtns" left="10" top="10">
+							<mx:Image id="save"   source="@Embed(source='assets/btn_save_16.png')"  buttonMode="true"  toolTip="保存"/>
+							<mx:Image id="cancel"  source="@Embed(source='assets/btn_cancel_16.png')" buttonMode="true"  toolTip="取消"/>
+						</mx:HBox>
+						</s:BorderContainer>
+					<s:BorderContainer id="rightAreaContent" width="100%" height="100%" borderVisible="false">
+						</s:BorderContainer>
+				</s:BorderContainer>
+			</mx:HDividedBox>
+		</s:VGroup>
+	</s:Panel>
+	
+</s:Application>

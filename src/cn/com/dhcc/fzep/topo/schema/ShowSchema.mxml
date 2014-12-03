@@ -12,7 +12,7 @@
 							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 							 showBusyCursor="true"/>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
-		<s:TitleWindow id="showInfoWin" width="280" title="详细信息" close="showInfoWin_closeHandler(event)" >
+		<s:TitleWindow id="showInfoWin" width="320" title="设备详细" close="showInfoWin_closeHandler(event)"  >
 			<mx:DataGrid id="headerShowInfo" showHeaders="false" width="30%" 
 						 borderVisible="false" textAlign="right">
 				<mx:dataProvider>
@@ -69,8 +69,15 @@
 			import xtreme.scene.SceneManager;
 			import xtreme.scene.entity.shapes.FlexComponent;
 			
+			[Bindable]
+			public var schemaID:String = "-1";
 			private function applicationComplete() : void
 			{
+				if(stage){
+					schemaID=root.loaderInfo.parameters['schemaID'];
+				}
+				
+				//Alert.show(schemaID);
 				getSchema(schemaID);
 				
 				stage.align = StageAlign.TOP_LEFT;
@@ -91,8 +98,6 @@
 				// 清空场景
 				Root.instance.sceneManager.clearScene();
 			}
-			[Bindable]
-			public var schemaID:String = "6";
 			[Bindable]
 			public var schemaType:String = null;
 			[Bindable]
@@ -151,6 +156,21 @@
 				var schema:Schema = event.result  as Schema;
 				schemaName.text = schema.schemaName;
 				loadSchema(schema.schemaData);
+				
+				var schemaArgs:Object = JSON.decode(schema.schemaArgs);
+				
+				//Alert.show(schemaArgs.viewX + "," + schemaArgs.viewY);
+				//修改画布位置
+				/**
+				var viewX:int = schemaArgs.viewX;
+				var viewY:int = schemaArgs.viewY;
+				if(viewX&&viewY){
+					var sceneMgr:SceneManager = Root.instance.sceneManager;
+					sceneMgr.viewport.changePosition(viewX, viewY);
+					//Alert.show(viewX + "@" + viewY);
+				}
+				*/
+				
 			}
 			
 			protected function getSchemaResult_faultHandler(event:FaultEvent):void
@@ -167,7 +187,7 @@
 				}else if(ObjectUtil.getClassInfo(ONU).name == info.type){
 					getONU(info.id);
 				}else if(ObjectUtil.getClassInfo(TwoLayerSwitch).name == info.type){
-					getThreeLayerSwitch(info.id);
+					getTwoLayerSwitch(info.id);
 				}else if(ObjectUtil.getClassInfo(ThreeLayerSwitch).name == info.type){
 					getThreeLayerSwitch(info.id);
 				}
@@ -218,10 +238,11 @@
 			protected function getCarrierResult_resultHandler(event:ResultEvent):void
 			{
 				var carrier:Carrier = event.result as Carrier;
-				showInfoWin.title = carrier.carrierName; 
+				//showInfoWin.title = carrier.carrierName; 
 				PopUpManager.addPopUp(showInfoWin, this, true);  
 				PopUpManager.centerPopUp(showInfoWin);  
 				headerShowInfo.dataProvider = new Array(
+					{name: "设备名称"},
 					{name: "安装地点"},
 					{name: "施工单位"},
 					{name: "主载波地址"},
@@ -230,6 +251,7 @@
 					{name: "备注"}
 				);
 				equipInfoGrid.dataProvider = new Array(
+					{name: carrier.carrierName},
 					{name: carrier.installationSite},
 					{name: carrier.constructionUnit},
 					{name: carrier.installationLocation},
@@ -243,10 +265,11 @@
 			{
 				
 				var gprs:GPRS = event.result as GPRS;
-				showInfoWin.title = gprs.gprsName; 
+				//showInfoWin.title = gprs.gprsName; 
 				PopUpManager.addPopUp(showInfoWin, this, true);  
 				PopUpManager.centerPopUp(showInfoWin);  
 				headerShowInfo.dataProvider = new Array(
+					{name: "设备名称"},
 					{name: "安装地点"},
 					{name: "施工单位"},
 					{name: "运营商"},
@@ -255,6 +278,7 @@
 					{name: "备注"}
 				);
 				equipInfoGrid.dataProvider = new Array(
+					{name: gprs.gprsName},
 					{name: gprs.installationSite},
 					{name: gprs.constructionUnit},
 					{name: gprs.pperators},
@@ -267,10 +291,11 @@
 			protected function getOLTResult_resultHandler(event:ResultEvent):void
 			{
 				var olt:OLT = event.result as OLT;
-				showInfoWin.title = olt.oltName; 
+				//showInfoWin.title = olt.oltName; 
 				PopUpManager.addPopUp(showInfoWin, this, true);  
 				PopUpManager.centerPopUp(showInfoWin);  
 				headerShowInfo.dataProvider = new Array(
+					{name: "设备名称"},
 					{name: "安装地点"},
 					{name: "施工单位"},
 					{name: "VPN实例"},
@@ -279,6 +304,7 @@
 					{name: "备注"}
 				);
 				equipInfoGrid.dataProvider = new Array(
+					{name: olt.oltName},
 					{name: olt.installationSite},
 					{name: olt.constructionUnit},
 					{name: olt.vpnNumber},
@@ -292,10 +318,11 @@
 			protected function getONUResult_resultHandler(event:ResultEvent):void
 			{
 				var onu:ONU = event.result as ONU;
-				showInfoWin.title = onu.onuName; 
+				//showInfoWin.title = onu.onuName; 
 				PopUpManager.addPopUp(showInfoWin, this, true);  
 				PopUpManager.centerPopUp(showInfoWin);  
 				headerShowInfo.dataProvider = new Array(
+					{name: "设备名称"},
 					{name: "安装地点"},
 					{name: "施工单位"},
 					{name: "VPN实例"},
@@ -304,6 +331,7 @@
 					{name: "备注"}
 				);
 				equipInfoGrid.dataProvider = new Array(
+					{name: onu.onuName},
 					{name: onu.installationSite},
 					{name: onu.constructionUnit},
 					{name: onu.vpnNumber},
@@ -316,7 +344,7 @@
 			protected function getThreeLayerSwitchResult_resultHandler(event:ResultEvent):void
 			{
 				var l3switch:ThreeLayerSwitch = event.result as ThreeLayerSwitch;
-				showInfoWin.title = l3switch.switchName;  
+				//showInfoWin.title = l3switch.switchName;  
 				PopUpManager.addPopUp(showInfoWin, this, true);  
 				PopUpManager.centerPopUp(showInfoWin);  
 				headerShowInfo.dataProvider = new Array(
@@ -343,7 +371,7 @@
 			protected function getTwoLayerSwitchResult_resultHandler(event:ResultEvent):void
 			{
 				var l2switch:TwoLayerSwitch = event.result as TwoLayerSwitch;
-				showInfoWin.title = l2switch.switchName;  
+				//showInfoWin.title = l2switch.switchName;  
 				PopUpManager.addPopUp(showInfoWin, this, true);  
 				PopUpManager.centerPopUp(showInfoWin);  
 				headerShowInfo.dataProvider = new Array(
@@ -370,7 +398,7 @@
 	</fx:Script>
 	
 	<s:Group width="100%" height="100%" x="0" y="0" >
-		<s:Label id="schemaName" text="视图名称" fontSize="22">		
+		<s:Label id="schemaName" text="" fontSize="14">		
 		</s:Label>
 		<xtreme:XtremeComponent name="view" id="view" width="100%" height="100%" />
 	</s:Group>

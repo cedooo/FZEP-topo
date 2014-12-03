@@ -1,6 +1,6 @@
 /**
  * This is a generated class and is not intended for modification.  To customize behavior
- * of this value object you may modify the generated sub-class of this class - Schema.as.
+ * of this value object you may modify the generated sub-class of this class - SchemaTreeNode.as.
  */
 
 package valueObjects
@@ -10,6 +10,7 @@ import com.adobe.fiber.valueobjects.IValueObject;
 import flash.events.EventDispatcher;
 import mx.collections.ArrayCollection;
 import mx.events.PropertyChangeEvent;
+import valueObjects.SchemaTreeNode;
 
 import flash.net.registerClassAlias;
 import flash.net.getClassByAlias;
@@ -20,28 +21,29 @@ import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 use namespace model_internal;
 
 [ExcludeClass]
-public class _Super_Schema extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
+public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
         try
         {
-            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.pojo.Schema") == null)
+            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.pojo.SchemaTreeNode") == null)
             {
-                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.Schema", cz);
+                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.SchemaTreeNode", cz);
             }
         }
         catch (e:Error)
         {
-            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.Schema", cz);
+            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.SchemaTreeNode", cz);
         }
     }
 
     model_internal static function initRemoteClassAliasAllRelated() : void
     {
+        valueObjects.SchemaTreeNode.initRemoteClassAliasSingleChild();
     }
 
-    model_internal var _dminternal_model : _SchemaEntityMetadata;
+    model_internal var _dminternal_model : _SchemaTreeNodeEntityMetadata;
     model_internal var _changedObjects:mx.collections.ArrayCollection = new ArrayCollection();
 
     public function getChangedObjects() : Array
@@ -58,14 +60,13 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
     /**
      * properties
      */
-    private var _internal_schemaArgs : String;
-    private var _internal_schemaType : String;
-    private var _internal_schemaName : String;
-    private var _internal_schemaAddTime : String;
-    private var _internal_schemaId : String;
-    private var _internal_schemaDelTime : String;
-    private var _internal_schemaData : String;
-    private var _internal_schemaNote : String;
+    private var _internal_listChild : ArrayCollection;
+    model_internal var _internal_listChild_leaf:valueObjects.SchemaTreeNode;
+    private var _internal_id : String;
+    private var _internal_name : String;
+    private var _internal_children : ArrayCollection;
+    model_internal var _internal_children_leaf:valueObjects.SchemaTreeNode;
+    private var _internal_type : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -77,9 +78,9 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
 
     model_internal var _changeWatcherArray:Array = new Array();
 
-    public function _Super_Schema()
+    public function _Super_SchemaTreeNode()
     {
-        _model = new _SchemaEntityMetadata(this);
+        _model = new _SchemaTreeNodeEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
 
@@ -90,51 +91,33 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
      */
 
     [Bindable(event="propertyChange")]
-    public function get schemaArgs() : String
+    public function get listChild() : ArrayCollection
     {
-        return _internal_schemaArgs;
+        return _internal_listChild;
     }
 
     [Bindable(event="propertyChange")]
-    public function get schemaType() : String
+    public function get id() : String
     {
-        return _internal_schemaType;
+        return _internal_id;
     }
 
     [Bindable(event="propertyChange")]
-    public function get schemaName() : String
+    public function get name() : String
     {
-        return _internal_schemaName;
+        return _internal_name;
     }
 
     [Bindable(event="propertyChange")]
-    public function get schemaAddTime() : String
+    public function get children() : ArrayCollection
     {
-        return _internal_schemaAddTime;
+        return _internal_children;
     }
 
     [Bindable(event="propertyChange")]
-    public function get schemaId() : String
+    public function get type() : String
     {
-        return _internal_schemaId;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get schemaDelTime() : String
-    {
-        return _internal_schemaDelTime;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get schemaData() : String
-    {
-        return _internal_schemaData;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get schemaNote() : String
-    {
-        return _internal_schemaNote;
+        return _internal_type;
     }
 
     public function clearAssociations() : void
@@ -145,83 +128,83 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
      * data/source property setters
      */
 
-    public function set schemaArgs(value:String) : void
+    public function set listChild(value:*) : void
     {
-        var oldValue:String = _internal_schemaArgs;
+        var oldValue:ArrayCollection = _internal_listChild;
         if (oldValue !== value)
         {
-            _internal_schemaArgs = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaArgs", oldValue, _internal_schemaArgs));
+            if (value is ArrayCollection)
+            {
+                _internal_listChild = value;
+            }
+            else if (value is Array)
+            {
+                _internal_listChild = new ArrayCollection(value);
+            }
+            else if (value == null)
+            {
+                _internal_listChild = null;
+            }
+            else
+            {
+                throw new Error("value of listChild must be a collection");
+            }
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "listChild", oldValue, _internal_listChild));
         }
     }
 
-    public function set schemaType(value:String) : void
+    public function set id(value:String) : void
     {
-        var oldValue:String = _internal_schemaType;
+        var oldValue:String = _internal_id;
         if (oldValue !== value)
         {
-            _internal_schemaType = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaType", oldValue, _internal_schemaType));
+            _internal_id = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "id", oldValue, _internal_id));
         }
     }
 
-    public function set schemaName(value:String) : void
+    public function set name(value:String) : void
     {
-        var oldValue:String = _internal_schemaName;
+        var oldValue:String = _internal_name;
         if (oldValue !== value)
         {
-            _internal_schemaName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaName", oldValue, _internal_schemaName));
+            _internal_name = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "name", oldValue, _internal_name));
         }
     }
 
-    public function set schemaAddTime(value:String) : void
+    public function set children(value:*) : void
     {
-        var oldValue:String = _internal_schemaAddTime;
+        var oldValue:ArrayCollection = _internal_children;
         if (oldValue !== value)
         {
-            _internal_schemaAddTime = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaAddTime", oldValue, _internal_schemaAddTime));
+            if (value is ArrayCollection)
+            {
+                _internal_children = value;
+            }
+            else if (value is Array)
+            {
+                _internal_children = new ArrayCollection(value);
+            }
+            else if (value == null)
+            {
+                _internal_children = null;
+            }
+            else
+            {
+                throw new Error("value of children must be a collection");
+            }
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "children", oldValue, _internal_children));
         }
     }
 
-    public function set schemaId(value:String) : void
+    public function set type(value:String) : void
     {
-        var oldValue:String = _internal_schemaId;
+        var oldValue:String = _internal_type;
         if (oldValue !== value)
         {
-            _internal_schemaId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaId", oldValue, _internal_schemaId));
-        }
-    }
-
-    public function set schemaDelTime(value:String) : void
-    {
-        var oldValue:String = _internal_schemaDelTime;
-        if (oldValue !== value)
-        {
-            _internal_schemaDelTime = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaDelTime", oldValue, _internal_schemaDelTime));
-        }
-    }
-
-    public function set schemaData(value:String) : void
-    {
-        var oldValue:String = _internal_schemaData;
-        if (oldValue !== value)
-        {
-            _internal_schemaData = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaData", oldValue, _internal_schemaData));
-        }
-    }
-
-    public function set schemaNote(value:String) : void
-    {
-        var oldValue:String = _internal_schemaNote;
-        if (oldValue !== value)
-        {
-            _internal_schemaNote = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaNote", oldValue, _internal_schemaNote));
+            _internal_type = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "type", oldValue, _internal_type));
         }
     }
 
@@ -285,14 +268,14 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
 
     [Transient]
     [Bindable(event="propertyChange")]
-    public function get _model() : _SchemaEntityMetadata
+    public function get _model() : _SchemaTreeNodeEntityMetadata
     {
         return model_internal::_dminternal_model;
     }
 
-    public function set _model(value : _SchemaEntityMetadata) : void
+    public function set _model(value : _SchemaTreeNodeEntityMetadata) : void
     {
-        var oldValue : _SchemaEntityMetadata = model_internal::_dminternal_model;
+        var oldValue : _SchemaTreeNodeEntityMetadata = model_internal::_dminternal_model;
         if (oldValue !== value)
         {
             model_internal::_dminternal_model = value;

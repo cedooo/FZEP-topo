@@ -67,8 +67,8 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
     private var _internal_projectId : String;
     private var _internal_flow : String;
     private var _internal_vlanId : String;
-    private var _internal_ip : String;
     private var _internal_switchId : String;
+    private var _internal_ip : String;
     private var _internal_vlanDescp : String;
     private var _internal_descp : String;
     private var _internal_typeSpecification : String;
@@ -153,15 +153,15 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
     }
 
     [Bindable(event="propertyChange")]
-    public function get ip() : String
-    {
-        return _internal_ip;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get switchId() : String
     {
         return _internal_switchId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get ip() : String
+    {
+        return _internal_ip;
     }
 
     [Bindable(event="propertyChange")]
@@ -298,16 +298,6 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         }
     }
 
-    public function set ip(value:String) : void
-    {
-        var oldValue:String = _internal_ip;
-        if (oldValue !== value)
-        {
-            _internal_ip = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "ip", oldValue, _internal_ip));
-        }
-    }
-
     public function set switchId(value:String) : void
     {
         var oldValue:String = _internal_switchId;
@@ -315,6 +305,16 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         {
             _internal_switchId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "switchId", oldValue, _internal_switchId));
+        }
+    }
+
+    public function set ip(value:String) : void
+    {
+        var oldValue:String = _internal_ip;
+        if (oldValue !== value)
+        {
+            _internal_ip = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "ip", oldValue, _internal_ip));
         }
     }
 

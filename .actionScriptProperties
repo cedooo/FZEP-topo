@@ -27,9 +27,10 @@
   <applications>
     <application path="cn/com/dhcc/fzep/topo/schema/SiteSchema.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/ShowSchema.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/SchemaManagerIndex.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/AreaSchema.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/schema/NewEquipSchema.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/EquipSchema.mxml"/>
-    <application path="regexTeset.mxml"/>
   </applications>
   <modules/>
   <workers/>

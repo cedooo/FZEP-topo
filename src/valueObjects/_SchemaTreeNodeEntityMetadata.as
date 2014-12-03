@@ -9,6 +9,8 @@ import com.adobe.fiber.styles.Style;
 import com.adobe.fiber.valueobjects.AbstractEntityMetadata;
 import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 import com.adobe.fiber.valueobjects.IPropertyIterator;
+import mx.collections.ArrayCollection;
+import valueObjects.SchemaTreeNode;
 import com.adobe.fiber.core.model_internal;
 import com.adobe.fiber.valueobjects.IModelType;
 import mx.events.PropertyChangeEvent;
@@ -16,60 +18,56 @@ import mx.events.PropertyChangeEvent;
 use namespace model_internal;
 
 [ExcludeClass]
-internal class _SchemaEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
+internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote");
+    model_internal static var allProperties:Array = new Array("listChild", "id", "name", "children", "type");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("listChild", "id", "name", "children", "type");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote");
+    model_internal static var dataProperties:Array = new Array("listChild", "id", "name", "children", "type");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote");
+    model_internal static var nonDerivedProperties:Array = new Array("listChild", "id", "name", "children", "type");
     model_internal static var derivedProperties:Array = new Array();
-    model_internal static var collectionProperties:Array = new Array();
+    model_internal static var collectionProperties:Array = new Array("listChild", "children");
     model_internal static var collectionBaseMap:Object;
-    model_internal static var entityName:String = "Schema";
+    model_internal static var entityName:String = "SchemaTreeNode";
     model_internal static var dependentsOnMap:Object;
     model_internal static var dependedOnServices:Array = new Array();
     model_internal static var propertyTypeMap:Object;
 
 
-    model_internal var _instance:_Super_Schema;
+    model_internal var _instance:_Super_SchemaTreeNode;
     model_internal static var _nullStyle:com.adobe.fiber.styles.Style = new com.adobe.fiber.styles.Style();
 
-    public function _SchemaEntityMetadata(value : _Super_Schema)
+    public function _SchemaTreeNodeEntityMetadata(value : _Super_SchemaTreeNode)
     {
         // initialize property maps
         if (model_internal::dependentsOnMap == null)
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["schemaArgs"] = new Array();
-            model_internal::dependentsOnMap["schemaType"] = new Array();
-            model_internal::dependentsOnMap["schemaName"] = new Array();
-            model_internal::dependentsOnMap["schemaAddTime"] = new Array();
-            model_internal::dependentsOnMap["schemaId"] = new Array();
-            model_internal::dependentsOnMap["schemaDelTime"] = new Array();
-            model_internal::dependentsOnMap["schemaData"] = new Array();
-            model_internal::dependentsOnMap["schemaNote"] = new Array();
+            model_internal::dependentsOnMap["listChild"] = new Array();
+            model_internal::dependentsOnMap["id"] = new Array();
+            model_internal::dependentsOnMap["name"] = new Array();
+            model_internal::dependentsOnMap["children"] = new Array();
+            model_internal::dependentsOnMap["type"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
+            model_internal::collectionBaseMap["listChild"] = "valueObjects.SchemaTreeNode";
+            model_internal::collectionBaseMap["children"] = "valueObjects.SchemaTreeNode";
         }
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["schemaArgs"] = "String";
-        model_internal::propertyTypeMap["schemaType"] = "String";
-        model_internal::propertyTypeMap["schemaName"] = "String";
-        model_internal::propertyTypeMap["schemaAddTime"] = "String";
-        model_internal::propertyTypeMap["schemaId"] = "String";
-        model_internal::propertyTypeMap["schemaDelTime"] = "String";
-        model_internal::propertyTypeMap["schemaData"] = "String";
-        model_internal::propertyTypeMap["schemaNote"] = "String";
+        model_internal::propertyTypeMap["listChild"] = "ArrayCollection";
+        model_internal::propertyTypeMap["id"] = "String";
+        model_internal::propertyTypeMap["name"] = "String";
+        model_internal::propertyTypeMap["children"] = "ArrayCollection";
+        model_internal::propertyTypeMap["type"] = "String";
 
         model_internal::_instance = value;
     }
@@ -122,7 +120,7 @@ internal class _SchemaEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     override public function getDependants(propertyName:String):Array
     {
        if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a data property of entity Schema");
+            throw new Error(propertyName + " is not a data property of entity SchemaTreeNode");
             
        return model_internal::dependentsOnMap[propertyName] as Array;  
     }
@@ -140,7 +138,7 @@ internal class _SchemaEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     override public function getCollectionBase(propertyName:String):String
     {
         if (model_internal::collectionProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a collection property of entity Schema");
+            throw new Error(propertyName + " is not a collection property of entity SchemaTreeNode");
 
         return model_internal::collectionBaseMap[propertyName];
     }
@@ -148,7 +146,7 @@ internal class _SchemaEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     override public function getPropertyType(propertyName:String):String
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a property of Schema");
+            throw new Error(propertyName + " is not a property of SchemaTreeNode");
 
         return model_internal::propertyTypeMap[propertyName];
     }
@@ -162,7 +160,7 @@ internal class _SchemaEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity Schema");
+            throw new Error(propertyName + " does not exist for entity SchemaTreeNode");
         }
 
         return model_internal::_instance[propertyName];
@@ -172,7 +170,7 @@ internal class _SchemaEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     {
         if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " is not a modifiable property of entity Schema");
+            throw new Error(propertyName + " is not a modifiable property of entity SchemaTreeNode");
         }
 
         model_internal::_instance[propertyName] = value;
@@ -204,7 +202,7 @@ internal class _SchemaEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity Schema");
+            throw new Error(propertyName + " does not exist for entity SchemaTreeNode");
         }
 
         if (model_internal::allAlwaysAvailableProperties.indexOf(propertyName) != -1)
@@ -299,49 +297,31 @@ internal class _SchemaEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSchemaArgsAvailable():Boolean
+    public function get isListChildAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSchemaTypeAvailable():Boolean
+    public function get isIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSchemaNameAvailable():Boolean
+    public function get isNameAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSchemaAddTimeAvailable():Boolean
+    public function get isChildrenAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSchemaIdAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isSchemaDelTimeAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isSchemaDataAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isSchemaNoteAvailable():Boolean
+    public function get isTypeAvailable():Boolean
     {
         return true;
     }
@@ -357,49 +337,31 @@ internal class _SchemaEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     }
 
     [Bindable(event="propertyChange")]   
-    public function get schemaArgsStyle():com.adobe.fiber.styles.Style
+    public function get listChildStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get schemaTypeStyle():com.adobe.fiber.styles.Style
+    public function get idStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get schemaNameStyle():com.adobe.fiber.styles.Style
+    public function get nameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get schemaAddTimeStyle():com.adobe.fiber.styles.Style
+    public function get childrenStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get schemaIdStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get schemaDelTimeStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get schemaDataStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get schemaNoteStyle():com.adobe.fiber.styles.Style
+    public function get typeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
