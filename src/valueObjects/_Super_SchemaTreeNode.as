@@ -60,9 +60,9 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
     /**
      * properties
      */
-    private var _internal_listChild : ArrayCollection;
-    model_internal var _internal_listChild_leaf:valueObjects.SchemaTreeNode;
     private var _internal_id : String;
+    private var _internal_parentNode : String;
+    private var _internal_treeLevel : String;
     private var _internal_name : String;
     private var _internal_children : ArrayCollection;
     model_internal var _internal_children_leaf:valueObjects.SchemaTreeNode;
@@ -91,15 +91,21 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
      */
 
     [Bindable(event="propertyChange")]
-    public function get listChild() : ArrayCollection
-    {
-        return _internal_listChild;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get id() : String
     {
         return _internal_id;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get parentNode() : String
+    {
+        return _internal_parentNode;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get treeLevel() : String
+    {
+        return _internal_treeLevel;
     }
 
     [Bindable(event="propertyChange")]
@@ -128,31 +134,6 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
      * data/source property setters
      */
 
-    public function set listChild(value:*) : void
-    {
-        var oldValue:ArrayCollection = _internal_listChild;
-        if (oldValue !== value)
-        {
-            if (value is ArrayCollection)
-            {
-                _internal_listChild = value;
-            }
-            else if (value is Array)
-            {
-                _internal_listChild = new ArrayCollection(value);
-            }
-            else if (value == null)
-            {
-                _internal_listChild = null;
-            }
-            else
-            {
-                throw new Error("value of listChild must be a collection");
-            }
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "listChild", oldValue, _internal_listChild));
-        }
-    }
-
     public function set id(value:String) : void
     {
         var oldValue:String = _internal_id;
@@ -160,6 +141,26 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
         {
             _internal_id = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "id", oldValue, _internal_id));
+        }
+    }
+
+    public function set parentNode(value:String) : void
+    {
+        var oldValue:String = _internal_parentNode;
+        if (oldValue !== value)
+        {
+            _internal_parentNode = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "parentNode", oldValue, _internal_parentNode));
+        }
+    }
+
+    public function set treeLevel(value:String) : void
+    {
+        var oldValue:String = _internal_treeLevel;
+        if (oldValue !== value)
+        {
+            _internal_treeLevel = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "treeLevel", oldValue, _internal_treeLevel));
         }
     }
 

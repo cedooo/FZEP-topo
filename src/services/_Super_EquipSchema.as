@@ -191,10 +191,10 @@ internal class _Super_EquipSchema extends com.adobe.fiber.services.wrapper.Remot
       *
       * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
       */
-    public function saveSchema(arg0:String, arg1:String, arg2:String, arg3:String) : mx.rpc.AsyncToken
+    public function saveSchema(arg0:String, arg1:String, arg2:String) : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("saveSchema");
-		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0,arg1,arg2,arg3) ;
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0,arg1,arg2) ;
         return _internal_token;
     }
      

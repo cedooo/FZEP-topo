@@ -75,6 +75,7 @@
 			import valueObjects.GPRS;
 			import valueObjects.OLT;
 			import valueObjects.ONU;
+			import valueObjects.Schema;
 			import valueObjects.ThreeLayerSwitch;
 			import valueObjects.TwoLayerSwitch;
 			
@@ -350,8 +351,12 @@
 				argsObj.viewX = sceneMgr.viewport.x;
 				argsObj.viewY = sceneMgr.viewport.y;
 				
+				var schema:Schema = new Schema();
+				schema.schemaId = siteId[0];
 				var args:String = JSON.encode(argsObj);
-				saveSchema2("7", "测试", equipJSONData, args);
+				var base:String = JSON.encode(schema);
+				
+				saveSchema2(base, equipJSONData, args);
 			}
 			/**
 			 * 搜索光缆图
@@ -461,9 +466,9 @@
 			}
 			
 			
-			protected function saveSchema2(arg0:String,arg1:String,arg2:String,arg3:String):void
+			protected function saveSchema2(arg0:String,arg1:String,arg2:String):void
 			{
-				saveSchemaResult.token = equipSchema.saveSchema(arg0, arg1,arg2,arg3);
+				saveSchemaResult.token = equipSchema.saveSchema(arg0, arg1,arg2);
 			}
 			
 			protected function saveSchemaResult_resultHandler(event:ResultEvent):void

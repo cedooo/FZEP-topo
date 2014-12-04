@@ -76,6 +76,7 @@
 			import valueObjects.GPRS;
 			import valueObjects.OLT;
 			import valueObjects.ONU;
+			import valueObjects.Schema;
 			import valueObjects.ThreeLayerSwitch;
 			import valueObjects.TwoLayerSwitch;
 			
@@ -380,8 +381,18 @@
 					argsObj.viewX = sceneMgr.viewport.x;
 					argsObj.viewY = sceneMgr.viewport.y;
 					
+					var schema:Schema = new Schema();
+					if(siteId[0]){
+						schema.siteId = siteId[0];
+						schema.schemaType = "1";
+					}else{
+						schema.schemaType = "2";
+					}
+					schema.schemaName = schemaName.text;
+					schema.schemaNote = schemaNote.text;
 					var args:String = JSON.encode(argsObj);
-					saveSchema2("", schemaName.text, equipJSONData, args);
+					var base:String = JSON.encode(schema);
+					saveSchema2(base, equipJSONData, args);
 				}
 			}
 			/**
@@ -389,7 +400,6 @@
 			 */
 			protected function buildCable_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
 				
 			}
 			
@@ -496,9 +506,9 @@
 			}
 			
 			
-			protected function saveSchema2(arg0:String,arg1:String,arg2:String,arg3:String):void
+			protected function saveSchema2(arg0:String,arg1:String,arg2:String):void
 			{
-				saveSchemaResult.token = equipSchema.saveSchema(arg0, arg1,arg2,arg3);
+				saveSchemaResult.token = equipSchema.saveSchema(arg0, arg1,arg2);
 			}
 			
 			protected function saveSchemaResult_resultHandler(event:ResultEvent):void
@@ -577,7 +587,7 @@
 				</s:HorizontalLayout>
 			</s:layout>
 			<mx:Text text="名称:" id="lbName"  />
-			<s:TextInput id="schemaName" maxChars="15"   >
+			<s:TextInput id="schemaName" maxChars="15"  >
 			</s:TextInput>
 			<!--
 			<mx:Image source="@Embed(source='assets/btn_note_16.png')"  toolTip="备注"/>

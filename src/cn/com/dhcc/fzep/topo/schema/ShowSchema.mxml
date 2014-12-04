@@ -77,7 +77,6 @@
 					schemaID=root.loaderInfo.parameters['schemaID'];
 				}
 				
-				//Alert.show(schemaID);
 				getSchema(schemaID);
 				
 				stage.align = StageAlign.TOP_LEFT;
@@ -90,7 +89,6 @@
 				view.getRoot().layerManager.enableContextMenu();
 				view.registerBuildInCommand(console);
 				view.getRoot().navigationView.visible = true;
-				
 				
 			}
 			public function clearup() : void

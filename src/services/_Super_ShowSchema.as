@@ -37,12 +37,12 @@ internal class _Super_ShowSchema extends com.adobe.fiber.services.wrapper.Remote
         var operations:Object = new Object();
         var operation:mx.rpc.remoting.Operation;
 
-        operation = new mx.rpc.remoting.Operation(null, "getThreeLayerSwitch");
-         operation.resultType = valueObjects.ThreeLayerSwitch;
-        operations["getThreeLayerSwitch"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "getCarrier");
          operation.resultType = valueObjects.Carrier;
         operations["getCarrier"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "getThreeLayerSwitch");
+         operation.resultType = valueObjects.ThreeLayerSwitch;
+        operations["getThreeLayerSwitch"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "getOLT");
          operation.resultType = valueObjects.OLT;
         operations["getOLT"] = operation;
@@ -76,24 +76,6 @@ internal class _Super_ShowSchema extends com.adobe.fiber.services.wrapper.Remote
     
 
     /**
-      * This method is a generated wrapper used to call the 'getThreeLayerSwitch' operation. It returns an mx.rpc.AsyncToken whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
-      * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
-      *
-      * @see mx.rpc.AsyncToken
-      * @see mx.rpc.CallResponder 
-      *
-      * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
-      */
-    public function getThreeLayerSwitch(arg0:String) : mx.rpc.AsyncToken
-    {
-        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getThreeLayerSwitch");
-		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0) ;
-        return _internal_token;
-    }
-     
-    /**
       * This method is a generated wrapper used to call the 'getCarrier' operation. It returns an mx.rpc.AsyncToken whose 
       * result property will be populated with the result of the operation when the server response is received. 
       * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
@@ -107,6 +89,24 @@ internal class _Super_ShowSchema extends com.adobe.fiber.services.wrapper.Remote
     public function getCarrier(arg0:String) : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getCarrier");
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0) ;
+        return _internal_token;
+    }
+     
+    /**
+      * This method is a generated wrapper used to call the 'getThreeLayerSwitch' operation. It returns an mx.rpc.AsyncToken whose 
+      * result property will be populated with the result of the operation when the server response is received. 
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
+      *
+      * @see mx.rpc.AsyncToken
+      * @see mx.rpc.CallResponder 
+      *
+      * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
+      */
+    public function getThreeLayerSwitch(arg0:String) : mx.rpc.AsyncToken
+    {
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getThreeLayerSwitch");
 		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0) ;
         return _internal_token;
     }

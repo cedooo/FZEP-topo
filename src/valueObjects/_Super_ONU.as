@@ -70,8 +70,8 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
     private var _internal_typeSpecification : String;
     private var _internal_showName : String;
     private var _internal_siteId : String;
-    private var _internal_onuName : String;
     private var _internal_delFlg : String;
+    private var _internal_onuName : String;
     private var _internal_ospfNumber : String;
 
     private static var emptyArray:Array = new Array();
@@ -169,15 +169,15 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
     }
 
     [Bindable(event="propertyChange")]
-    public function get onuName() : String
-    {
-        return _internal_onuName;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get delFlg() : String
     {
         return _internal_delFlg;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get onuName() : String
+    {
+        return _internal_onuName;
     }
 
     [Bindable(event="propertyChange")]
@@ -314,16 +314,6 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
         }
     }
 
-    public function set onuName(value:String) : void
-    {
-        var oldValue:String = _internal_onuName;
-        if (oldValue !== value)
-        {
-            _internal_onuName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "onuName", oldValue, _internal_onuName));
-        }
-    }
-
     public function set delFlg(value:String) : void
     {
         var oldValue:String = _internal_delFlg;
@@ -331,6 +321,16 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
         {
             _internal_delFlg = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "delFlg", oldValue, _internal_delFlg));
+        }
+    }
+
+    public function set onuName(value:String) : void
+    {
+        var oldValue:String = _internal_onuName;
+        if (oldValue !== value)
+        {
+            _internal_onuName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "onuName", oldValue, _internal_onuName));
         }
     }
 

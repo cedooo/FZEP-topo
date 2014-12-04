@@ -4,7 +4,7 @@
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:services="services.*"
-			     creationComplete="init()">
+			   applicationComplete="init()">
 	
 	<fx:Declarations>
 		<s:CallResponder id="getAllAreaResult" result="getAllAreaResult_resultHandler(event)"/>
@@ -32,13 +32,9 @@
 		<![CDATA[
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
-			import mx.controls.Label;
 			import mx.events.CloseEvent;
 			import mx.events.TreeEvent;
 			import mx.rpc.events.ResultEvent;
-			
-			import spark.components.Button;
-			import spark.components.Label;
 			
 			import valueObjects.Area;
 			import valueObjects.Schema;
@@ -49,11 +45,21 @@
 			public var selectedNode:XML;
 			[Bindable] 
 			private var cm:ContextMenu; 
+			[Bindable]
+			private var basePath:String = '';
 			private function showInfo():void{
-				
 			}
 			//初始化函数   
 			private function init():void{
+				Alert.yesLabel="是";
+				Alert.noLabel="否";
+				Alert.okLabel="确定";
+				Alert.cancelLabel="取消";
+				var allURL:String = root.loaderInfo.url;
+				var reg:RegExp = /(\/+)/;
+				var regR:Array = allURL.split(reg);
+				basePath= regR[0] + regR[1] + regR[2] + regR[3] + regR[4] + regR[5];
+				
 				cm = new ContextMenu(); 
 				cm.hideBuiltInItems(); 
 				//设定监听source_txa组件的点击函数
@@ -69,7 +75,6 @@
 				
 				schemaTree.contextMenu = cm;
 				getRootNode();
-				
 				
 			}
 			[Bindable]
@@ -153,9 +158,7 @@
 				}
 				selected.children = arrayNode;
 				treeData.itemUpdated(selected, true, true);
-				
 			}
-			
 			
 			protected function getListSchemaBySiteID(arg0:String):void
 			{
@@ -235,10 +238,6 @@
 			protected function add_clickHandler(event:MouseEvent):void
 			{
 				var item:SchemaTreeNode = schemaTree.selectedItem as SchemaTreeNode;
-				var allURL:String = root.loaderInfo.url;
-				var reg:RegExp = /(\/+)/;
-				var regR:Array = allURL.split(reg);
-				var basePath:String = regR[0] + regR[1] + regR[2] + regR[3] + regR[4] + regR[5];
 				if(item.type == "site"){
 					openWindow(basePath + "topo/addView.jsp?siteID="+item.id,"添加站点视图"); 
 				}else if(item.type == "customerSchema"){
@@ -278,10 +277,10 @@
 				//打开全屏的新窗口 
 				jsString+=" var win = window.open('"+pageUrl+"','"+pageName+"',args);"; 
 				jsString+=" if(win){"; 
-				jsString+="    win.resizeTo(screenWidth,screenHeight);"; 
+				jsString+="    win.resizeTo(screenWidth*0.85,screenHeight*0.85);"; 
 				jsString+="    win.outerWidth = screenWidth;"; 
 				jsString+="    win.outerHeight = screenHeight;"; 
-				jsString+="    win.moveTo(0,0);"; 
+				jsString+="    win.moveTo(screenWidth*0.075,screenHeight*0.075);"; 
 				jsString+=" }"; 
 				ExternalInterface.call("function(){"+jsString+"}"); 
 			}  
@@ -289,10 +288,9 @@
 			protected function schemaTree_doubleClickHandler(event:MouseEvent):void
 			{
 				var item:SchemaTreeNode = schemaTree.selectedItem as SchemaTreeNode;
-				var btn:Button = new Button();
-				btn.label = item.name;
-				btn.visible = true;
-				rightAreaContent.addElement(btn);
+				if(item.type == "schema"){
+					openWindow(basePath + "topo/view.jsp?schemaID="+item.id, item.name); 
+				}
 			}
 			
 		]]>
@@ -300,7 +298,7 @@
 	
 	
 	<s:Panel title="展示图"
-			 width="100%" height="100%"
+			 width="75%" height="75%"
 			 horizontalCenter="0" verticalCenter="0">
 		<s:VGroup left="10" right="10" top="10" bottom="10" >
 			<mx:HBox id="schmaOperBtns">
@@ -311,7 +309,9 @@
 			</mx:HBox>
 			<mx:HDividedBox width="100%" height="100%" >
 				<mx:Tree  id="schemaTree" width="20%" height="100%" labelField="name" itemOpen="schemaTree_itemOpenHandler(event)"
-						 showRoot="true" dataProvider="{treeData}" click="schemaTree_clickHandler(event)" doubleClickEnabled="true" doubleClick="schemaTree_doubleClickHandler(event)" />
+						 showRoot="true" dataProvider="{treeData}" click="schemaTree_clickHandler(event)" 
+						 doubleClickEnabled="true" doubleClick="schemaTree_doubleClickHandler(event)" 
+						 defaultLeafIcon="@Embed(source='assets/view_16.png')"  />
 				<s:BorderContainer id="rightArea" height="100%" width="80%">
 					<s:layout>
 						<s:VerticalLayout>

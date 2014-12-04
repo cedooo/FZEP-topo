@@ -61,11 +61,13 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
     private var _internal_schemaArgs : String;
     private var _internal_schemaType : String;
     private var _internal_schemaName : String;
+    private var _internal_siteId : String;
     private var _internal_schemaAddTime : String;
     private var _internal_schemaId : String;
-    private var _internal_schemaDelTime : String;
     private var _internal_schemaData : String;
+    private var _internal_schemaDelTime : String;
     private var _internal_schemaNote : String;
+    private var _internal_areaId : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -108,6 +110,12 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
     }
 
     [Bindable(event="propertyChange")]
+    public function get siteId() : String
+    {
+        return _internal_siteId;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get schemaAddTime() : String
     {
         return _internal_schemaAddTime;
@@ -120,21 +128,27 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
     }
 
     [Bindable(event="propertyChange")]
-    public function get schemaDelTime() : String
-    {
-        return _internal_schemaDelTime;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get schemaData() : String
     {
         return _internal_schemaData;
     }
 
     [Bindable(event="propertyChange")]
+    public function get schemaDelTime() : String
+    {
+        return _internal_schemaDelTime;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get schemaNote() : String
     {
         return _internal_schemaNote;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get areaId() : String
+    {
+        return _internal_areaId;
     }
 
     public function clearAssociations() : void
@@ -175,6 +189,16 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
         }
     }
 
+    public function set siteId(value:String) : void
+    {
+        var oldValue:String = _internal_siteId;
+        if (oldValue !== value)
+        {
+            _internal_siteId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteId", oldValue, _internal_siteId));
+        }
+    }
+
     public function set schemaAddTime(value:String) : void
     {
         var oldValue:String = _internal_schemaAddTime;
@@ -195,16 +219,6 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
         }
     }
 
-    public function set schemaDelTime(value:String) : void
-    {
-        var oldValue:String = _internal_schemaDelTime;
-        if (oldValue !== value)
-        {
-            _internal_schemaDelTime = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaDelTime", oldValue, _internal_schemaDelTime));
-        }
-    }
-
     public function set schemaData(value:String) : void
     {
         var oldValue:String = _internal_schemaData;
@@ -215,6 +229,16 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
         }
     }
 
+    public function set schemaDelTime(value:String) : void
+    {
+        var oldValue:String = _internal_schemaDelTime;
+        if (oldValue !== value)
+        {
+            _internal_schemaDelTime = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaDelTime", oldValue, _internal_schemaDelTime));
+        }
+    }
+
     public function set schemaNote(value:String) : void
     {
         var oldValue:String = _internal_schemaNote;
@@ -222,6 +246,16 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
         {
             _internal_schemaNote = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaNote", oldValue, _internal_schemaNote));
+        }
+    }
+
+    public function set areaId(value:String) : void
+    {
+        var oldValue:String = _internal_areaId;
+        if (oldValue !== value)
+        {
+            _internal_areaId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "areaId", oldValue, _internal_areaId));
         }
     }
 
