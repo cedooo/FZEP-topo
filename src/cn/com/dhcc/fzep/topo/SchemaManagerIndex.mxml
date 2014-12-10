@@ -22,6 +22,8 @@
 		<s:CallResponder id="getListSchemaBySiteIDResult" result="getListSchemaBySiteIDResult_resultHandler(event)"/>
 		<s:CallResponder id="getListCustomerSchemaResult" result="getListSchemaBySiteIDResult_resultHandler(event)"/>
 		<s:CallResponder id="deleteSchemaResult" result="deleteSchemaResult_resultHandler(event)"/>
+		<s:CallResponder id="getSchemaBriefInfoResult" result="getSchemaBriefInfoResult_resultHandler(event)"/>
+		<s:CallResponder id="saveSchemaBriefInfoResult" result="saveSchemaBriefInfoResult_resultHandler(event)"/>
 	</fx:Declarations>
 	<fx:Style>
 		@namespace services "services.*";
@@ -30,6 +32,8 @@
 	</fx:Style>
 	<fx:Script>
 		<![CDATA[
+			import com.adobe.serialization.json.JSON;
+			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
@@ -47,6 +51,8 @@
 			private var cm:ContextMenu; 
 			[Bindable]
 			private var basePath:String = '';
+			[Bindable]
+			private var topoBasePath:String = '';
 			private function showInfo():void{
 			}
 			//初始化函数   
@@ -59,6 +65,7 @@
 				var reg:RegExp = /(\/+)/;
 				var regR:Array = allURL.split(reg);
 				basePath= regR[0] + regR[1] + regR[2] + regR[3] + regR[4] + regR[5];
+				topoBasePath = basePath + "topo/";
 				
 				cm = new ContextMenu(); 
 				cm.hideBuiltInItems(); 
@@ -196,13 +203,23 @@
 				var item:SchemaTreeNode = schemaTree.selectedItem as SchemaTreeNode;
 				//Alert.show(String(item.type));
 				if(item.type == "schema"){
-					enable(['refresh','del', 'edit']);
+					//enable(['refresh','del', 'edit']);
+					enable(['refresh','del']);
+					getSchemaBriefInfo(item.id);
+					editSchema.visible = true;
 				}else if(item.type == "site"){
 					enable(['refresh','add']);
 				}else if(item.type == "customerSchema"){
 					enable(['refresh','add']);
+				}else if(item.type == "areaSchema"){
+					enable(['edit']);
+				}else if ("levelSchema" == item.type ){
+					enable(['refresh']);
+				}else if ("siteSchema" == item.type){
+					enable(['refresh']);
 				}else {
 					enable(['refresh']);
+					editSchema.visible = false;
 				}
 			}
 			protected function enable(enable:Array):void{
@@ -239,9 +256,9 @@
 			{
 				var item:SchemaTreeNode = schemaTree.selectedItem as SchemaTreeNode;
 				if(item.type == "site"){
-					openWindow(basePath + "topo/addView.jsp?siteID="+item.id,"添加站点视图"); 
+					openWindow(topoBasePath + "addView.jsp?siteID="+item.id,"添加站点视图"); 
 				}else if(item.type == "customerSchema"){
-					openWindow(basePath + "topo/addView.jsp","添加站点视图"); 
+					openWindow(topoBasePath + "addView.jsp","添加站点视图"); 
 				}else {
 					Alert.show("非法操作","操作无效");
 				}
@@ -290,14 +307,70 @@
 				var item:SchemaTreeNode = schemaTree.selectedItem as SchemaTreeNode;
 				if(item.type == "schema"){
 					openWindow(basePath + "topo/view.jsp?schemaID="+item.id, item.name); 
+				}else  if(item.type == "areaSchema"){
+					openWindow(basePath + "topo/areaMaps.jsp", "百度"); 
 				}
+			}
+			
+			protected function edit_clickHandler(event:MouseEvent):void
+			{
+				Alert.show('edit');
+			}
+			
+			
+			protected function getSchemaBriefInfo(arg0:String):void
+			{
+				getSchemaBriefInfoResult.token = schemaTree2.getSchemaBriefInfo(arg0);
+			}
+			
+			protected function getSchemaBriefInfoResult_resultHandler(event:ResultEvent):void
+			{
+				var schema:Schema = event.result as Schema;				
+				sName.text = schema.schemaName;
+				sNote.text = schema.schemaNote;
+				sId.text = schema.schemaId;
+				sCreateTime.text = schema.schemaAddTime;
+			}
+			
+			protected function editEnable_clickHandler(event:MouseEvent):void
+			{
+				sName.editable =  true;
+				sNote.editable =  true;
+			}
+			protected function editSchema_clickHandler(event:MouseEvent):void
+			{
+				if(sId.text){
+					openWindow(basePath + "topo/editSchema.jsp?schemaID=" + sId.text , "编辑"); 
+				}
+			}
+			
+			
+			protected function saveSchemaBriefInfo(arg0:String):void
+			{
+				saveSchemaBriefInfoResult.token = schemaTree2.saveSchemaBriefInfo(arg0);
+			}
+			
+			protected function saveSchemaBriefInfoResult_resultHandler(event:ResultEvent):void
+			{
+				Alert.show(event.result?"保存成功":"保存失败","操作结果");
+			}
+			
+			protected function save_clickHandler(event:MouseEvent):void
+			{
+				var schema:Schema = new Schema();
+				schema.schemaId = sId.text;
+				schema.schemaName = sName.text;
+				schema.schemaNote = sNote.text;
+				var json:String = JSON.encode(schema);
+				//Alert.show(json);
+				saveSchemaBriefInfo(json);
 			}
 			
 		]]>
 	</fx:Script>
 	
 	
-	<s:Panel title="展示图"
+	<s:Panel title="福州电业局视图管理"
 			 width="75%" height="75%"
 			 horizontalCenter="0" verticalCenter="0">
 		<s:VGroup left="10" right="10" top="10" bottom="10" >
@@ -305,26 +378,49 @@
 				<mx:Image id="refresh" click="getRootNode()"  source="@Embed(source='assets/btn_refresh_16_2.png')"  buttonMode="true"  toolTip="刷新"/>
 				<mx:Image id="add" click="add_clickHandler(event)" source="@Embed(source='assets/btn_add_16_3.png')" buttonMode="true"  toolTip="添加"/>
 				<mx:Image id="del" click="del_clickHandler(event)" source="@Embed(source='assets/btn_del_16.png')" buttonMode="true"  toolTip="删除"/>
-				<mx:Image id="edit"  source="@Embed(source='assets/btn_edit_16.png')" buttonMode="true"  toolTip="修改"/>
+				<mx:Image id="edit" click="edit_clickHandler(event)" source="@Embed(source='assets/btn_edit_16.png')" buttonMode="true"  toolTip="编辑"/>
 			</mx:HBox>
 			<mx:HDividedBox width="100%" height="100%" >
 				<mx:Tree  id="schemaTree" width="20%" height="100%" labelField="name" itemOpen="schemaTree_itemOpenHandler(event)"
 						 showRoot="true" dataProvider="{treeData}" click="schemaTree_clickHandler(event)" 
 						 doubleClickEnabled="true" doubleClick="schemaTree_doubleClickHandler(event)" 
 						 defaultLeafIcon="@Embed(source='assets/view_16.png')"  />
-				<s:BorderContainer id="rightArea" height="100%" width="80%">
+				<s:BorderContainer id="rightArea" height="100%" width="80%"  backgroundAlpha="0.0" >
 					<s:layout>
 						<s:VerticalLayout>
 						</s:VerticalLayout>
 					</s:layout>
-					<s:BorderContainer id="rightAreaBtns" width="100%" height="26" borderVisible="false">
+					<s:BorderContainer id="rightAreaBtns" width="100%" height="26" borderVisible="false"  backgroundAlpha="0.0">
 						<mx:HBox id="saveOperBtns" left="10" top="10">
-							<mx:Image id="save"   source="@Embed(source='assets/btn_save_16.png')"  buttonMode="true"  toolTip="保存"/>
-							<mx:Image id="cancel"  source="@Embed(source='assets/btn_cancel_16.png')" buttonMode="true"  toolTip="取消"/>
+							<mx:Image id="save"   source="@Embed(source='assets/btn_save_16.png')" click="save_clickHandler(event)"  buttonMode="true"  toolTip="保存"/>
+							<!--<mx:Image id="cancel"  source="@Embed(source='assets/btn_cancel_16.png')" buttonMode="true"  toolTip="取消"/>-->
 						</mx:HBox>
 						</s:BorderContainer>
-					<s:BorderContainer id="rightAreaContent" width="100%" height="100%" borderVisible="false">
-						</s:BorderContainer>
+					<s:BorderContainer id="rightAreaContent" width="100%" height="100%" borderVisible="false"  left="10"  backgroundAlpha="0.0">
+						<s:layout>
+							<s:VerticalLayout  paddingLeft="10" >
+							</s:VerticalLayout>
+						</s:layout>
+							
+						<mx:Form width="100%" >
+							<mx:FormItem label="视图名称">
+								<mx:TextInput id="sName" width="200" maxChars="15" editable="true"/>
+							</mx:FormItem>
+							<mx:FormItem label="创建时间">
+								<mx:Label id="sCreateTime"  />
+							</mx:FormItem>
+							
+							<mx:FormItem label="备注信息">
+								<s:TextArea id="sNote" width="200" editable="true" />
+							</mx:FormItem>
+							
+							<mx:FormItem label="视图ID" visible="false">
+								<mx:TextInput id="sId"  maxChars="15"   editable="false"  />
+							</mx:FormItem>
+						</mx:Form>
+						<s:Label id="editSchema" text="编辑视图" visible="false" click="editSchema_clickHandler(event)" buttonMode="true" textDecoration="underline">
+						</s:Label>
+					</s:BorderContainer>
 				</s:BorderContainer>
 			</mx:HDividedBox>
 		</s:VGroup>

@@ -50,8 +50,8 @@
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
 			
-			import cn.com.dhcc.fzep.topo.utils.TopoXMLUtils;
 			import cn.com.dhcc.fzep.topo.components.SiteComponent;
+			import cn.com.dhcc.fzep.topo.utils.TopoXMLUtils;
 			
 			import valueObjects.Site;
 			
@@ -61,6 +61,9 @@
 			import xtreme.scene.entity.shapes.FlexComponent;
 			[Bindable]
 			public var siteId:Array = ['1'];
+			[Bindable]
+			public var areaId:String;    //站点ID
+			
 			public var dSelectWidth:int;
 			private function applicationComplete() : void
 			{

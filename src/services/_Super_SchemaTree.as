@@ -46,6 +46,12 @@ internal class _Super_SchemaTree extends com.adobe.fiber.services.wrapper.Remote
         operation = new mx.rpc.remoting.Operation(null, "getListCustomerSchema");
          operation.resultElementType = valueObjects.Schema;
         operations["getListCustomerSchema"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "getSchemaBriefInfo");
+         operation.resultType = valueObjects.Schema;
+        operations["getSchemaBriefInfo"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "saveSchemaBriefInfo");
+         operation.resultType = Boolean;
+        operations["saveSchemaBriefInfo"] = operation;
 
         _serviceControl.operations = operations;
         _serviceControl.convertResultHandler = com.adobe.serializers.utility.TypeUtility.convertResultHandler;
@@ -132,6 +138,42 @@ internal class _Super_SchemaTree extends com.adobe.fiber.services.wrapper.Remote
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getListCustomerSchema");
 		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
+        return _internal_token;
+    }
+     
+    /**
+      * This method is a generated wrapper used to call the 'getSchemaBriefInfo' operation. It returns an mx.rpc.AsyncToken whose 
+      * result property will be populated with the result of the operation when the server response is received. 
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
+      *
+      * @see mx.rpc.AsyncToken
+      * @see mx.rpc.CallResponder 
+      *
+      * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
+      */
+    public function getSchemaBriefInfo(arg0:String) : mx.rpc.AsyncToken
+    {
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getSchemaBriefInfo");
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0) ;
+        return _internal_token;
+    }
+     
+    /**
+      * This method is a generated wrapper used to call the 'saveSchemaBriefInfo' operation. It returns an mx.rpc.AsyncToken whose 
+      * result property will be populated with the result of the operation when the server response is received. 
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
+      *
+      * @see mx.rpc.AsyncToken
+      * @see mx.rpc.CallResponder 
+      *
+      * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
+      */
+    public function saveSchemaBriefInfo(arg0:String) : mx.rpc.AsyncToken
+    {
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("saveSchemaBriefInfo");
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0) ;
         return _internal_token;
     }
      

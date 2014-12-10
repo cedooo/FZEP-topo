@@ -20,17 +20,23 @@
       <libraryPathEntry kind="3" linkType="1" path="${DCD_FIBER_LOCATION}/fiber.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="1" linkType="1" path="${DCD_FIBER_LOCALE_LOCATION}"/>
       <libraryPathEntry kind="3" linkType="1" path="${DCD_FIBER_LOCATION}/playerfds.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="G:/lib/DegrafaFlex4.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
-  <theme themeIsDefault="false" themeIsSDK="true" themeLocation="${SDK_THEMES_DIR}/samples/themes/spark_sky"/>
+  <theme themeIsDefault="false" themeIsSDK="true" themeLocation="${SDK_THEMES_DIR}/samples/themes/spark_sage"/>
   <applications>
     <application path="cn/com/dhcc/fzep/topo/schema/SiteSchema.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/ShowSchema.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/SchemaManagerIndex.mxml"/>
-    <application path="cn/com/dhcc/fzep/topo/schema/AreaSchema.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/NewEquipSchema.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/schema/AreaSchema.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/EquipmentDetails.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/EquipSchema.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/schema/EditEquipSchema.mxml"/>
+    <application path="degrafatest.mxml"/>
+    <application path="svg.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/schema/NewSiteSchema.mxml"/>
   </applications>
   <modules/>
   <workers/>

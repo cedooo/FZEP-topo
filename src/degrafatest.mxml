@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
+			   xmlns:degrafa="http://www.degrafa.com/2007"
+			   xmlns:paint="com.degrafa.paint.*"
+			   xmlns:geometry="com.degrafa.geometry.*"
+			  creationComplete="application1_applicationCompleteHandler(event)"
+			   >
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			[Embed(source="assets/svg/3333.svg")]
+			[Bindable]
+			public var svg3:Class;
+			protected function geometrygroup1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				Alert.show(event.localX + "," + event.localY);
+			}
+			
+			protected function geometrygroup1_mouseOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				var gg:GeometryGroup = event.currentTarget as GeometryGroup;
+				gg.visible = false;
+			}
+			
+			protected function geometrygroup1_mouseOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				var gg:GeometryGroup = event.currentTarget as GeometryGroup;
+				gg.visible = true;
+				
+			}
+			
+			private static function searchPath(node:XML):void 
+			{ 
+				var reg:RegExp = /[.]*::path/;
+				// Loop over all of the child elements of the node 
+				Alert.show(node);
+				for each ( var element:XML in node.elements( ) ) 
+				{ 
+					var name:String = element.name().toString();
+					if(name.match(reg)) 
+					{ 
+						Alert.show(name + " is a path class");
+					}
+				}
+			}
+			
+			protected function application1_applicationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				searchPath(svg3 as XML);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		
+	</fx:Declarations>
+	<s:Label text="hello 世界" >
+		
+	</s:Label>
+	<degrafa:Surface verticalCenter="0" horizontalCenter="0">
+		<degrafa:GeometryGroup click="geometrygroup1_clickHandler(event)" mouseOver="geometrygroup1_mouseOverHandler(event)" mouseOut="geometrygroup1_mouseOutHandler(event)">
+			<geometry:Circle radius="150">
+				<geometry:fill>
+					<paint:SolidFill color="#62ABCD"/>
+				</geometry:fill>
+			</geometry:Circle>
+		</degrafa:GeometryGroup>
+	</degrafa:Surface>
+</s:Application>

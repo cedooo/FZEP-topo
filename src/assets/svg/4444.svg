@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-flat-20030114.dtd">
+<!-- Created by SVGDeveloper 1.0 -->
+<svg width="822" height="455" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<image x="111" y="270" width="822" height="455" xlink:href="C:\Users\cedo\Desktop\bg.jpg" transform="matrix(1,0,0,1,-110.5,-269.25)" opacity="1.00" visibility="inherit" overflow="hidden" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" />
+<path d="M344 233L348 238L354 240L357 241L367 241L370 240L376 231L378 225L376 217L374 212L366 207L350 206L341 216L341 224C340 225 341 230 341 230L344 233ZM478 243" fill="#FF0000" stroke="none" stroke-opacity="0" fill-opacity="0.56" cursor="move" xmlns="http://www.w3.org/2000/svg" />
+<path d="M424 218C422.9999 220 371 256 371 256L327 245L316 197C316 197 374 185 375 185C376 185 415 189 415 189C415 189 425 217 424 218ZM341 216L342 228L352 238L362 238L369 238L376 225L376 216C376 216 371 210 370 210L356 206L348 206L341 216Z" fill="#00FF00" fill-opacity="0.5372549" stroke="none" stroke-opacity="0" cursor="pointer" />
+</svg>

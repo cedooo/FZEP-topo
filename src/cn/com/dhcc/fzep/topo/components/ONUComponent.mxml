@@ -36,6 +36,6 @@
 		]]>
 	</fx:Script>
 	
-	<mx:Image id="imgVisitor" source="assets/{imgName}" x="26" y="9" width="48" height="48"/>
-	<s:Label id="lblUserName" text="{onu.onuName}" y="60"  textAlign="center" width="100%" fontSize="12"  fontWeight="bold"/>
+	<mx:Image id="imgVisitor" source="assets/{imgName}"  x="14" y="9" width="32" height="32"/>
+	<s:Label id="lblUserName" text="{onu.onuName}" y="45"  textAlign="center" width="100%" fontSize="12"  fontWeight="bold"/>
 </s:Group>

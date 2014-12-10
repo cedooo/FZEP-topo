@@ -22,14 +22,14 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("id", "parentNode", "treeLevel", "name", "children", "type");
+    model_internal static var allProperties:Array = new Array("id", "treeLevel", "parentNode", "name", "children", "type");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("id", "parentNode", "treeLevel", "name", "children", "type");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("id", "treeLevel", "parentNode", "name", "children", "type");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("id", "parentNode", "treeLevel", "name", "children", "type");
+    model_internal static var dataProperties:Array = new Array("id", "treeLevel", "parentNode", "name", "children", "type");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("id", "parentNode", "treeLevel", "name", "children", "type");
+    model_internal static var nonDerivedProperties:Array = new Array("id", "treeLevel", "parentNode", "name", "children", "type");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array("children");
     model_internal static var collectionBaseMap:Object;
@@ -50,8 +50,8 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
             // dependents map
             model_internal::dependentsOnMap = new Object();
             model_internal::dependentsOnMap["id"] = new Array();
-            model_internal::dependentsOnMap["parentNode"] = new Array();
             model_internal::dependentsOnMap["treeLevel"] = new Array();
+            model_internal::dependentsOnMap["parentNode"] = new Array();
             model_internal::dependentsOnMap["name"] = new Array();
             model_internal::dependentsOnMap["children"] = new Array();
             model_internal::dependentsOnMap["type"] = new Array();
@@ -64,8 +64,8 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
         // Property type Map
         model_internal::propertyTypeMap = new Object();
         model_internal::propertyTypeMap["id"] = "String";
-        model_internal::propertyTypeMap["parentNode"] = "String";
         model_internal::propertyTypeMap["treeLevel"] = "String";
+        model_internal::propertyTypeMap["parentNode"] = "String";
         model_internal::propertyTypeMap["name"] = "String";
         model_internal::propertyTypeMap["children"] = "ArrayCollection";
         model_internal::propertyTypeMap["type"] = "String";
@@ -304,13 +304,13 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]
-    public function get isParentNodeAvailable():Boolean
+    public function get isTreeLevelAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isTreeLevelAvailable():Boolean
+    public function get isParentNodeAvailable():Boolean
     {
         return true;
     }
@@ -350,13 +350,13 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]   
-    public function get parentNodeStyle():com.adobe.fiber.styles.Style
+    public function get treeLevelStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get treeLevelStyle():com.adobe.fiber.styles.Style
+    public function get parentNodeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

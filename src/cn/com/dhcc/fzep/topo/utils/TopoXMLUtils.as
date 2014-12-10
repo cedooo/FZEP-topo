@@ -9,6 +9,7 @@ package cn.com.dhcc.fzep.topo.utils
 	import cn.com.dhcc.fzep.topo.components.GPRSComponent;
 	import cn.com.dhcc.fzep.topo.components.OLTComponent;
 	import cn.com.dhcc.fzep.topo.components.ONUComponent;
+	import cn.com.dhcc.fzep.topo.components.SchemaElementComponent;
 	import cn.com.dhcc.fzep.topo.components.SiteComponent;
 	import cn.com.dhcc.fzep.topo.components.ThreeLayerSwitchComponent;
 	import cn.com.dhcc.fzep.topo.components.TwoLayerSwitchComponent;
@@ -121,6 +122,18 @@ package cn.com.dhcc.fzep.topo.utils
 						eleInfo.showName = l2SwitchO.switchName;
 						eleInfo.type = ObjectUtil.getClassInfo(l2SwitchO).name;
 						eleInfo.imgPath = "assets/equip/l2switch.png";
+						stp += JSON.encode(eleInfo) + ",";
+					}else if(ps.component is SiteComponent){    //站点
+						var siteCom:SiteComponent = ps.component as SiteComponent;
+						var siteO:Site = siteCom.site;
+						eleInfo.id = siteO.siteId;
+						eleInfo.showName = siteO.siteName;
+						eleInfo.type = ObjectUtil.getClassInfo(siteO).name;
+						eleInfo.imgPath = "assets/tower.png";
+						stp += JSON.encode(eleInfo) + ",";
+					}else if(ps.component is SchemaElementComponent){
+						var ele:SchemaElementComponent = ps.component as SchemaElementComponent;
+						eleInfo = ele.eleInfo;
 						stp += JSON.encode(eleInfo) + ",";
 					}
 				}
