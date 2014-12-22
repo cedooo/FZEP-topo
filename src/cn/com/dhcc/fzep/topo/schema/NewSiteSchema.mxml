@@ -40,7 +40,7 @@
 		<services:SiteSchema id="siteSchema"
 							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 							 showBusyCursor="true"/>
-		<s:CallResponder id="saveSchemaResult"/>
+		<s:CallResponder id="saveSchemaResult" result="saveSchemaResult_resultHandler(event)"/>
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
@@ -73,7 +73,7 @@
 			public var siteId:Array = new Array();
 			 * */
 			[Bindable]
-			public var areaId:Array = new Array();
+			public var areaId:Array = new Array(['2']);
 			public var dSelectWidth:int;
 			private function applicationComplete() : void
 			{
@@ -107,7 +107,7 @@
 				selector.getResult = getListByAreaResult;
 				selector.showField = "siteName";
 				selector.refreshSelectorData = getListByArea;
-				getListByArea(areaId);
+				getListByArea(areaId[0]);
 				
 			}
 			
@@ -202,7 +202,7 @@
 				{
 					var sceneMgr:SceneManager = Root.instance.sceneManager;
 					var equipJSONData:String = TopoXMLUtils.generateJSON(sceneMgr.entityList());
-					Alert.show(equipJSONData);
+					//Alert.show(equipJSONData);
 					var argsObj:Object = new Object();
 					argsObj.viewX = sceneMgr.viewport.x;
 					argsObj.viewY = sceneMgr.viewport.y;
@@ -262,7 +262,7 @@
 	</s:layout>
 	
 	<s:VGroup id="operGroup" height="100%" gap="0" >	
-		<cedo:ElementSelector id="selector" selectedItem="addEquip"  args="{siteId}" ></cedo:ElementSelector>
+		<cedo:ElementSelector id="selector" selectedItem="addEquip"  args="{areaId}" ></cedo:ElementSelector>
 	</s:VGroup>
 	<s:VGroup id="hide" width="10" height="100%" gap="0"
 			  click="hide_clickHandler(event)" opaqueBackground="0xe8e8e8">

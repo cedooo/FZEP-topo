@@ -26,7 +26,7 @@
 			//初始化函数   
 			private function init():void{
 				//设定监听source_txa组件的点击函数
-				var cmi:ContextMenuItem = new ContextMenuItem("设备详情", true); 
+				var cmi:ContextMenuItem = new ContextMenuItem("详细", true); 
 				cmi.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, showInfo);
 				var cmi2:ContextMenuItem = new ContextMenuItem("转到科大GIS", true); 
 				cmi2.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, showInfo);

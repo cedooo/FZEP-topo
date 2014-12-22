@@ -20,14 +20,14 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "typeSpecification", "lookbackLocation", "siteId", "showName", "oltId", "delFlg");
+    model_internal static var allProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "typeSpecification", "lookbackLocation", "showName", "siteId", "oltId", "delFlg");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "typeSpecification", "lookbackLocation", "siteId", "showName", "oltId", "delFlg");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "typeSpecification", "lookbackLocation", "showName", "siteId", "oltId", "delFlg");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "typeSpecification", "lookbackLocation", "siteId", "showName", "oltId", "delFlg");
+    model_internal static var dataProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "typeSpecification", "lookbackLocation", "showName", "siteId", "oltId", "delFlg");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "typeSpecification", "lookbackLocation", "siteId", "showName", "oltId", "delFlg");
+    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "typeSpecification", "lookbackLocation", "showName", "siteId", "oltId", "delFlg");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -59,8 +59,8 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
             model_internal::dependentsOnMap["descp"] = new Array();
             model_internal::dependentsOnMap["typeSpecification"] = new Array();
             model_internal::dependentsOnMap["lookbackLocation"] = new Array();
-            model_internal::dependentsOnMap["siteId"] = new Array();
             model_internal::dependentsOnMap["showName"] = new Array();
+            model_internal::dependentsOnMap["siteId"] = new Array();
             model_internal::dependentsOnMap["oltId"] = new Array();
             model_internal::dependentsOnMap["delFlg"] = new Array();
 
@@ -82,8 +82,8 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
         model_internal::propertyTypeMap["descp"] = "String";
         model_internal::propertyTypeMap["typeSpecification"] = "String";
         model_internal::propertyTypeMap["lookbackLocation"] = "String";
-        model_internal::propertyTypeMap["siteId"] = "String";
         model_internal::propertyTypeMap["showName"] = "String";
+        model_internal::propertyTypeMap["siteId"] = "String";
         model_internal::propertyTypeMap["oltId"] = "String";
         model_internal::propertyTypeMap["delFlg"] = "String";
 
@@ -387,13 +387,13 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSiteIdAvailable():Boolean
+    public function get isShowNameAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isShowNameAvailable():Boolean
+    public function get isSiteIdAvailable():Boolean
     {
         return true;
     }
@@ -493,13 +493,13 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     }
 
     [Bindable(event="propertyChange")]   
-    public function get siteIdStyle():com.adobe.fiber.styles.Style
+    public function get showNameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get showNameStyle():com.adobe.fiber.styles.Style
+    public function get siteIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

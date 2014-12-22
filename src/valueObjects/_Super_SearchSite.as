@@ -1,6 +1,6 @@
 /**
  * This is a generated class and is not intended for modification.  To customize behavior
- * of this value object you may modify the generated sub-class of this class - SchemaTreeNode.as.
+ * of this value object you may modify the generated sub-class of this class - SearchSite.as.
  */
 
 package valueObjects
@@ -10,7 +10,7 @@ import com.adobe.fiber.valueobjects.IValueObject;
 import flash.events.EventDispatcher;
 import mx.collections.ArrayCollection;
 import mx.events.PropertyChangeEvent;
-import valueObjects.SchemaTreeNode;
+import valueObjects.Page;
 
 import flash.net.registerClassAlias;
 import flash.net.getClassByAlias;
@@ -21,29 +21,29 @@ import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 use namespace model_internal;
 
 [ExcludeClass]
-public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
+public class _Super_SearchSite extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
         try
         {
-            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.pojo.SchemaTreeNode") == null)
+            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.common.search.SearchSite") == null)
             {
-                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.SchemaTreeNode", cz);
+                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.common.search.SearchSite", cz);
             }
         }
         catch (e:Error)
         {
-            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.SchemaTreeNode", cz);
+            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.common.search.SearchSite", cz);
         }
     }
 
     model_internal static function initRemoteClassAliasAllRelated() : void
     {
-        valueObjects.SchemaTreeNode.initRemoteClassAliasSingleChild();
+        valueObjects.Page.initRemoteClassAliasSingleChild();
     }
 
-    model_internal var _dminternal_model : _SchemaTreeNodeEntityMetadata;
+    model_internal var _dminternal_model : _SearchSiteEntityMetadata;
     model_internal var _changedObjects:mx.collections.ArrayCollection = new ArrayCollection();
 
     public function getChangedObjects() : Array
@@ -60,13 +60,10 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
     /**
      * properties
      */
-    private var _internal_id : String;
-    private var _internal_parentNode : String;
-    private var _internal_treeLevel : String;
-    private var _internal_name : String;
-    private var _internal_children : ArrayCollection;
-    model_internal var _internal_children_leaf:valueObjects.SchemaTreeNode;
-    private var _internal_type : String;
+    private var _internal_areaName : String;
+    private var _internal_page : valueObjects.Page;
+    private var _internal_searchField : String;
+    private var _internal_keyWord : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -78,9 +75,9 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
 
     model_internal var _changeWatcherArray:Array = new Array();
 
-    public function _Super_SchemaTreeNode()
+    public function _Super_SearchSite()
     {
-        _model = new _SchemaTreeNodeEntityMetadata(this);
+        _model = new _SearchSiteEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
 
@@ -91,39 +88,27 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
      */
 
     [Bindable(event="propertyChange")]
-    public function get id() : String
+    public function get areaName() : String
     {
-        return _internal_id;
+        return _internal_areaName;
     }
 
     [Bindable(event="propertyChange")]
-    public function get parentNode() : String
+    public function get page() : valueObjects.Page
     {
-        return _internal_parentNode;
+        return _internal_page;
     }
 
     [Bindable(event="propertyChange")]
-    public function get treeLevel() : String
+    public function get searchField() : String
     {
-        return _internal_treeLevel;
+        return _internal_searchField;
     }
 
     [Bindable(event="propertyChange")]
-    public function get name() : String
+    public function get keyWord() : String
     {
-        return _internal_name;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get children() : ArrayCollection
-    {
-        return _internal_children;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get type() : String
-    {
-        return _internal_type;
+        return _internal_keyWord;
     }
 
     public function clearAssociations() : void
@@ -134,78 +119,43 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
      * data/source property setters
      */
 
-    public function set id(value:String) : void
+    public function set areaName(value:String) : void
     {
-        var oldValue:String = _internal_id;
+        var oldValue:String = _internal_areaName;
         if (oldValue !== value)
         {
-            _internal_id = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "id", oldValue, _internal_id));
+            _internal_areaName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "areaName", oldValue, _internal_areaName));
         }
     }
 
-    public function set parentNode(value:String) : void
+    public function set page(value:valueObjects.Page) : void
     {
-        var oldValue:String = _internal_parentNode;
+        var oldValue:valueObjects.Page = _internal_page;
         if (oldValue !== value)
         {
-            _internal_parentNode = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "parentNode", oldValue, _internal_parentNode));
+            _internal_page = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "page", oldValue, _internal_page));
         }
     }
 
-    public function set treeLevel(value:String) : void
+    public function set searchField(value:String) : void
     {
-        var oldValue:String = _internal_treeLevel;
+        var oldValue:String = _internal_searchField;
         if (oldValue !== value)
         {
-            _internal_treeLevel = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "treeLevel", oldValue, _internal_treeLevel));
+            _internal_searchField = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "searchField", oldValue, _internal_searchField));
         }
     }
 
-    public function set name(value:String) : void
+    public function set keyWord(value:String) : void
     {
-        var oldValue:String = _internal_name;
+        var oldValue:String = _internal_keyWord;
         if (oldValue !== value)
         {
-            _internal_name = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "name", oldValue, _internal_name));
-        }
-    }
-
-    public function set children(value:*) : void
-    {
-        var oldValue:ArrayCollection = _internal_children;
-        if (oldValue !== value)
-        {
-            if (value is ArrayCollection)
-            {
-                _internal_children = value;
-            }
-            else if (value is Array)
-            {
-                _internal_children = new ArrayCollection(value);
-            }
-            else if (value == null)
-            {
-                _internal_children = null;
-            }
-            else
-            {
-                throw new Error("value of children must be a collection");
-            }
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "children", oldValue, _internal_children));
-        }
-    }
-
-    public function set type(value:String) : void
-    {
-        var oldValue:String = _internal_type;
-        if (oldValue !== value)
-        {
-            _internal_type = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "type", oldValue, _internal_type));
+            _internal_keyWord = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "keyWord", oldValue, _internal_keyWord));
         }
     }
 
@@ -269,14 +219,14 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
 
     [Transient]
     [Bindable(event="propertyChange")]
-    public function get _model() : _SchemaTreeNodeEntityMetadata
+    public function get _model() : _SearchSiteEntityMetadata
     {
         return model_internal::_dminternal_model;
     }
 
-    public function set _model(value : _SchemaTreeNodeEntityMetadata) : void
+    public function set _model(value : _SearchSiteEntityMetadata) : void
     {
-        var oldValue : _SchemaTreeNodeEntityMetadata = model_internal::_dminternal_model;
+        var oldValue : _SearchSiteEntityMetadata = model_internal::_dminternal_model;
         if (oldValue !== value)
         {
             model_internal::_dminternal_model = value;

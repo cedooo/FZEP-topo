@@ -2,6 +2,7 @@ package cn.com.dhcc.fzep.topo.utils
 {
 	import com.adobe.serialization.json.JSON;
 	
+	import mx.controls.Alert;
 	import mx.utils.ObjectUtil;
 	
 	import cn.com.dhcc.fzep.topo.components.AreaComponent;
@@ -73,8 +74,6 @@ package cn.com.dhcc.fzep.topo.utils
 				var eleInfo:SchemaElementsInfo = new SchemaElementsInfo();
 				if(enti is FlexComponent){
 					var ps:FlexComponent = enti as FlexComponent;
-					eleInfo.x = ps.x;
-					eleInfo.y = ps.y;   
 					if(ps.component is CarrierComponent){    //载波设备
 						var carrier:CarrierComponent = ps.component as CarrierComponent;
 						var carrierO:Carrier = carrier.carrier;
@@ -82,7 +81,6 @@ package cn.com.dhcc.fzep.topo.utils
 						eleInfo.showName = carrierO.carrierName;
 						eleInfo.type = ObjectUtil.getClassInfo(carrierO).name;
 						eleInfo.imgPath = "assets/equip/carrier.png";
-						stp += JSON.encode(eleInfo) + ",";
 					}else if(ps.component is GPRSComponent){    //GPRS无线设备
 						var gprs:GPRSComponent = ps.component as GPRSComponent;
 						var gprsO:GPRS = gprs.gprs;
@@ -90,7 +88,6 @@ package cn.com.dhcc.fzep.topo.utils
 						eleInfo.showName = gprsO.gprsName;
 						eleInfo.type = ObjectUtil.getClassInfo(gprsO).name;
 						eleInfo.imgPath = "assets/equip/AP.png";
-						stp += JSON.encode(eleInfo) + ",";
 					}else if(ps.component is OLTComponent){    //OLT设备
 						var olt:OLTComponent = ps.component as OLTComponent;
 						var oltO:OLT = olt.olt;
@@ -98,7 +95,6 @@ package cn.com.dhcc.fzep.topo.utils
 						eleInfo.showName = oltO.oltName;
 						eleInfo.type = ObjectUtil.getClassInfo(oltO).name;
 						eleInfo.imgPath = "assets/equip/OLT.png";
-						stp += JSON.encode(eleInfo) + ",";
 					}else if(ps.component is ONUComponent){    //ONU设备
 						var onu:ONUComponent = ps.component as ONUComponent;
 						var onuO:ONU = onu.onu;
@@ -106,7 +102,6 @@ package cn.com.dhcc.fzep.topo.utils
 						eleInfo.showName = onuO.onuName;
 						eleInfo.type = ObjectUtil.getClassInfo(onuO).name;
 						eleInfo.imgPath = "assets/equip/onu.png";
-						stp += JSON.encode(eleInfo) + ",";
 					}else if(ps.component is ThreeLayerSwitchComponent){    //载波设备
 						var l3Switch:ThreeLayerSwitchComponent = ps.component as ThreeLayerSwitchComponent;
 						var l3SwitchO:ThreeLayerSwitch = l3Switch.l3switch;
@@ -114,7 +109,6 @@ package cn.com.dhcc.fzep.topo.utils
 						eleInfo.showName = l3SwitchO.switchName;
 						eleInfo.type = ObjectUtil.getClassInfo(l3SwitchO).name;
 						eleInfo.imgPath = "assets/equip/l3switch.png";
-						stp += JSON.encode(eleInfo) + ",";
 					}else if(ps.component is TwoLayerSwitchComponent){    //载波设备
 						var l2Switch:TwoLayerSwitchComponent = ps.component as TwoLayerSwitchComponent;
 						var l2SwitchO:TwoLayerSwitch = l2Switch.l2switch;
@@ -122,7 +116,6 @@ package cn.com.dhcc.fzep.topo.utils
 						eleInfo.showName = l2SwitchO.switchName;
 						eleInfo.type = ObjectUtil.getClassInfo(l2SwitchO).name;
 						eleInfo.imgPath = "assets/equip/l2switch.png";
-						stp += JSON.encode(eleInfo) + ",";
 					}else if(ps.component is SiteComponent){    //站点
 						var siteCom:SiteComponent = ps.component as SiteComponent;
 						var siteO:Site = siteCom.site;
@@ -130,14 +123,15 @@ package cn.com.dhcc.fzep.topo.utils
 						eleInfo.showName = siteO.siteName;
 						eleInfo.type = ObjectUtil.getClassInfo(siteO).name;
 						eleInfo.imgPath = "assets/tower.png";
-						stp += JSON.encode(eleInfo) + ",";
 					}else if(ps.component is SchemaElementComponent){
 						var ele:SchemaElementComponent = ps.component as SchemaElementComponent;
 						eleInfo = ele.eleInfo;
-						stp += JSON.encode(eleInfo) + ",";
 					}
+					eleInfo.x = ps.x;
+					eleInfo.y = ps.y;
+					stp += JSON.encode(eleInfo) + ",";
 				}
-			}
+			}   
 			var paten:RegExp = /,$/;   //去掉返回json数组最后的‘,’ 的正则表达式 
 			var fstp:String = "";
 			fstp = stp.replace(paten," ");

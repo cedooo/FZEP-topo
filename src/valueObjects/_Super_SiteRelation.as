@@ -1,6 +1,6 @@
 /**
  * This is a generated class and is not intended for modification.  To customize behavior
- * of this value object you may modify the generated sub-class of this class - SchemaTreeNode.as.
+ * of this value object you may modify the generated sub-class of this class - SiteRelation.as.
  */
 
 package valueObjects
@@ -10,7 +10,8 @@ import com.adobe.fiber.valueobjects.IValueObject;
 import flash.events.EventDispatcher;
 import mx.collections.ArrayCollection;
 import mx.events.PropertyChangeEvent;
-import valueObjects.SchemaTreeNode;
+import valueObjects.Cable;
+import valueObjects.Site;
 
 import flash.net.registerClassAlias;
 import flash.net.getClassByAlias;
@@ -21,29 +22,30 @@ import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 use namespace model_internal;
 
 [ExcludeClass]
-public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
+public class _Super_SiteRelation extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
         try
         {
-            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.pojo.SchemaTreeNode") == null)
+            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.common.SiteRelation") == null)
             {
-                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.SchemaTreeNode", cz);
+                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.common.SiteRelation", cz);
             }
         }
         catch (e:Error)
         {
-            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.SchemaTreeNode", cz);
+            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.common.SiteRelation", cz);
         }
     }
 
     model_internal static function initRemoteClassAliasAllRelated() : void
     {
-        valueObjects.SchemaTreeNode.initRemoteClassAliasSingleChild();
+        valueObjects.Site.initRemoteClassAliasSingleChild();
+        valueObjects.Cable.initRemoteClassAliasSingleChild();
     }
 
-    model_internal var _dminternal_model : _SchemaTreeNodeEntityMetadata;
+    model_internal var _dminternal_model : _SiteRelationEntityMetadata;
     model_internal var _changedObjects:mx.collections.ArrayCollection = new ArrayCollection();
 
     public function getChangedObjects() : Array
@@ -60,13 +62,11 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
     /**
      * properties
      */
-    private var _internal_id : String;
-    private var _internal_parentNode : String;
-    private var _internal_treeLevel : String;
-    private var _internal_name : String;
-    private var _internal_children : ArrayCollection;
-    model_internal var _internal_children_leaf:valueObjects.SchemaTreeNode;
-    private var _internal_type : String;
+    private var _internal_center : valueObjects.Site;
+    private var _internal_listCable : ArrayCollection;
+    model_internal var _internal_listCable_leaf:valueObjects.Cable;
+    private var _internal_levelOneSite : ArrayCollection;
+    model_internal var _internal_levelOneSite_leaf:valueObjects.Site;
 
     private static var emptyArray:Array = new Array();
 
@@ -78,9 +78,9 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
 
     model_internal var _changeWatcherArray:Array = new Array();
 
-    public function _Super_SchemaTreeNode()
+    public function _Super_SiteRelation()
     {
-        _model = new _SchemaTreeNodeEntityMetadata(this);
+        _model = new _SiteRelationEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
 
@@ -91,39 +91,21 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
      */
 
     [Bindable(event="propertyChange")]
-    public function get id() : String
+    public function get center() : valueObjects.Site
     {
-        return _internal_id;
+        return _internal_center;
     }
 
     [Bindable(event="propertyChange")]
-    public function get parentNode() : String
+    public function get listCable() : ArrayCollection
     {
-        return _internal_parentNode;
+        return _internal_listCable;
     }
 
     [Bindable(event="propertyChange")]
-    public function get treeLevel() : String
+    public function get levelOneSite() : ArrayCollection
     {
-        return _internal_treeLevel;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get name() : String
-    {
-        return _internal_name;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get children() : ArrayCollection
-    {
-        return _internal_children;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get type() : String
-    {
-        return _internal_type;
+        return _internal_levelOneSite;
     }
 
     public function clearAssociations() : void
@@ -134,78 +116,63 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
      * data/source property setters
      */
 
-    public function set id(value:String) : void
+    public function set center(value:valueObjects.Site) : void
     {
-        var oldValue:String = _internal_id;
+        var oldValue:valueObjects.Site = _internal_center;
         if (oldValue !== value)
         {
-            _internal_id = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "id", oldValue, _internal_id));
+            _internal_center = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "center", oldValue, _internal_center));
         }
     }
 
-    public function set parentNode(value:String) : void
+    public function set listCable(value:*) : void
     {
-        var oldValue:String = _internal_parentNode;
-        if (oldValue !== value)
-        {
-            _internal_parentNode = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "parentNode", oldValue, _internal_parentNode));
-        }
-    }
-
-    public function set treeLevel(value:String) : void
-    {
-        var oldValue:String = _internal_treeLevel;
-        if (oldValue !== value)
-        {
-            _internal_treeLevel = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "treeLevel", oldValue, _internal_treeLevel));
-        }
-    }
-
-    public function set name(value:String) : void
-    {
-        var oldValue:String = _internal_name;
-        if (oldValue !== value)
-        {
-            _internal_name = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "name", oldValue, _internal_name));
-        }
-    }
-
-    public function set children(value:*) : void
-    {
-        var oldValue:ArrayCollection = _internal_children;
+        var oldValue:ArrayCollection = _internal_listCable;
         if (oldValue !== value)
         {
             if (value is ArrayCollection)
             {
-                _internal_children = value;
+                _internal_listCable = value;
             }
             else if (value is Array)
             {
-                _internal_children = new ArrayCollection(value);
+                _internal_listCable = new ArrayCollection(value);
             }
             else if (value == null)
             {
-                _internal_children = null;
+                _internal_listCable = null;
             }
             else
             {
-                throw new Error("value of children must be a collection");
+                throw new Error("value of listCable must be a collection");
             }
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "children", oldValue, _internal_children));
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "listCable", oldValue, _internal_listCable));
         }
     }
 
-    public function set type(value:String) : void
+    public function set levelOneSite(value:*) : void
     {
-        var oldValue:String = _internal_type;
+        var oldValue:ArrayCollection = _internal_levelOneSite;
         if (oldValue !== value)
         {
-            _internal_type = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "type", oldValue, _internal_type));
+            if (value is ArrayCollection)
+            {
+                _internal_levelOneSite = value;
+            }
+            else if (value is Array)
+            {
+                _internal_levelOneSite = new ArrayCollection(value);
+            }
+            else if (value == null)
+            {
+                _internal_levelOneSite = null;
+            }
+            else
+            {
+                throw new Error("value of levelOneSite must be a collection");
+            }
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "levelOneSite", oldValue, _internal_levelOneSite));
         }
     }
 
@@ -269,14 +236,14 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
 
     [Transient]
     [Bindable(event="propertyChange")]
-    public function get _model() : _SchemaTreeNodeEntityMetadata
+    public function get _model() : _SiteRelationEntityMetadata
     {
         return model_internal::_dminternal_model;
     }
 
-    public function set _model(value : _SchemaTreeNodeEntityMetadata) : void
+    public function set _model(value : _SiteRelationEntityMetadata) : void
     {
-        var oldValue : _SchemaTreeNodeEntityMetadata = model_internal::_dminternal_model;
+        var oldValue : _SiteRelationEntityMetadata = model_internal::_dminternal_model;
         if (oldValue !== value)
         {
             model_internal::_dminternal_model = value;

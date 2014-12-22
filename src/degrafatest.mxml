@@ -10,9 +10,17 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import com.degrafa.geometry.Path;
+			import com.degrafa.paint.SolidFill;
+			
 			import mx.controls.Alert;
+			import mx.controls.Label;
 			import mx.events.FlexEvent;
-			[Embed(source="assets/svg/3333.svg")]
+			import mx.events.FlexMouseEvent;
+			
+			import spark.components.Group;
+			import spark.components.Label;
+			[Embed(source="assets/svg/fz.svg")]
 			[Bindable]
 			public var svg3:Class;
 			protected function geometrygroup1_clickHandler(event:MouseEvent):void
@@ -25,36 +33,99 @@
 			{
 				// TODO Auto-generated method stub
 				var gg:GeometryGroup = event.currentTarget as GeometryGroup;
-				gg.visible = false;
+				//gg.visible = false;
 			}
 			
 			protected function geometrygroup1_mouseOutHandler(event:MouseEvent):void
 			{
 				// TODO Auto-generated method stub
 				var gg:GeometryGroup = event.currentTarget as GeometryGroup;
-				gg.visible = true;
+				//gg.visible = true;
 				
 			}
 			
-			private static function searchPath(node:XML):void 
+			private function searchPath(node:XML):void 
 			{ 
+				//Alert.show(node);
 				var reg:RegExp = /[.]*::path/;
 				// Loop over all of the child elements of the node 
-				Alert.show(node);
 				for each ( var element:XML in node.elements( ) ) 
 				{ 
 					var name:String = element.name().toString();
 					if(name.match(reg)) 
 					{ 
-						Alert.show(name + " is a path class");
+						//Alert.show(element.attribute("id"));
+						var geoGroups:GeometryGroup = new GeometryGroup();
+						geoGroups.addEventListener(MouseEvent.CLICK, loadSchema);
+						var path:Path = new Path();
+						path.data = element.attribute("d");
+						path.id = element.attribute("id");
+						path.visible = true;
+						var fillColor:String = element.attribute("fill");
+						var fill:SolidFill = new SolidFill(fillColor);
+						path.fill = fill;
+						
+						var label:spark.components.Label = new spark.components.Label();
+						label.text = element.attribute("id");
+						label.x = 10;
+						label.y = 10;
+						geoGroups.addChild(label);
+						geoGroups.draw(null,null);
+						geoGroups.geometryCollection.addItem(path);
+						geoGroups.name = element.attribute("id");
+						geoGroups.buttonMode = true;
+						geoGroups.target = geoSurf;
+						//geoSurf.graphicsCollection.addItem(geoGroups);
 					}
 				}
+				//geoGroup.addEventListener(MouseEvent.CLICK, loadSchema);
 			}
 			
 			protected function application1_applicationCompleteHandler(event:FlexEvent):void
 			{
+				init();
+			}
+			[Bindable]  
+			private var datas:XML = new XML();  
+			private function init():void  
+			{  
+				var url:URLRequest = new URLRequest("http://localhost:8080/fuzhou/topo/fx/assets/svg/fz.svg");  
+				var loader:URLLoader = new URLLoader();  
+				loader.addEventListener(Event.COMPLETE,onComplete);  
+				loader.load(url);  
+			}  
+			private function onComplete(event:Event):void{  
+				var result:URLLoader = URLLoader(event.target);  
+				datas = XML(result.data);  
+				searchPath(datas);
+			}  
+			private function loadSchema(event:MouseEvent):void{  
+				var grup:GeometryGroup = event.currentTarget as GeometryGroup;
+				Alert.show(grup.name);
+				
+			} 
+			[Embed(source="assets/bg/350px-Subdivisions_of_Fuzhou-China.png")]
+			[Bindable]
+			public var bgImg:Class;
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				var btn:Button = event.currentTarget as Button;
+				if(btn.label == "1X"){
+					geoSurf.scaleX = 1; 
+					geoSurf.scaleY = 1; 
+					geoSurf.rotation = 1 * Math.PI * (45 / 360);
+				}else {
+					geoSurf.scaleX = 2; 
+					geoSurf.scaleY = 2; 
+					geoSurf.rotation = 2 * Math.PI * (45 / 360);
+				}
+			}
+			
+			protected function bordercontainer1_mouseWheelOutsideHandler(event:FlexMouseEvent):void
+			{
 				// TODO Auto-generated method stub
-				searchPath(svg3 as XML);
+				
 			}
 			
 		]]>
@@ -63,16 +134,30 @@
 	<fx:Declarations>
 		
 	</fx:Declarations>
-	<s:Label text="hello 世界" >
+	
+	<s:BorderContainer width="600" height="480"
+					   backgroundImageFillMode="scale" mouseWheelOutside="bordercontainer1_mouseWheelOutsideHandler(event)">
 		
-	</s:Label>
-	<degrafa:Surface verticalCenter="0" horizontalCenter="0">
-		<degrafa:GeometryGroup click="geometrygroup1_clickHandler(event)" mouseOver="geometrygroup1_mouseOverHandler(event)" mouseOut="geometrygroup1_mouseOutHandler(event)">
-			<geometry:Circle radius="150">
-				<geometry:fill>
-					<paint:SolidFill color="#62ABCD"/>
-				</geometry:fill>
-			</geometry:Circle>
-		</degrafa:GeometryGroup>
-	</degrafa:Surface>
+		<degrafa:Surface id="geoSurf"  >
+			<degrafa:GeometryGroup id="geoGroup"   mouseOver="geometrygroup1_mouseOverHandler(event)" mouseOut="geometrygroup1_mouseOutHandler(event)">
+				<!--
+				<geometry:Circle radius="150">
+					<geometry:fill>
+						<paint:SolidFill color="#62ABCD"/>
+					</geometry:fill>
+				</geometry:Circle>
+				-->
+			</degrafa:GeometryGroup>
+		</degrafa:Surface>
+	</s:BorderContainer>
+	<s:BorderContainer>
+		<s:layout>
+			<s:HorizontalLayout />
+		</s:layout>
+		<s:Button label="1X" click="button1_clickHandler(event)" />
+		<s:Button  label="2X" click="button1_clickHandler(event)" />
+		<mx:Slider  direction="vertical" >
+			
+		</mx:Slider>
+	</s:BorderContainer>
 </s:Application>

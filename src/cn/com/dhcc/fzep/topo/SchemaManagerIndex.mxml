@@ -201,27 +201,29 @@
 			protected function schemaTree_clickHandler(event:MouseEvent):void
 			{
 				var item:SchemaTreeNode = schemaTree.selectedItem as SchemaTreeNode;
-				//Alert.show(String(item.type));
-				if(item.type == "schema"){
+				if(item.type == "schema"){    //设备视图
 					//enable(['refresh','del', 'edit']);
 					enable(['refresh','del']);
 					getSchemaBriefInfo(item.id);
 					editSchema.visible = true;
-				}else if(item.type == "site"){
+				}else if(item.type == "site"){    //站点
 					enable(['refresh','add']);
-				}else if(item.type == "customerSchema"){
+				}else if(item.type == "customerSchema"){    //自定义视图
 					enable(['refresh','add']);
-				}else if(item.type == "areaSchema"){
+				}else if(item.type == "areaSchema"){    //区域视图       deprecated
 					enable(['edit']);
-				}else if ("levelSchema" == item.type ){
-					enable(['refresh']);
-				}else if ("siteSchema" == item.type){
-					enable(['refresh']);
-				}else {
+				}else if ("levelSchema" == item.type ){    //分级视图
+					enable(['refresh', 'edit']);
+				}else if ("siteSchema" == item.type){    //站点视图
+					enable(['refresh', 'edit']);
+				}else {    //其他
 					enable(['refresh']);
 					editSchema.visible = false;
 				}
 			}
+			/**
+			 * 设置允许的操作按钮的有效性
+			 */
 			protected function enable(enable:Array):void{
 				//Alert.show(String(enable));
 				var operBt:Array = schmaOperBtns.getChildren();

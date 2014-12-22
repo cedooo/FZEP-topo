@@ -91,7 +91,8 @@
 			import xtreme.core.Root;
 			import xtreme.scene.SceneManager;
 			import xtreme.scene.entity.shapes.FlexComponent;
-			
+			[Embed(source="assets/buttons/btn_arrow_r_48.png")]
+			public var hideBtn:Class;
 			[Bindable]
 			public var siteId:Array = new Array();
 			[Bindable]
@@ -644,9 +645,8 @@
 		<s:HorizontalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0" >
 		</s:HorizontalLayout>
 	</s:layout>
-	
-	<s:VGroup id="operGroup" height="100%" gap="0" >	
-		<mx:VBox id="vBox" verticalAlign="middle" horizontalAlign="center"   width="{operGroup.width}" height="50">
+	<s:VGroup id="operGroup" height="100%" gap="0"  visible="true" >	
+		<mx:VBox id="vBox" verticalAlign="middle" horizontalAlign="center"    height="50">
 			<mx:HBox id="equipBtns">
 				<mx:Image id="l3switchBtn"  source="@Embed(source='assets/equip/l3switch.png')" width="42" height="42" buttonMode="true"  toolTip="3层交换机" click="equipType_clickHandler(event)" />
 				<mx:Image id="l2switchBtn"   source="@Embed(source='assets/equip/l2switch.png')" width="42" height="42"  buttonMode="true"  toolTip="2层交换机" click="equipType_clickHandler(event)"/>
@@ -663,9 +663,13 @@
 		
 	</s:VGroup>
 	<s:VGroup id="hide" width="10" height="100%" gap="0"
-			  click="hide_clickHandler(event)" opaqueBackground="0xe8e8e8" >
+			  click="hide_clickHandler(event)"  buttonMode="true" toolTip="" opaqueBackground="0xffffff" >
+		<!--
+		<s:BorderContainer width="10"  y="{this.height*0.5}" borderVisible="false" backgroundAlpha="0.4" backgroundImage="{hideBtn}" backgroundImageFillMode="scale">
+		</s:BorderContainer>
+		<mx:Image x="0" y="200" source="{hideBtn}" width="10" />
+		-->
 	</s:VGroup>
-		
 	<s:Group width="100%" height="100%" x="0" y="5" >
 		<!--creationComplete="group1_creationCompleteHandler(event)"  >-->
 		<xtreme:XtremeComponent name="view" id="view" width="100%" height="100%" />
@@ -691,4 +695,5 @@
 			</s:Button>
 		</s:BorderContainer>
 	</s:Group>
+		
 </s:Application>

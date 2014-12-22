@@ -65,18 +65,18 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     private var _internal_installationSite : String;
     private var _internal_switchName : String;
     private var _internal_runTime : String;
-    private var _internal_VLANID : String;
     private var _internal_flow : String;
     private var _internal_projectId : String;
+    private var _internal_VLANID : String;
     private var _internal_ownedBusiness : String;
     private var _internal_switchId : String;
     private var _internal_vlanDescp : String;
     private var _internal_switchType : String;
-    private var _internal_subNetwork : String;
     private var _internal_descp : String;
+    private var _internal_subNetwork : String;
     private var _internal_typeSpecification : String;
-    private var _internal_showName : String;
     private var _internal_siteId : String;
+    private var _internal_showName : String;
     private var _internal_delFlg : String;
     private var _internal_debugging : String;
 
@@ -145,12 +145,6 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     }
 
     [Bindable(event="propertyChange")]
-    public function get VLANID() : String
-    {
-        return _internal_VLANID;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get flow() : String
     {
         return _internal_flow;
@@ -160,6 +154,12 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     public function get projectId() : String
     {
         return _internal_projectId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get VLANID() : String
+    {
+        return _internal_VLANID;
     }
 
     [Bindable(event="propertyChange")]
@@ -187,15 +187,15 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     }
 
     [Bindable(event="propertyChange")]
-    public function get subNetwork() : String
-    {
-        return _internal_subNetwork;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get descp() : String
     {
         return _internal_descp;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get subNetwork() : String
+    {
+        return _internal_subNetwork;
     }
 
     [Bindable(event="propertyChange")]
@@ -205,15 +205,15 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     }
 
     [Bindable(event="propertyChange")]
-    public function get showName() : String
-    {
-        return _internal_showName;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get siteId() : String
     {
         return _internal_siteId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get showName() : String
+    {
+        return _internal_showName;
     }
 
     [Bindable(event="propertyChange")]
@@ -306,16 +306,6 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         }
     }
 
-    public function set VLANID(value:String) : void
-    {
-        var oldValue:String = _internal_VLANID;
-        if (oldValue !== value)
-        {
-            _internal_VLANID = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "VLANID", oldValue, _internal_VLANID));
-        }
-    }
-
     public function set flow(value:String) : void
     {
         var oldValue:String = _internal_flow;
@@ -333,6 +323,16 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         {
             _internal_projectId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "projectId", oldValue, _internal_projectId));
+        }
+    }
+
+    public function set VLANID(value:String) : void
+    {
+        var oldValue:String = _internal_VLANID;
+        if (oldValue !== value)
+        {
+            _internal_VLANID = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "VLANID", oldValue, _internal_VLANID));
         }
     }
 
@@ -376,16 +376,6 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         }
     }
 
-    public function set subNetwork(value:String) : void
-    {
-        var oldValue:String = _internal_subNetwork;
-        if (oldValue !== value)
-        {
-            _internal_subNetwork = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "subNetwork", oldValue, _internal_subNetwork));
-        }
-    }
-
     public function set descp(value:String) : void
     {
         var oldValue:String = _internal_descp;
@@ -393,6 +383,16 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         {
             _internal_descp = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "descp", oldValue, _internal_descp));
+        }
+    }
+
+    public function set subNetwork(value:String) : void
+    {
+        var oldValue:String = _internal_subNetwork;
+        if (oldValue !== value)
+        {
+            _internal_subNetwork = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "subNetwork", oldValue, _internal_subNetwork));
         }
     }
 
@@ -406,16 +406,6 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         }
     }
 
-    public function set showName(value:String) : void
-    {
-        var oldValue:String = _internal_showName;
-        if (oldValue !== value)
-        {
-            _internal_showName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "showName", oldValue, _internal_showName));
-        }
-    }
-
     public function set siteId(value:String) : void
     {
         var oldValue:String = _internal_siteId;
@@ -423,6 +413,16 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         {
             _internal_siteId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteId", oldValue, _internal_siteId));
+        }
+    }
+
+    public function set showName(value:String) : void
+    {
+        var oldValue:String = _internal_showName;
+        if (oldValue !== value)
+        {
+            _internal_showName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "showName", oldValue, _internal_showName));
         }
     }
 

@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:xtreme="xtreme.core.*"
+			   xmlns:services="services.*"  minWidth="955" minHeight="600" 
+			   xmlns:degrafa="http://www.degrafa.com/2007"
+			   xmlns:paint="com.degrafa.paint.*"
+			   xmlns:geometry="com.degrafa.geometry.*"
+			   width="100%"  applicationComplete="applicationComplete();" >
+	<fx:Declarations>
+		<s:CallResponder id="getListByAreaResult"/>
+		<services:SiteSchema id="siteSchema"
+							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							 showBusyCursor="true"/>
+		<s:CallResponder id="getSchemaResult" result="getSchemaResult_resultHandler(event)" fault="getSchemaResult_faultHandler(event)"/>
+		<services:ShowSchema id="showSchema"
+							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							 showBusyCursor="true"/>
+		<s:CallResponder id="getSchemaByAreaNameResult" result="getSchemaResult_resultHandler(event)" fault="getSchemaResult_faultHandler(event)"/>
+		<s:CallResponder id="getListByConditionResult"/>
+		<s:CallResponder id="getPageResult" result="getPageResult_resultHandler(event)"/>
+		<s:CallResponder id="getSiteRelationBySiteNameResult" result="getSiteRelationBySiteNameResult_resultHandler(event)"
+						 fault="getSiteRelationBySiteNameResult_faultHandler(event)"/>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.serialization.json.JSON;
+			import com.degrafa.GeometryGroup;
+			import com.degrafa.geometry.Path;
+			import com.degrafa.paint.SolidFill;
+			
+			import flash.ux.core.Console;
+			import flash.ux.utils.MathUtil;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.controls.Image;
+			import mx.core.DragSource;
+			import mx.core.IUIComponent;
+			import mx.events.DragEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.DragManager;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			
+			import cn.com.dhcc.fzep.topo.components.SchemaElementComponent;
+			import cn.com.dhcc.fzep.topo.components.SiteComponent;
+			import cn.com.dhcc.fzep.topo.poao.SchemaElementsInfo;
+			
+			import valueObjects.Page;
+			import valueObjects.Schema;
+			import valueObjects.SearchSite;
+			import valueObjects.Site;
+			import valueObjects.SiteRelation;
+			
+			import xtreme.core.Root;
+			import xtreme.scene.SceneManager;
+			import xtreme.scene.entity.shapes.DynamicConnector;
+			import xtreme.scene.entity.shapes.FlexComponent;
+			//[Embed(source="assets/bg/350px-Subdivisions_of_Fuzhou-China.png")]
+			[Embed(source="assets/baidufz.jpg")]
+			[Bindable]
+			public var mapBgImg:Class;
+			[Embed(source="assets/svg/fz2.svg")]
+			[Bindable]
+			public var fzSVG:Class;
+			[Bindable]
+			public var schemaName:String = "台江区";
+			private function applicationComplete() : void
+			{
+				
+				//getSchema(schemaID);
+				stage.align = StageAlign.TOP_LEFT;
+				stage.scaleMode = StageScaleMode.NO_SCALE;
+				stage.quality = StageQuality.HIGH;
+				this.contextMenu.hideBuiltInItems();
+				var console:Console = Console.instance;
+				if (console == null)
+					console = new Console(stage);
+				view.getRoot().layerManager.enableContextMenu();
+				view.registerBuildInCommand(console);
+				view.getRoot().navigationView.visible = false;
+				/**
+				 * 设置默认分页搜索参数
+				 */
+				page.curPage = 1;
+				page.numPerPage = 6;
+				searchSiteCondition.page = page;
+				searchSiteCondition.areaName = schemaName;
+				//getListByCondition(searchSiteCondition);
+				loadSVG();
+				getSchemaByAreaName(schemaName);
+				/**
+				 * 站点列表初始化
+				 */
+				SiteListCntMenu = new ContextMenu();
+				var cmi:ContextMenuItem = new ContextMenuItem("搜站点关系", true); 
+				SiteListCntMenu.hideBuiltInItems(); 
+				SiteListCntMenu.customItems = [cmi]; 
+			}
+			protected function getSchema(arg0:String):void
+			{
+				getSchemaResult.token = showSchema.getSchema(arg0);
+			}
+			protected function getSchemaResult_resultHandler(event:ResultEvent):void
+			{
+				var schema:Schema = event.result  as Schema;
+				if(schema){
+					schemaNameLabel.text = schema.schemaName;
+					schemaNote.text = schema.schemaNote;
+					loadSchema(schema.schemaData);
+				}else{
+					Alert.okLabel = "知道了";
+					clearup();
+					Alert.show("无该区域站点视图。\n要添加站点图，请到视图管理页面操作。", "提示");
+				}
+				
+			}
+			/**
+			 * 加载视图数据
+			 */
+			protected function loadSchema(data:String):void {
+				clearup();
+				//get the raw JSON data and cast to String  
+				var rawData:String = String(data);  
+				
+				//decode the data to ActionScript using the JSON API  
+				//in this case, the JSON data is a serialize Array of Objects.  
+				var arr:Array = (JSON.decode(rawData) as Array);  
+				
+				//create a new ArrayCollection passing the de-serialized Array  
+				//ArrayCollections work better as DataProviders, as they can  
+				//be watched for changes.  
+				var dp:ArrayCollection = new ArrayCollection(arr);  
+				
+				var sceneMgr:SceneManager = Root.instance.sceneManager;
+				//Alert.show(String(dp.length));
+				
+				for (var i:int = 0; i < dp.length; i++) 
+				{
+					var obj:Object =  dp.getItemAt(i);
+					var seInfo:SchemaElementsInfo = new SchemaElementsInfo();
+					seInfo.id = obj.id;
+					seInfo.imgPath = obj.imgPath;
+					seInfo.showName = obj.showName;
+					seInfo.type = obj.type;
+					seInfo.x = obj.x;
+					seInfo.y = obj.y;
+					
+					var eCom:SchemaElementComponent = new SchemaElementComponent();
+					eCom.imgName = seInfo.imgPath;
+					eCom.eleInfo = seInfo;
+					//eCom.doShow = doShowEquipment;
+					//eCom.doubleClickEnabled = true;
+					//eCom.addEventListener(MouseEvent.DOUBLE_CLICK, toEquipDetail);
+					var eid:String = seInfo.type + seInfo.id;
+					var equipFC:FlexComponent = new FlexComponent(eid, eCom);
+					equipFC.draggable = false;
+					equipFC.x = seInfo.x;
+					equipFC.y = seInfo.y;
+					equipFC.width = 60;
+					equipFC.height = 60;
+					
+					sceneMgr.addEntity(equipFC);
+				}
+				
+			}
+			public function clearup() : void
+			{
+				// 清空场景
+				Root.instance.sceneManager.clearScene();
+			}
+			protected function getSchemaResult_faultHandler(event:FaultEvent):void
+			{
+				Alert.show("无法获取视图数据。","出错啦！");
+			}
+			protected function image1_mouseOverHandler(event:MouseEvent):void
+			{
+				var img:Image = event.currentTarget as Image;
+				//img.opaqueBackground = "0xef23ed";
+				img.alpha = 0.5;
+			}
+			
+			protected function image1_mouseOutHandler(event:MouseEvent):void
+			{
+				var img:Image = event.currentTarget as Image;
+				//img.opaqueBackground = null;
+				img.alpha = 0.2;
+				
+			}
+			
+			
+			protected function getListByArea(arg0:String):void
+			{
+				getListByAreaResult.token = siteSchema.getListByArea(arg0);
+			}
+			
+			protected function getSchemaByAreaName(arg0:String):void
+			{
+				getSchemaByAreaNameResult.token = siteSchema.getSchemaByAreaName(arg0);
+			}
+			
+			
+			private function searchPath(node:XML):void 
+			{ 
+				//Alert.show(node);
+				var reg:RegExp = /[.]*::path/;
+				// Loop over all of the child elements of the node 
+				for each ( var element:XML in node.elements( ) ) 
+				{ 
+					var name:String = element.name().toString();
+					if(name.match(reg)) 
+					{ 
+						//Alert.show(element.attribute("id"));
+						var geoGroups:GeometryGroup = new GeometryGroup();
+						geoGroups.addEventListener(MouseEvent.CLICK, loadSchema2);
+						var path:Path = new Path();
+						path.data = element.attribute("d");
+						path.id = element.attribute("id");
+						path.visible = true;
+						var fillColor:String = element.attribute("fill");
+						var fill:SolidFill = new SolidFill(fillColor);
+						path.fill = fill;
+						
+						var label:spark.components.Label = new spark.components.Label();
+						label.text = element.attribute("id");
+						label.x = 10;
+						label.y = 10;
+						geoGroups.addChild(label);
+						geoGroups.draw(null,null);
+						geoGroups.geometryCollection.addItem(path);
+						geoGroups.name = element.attribute("id");
+						geoGroups.buttonMode = true;
+						geoGroups.target = geoSurf;
+						//geoSurf.graphicsCollection.addItem(geoGroups);
+					}
+				}
+				//geoGroup.addEventListener(MouseEvent.CLICK, loadSchema);
+			}
+			
+			
+			[Bindable]  
+			private var datas:XML = new XML();  
+			[Bindable]
+			private var basePath:String = '';
+			[Bindable]
+			private var topoBasePath:String = '';
+			private function loadSVG():void  
+			{  	
+				var allURL:String = root.loaderInfo.url;
+				var reg:RegExp = /(\/+)/;
+				var regR:Array = allURL.split(reg);
+				basePath= regR[0] + regR[1] + regR[2] + regR[3] + regR[4] + regR[5];
+				topoBasePath = basePath + "topo/";
+				var url:URLRequest = new URLRequest(topoBasePath + "fx/assets/svg/fz.svg");  
+				var loader:URLLoader = new URLLoader();  
+				loader.addEventListener(Event.COMPLETE,onComplete);  
+				loader.load(url);  
+			}  
+			private function onComplete(event:Event):void{  
+				var result:URLLoader = URLLoader(event.target);  
+				datas = XML(result.data);  
+				searchPath(datas);
+			}  
+			private function loadSchema2(event:MouseEvent):void{  
+				var grup:GeometryGroup = event.currentTarget as GeometryGroup;
+				//Alert.show(grup.name);
+				
+				getSchemaByAreaName(grup.name);
+				searchSite(grup.name);
+			} 
+			
+			
+			protected function getListByAreaNameResult_faultHandler(event:FaultEvent):void
+			{
+				// TODO Auto-generated method stub
+				Alert.show("获取站点信息失败", "提示");
+			}
+			
+			protected function getListByAreaNameResult_resultHandler(event:ResultEvent):void
+			{
+				var data:Array = event.result as Array;
+				//siteGridP.title = "区域站点(" + data.length + ")";
+				
+			}
+			
+			protected function searchKey_focusInHandler(event:FocusEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function searchKey_keyDownHandler(event:KeyboardEvent):void
+			{
+				if(event.keyCode ==13){    //the 'enter' key code 
+					searchSiteSchema();
+				}
+			}
+			
+			
+			protected function searchBtn_clickHandler(event:MouseEvent):void
+			{
+				searchSiteSchema();
+			}
+			/**
+			 * 搜索并生成区域对应站点视图
+			 */
+			protected function searchSiteSchema():void {
+				var keyReg:RegExp = /.{1,15}/;    //关键字格式正则表达式
+				if(searchKey.text.match(keyReg)){
+					//Alert.show(searchKey.text,"搜索");
+					getSiteRelationBySiteName(searchKey.text, 1);
+				}else{
+					//搜索关键字-参数错误
+				}
+			}
+			
+			
+			protected function getListByCondition(arg0:SearchSite):void
+			{
+				getPage(arg0);
+				getListByConditionResult.token = siteSchema.getListByCondition(arg0);
+			}
+			
+			[Bindable]
+			public var searchSiteCondition:SearchSite = new SearchSite();
+			[Bindable]
+			public var page:Page = new Page();
+			/**
+			 * 搜索区域对应站点
+			 */
+			protected function searchSite(areaName:String):void {
+				searchSiteCondition.areaName = areaName;
+				searchSiteCondition.page.curPage = 1;
+				getListByCondition(searchSiteCondition);
+			}
+			
+			
+			protected function getPage(arg0:SearchSite):void
+			{
+				getPageResult.token = siteSchema.getPage(arg0);
+			}
+			
+			protected function getPageResult_resultHandler(event:ResultEvent):void
+			{
+				var rePage:Page = event.result as Page;
+				searchSiteCondition.page.totalPage = rePage.totalPage;
+				searchSiteCondition.page.curPage = rePage.curPage;
+				pagedetail.text = "第" + searchSiteCondition.page.curPage + "页/共" + searchSiteCondition.page.totalPage + "页"
+				inputpage.maximum = rePage.totalPage;
+				if(rePage.curPage==1){
+					prePage.enabled = false;
+					firstPage.enabled = false;
+				}else{
+					prePage.enabled = true;
+					firstPage.enabled = true;
+				}
+				if(rePage.curPage+1>rePage.totalPage){
+					nextPage.enabled = false;
+					lastPage.enabled = false;
+				}else {
+					nextPage.enabled = true;
+					lastPage.enabled = true;
+				}
+			}
+			
+			
+			protected function siteDataGrid_creationCompleteHandler(event:FlexEvent):void
+			{
+				getListByCondition(searchSiteCondition);
+			}
+			
+			
+			protected function gotoPage(event:MouseEvent):void
+			{
+				if(event.currentTarget.id=="firstPage"){
+					searchSiteCondition.page.curPage = 1;
+				}else if(event.currentTarget.id=="lastPage"){
+					searchSiteCondition.page.curPage = searchSiteCondition.page.totalPage;
+				}else if(event.currentTarget.id=="prePage"){
+					if(searchSiteCondition.page.curPage>1){
+						searchSiteCondition.page.curPage = searchSiteCondition.page.curPage-1;
+					}
+				}else if(event.currentTarget.id=="nextPage"){
+					if(searchSiteCondition.page.curPage<searchSiteCondition.page.totalPage){
+						searchSiteCondition.page.curPage = searchSiteCondition.page.curPage+1;
+					}
+				}else if(event.currentTarget.id=="jumpTo"){
+					//Alert.show("jump to " + inputpage.value );
+					if(inputpage.value<=searchSiteCondition.page.totalPage && inputpage.value >0){
+						searchSiteCondition.page.curPage = inputpage.value;
+					}
+				}
+				//Alert.show(searchSiteCondition.page.totalPage+'');
+				//Alert.show(searchSiteCondition.page.curPage + "/" + searchSiteCondition.page.numPerPage);
+				getListByCondition(searchSiteCondition);
+			}
+			
+			protected function searchSiteListKeyBtn_clickHandler(event:MouseEvent):void
+			{
+				searchSiteCondition.keyWord = searchSiteListKey.text;
+				if(searchSiteCondition.keyWord.length>0){
+					if(scope_sitename.selected){
+						searchSiteCondition.searchField = "siteName";
+					}else if(scope_siteAddress.selected){
+						searchSiteCondition.searchField = "siteAdress";
+					}else if(scope_contact.selected){
+						searchSiteCondition.searchField = "connactName";
+					}
+					searchSiteCondition.page.curPage = 1;
+					getListByCondition(searchSiteCondition);
+				}else{
+					searchSiteCondition.searchField = "";
+					searchSiteCondition.page.curPage = 1;
+					getListByCondition(searchSiteCondition);
+					
+				}
+			}
+			
+			protected function searchSiteListAllBtn_clickHandler(event:MouseEvent):void
+			{
+				scope_sitename.selected = true;
+				searchSiteListKey.text = "";
+				searchSiteCondition.searchField = "";
+				searchSiteCondition.page.curPage = 1;
+				getListByCondition(searchSiteCondition);
+			}
+			
+			protected function searchSiteListKeyBtn_keyUpHandler(event:KeyboardEvent):void
+			{
+				if(event.keyCode ==13){    //the 'enter' key code 
+					//Alert.show("en");
+					searchSiteListKeyBtn_clickHandler(null);
+				}
+			}
+			
+			
+			protected function getSiteRelationBySiteName(arg0:String, arg1:int):void
+			{
+				getSiteRelationBySiteNameResult.token = siteSchema.getSiteRelationBySiteName(arg0, arg1);
+			}
+			
+			protected function getSiteRelationBySiteNameResult_resultHandler(event:ResultEvent):void
+			{
+				var siteRelation:SiteRelation = event.result as SiteRelation;
+				if(siteRelation.center){
+					schemaNameLabel.text ="【" + searchKey.text + "】站点关系图";
+					clearup();
+					var sceneMgr:SceneManager = Root.instance.sceneManager;
+					
+					var siteComponent:SiteComponent = new SiteComponent();
+					siteComponent.site = siteRelation.center;
+					var center:FlexComponent = new FlexComponent("site_" + siteComponent.site.siteId, siteComponent);
+					center.width = 60;
+					center.height = 60;
+					center.x = view.width*0.33;
+					center.y = view.height*0.45;
+					center.draggable = false;
+					
+					sceneMgr.addEntity(center);
+					
+					
+					var radius:Number;
+					radius = 150;
+					var angle:Number = 45;
+					var leveOneList:ArrayCollection = siteRelation.levelOneSite;
+					var intern:Number = 360/leveOneList.length;
+					for (var i:int = 0; i < leveOneList.length; i++) 
+					{
+						var siteLevelOneComp:SiteComponent = new SiteComponent();
+						siteLevelOneComp.site = leveOneList.getItemAt(i) as Site;
+						var flexCom:FlexComponent = new FlexComponent("site_" + siteLevelOneComp.site.siteId, siteLevelOneComp);
+						flexCom.draggable = true;
+						
+						//flexCom.width = 60;
+						//flexCom.height = 60;
+						
+						// 计算面板位置
+						var rad:Number = angle * MathUtil.DEG_2_RAD;
+						flexCom.x = center.x + Math.sin(rad) * radius;
+						flexCom.y = center.y + Math.cos(rad) * radius;
+						flexCom.alpha = 0.7;
+						angle += intern;
+						sceneMgr.addEntity(flexCom);
+					}
+					
+					
+					//光缆颜色
+					var lineColors:Array = [0xFF3F33, 0xFF8433, 0xFFB133, 0xFCDB34, 0xF9FF33,
+						0xBFE43A, 0x36DB43, 0x3DA4D8, 0x3D74DA, 0x543CD9];
+					
+					var cableList:ArrayCollection = siteRelation.listCable;
+					//Alert.show(cableList.length +"");
+					for (var j:int = 0; j < cableList.length; j++) 
+					{
+						var cableObj:Object = cableList.getItemAt(j);
+						var startID:String = cableObj["cableStartId"];
+						var endID:String = cableObj["cableEndId"];
+						var startComponent:FlexComponent = sceneMgr.getEntity("site_" + startID) as FlexComponent;
+						var endComponent:FlexComponent = sceneMgr.getEntity("site_" + endID) as FlexComponent;
+						
+						if(startComponent && endComponent){
+							var connector:DynamicConnector = new DynamicConnector("connector_" + j);
+							connector.lineThickness = 2;
+							connector.lineColor = 0x52B231;//lineColors[lineColors.length%j];
+							connector.connect(startComponent.centerAnchor, endComponent.centerAnchor);
+							connector.alpha = 0.5;
+							sceneMgr.addEntity(connector);
+						}
+					}
+				}else{
+					Alert.show("站点不存在，\n请确认站点名称是否正确。","提示");
+				}
+			}
+			/**
+			 * 查询站点关系 错误提示
+			 */
+			protected function getSiteRelationBySiteNameResult_faultHandler(event:FaultEvent):void
+			{
+				Alert.show("查询失败","出错了");
+			}
+			
+			[Bindable]
+			public var SiteListCntMenu:ContextMenu;    //站点列表 右键菜单
+			
+			protected function siteContainer_dragEnterHandler(event:DragEvent, format:String):void
+			{
+				if(event.dragSource.hasFormat(format)){  
+					DragManager.acceptDragDrop(IUIComponent(event.target));//允许List接收释放  
+				}  
+				
+			}
+			
+			protected function siteContainer_dragDropHandler(event:DragEvent, format:String):void
+			{
+				var obj:DragSource  = event.dragSource ; 
+				Alert.show(String(obj.dataForFormat(format)['x']));
+				//getSiteRelationBySiteName("站点1", 1);
+				
+			}
+			
+			protected function siteDataGrid_dragStartHandler(e:DragEvent, format:String):void
+			{
+				var iu:IUIComponent=e.currentTarget as IUIComponent;  
+				var ds:DragSource=new DragSource();  
+				ds.addData({"x": e.localX, "y": e.localY}, format); //设置一个标号format  
+				DragManager.doDrag(null, ds, e);  
+			}
+			
+		]]>
+	</fx:Script>
+		<s:layout>
+			<s:VerticalLayout gap="-1"  ></s:VerticalLayout>
+		</s:layout>
+		<s:BorderContainer  borderAlpha="1"  borderVisible="false" backgroundAlpha="0.0" width="100%" height="{this.height-siteGrid.height}" dropShadowVisible="false">
+			<s:layout>
+				<s:HorizontalLayout gap="-1" paddingLeft="10" paddingRight="10" paddingTop="10"  />
+			</s:layout>
+			<s:Panel id="areaSch"  title="福州" borderAlpha="1" width="40%" height="100%" dropShadowVisible="false" >
+				<s:BorderContainer backgroundAlpha="1" borderVisible="false" width="100%"  backgroundImage="{mapBgImg}" backgroundImageFillMode="scale"   height="100%">
+					<!--<mx:Image source="{bgImg}"   /> backgroundImage="{mapBgImg}"
+					<mx:Image source="{fzSVG}" mouseOver="image1_mouseOverHandler(event)" 
+							  mouseOut="image1_mouseOutHandler(event)"  alpha="0.2" 
+							  buttonMode="true" scaleContent="true" click="image1_clickHandler(event)"  />
+					-->
+					<degrafa:Surface id="geoSurf">
+					</degrafa:Surface>
+					<!--
+					<s:BorderContainer borderVisible="false" width="100%" backgroundAlpha="0">
+						<s:layout>
+							<s:HorizontalLayout />
+						</s:layout>
+						<s:Button label="台江区" click="getSchemaByAreaName('台江区');searchSite('台江区');"></s:Button>
+						<s:Button label="晋安区" click="getSchemaByAreaName('晋安区');searchSite('晋安区');"></s:Button>
+						<s:Button label="马尾区" click="getSchemaByAreaName('马尾区');searchSite('马尾区');"></s:Button>
+						<s:Button label="仓山区" click="getSchemaByAreaName('仓山区');searchSite('仓山区');"></s:Button>
+						<s:Button label="鼓楼区" click="getSchemaByAreaName('鼓楼区');searchSite('鼓楼区');"></s:Button>
+					</s:BorderContainer>
+					-->
+				</s:BorderContainer>
+			</s:Panel>
+			
+			<s:BorderContainer id="siteContainer"  borderAlpha="1" backgroundAlpha="0" width="60%" height="100%" visible="true" dropShadowVisible="false"
+								dragEnter="siteContainer_dragEnterHandler(event,'siteInfo')"
+								dragDrop="siteContainer_dragDropHandler(event,'siteInfo')">
+				<s:Group id="xContainer" width="100%" height="100%" x="0" y="0"  >
+					<xtreme:XtremeComponent name="view" id="view" width="100%" height="100%" />
+				</s:Group>
+				<mx:HBox backgroundAlpha="0" width="100%" paddingBottom="10" paddingLeft="10" paddingTop="10" paddingRight="10">
+					<mx:Image source="@Embed('assets/btn_info_48.png')" width="16" height="16" toolTip="视图信息">
+					</mx:Image>
+					<s:Label id="schemaNameLabel" text="" fontSize="14" toolTip="视图名称" fontFamily="Times New Roman" >			
+					</s:Label>
+					<s:Label id="schemaNote" text="" fontSize="14" toolTip="备注" fontFamily="Times New Roman">	
+					</s:Label>
+					<mx:Spacer width="100%"/>
+					<s:Group toolTip="搜站点关系">
+						<s:layout>
+							<s:HorizontalLayout />
+						</s:layout>
+						
+						<s:HGroup toolTip="关联层数" >
+							<s:RadioButton groupName="paymentType"  id="degreeOne"   label="1层"   />
+							<s:RadioButton groupName="paymentType"  id="degreeTwo" value="check" selected="true" label="2层" />
+							<s:RadioButton groupName="paymentType" id="degreeThree"   value="credit"  label="3层"   />
+						</s:HGroup>
+
+						<s:TextInput id="searchKey" keyDown="searchKey_keyDownHandler(event)" maxChars="15">
+						</s:TextInput>
+						<mx:Image id="searchBtn" click="searchBtn_clickHandler(event)"  source="@Embed(source='assets/buttons/btn_search_32.png')" buttonMode="true" width="24" height="24" toolTip="搜索"/>
+					</s:Group>
+				</mx:HBox>
+
+			</s:BorderContainer>
+			<!--
+			<s:Panel title="福州市电业局站点" borderAlpha="0.3" width="60%" height="100%" visible="true" dropShadowVisible="false"  >
+				<s:Group id="xContainer" width="100%" height="100%" x="0" y="0" >
+					<xtreme:XtremeComponent name="view" id="view" width="100%" height="100%" />
+				</s:Group>
+				
+				<s:BorderContainer id="info" borderVisible="false" backgroundAlpha="0" height="{schemaNameLabel.height}" top="10" left="10"  >
+					<s:layout>
+						<s:HorizontalLayout />
+					</s:layout>
+					<mx:Image source="@Embed('assets/btn_info_48.png')" width="16" height="16" toolTip="视图信息">
+					</mx:Image>
+					<s:Label id="schemaNameLabel" text="" fontSize="14" toolTip="视图名称" fontFamily="Times New Roman" >			
+					</s:Label>
+					<s:Label id="schemaNote" text="" fontSize="14" toolTip="备注" fontFamily="Times New Roman">	
+					</s:Label>
+				</s:BorderContainer>
+			</s:Panel>
+			-->
+		</s:BorderContainer>	
+		<s:BorderContainer id="siteGrid" borderAlpha="1"   borderVisible="false" backgroundAlpha="0.0" width="100%"  dropShadowVisible="false">
+			<s:layout>
+				<s:VerticalLayout  gap="1" paddingBottom="10" paddingLeft="10" paddingRight="10" />
+			</s:layout>
+			<s:BorderContainer id="siteGridP" width="100%" borderAlpha="1"  backgroundAlpha="0"  >
+				<s:layout>
+					 <s:VerticalLayout paddingBottom="5"  />
+				 </s:layout>
+				<mx:HBox backgroundAlpha="0"  horizontalAlign="left" width="100%" paddingTop="5" paddingLeft="5">
+					<s:HGroup toolTip="搜索域" >
+						<s:RadioButton groupName="scopeType" selected="true"  id="scope_sitename"   label="站点名称"   />
+						<s:RadioButton groupName="scopeType"  id="scope_siteAddress" value="check" label="站点位置"  />
+						<s:RadioButton groupName="scopeType" id="scope_contact"   value="credit"  label="站点联系人"   />
+					</s:HGroup>
+					<s:TextInput id="searchSiteListKey"  maxChars="15"  keyDown="searchSiteListKeyBtn_keyUpHandler(event)" >
+					</s:TextInput>
+					<mx:LinkButton id="searchSiteListKeyBtn" fontWeight="bold" label="搜索" click="searchSiteListKeyBtn_clickHandler(event)" 
+								  />   
+					<mx:LinkButton id="searchSiteListAllBtn"  label="重置" click="searchSiteListAllBtn_clickHandler(event)"   />   
+				</mx:HBox>  
+				<mx:DataGrid id="siteDataGrid" paddingTop="0" width="100%" dataProvider="{getListByConditionResult.lastResult}"
+						 	creationComplete="siteDataGrid_creationCompleteHandler(event)" contextMenu="{SiteListCntMenu}" dragEnabled="true" 
+							>
+					<mx:columns>
+						<!--<mx:DataGridColumn dataField="siteId" headerText="站点编码" />-->
+						<mx:DataGridColumn dataField="siteName" headerText="站点名称" />
+						<mx:DataGridColumn dataField="siteAdress" headerText="站点位置" />
+						<mx:DataGridColumn dataField="connactName" headerText="联系人" />
+						<mx:DataGridColumn dataField="connactNumber" headerText="联系电话" />
+						<mx:DataGridColumn dataField="descp" headerText="备注"/>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:HBox backgroundAlpha="0" verticalAlign="middle" horizontalAlign="center" width="100%">
+					<mx:Label   text="第 0 页/共 0 页" id="pagedetail"  />  
+					<mx:LinkButton label="首页" id="firstPage"  click="gotoPage(event)"   />  
+					<mx:LinkButton label="上一页" id="prePage" click="gotoPage(event)" />  
+					<mx:LinkButton label="下一页" id="nextPage" click="gotoPage(event)" />  
+					<mx:LinkButton label="末页"  id="lastPage" click="gotoPage(event)" />  
+					<mx:NumericStepper id="inputpage" stepSize="1" minimum="1" maximum="1" />  
+					<mx:LinkButton id="jumpTo" label="跳转" click="gotoPage(event)"  />    
+				</mx:HBox>  
+			</s:BorderContainer>
+		</s:BorderContainer>
+</s:Application>

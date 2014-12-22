@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-flat-20030114.dtd">
+<!-- Created by SVGDeveloper 1.0 -->
+<svg width="640" height="480" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<path d="M288 188L290 196L290 200L294 206L298 210L296 212L302 219L304 224L302 226L311 226L316 226C317 224 320 226 320 226L325 226C329 226 337 227 337 227C337 227 339 230 340 230C341 230 345 234 345 234L352 233L356 230L358 226C358 225 356 223 356 223C352 221 350 217 350 217L346 216L342 214L337 211L328 204C324 204 314 205 314 205L308 203L306 198L299 193L296 190L294 186C292 186 289 188 288 188Z" fill="#FF0000" stroke="none" stroke-opacity="0" opacity="0.51" transform="matrix(1,0,0,1,-88,-7)" stroke-dasharray="1,1" cursor="pointer" id="仓山区" xmlns="http://www.w3.org/2000/svg" />
+<path d="M293 91L291 103L282 120C282 120 289 124 289 129C289 135 303 148 303 151C303 153 304 159 304 163C304 166 313 176 313 176L337 189L343 202L350 176C350 176 344 163 341 158C339 153 321 124 321 124L317 109L305 96C305 96 294 92 293 91Z" fill="#00FF00" stroke="none" stroke-opacity="0" stroke-dasharray="1,1" id="晋安区" transform="matrix(1,0,0,1,-88,-6)" xmlns="http://www.w3.org/2000/svg" />
+<path d="M360 193L363 211L376 214L382 197C382 197 387 185 387 184C387 183 377 176 377 176L364 175L360 193Z" fill="#0000FF" stroke="none" stroke-opacity="0" stroke-dasharray="6,6" id="马尾区" transform="matrix(1,0,0,1,-88,-6)" xmlns="http://www.w3.org/2000/svg" />
+<path d="M305 189L311 194L316 189C316 189 316 185 314 185C312 185 307 181 307 181L297 185C297 185 307 188 305 189Z" fill="#FFFF00" stroke="none" stroke-opacity="0" id="鼓楼区" transform="matrix(1,0,0,1,-88,-6)" xmlns="http://www.w3.org/2000/svg" />
+<path d="M315 201C315 201 325 200 327 201C329 201 337 205 337 205L334 198L319 193L309 197C309 197 315 203 315 201Z" fill="#00FFFF" stroke="none" stroke-opacity="0" id="台江区" transform="matrix(1,0,0,1,-88,-6)" xmlns="http://www.w3.org/2000/svg" />
+</svg>
