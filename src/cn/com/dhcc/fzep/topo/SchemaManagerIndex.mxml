@@ -133,7 +133,7 @@
 			protected function getRootNode():void
 			{
 				getRootNodeResult.token = schemaTree2.getRootNode();
-				enable(['refresh']);    //设置可用操作
+				enable(['refresh']);    //设置可用操作 
 			}
 			
 			protected function getRootNodeResult_resultHandler(event:ResultEvent):void
@@ -212,9 +212,11 @@
 					enable(['refresh','add']);
 				}else if(item.type == "areaSchema"){    //区域视图       deprecated
 					enable(['edit']);
-				}else if ("levelSchema" == item.type ){    //分级视图
+				}else if ("levelSchema" == item.type ){    //区域视图
 					enable(['refresh', 'edit']);
 				}else if ("siteSchema" == item.type){    //站点视图
+					enable(['refresh', 'edit']);
+				}else if ("area" == item.type){    //站点视图
 					enable(['refresh', 'edit']);
 				}else {    //其他
 					enable(['refresh']);
@@ -313,10 +315,17 @@
 					openWindow(basePath + "topo/areaMaps.jsp", "百度"); 
 				}
 			}
-			
+			/**
+			 * 编辑
+			 */
 			protected function edit_clickHandler(event:MouseEvent):void
 			{
-				Alert.show('edit');
+				var item:SchemaTreeNode = schemaTree.selectedItem as SchemaTreeNode;
+				//Alert.show('edit');
+				if(item.type == "area"){
+					Alert.show(item.name);
+					//openWindow(basePath + "topo/view.jsp?schemaID="+item.id, item.name); 
+				}
 			}
 			
 			

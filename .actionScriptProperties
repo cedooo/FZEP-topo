@@ -38,6 +38,7 @@
     <application path="cn/com/dhcc/fzep/topo/schema/EditEquipSchema.mxml"/>
     <application path="cusGrap.mxml"/>
     <application path="SiteRelationSearch.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/schema/EditAreaSiteSchema.mxml"/>
   </applications>
   <modules/>
   <workers/>

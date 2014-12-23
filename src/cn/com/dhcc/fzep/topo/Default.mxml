@@ -37,7 +37,6 @@
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.controls.Image;
-			import mx.core.DragSource;
 			import mx.core.IUIComponent;
 			import mx.events.DragEvent;
 			import mx.events.FlexEvent;
@@ -67,10 +66,9 @@
 			[Bindable]
 			public var fzSVG:Class;
 			[Bindable]
-			public var schemaName:String = "台江区";
+			public var schemaName:String = "晋安区";
 			private function applicationComplete() : void
 			{
-				
 				//getSchema(schemaID);
 				stage.align = StageAlign.TOP_LEFT;
 				stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -275,7 +273,6 @@
 			
 			protected function getListByAreaNameResult_faultHandler(event:FaultEvent):void
 			{
-				// TODO Auto-generated method stub
 				Alert.show("获取站点信息失败", "提示");
 			}
 			
@@ -288,7 +285,7 @@
 			
 			protected function searchKey_focusInHandler(event:FocusEvent):void
 			{
-				// TODO Auto-generated method stub
+				// TODO 自动补全 搜索  站点名称  关键字
 				
 			}
 			
@@ -309,9 +306,9 @@
 			 */
 			protected function searchSiteSchema():void {
 				var keyReg:RegExp = /.{1,15}/;    //关键字格式正则表达式
-				if(searchKey.text.match(keyReg)){
+				if(searchRelationKey.text.match(keyReg)){
 					//Alert.show(searchKey.text,"搜索");
-					getSiteRelationBySiteName(searchKey.text, 1);
+					getSiteRelationBySiteName(searchRelationKey.text, 1);
 				}else{
 					//搜索关键字-参数错误
 				}
@@ -446,7 +443,7 @@
 			{
 				var siteRelation:SiteRelation = event.result as SiteRelation;
 				if(siteRelation.center){
-					schemaNameLabel.text ="【" + searchKey.text + "】站点关系图";
+					schemaNameLabel.text ="【" + searchRelationKey.text + "】站点关系图";
 					clearup();
 					var sceneMgr:SceneManager = Root.instance.sceneManager;
 					
@@ -527,28 +524,46 @@
 			
 			protected function siteContainer_dragEnterHandler(event:DragEvent, format:String):void
 			{
+				DragManager.acceptDragDrop(IUIComponent(event.target));//允许List接收释放  
+				/*
 				if(event.dragSource.hasFormat(format)){  
 					DragManager.acceptDragDrop(IUIComponent(event.target));//允许List接收释放  
 				}  
-				
+				*/
 			}
 			
 			protected function siteContainer_dragDropHandler(event:DragEvent, format:String):void
 			{
+				/*
 				var obj:DragSource  = event.dragSource ; 
-				Alert.show(String(obj.dataForFormat(format)['x']));
-				//getSiteRelationBySiteName("站点1", 1);
+				var site:Site = obj.dataForFormat(format) as Site;
+				var siteName:String  = site.siteName;
+				//var siteName:String  = obj.dataForFormat(format)['siteName'];
+				//Alert.show(String(obj.dataForFormat(format)['siteName']));
+				getSiteRelationBySiteName(siteName, 1);
+				*/
+				var site:Site  = siteDataGrid.selectedItem as Site;
+				var siteName:String  = site.siteName;
+				getSiteRelationBySiteName(siteName, 1);
 				
+				searchRelationKey.text = siteName;
+				schemaNameLabel.text = "【" + searchRelationKey.text + "】站点关系图";
+				schemaNote.text = "";
 			}
 			
 			protected function siteDataGrid_dragStartHandler(e:DragEvent, format:String):void
 			{
-				var iu:IUIComponent=e.currentTarget as IUIComponent;  
+				/*
+				//var iu:IUIComponent=e.currentTarget as IUIComponent;  
+				var dataGrids:DataGrid = e.currentTarget as DataGrid;
+				var site:Site  = dataGrids.selectedItem as Site;
+				var iu:IUIComponent= e.currentTarget as IUIComponent;  
+				//Alert.show(obj['siteName']);
 				var ds:DragSource=new DragSource();  
-				ds.addData({"x": e.localX, "y": e.localY}, format); //设置一个标号format  
-				DragManager.doDrag(null, ds, e);  
+				ds.addData({"site": site}, format); //设置一个标号format  
+				DragManager.doDrag(iu,ds, e);  
+				*/
 			}
-			
 		]]>
 	</fx:Script>
 		<s:layout>
@@ -565,20 +580,22 @@
 							  mouseOut="image1_mouseOutHandler(event)"  alpha="0.2" 
 							  buttonMode="true" scaleContent="true" click="image1_clickHandler(event)"  />
 					-->
-					<degrafa:Surface id="geoSurf">
+					<degrafa:Surface id="geoSurf" visible="false">
 					</degrafa:Surface>
-					<!--
-					<s:BorderContainer borderVisible="false" width="100%" backgroundAlpha="0">
-						<s:layout>
-							<s:HorizontalLayout />
-						</s:layout>
-						<s:Button label="台江区" click="getSchemaByAreaName('台江区');searchSite('台江区');"></s:Button>
-						<s:Button label="晋安区" click="getSchemaByAreaName('晋安区');searchSite('晋安区');"></s:Button>
-						<s:Button label="马尾区" click="getSchemaByAreaName('马尾区');searchSite('马尾区');"></s:Button>
-						<s:Button label="仓山区" click="getSchemaByAreaName('仓山区');searchSite('仓山区');"></s:Button>
-						<s:Button label="鼓楼区" click="getSchemaByAreaName('鼓楼区');searchSite('鼓楼区');"></s:Button>
+					<s:BorderContainer borderVisible="false" width="100%" backgroundAlpha="0" fontSize="14">
+						<s:Label backgroundColor="0x4CB848" x="120" y="200" text="台江区"  click="getSchemaByAreaName('台江区');searchSite('台江区');" buttonMode="true"></s:Label>
+						<s:Label backgroundColor="0x4CB848" x="160" y="110"  text="晋安区" click="getSchemaByAreaName('晋安区');searchSite('晋安区');" buttonMode="true"></s:Label>
+						<s:Label backgroundColor="0x4CB848" x="330" y="270"  text="马尾区" click="getSchemaByAreaName('马尾区');searchSite('马尾区');" buttonMode="true"></s:Label>
+						<s:Label backgroundColor="0x4CB848" x="40" y="210"  text="仓山区" click="getSchemaByAreaName('仓山区');searchSite('仓山区');" buttonMode="true"></s:Label>
+						<s:Label backgroundColor="0x4CB848" x="70" y="105"   text="鼓楼区" click="getSchemaByAreaName('鼓楼区');searchSite('鼓楼区');" buttonMode="true"></s:Label>
+						<!--
+						<s:Button x="120" y="200" label="台江区"  click="getSchemaByAreaName('台江区');searchSite('台江区');"></s:Button>
+						<s:Button x="160" y="110"  label="晋安区" click="getSchemaByAreaName('晋安区');searchSite('晋安区');"></s:Button>
+						<s:Button x="330" y="270"  label="马尾区" click="getSchemaByAreaName('马尾区');searchSite('马尾区');"></s:Button>
+						<s:Button x="40" y="210"  label="仓山区" click="getSchemaByAreaName('仓山区');searchSite('仓山区');"></s:Button>
+						<s:Button x="70" y="105"   label="鼓楼区" click="getSchemaByAreaName('鼓楼区');searchSite('鼓楼区');"></s:Button>
+						-->
 					</s:BorderContainer>
-					-->
 				</s:BorderContainer>
 			</s:Panel>
 			
@@ -596,7 +613,7 @@
 					<s:Label id="schemaNote" text="" fontSize="14" toolTip="备注" fontFamily="Times New Roman">	
 					</s:Label>
 					<mx:Spacer width="100%"/>
-					<s:Group toolTip="搜站点关系">
+					<s:Group toolTip="搜站点关系"  >
 						<s:layout>
 							<s:HorizontalLayout />
 						</s:layout>
@@ -606,10 +623,12 @@
 							<s:RadioButton groupName="paymentType"  id="degreeTwo" value="check" selected="true" label="2层" />
 							<s:RadioButton groupName="paymentType" id="degreeThree"   value="credit"  label="3层"   />
 						</s:HGroup>
-
-						<s:TextInput id="searchKey" keyDown="searchKey_keyDownHandler(event)" maxChars="15">
+						<s:TextInput id="searchRelationKey" keyDown="searchKey_keyDownHandler(event)" maxChars="15">
 						</s:TextInput>
-						<mx:Image id="searchBtn" click="searchBtn_clickHandler(event)"  source="@Embed(source='assets/buttons/btn_search_32.png')" buttonMode="true" width="24" height="24" toolTip="搜索"/>
+						<mx:Image id="searchRelationBtn" click="searchBtn_clickHandler(event)"  source="@Embed(source='assets/buttons/btn_search_24.png')" buttonMode="true" width="24" height="24" toolTip="搜索"/>
+						
+						<mx:Image source="@Embed('assets/buttons/btn_full_screen_24.png')" toolTip="全屏" buttonMode="true"  width="20" height="20" >
+						</mx:Image>
 					</s:Group>
 				</mx:HBox>
 
@@ -648,15 +667,18 @@
 						<s:RadioButton groupName="scopeType"  id="scope_siteAddress" value="check" label="站点位置"  />
 						<s:RadioButton groupName="scopeType" id="scope_contact"   value="credit"  label="站点联系人"   />
 					</s:HGroup>
+					<s:Label  paddingTop="5" paddingLeft="5" text="中包含关键字" />
 					<s:TextInput id="searchSiteListKey"  maxChars="15"  keyDown="searchSiteListKeyBtn_keyUpHandler(event)" >
 					</s:TextInput>
 					<mx:LinkButton id="searchSiteListKeyBtn" fontWeight="bold" label="搜索" click="searchSiteListKeyBtn_clickHandler(event)" 
 								  />   
 					<mx:LinkButton id="searchSiteListAllBtn"  label="重置" click="searchSiteListAllBtn_clickHandler(event)"   />   
+					<mx:Spacer width="100%"/>
+					<s:Label  paddingTop="5" paddingLeft="5" text="拖动站点到 ↑视图窗口↑，搜索站点关系。" />
 				</mx:HBox>  
 				<mx:DataGrid id="siteDataGrid" paddingTop="0" width="100%" dataProvider="{getListByConditionResult.lastResult}"
 						 	creationComplete="siteDataGrid_creationCompleteHandler(event)" contextMenu="{SiteListCntMenu}" dragEnabled="true" 
-							>
+							dragStart="siteDataGrid_dragStartHandler(event,'siteInfo')">
 					<mx:columns>
 						<!--<mx:DataGridColumn dataField="siteId" headerText="站点编码" />-->
 						<mx:DataGridColumn dataField="siteName" headerText="站点名称" />

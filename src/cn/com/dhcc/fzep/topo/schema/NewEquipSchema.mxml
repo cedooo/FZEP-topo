@@ -50,7 +50,6 @@
 	<fx:Script>
 		<![CDATA[
 			import com.adobe.serialization.json.JSON;
-			
 			import flash.ux.core.Console;
 			
 			import mx.collections.ArrayList;
