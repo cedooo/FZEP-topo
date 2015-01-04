@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:services="services.*"
+			   xmlns:xtreme="xtreme.core.*"
+			   xmlns:cedo="cn.com.dhcc.fzep.topo.components.*"
+			   minWidth="955" minHeight="600" applicationComplete="applicationComplete();"  >
+	<fx:Script>
+		<![CDATA[
+			import flash.ux.core.Console;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			
+			
+			import valueObjects.Site;
+			[Bindable]
+			public var siteId:int;    //TODO 接收外部传入参数
+			private function applicationComplete() : void
+			{
+				if(stage){
+					siteId = root.loaderInfo.parameters['siteId'];
+				}			
+				
+				//siteId = 1;    //测试
+				getSiteInfoById(String(siteId));
+				elist = new EquipList();
+				
+				stage.align = StageAlign.TOP_LEFT;
+				stage.scaleMode = StageScaleMode.NO_SCALE;
+				stage.quality = StageQuality.HIGH;
+				this.contextMenu.hideBuiltInItems();
+				var console:Console = Console.instance;
+				if (console == null)
+					console = new Console(stage);
+				view.getRoot().layerManager.enableContextMenu();
+				view.registerBuildInCommand(console);
+				view.getRoot(). navigationView.visible = false;
+				
+				loadEquipList(String(siteId));
+				//elist.testCase1();
+				
+			}
+			[Bindable]
+			protected var site:Site;
+			
+			protected function getSiteInfoById(arg0:String):void
+			{
+				getSiteInfoByIdResult.token = siteEquip.getSiteInfoById(arg0);
+			}
+			
+			protected function getSiteInfoByIdResult_resultHandler(event:ResultEvent):void
+			{
+				//Alert.show(event.result['siteName']);
+				//var ssite:Site = event.result as Site;
+				var siteObj:Object = event.result;
+				var siteId:String = siteObj['siteId'];
+				//Alert.show(siteId);
+				var site:Site = new Site();
+				site.siteId = siteId;
+				site.siteName = siteObj['siteName'];
+				//Alert.show(ssite.toString());
+				test.text = "站点名称: " + siteObj['siteName'] 
+					+ "\n地址: " + siteObj['siteAdress'] 
+					+ "\n联系人: " + siteObj['connactName'] 
+					+ "\n联系电话:" + siteObj['connactNumber'] 
+					+ "\n备注: " + siteObj['descp'];
+				/*
+				‘动态’加载站点信息
+				@Deprecated
+				if(site){
+					var elist:EquipList = new EquipList();
+					elist.clearup();
+					elist.loadBySite(site);
+				}else{
+					Alert.show("获取站点数据失败","错误");
+				}
+				*/
+			}
+			
+			protected function getSiteInfoByIdResult_faultHandler(event:FaultEvent):void
+			{
+				// TODO Auto-generated method stub
+				Alert.show("获取数据失败","错误");
+			}
+			[Bindable]
+			protected var elist:EquipList ;
+			/**
+			 * 加载站点设备列表
+			 */
+			protected function loadEquipList(siteId:String):void{
+				var site:Site = new Site();
+				site.siteId = String(siteId);
+				elist.clearup();
+				elist.loadBySite(site);
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:CallResponder id="getSiteInfoByIdResult" result="getSiteInfoByIdResult_resultHandler(event)" fault="getSiteInfoByIdResult_faultHandler(event)"/>
+		<services:SiteEquip id="siteEquip"
+							fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							showBusyCursor="true"/>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:BorderContainer width="100%" height="100%" >
+		<s:layout>
+			<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="10" paddingRight="10" >
+			</s:VerticalLayout>
+		</s:layout>
+		<s:BorderContainer width="100%" height="100%" >
+			<s:layout>
+				<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="10" paddingRight="10" >
+				</s:VerticalLayout>
+			</s:layout>
+			<s:Panel  width="100%" height="30%"  dropShadowVisible="false" title="站点信息">
+				<s:Label id="test">
+				</s:Label>
+			</s:Panel>
+			<s:Panel width="100%" height="70%" title="站点设备"  dropShadowVisible="false" >
+				<s:Group id="xContainer" width="100%" height="100%" x="0" y="0"  >
+					<xtreme:XtremeComponent name="view" id="view" width="100%" height="100%" />
+				</s:Group>
+		</s:Panel>
+		</s:BorderContainer>
+	</s:BorderContainer>
+	
+</s:Application>

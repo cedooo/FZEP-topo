@@ -60,8 +60,8 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
      */
     private var _internal_schemaArgs : String;
     private var _internal_schemaType : String;
-    private var _internal_schemaName : String;
     private var _internal_siteId : String;
+    private var _internal_schemaName : String;
     private var _internal_schemaAddTime : String;
     private var _internal_schemaId : String;
     private var _internal_schemaDelTime : String;
@@ -104,15 +104,15 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
     }
 
     [Bindable(event="propertyChange")]
-    public function get schemaName() : String
-    {
-        return _internal_schemaName;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get siteId() : String
     {
         return _internal_siteId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get schemaName() : String
+    {
+        return _internal_schemaName;
     }
 
     [Bindable(event="propertyChange")]
@@ -179,16 +179,6 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
         }
     }
 
-    public function set schemaName(value:String) : void
-    {
-        var oldValue:String = _internal_schemaName;
-        if (oldValue !== value)
-        {
-            _internal_schemaName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaName", oldValue, _internal_schemaName));
-        }
-    }
-
     public function set siteId(value:String) : void
     {
         var oldValue:String = _internal_siteId;
@@ -196,6 +186,16 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
         {
             _internal_siteId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteId", oldValue, _internal_siteId));
+        }
+    }
+
+    public function set schemaName(value:String) : void
+    {
+        var oldValue:String = _internal_schemaName;
+        if (oldValue !== value)
+        {
+            _internal_schemaName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaName", oldValue, _internal_schemaName));
         }
     }
 

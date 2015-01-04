@@ -58,14 +58,15 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
     /**
      * properties
      */
-    private var _internal_portNumber : String;
     private var _internal_constructionUnit : String;
+    private var _internal_portNumber : String;
+    private var _internal_constructionUnitId : String;
     private var _internal_manufacturers : String;
     private var _internal_installationSite : String;
     private var _internal_switchName : String;
     private var _internal_runTime : String;
-    private var _internal_flow : String;
     private var _internal_projectId : String;
+    private var _internal_flow : String;
     private var _internal_vlanId : String;
     private var _internal_ip : String;
     private var _internal_switchId : String;
@@ -99,15 +100,21 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
      */
 
     [Bindable(event="propertyChange")]
+    public function get constructionUnit() : String
+    {
+        return _internal_constructionUnit;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get portNumber() : String
     {
         return _internal_portNumber;
     }
 
     [Bindable(event="propertyChange")]
-    public function get constructionUnit() : String
+    public function get constructionUnitId() : String
     {
-        return _internal_constructionUnit;
+        return _internal_constructionUnitId;
     }
 
     [Bindable(event="propertyChange")]
@@ -135,15 +142,15 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
     }
 
     [Bindable(event="propertyChange")]
-    public function get flow() : String
-    {
-        return _internal_flow;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get projectId() : String
     {
         return _internal_projectId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get flow() : String
+    {
+        return _internal_flow;
     }
 
     [Bindable(event="propertyChange")]
@@ -208,6 +215,16 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
      * data/source property setters
      */
 
+    public function set constructionUnit(value:String) : void
+    {
+        var oldValue:String = _internal_constructionUnit;
+        if (oldValue !== value)
+        {
+            _internal_constructionUnit = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnit", oldValue, _internal_constructionUnit));
+        }
+    }
+
     public function set portNumber(value:String) : void
     {
         var oldValue:String = _internal_portNumber;
@@ -218,13 +235,13 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         }
     }
 
-    public function set constructionUnit(value:String) : void
+    public function set constructionUnitId(value:String) : void
     {
-        var oldValue:String = _internal_constructionUnit;
+        var oldValue:String = _internal_constructionUnitId;
         if (oldValue !== value)
         {
-            _internal_constructionUnit = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnit", oldValue, _internal_constructionUnit));
+            _internal_constructionUnitId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnitId", oldValue, _internal_constructionUnitId));
         }
     }
 
@@ -268,16 +285,6 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         }
     }
 
-    public function set flow(value:String) : void
-    {
-        var oldValue:String = _internal_flow;
-        if (oldValue !== value)
-        {
-            _internal_flow = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "flow", oldValue, _internal_flow));
-        }
-    }
-
     public function set projectId(value:String) : void
     {
         var oldValue:String = _internal_projectId;
@@ -285,6 +292,16 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         {
             _internal_projectId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "projectId", oldValue, _internal_projectId));
+        }
+    }
+
+    public function set flow(value:String) : void
+    {
+        var oldValue:String = _internal_flow;
+        if (oldValue !== value)
+        {
+            _internal_flow = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "flow", oldValue, _internal_flow));
         }
     }
 

@@ -59,6 +59,7 @@ public class _Super_Carrier extends flash.events.EventDispatcher implements com.
      * properties
      */
     private var _internal_constructionUnit : String;
+    private var _internal_constructionUnitId : String;
     private var _internal_manufacturers : String;
     private var _internal_installationSite : String;
     private var _internal_runTime : String;
@@ -100,6 +101,12 @@ public class _Super_Carrier extends flash.events.EventDispatcher implements com.
     public function get constructionUnit() : String
     {
         return _internal_constructionUnit;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get constructionUnitId() : String
+    {
+        return _internal_constructionUnitId;
     }
 
     [Bindable(event="propertyChange")]
@@ -201,6 +208,16 @@ public class _Super_Carrier extends flash.events.EventDispatcher implements com.
         {
             _internal_constructionUnit = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnit", oldValue, _internal_constructionUnit));
+        }
+    }
+
+    public function set constructionUnitId(value:String) : void
+    {
+        var oldValue:String = _internal_constructionUnitId;
+        if (oldValue !== value)
+        {
+            _internal_constructionUnitId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnitId", oldValue, _internal_constructionUnitId));
         }
     }
 

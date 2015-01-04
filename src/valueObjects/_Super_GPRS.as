@@ -59,19 +59,20 @@ public class _Super_GPRS extends flash.events.EventDispatcher implements com.ado
      * properties
      */
     private var _internal_pperators : String;
-    private var _internal_gprsId : String;
     private var _internal_constructionUnit : String;
+    private var _internal_gprsId : String;
+    private var _internal_constructionUnitId : String;
     private var _internal_technologyType : String;
     private var _internal_manufacturers : String;
     private var _internal_installationSite : String;
-    private var _internal_gprsName : String;
     private var _internal_runTime : String;
+    private var _internal_gprsName : String;
     private var _internal_projectId : String;
     private var _internal_ip : String;
     private var _internal_descp : String;
     private var _internal_typeSpecification : String;
-    private var _internal_siteId : String;
     private var _internal_showName : String;
+    private var _internal_siteId : String;
     private var _internal_delFlg : String;
     private var _internal_operators : String;
     private var _internal_debugging : String;
@@ -106,15 +107,21 @@ public class _Super_GPRS extends flash.events.EventDispatcher implements com.ado
     }
 
     [Bindable(event="propertyChange")]
+    public function get constructionUnit() : String
+    {
+        return _internal_constructionUnit;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get gprsId() : String
     {
         return _internal_gprsId;
     }
 
     [Bindable(event="propertyChange")]
-    public function get constructionUnit() : String
+    public function get constructionUnitId() : String
     {
-        return _internal_constructionUnit;
+        return _internal_constructionUnitId;
     }
 
     [Bindable(event="propertyChange")]
@@ -136,15 +143,15 @@ public class _Super_GPRS extends flash.events.EventDispatcher implements com.ado
     }
 
     [Bindable(event="propertyChange")]
-    public function get gprsName() : String
-    {
-        return _internal_gprsName;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get runTime() : String
     {
         return _internal_runTime;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get gprsName() : String
+    {
+        return _internal_gprsName;
     }
 
     [Bindable(event="propertyChange")]
@@ -172,15 +179,15 @@ public class _Super_GPRS extends flash.events.EventDispatcher implements com.ado
     }
 
     [Bindable(event="propertyChange")]
-    public function get siteId() : String
-    {
-        return _internal_siteId;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get showName() : String
     {
         return _internal_showName;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get siteId() : String
+    {
+        return _internal_siteId;
     }
 
     [Bindable(event="propertyChange")]
@@ -225,6 +232,16 @@ public class _Super_GPRS extends flash.events.EventDispatcher implements com.ado
         }
     }
 
+    public function set constructionUnit(value:String) : void
+    {
+        var oldValue:String = _internal_constructionUnit;
+        if (oldValue !== value)
+        {
+            _internal_constructionUnit = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnit", oldValue, _internal_constructionUnit));
+        }
+    }
+
     public function set gprsId(value:String) : void
     {
         var oldValue:String = _internal_gprsId;
@@ -235,13 +252,13 @@ public class _Super_GPRS extends flash.events.EventDispatcher implements com.ado
         }
     }
 
-    public function set constructionUnit(value:String) : void
+    public function set constructionUnitId(value:String) : void
     {
-        var oldValue:String = _internal_constructionUnit;
+        var oldValue:String = _internal_constructionUnitId;
         if (oldValue !== value)
         {
-            _internal_constructionUnit = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnit", oldValue, _internal_constructionUnit));
+            _internal_constructionUnitId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnitId", oldValue, _internal_constructionUnitId));
         }
     }
 
@@ -275,16 +292,6 @@ public class _Super_GPRS extends flash.events.EventDispatcher implements com.ado
         }
     }
 
-    public function set gprsName(value:String) : void
-    {
-        var oldValue:String = _internal_gprsName;
-        if (oldValue !== value)
-        {
-            _internal_gprsName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "gprsName", oldValue, _internal_gprsName));
-        }
-    }
-
     public function set runTime(value:String) : void
     {
         var oldValue:String = _internal_runTime;
@@ -292,6 +299,16 @@ public class _Super_GPRS extends flash.events.EventDispatcher implements com.ado
         {
             _internal_runTime = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "runTime", oldValue, _internal_runTime));
+        }
+    }
+
+    public function set gprsName(value:String) : void
+    {
+        var oldValue:String = _internal_gprsName;
+        if (oldValue !== value)
+        {
+            _internal_gprsName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "gprsName", oldValue, _internal_gprsName));
         }
     }
 
@@ -335,16 +352,6 @@ public class _Super_GPRS extends flash.events.EventDispatcher implements com.ado
         }
     }
 
-    public function set siteId(value:String) : void
-    {
-        var oldValue:String = _internal_siteId;
-        if (oldValue !== value)
-        {
-            _internal_siteId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteId", oldValue, _internal_siteId));
-        }
-    }
-
     public function set showName(value:String) : void
     {
         var oldValue:String = _internal_showName;
@@ -352,6 +359,16 @@ public class _Super_GPRS extends flash.events.EventDispatcher implements com.ado
         {
             _internal_showName = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "showName", oldValue, _internal_showName));
+        }
+    }
+
+    public function set siteId(value:String) : void
+    {
+        var oldValue:String = _internal_siteId;
+        if (oldValue !== value)
+        {
+            _internal_siteId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteId", oldValue, _internal_siteId));
         }
     }
 

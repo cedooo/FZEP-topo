@@ -9,9 +9,6 @@ import com.adobe.fiber.styles.Style;
 import com.adobe.fiber.valueobjects.AbstractEntityMetadata;
 import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 import com.adobe.fiber.valueobjects.IPropertyIterator;
-import mx.collections.ArrayCollection;
-import valueObjects.Cable;
-import valueObjects.Site;
 import com.adobe.fiber.core.model_internal;
 import com.adobe.fiber.valueobjects.IModelType;
 import mx.events.PropertyChangeEvent;
@@ -19,55 +16,54 @@ import mx.events.PropertyChangeEvent;
 use namespace model_internal;
 
 [ExcludeClass]
-internal class _SiteRelationEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
+internal class _AEquipmentEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("center", "levelTwoSite", "listCable", "levelOneSite");
+    model_internal static var allProperties:Array = new Array("id", "name", "img", "type", "jsonData");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("center", "levelTwoSite", "listCable", "levelOneSite");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("id", "name", "img", "type", "jsonData");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("center", "levelTwoSite", "listCable", "levelOneSite");
+    model_internal static var dataProperties:Array = new Array("id", "name", "img", "type", "jsonData");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("center", "levelTwoSite", "listCable", "levelOneSite");
+    model_internal static var nonDerivedProperties:Array = new Array("id", "name", "img", "type", "jsonData");
     model_internal static var derivedProperties:Array = new Array();
-    model_internal static var collectionProperties:Array = new Array("levelTwoSite", "listCable", "levelOneSite");
+    model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
-    model_internal static var entityName:String = "SiteRelation";
+    model_internal static var entityName:String = "AEquipment";
     model_internal static var dependentsOnMap:Object;
     model_internal static var dependedOnServices:Array = new Array();
     model_internal static var propertyTypeMap:Object;
 
 
-    model_internal var _instance:_Super_SiteRelation;
+    model_internal var _instance:_Super_AEquipment;
     model_internal static var _nullStyle:com.adobe.fiber.styles.Style = new com.adobe.fiber.styles.Style();
 
-    public function _SiteRelationEntityMetadata(value : _Super_SiteRelation)
+    public function _AEquipmentEntityMetadata(value : _Super_AEquipment)
     {
         // initialize property maps
         if (model_internal::dependentsOnMap == null)
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["center"] = new Array();
-            model_internal::dependentsOnMap["levelTwoSite"] = new Array();
-            model_internal::dependentsOnMap["listCable"] = new Array();
-            model_internal::dependentsOnMap["levelOneSite"] = new Array();
+            model_internal::dependentsOnMap["id"] = new Array();
+            model_internal::dependentsOnMap["name"] = new Array();
+            model_internal::dependentsOnMap["img"] = new Array();
+            model_internal::dependentsOnMap["type"] = new Array();
+            model_internal::dependentsOnMap["jsonData"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
-            model_internal::collectionBaseMap["levelTwoSite"] = "valueObjects.Site";
-            model_internal::collectionBaseMap["listCable"] = "valueObjects.Cable";
-            model_internal::collectionBaseMap["levelOneSite"] = "valueObjects.Site";
         }
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["center"] = "valueObjects.Site";
-        model_internal::propertyTypeMap["levelTwoSite"] = "ArrayCollection";
-        model_internal::propertyTypeMap["listCable"] = "ArrayCollection";
-        model_internal::propertyTypeMap["levelOneSite"] = "ArrayCollection";
+        model_internal::propertyTypeMap["id"] = "String";
+        model_internal::propertyTypeMap["name"] = "String";
+        model_internal::propertyTypeMap["img"] = "String";
+        model_internal::propertyTypeMap["type"] = "String";
+        model_internal::propertyTypeMap["jsonData"] = "String";
 
         model_internal::_instance = value;
     }
@@ -120,7 +116,7 @@ internal class _SiteRelationEntityMetadata extends com.adobe.fiber.valueobjects.
     override public function getDependants(propertyName:String):Array
     {
        if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a data property of entity SiteRelation");
+            throw new Error(propertyName + " is not a data property of entity AEquipment");
             
        return model_internal::dependentsOnMap[propertyName] as Array;  
     }
@@ -138,7 +134,7 @@ internal class _SiteRelationEntityMetadata extends com.adobe.fiber.valueobjects.
     override public function getCollectionBase(propertyName:String):String
     {
         if (model_internal::collectionProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a collection property of entity SiteRelation");
+            throw new Error(propertyName + " is not a collection property of entity AEquipment");
 
         return model_internal::collectionBaseMap[propertyName];
     }
@@ -146,7 +142,7 @@ internal class _SiteRelationEntityMetadata extends com.adobe.fiber.valueobjects.
     override public function getPropertyType(propertyName:String):String
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a property of SiteRelation");
+            throw new Error(propertyName + " is not a property of AEquipment");
 
         return model_internal::propertyTypeMap[propertyName];
     }
@@ -160,7 +156,7 @@ internal class _SiteRelationEntityMetadata extends com.adobe.fiber.valueobjects.
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity SiteRelation");
+            throw new Error(propertyName + " does not exist for entity AEquipment");
         }
 
         return model_internal::_instance[propertyName];
@@ -170,7 +166,7 @@ internal class _SiteRelationEntityMetadata extends com.adobe.fiber.valueobjects.
     {
         if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " is not a modifiable property of entity SiteRelation");
+            throw new Error(propertyName + " is not a modifiable property of entity AEquipment");
         }
 
         model_internal::_instance[propertyName] = value;
@@ -202,7 +198,7 @@ internal class _SiteRelationEntityMetadata extends com.adobe.fiber.valueobjects.
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity SiteRelation");
+            throw new Error(propertyName + " does not exist for entity AEquipment");
         }
 
         if (model_internal::allAlwaysAvailableProperties.indexOf(propertyName) != -1)
@@ -297,25 +293,31 @@ internal class _SiteRelationEntityMetadata extends com.adobe.fiber.valueobjects.
     }
 
     [Bindable(event="propertyChange")]
-    public function get isCenterAvailable():Boolean
+    public function get isIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isLevelTwoSiteAvailable():Boolean
+    public function get isNameAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isListCableAvailable():Boolean
+    public function get isImgAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isLevelOneSiteAvailable():Boolean
+    public function get isTypeAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isJsonDataAvailable():Boolean
     {
         return true;
     }
@@ -331,25 +333,31 @@ internal class _SiteRelationEntityMetadata extends com.adobe.fiber.valueobjects.
     }
 
     [Bindable(event="propertyChange")]   
-    public function get centerStyle():com.adobe.fiber.styles.Style
+    public function get idStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get levelTwoSiteStyle():com.adobe.fiber.styles.Style
+    public function get nameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get listCableStyle():com.adobe.fiber.styles.Style
+    public function get imgStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get levelOneSiteStyle():com.adobe.fiber.styles.Style
+    public function get typeStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get jsonDataStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

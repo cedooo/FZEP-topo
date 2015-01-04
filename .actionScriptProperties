@@ -25,20 +25,22 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="cn/com/dhcc/fzep/topo/schema/SiteSchema.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/ShowSchema.mxml"/>
+    <application path="svgTest2.mxml"/>
     <application path="degrafatest.mxml"/>
-    <application path="cn/com/dhcc/fzep/topo/schema/NewSiteSchema.mxml"/>
-    <application path="cn/com/dhcc/fzep/topo/SchemaManagerIndex.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/SiteEquipList.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/NewEquipSchema.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/AreaSchema.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/schema/EditEquipSchema.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/schema/SiteSchema.mxml"/>
+    <application path="SiteRelationSearch.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/schema/EditAreaSiteSchema.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/schema/NewSiteSchema.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/SchemaManagerIndex.mxml"/>
+    <application path="cusGrap.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/EquipmentDetails.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/EquipSchema.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/Default.mxml"/>
-    <application path="cn/com/dhcc/fzep/topo/schema/EditEquipSchema.mxml"/>
-    <application path="cusGrap.mxml"/>
-    <application path="SiteRelationSearch.mxml"/>
-    <application path="cn/com/dhcc/fzep/topo/schema/EditAreaSiteSchema.mxml"/>
   </applications>
   <modules/>
   <workers/>

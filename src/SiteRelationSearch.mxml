@@ -44,7 +44,7 @@
 			
 			protected function getSiteRelationBySiteName(arg0:String, arg1:int):void
 			{
-				getSiteRelationBySiteNameResult.token = siteSchema.getSiteRelationBySiteName(arg0, arg1);
+				//getSiteRelationBySiteNameResult.token = siteSchema.getSiteRelationBySiteName(arg0, arg1);
 			}
 			
 			protected function getSiteRelationBySiteNameResult_resultHandler(event:ResultEvent):void

@@ -1,6 +1,6 @@
 /**
  * This is a generated class and is not intended for modification.  To customize behavior
- * of this value object you may modify the generated sub-class of this class - SiteRelation.as.
+ * of this value object you may modify the generated sub-class of this class - AEquipment.as.
  */
 
 package valueObjects
@@ -10,8 +10,6 @@ import com.adobe.fiber.valueobjects.IValueObject;
 import flash.events.EventDispatcher;
 import mx.collections.ArrayCollection;
 import mx.events.PropertyChangeEvent;
-import valueObjects.Cable;
-import valueObjects.Site;
 
 import flash.net.registerClassAlias;
 import flash.net.getClassByAlias;
@@ -22,30 +20,28 @@ import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 use namespace model_internal;
 
 [ExcludeClass]
-public class _Super_SiteRelation extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
+public class _Super_AEquipment extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
         try
         {
-            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.common.SiteRelation") == null)
+            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.vo.AEquipment") == null)
             {
-                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.common.SiteRelation", cz);
+                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.vo.AEquipment", cz);
             }
         }
         catch (e:Error)
         {
-            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.common.SiteRelation", cz);
+            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.vo.AEquipment", cz);
         }
     }
 
     model_internal static function initRemoteClassAliasAllRelated() : void
     {
-        valueObjects.Site.initRemoteClassAliasSingleChild();
-        valueObjects.Cable.initRemoteClassAliasSingleChild();
     }
 
-    model_internal var _dminternal_model : _SiteRelationEntityMetadata;
+    model_internal var _dminternal_model : _AEquipmentEntityMetadata;
     model_internal var _changedObjects:mx.collections.ArrayCollection = new ArrayCollection();
 
     public function getChangedObjects() : Array
@@ -62,13 +58,11 @@ public class _Super_SiteRelation extends flash.events.EventDispatcher implements
     /**
      * properties
      */
-    private var _internal_center : valueObjects.Site;
-    private var _internal_levelTwoSite : ArrayCollection;
-    model_internal var _internal_levelTwoSite_leaf:valueObjects.Site;
-    private var _internal_listCable : ArrayCollection;
-    model_internal var _internal_listCable_leaf:valueObjects.Cable;
-    private var _internal_levelOneSite : ArrayCollection;
-    model_internal var _internal_levelOneSite_leaf:valueObjects.Site;
+    private var _internal_id : String;
+    private var _internal_name : String;
+    private var _internal_img : String;
+    private var _internal_type : String;
+    private var _internal_jsonData : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -80,9 +74,9 @@ public class _Super_SiteRelation extends flash.events.EventDispatcher implements
 
     model_internal var _changeWatcherArray:Array = new Array();
 
-    public function _Super_SiteRelation()
+    public function _Super_AEquipment()
     {
-        _model = new _SiteRelationEntityMetadata(this);
+        _model = new _AEquipmentEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
 
@@ -93,27 +87,33 @@ public class _Super_SiteRelation extends flash.events.EventDispatcher implements
      */
 
     [Bindable(event="propertyChange")]
-    public function get center() : valueObjects.Site
+    public function get id() : String
     {
-        return _internal_center;
+        return _internal_id;
     }
 
     [Bindable(event="propertyChange")]
-    public function get levelTwoSite() : ArrayCollection
+    public function get name() : String
     {
-        return _internal_levelTwoSite;
+        return _internal_name;
     }
 
     [Bindable(event="propertyChange")]
-    public function get listCable() : ArrayCollection
+    public function get img() : String
     {
-        return _internal_listCable;
+        return _internal_img;
     }
 
     [Bindable(event="propertyChange")]
-    public function get levelOneSite() : ArrayCollection
+    public function get type() : String
     {
-        return _internal_levelOneSite;
+        return _internal_type;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get jsonData() : String
+    {
+        return _internal_jsonData;
     }
 
     public function clearAssociations() : void
@@ -124,88 +124,53 @@ public class _Super_SiteRelation extends flash.events.EventDispatcher implements
      * data/source property setters
      */
 
-    public function set center(value:valueObjects.Site) : void
+    public function set id(value:String) : void
     {
-        var oldValue:valueObjects.Site = _internal_center;
+        var oldValue:String = _internal_id;
         if (oldValue !== value)
         {
-            _internal_center = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "center", oldValue, _internal_center));
+            _internal_id = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "id", oldValue, _internal_id));
         }
     }
 
-    public function set levelTwoSite(value:*) : void
+    public function set name(value:String) : void
     {
-        var oldValue:ArrayCollection = _internal_levelTwoSite;
+        var oldValue:String = _internal_name;
         if (oldValue !== value)
         {
-            if (value is ArrayCollection)
-            {
-                _internal_levelTwoSite = value;
-            }
-            else if (value is Array)
-            {
-                _internal_levelTwoSite = new ArrayCollection(value);
-            }
-            else if (value == null)
-            {
-                _internal_levelTwoSite = null;
-            }
-            else
-            {
-                throw new Error("value of levelTwoSite must be a collection");
-            }
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "levelTwoSite", oldValue, _internal_levelTwoSite));
+            _internal_name = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "name", oldValue, _internal_name));
         }
     }
 
-    public function set listCable(value:*) : void
+    public function set img(value:String) : void
     {
-        var oldValue:ArrayCollection = _internal_listCable;
+        var oldValue:String = _internal_img;
         if (oldValue !== value)
         {
-            if (value is ArrayCollection)
-            {
-                _internal_listCable = value;
-            }
-            else if (value is Array)
-            {
-                _internal_listCable = new ArrayCollection(value);
-            }
-            else if (value == null)
-            {
-                _internal_listCable = null;
-            }
-            else
-            {
-                throw new Error("value of listCable must be a collection");
-            }
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "listCable", oldValue, _internal_listCable));
+            _internal_img = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "img", oldValue, _internal_img));
         }
     }
 
-    public function set levelOneSite(value:*) : void
+    public function set type(value:String) : void
     {
-        var oldValue:ArrayCollection = _internal_levelOneSite;
+        var oldValue:String = _internal_type;
         if (oldValue !== value)
         {
-            if (value is ArrayCollection)
-            {
-                _internal_levelOneSite = value;
-            }
-            else if (value is Array)
-            {
-                _internal_levelOneSite = new ArrayCollection(value);
-            }
-            else if (value == null)
-            {
-                _internal_levelOneSite = null;
-            }
-            else
-            {
-                throw new Error("value of levelOneSite must be a collection");
-            }
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "levelOneSite", oldValue, _internal_levelOneSite));
+            _internal_type = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "type", oldValue, _internal_type));
+        }
+    }
+
+    public function set jsonData(value:String) : void
+    {
+        var oldValue:String = _internal_jsonData;
+        if (oldValue !== value)
+        {
+            _internal_jsonData = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "jsonData", oldValue, _internal_jsonData));
         }
     }
 
@@ -269,14 +234,14 @@ public class _Super_SiteRelation extends flash.events.EventDispatcher implements
 
     [Transient]
     [Bindable(event="propertyChange")]
-    public function get _model() : _SiteRelationEntityMetadata
+    public function get _model() : _AEquipmentEntityMetadata
     {
         return model_internal::_dminternal_model;
     }
 
-    public function set _model(value : _SiteRelationEntityMetadata) : void
+    public function set _model(value : _AEquipmentEntityMetadata) : void
     {
-        var oldValue : _SiteRelationEntityMetadata = model_internal::_dminternal_model;
+        var oldValue : _AEquipmentEntityMetadata = model_internal::_dminternal_model;
         if (oldValue !== value)
         {
             model_internal::_dminternal_model = value;

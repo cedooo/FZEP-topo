@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:degrafa="com.degrafa.*"
+			   xmlns:paint="com.degrafa.paint.*"
+			   xmlns:geometry="com.degrafa.geometry.*"
+			   minWidth="955" minHeight="600" xmlns:ns="http://www.degrafa.com/2007">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<degrafa:Surface verticalCenter="0" horizontalCenter="0">
+		<degrafa:fills>
+			<paint:BitmapFill id="bitmapFill" source="{svgTest}" smooth="true"/>
+		</degrafa:fills>
+		<degrafa:GeometryGroup scaleX="1" scaleY="1">
+			<ns:Circle fill="{bitmapFill}" radius="440"/>
+		</degrafa:GeometryGroup> 
+	</degrafa:Surface>
+	<fx:Script>
+		<![CDATA[
+		[Embed(source="assets/svg/fz.svg")]
+		[Bindable]
+		public var svgTest:Class;
+		]]>
+	</fx:Script>
+</s:Application>

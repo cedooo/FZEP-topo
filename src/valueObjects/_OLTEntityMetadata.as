@@ -20,14 +20,14 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "typeSpecification", "lookbackLocation", "showName", "siteId", "oltId", "delFlg");
+    model_internal static var allProperties:Array = new Array("constructionUnit", "constructionUnitId", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "lookbackLocation", "typeSpecification", "showName", "siteId", "oltId", "delFlg");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "typeSpecification", "lookbackLocation", "showName", "siteId", "oltId", "delFlg");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "constructionUnitId", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "lookbackLocation", "typeSpecification", "showName", "siteId", "oltId", "delFlg");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "typeSpecification", "lookbackLocation", "showName", "siteId", "oltId", "delFlg");
+    model_internal static var dataProperties:Array = new Array("constructionUnit", "constructionUnitId", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "lookbackLocation", "typeSpecification", "showName", "siteId", "oltId", "delFlg");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "typeSpecification", "lookbackLocation", "showName", "siteId", "oltId", "delFlg");
+    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "constructionUnitId", "manufacturers", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "lookbackLocation", "typeSpecification", "showName", "siteId", "oltId", "delFlg");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -48,6 +48,7 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
             // dependents map
             model_internal::dependentsOnMap = new Object();
             model_internal::dependentsOnMap["constructionUnit"] = new Array();
+            model_internal::dependentsOnMap["constructionUnitId"] = new Array();
             model_internal::dependentsOnMap["manufacturers"] = new Array();
             model_internal::dependentsOnMap["installationSite"] = new Array();
             model_internal::dependentsOnMap["runTime"] = new Array();
@@ -57,8 +58,8 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
             model_internal::dependentsOnMap["oSPFNumber"] = new Array();
             model_internal::dependentsOnMap["oltName"] = new Array();
             model_internal::dependentsOnMap["descp"] = new Array();
-            model_internal::dependentsOnMap["typeSpecification"] = new Array();
             model_internal::dependentsOnMap["lookbackLocation"] = new Array();
+            model_internal::dependentsOnMap["typeSpecification"] = new Array();
             model_internal::dependentsOnMap["showName"] = new Array();
             model_internal::dependentsOnMap["siteId"] = new Array();
             model_internal::dependentsOnMap["oltId"] = new Array();
@@ -71,6 +72,7 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
         // Property type Map
         model_internal::propertyTypeMap = new Object();
         model_internal::propertyTypeMap["constructionUnit"] = "String";
+        model_internal::propertyTypeMap["constructionUnitId"] = "String";
         model_internal::propertyTypeMap["manufacturers"] = "String";
         model_internal::propertyTypeMap["installationSite"] = "String";
         model_internal::propertyTypeMap["runTime"] = "String";
@@ -80,8 +82,8 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
         model_internal::propertyTypeMap["oSPFNumber"] = "String";
         model_internal::propertyTypeMap["oltName"] = "String";
         model_internal::propertyTypeMap["descp"] = "String";
-        model_internal::propertyTypeMap["typeSpecification"] = "String";
         model_internal::propertyTypeMap["lookbackLocation"] = "String";
+        model_internal::propertyTypeMap["typeSpecification"] = "String";
         model_internal::propertyTypeMap["showName"] = "String";
         model_internal::propertyTypeMap["siteId"] = "String";
         model_internal::propertyTypeMap["oltId"] = "String";
@@ -321,6 +323,12 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     }
 
     [Bindable(event="propertyChange")]
+    public function get isConstructionUnitIdAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get isManufacturersAvailable():Boolean
     {
         return true;
@@ -375,13 +383,13 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     }
 
     [Bindable(event="propertyChange")]
-    public function get isTypeSpecificationAvailable():Boolean
+    public function get isLookbackLocationAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isLookbackLocationAvailable():Boolean
+    public function get isTypeSpecificationAvailable():Boolean
     {
         return true;
     }
@@ -422,6 +430,12 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
 
     [Bindable(event="propertyChange")]   
     public function get constructionUnitStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get constructionUnitIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
@@ -481,13 +495,13 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     }
 
     [Bindable(event="propertyChange")]   
-    public function get typeSpecificationStyle():com.adobe.fiber.styles.Style
+    public function get lookbackLocationStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get lookbackLocationStyle():com.adobe.fiber.styles.Style
+    public function get typeSpecificationStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

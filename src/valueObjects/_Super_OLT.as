@@ -59,6 +59,7 @@ public class _Super_OLT extends flash.events.EventDispatcher implements com.adob
      * properties
      */
     private var _internal_constructionUnit : String;
+    private var _internal_constructionUnitId : String;
     private var _internal_manufacturers : String;
     private var _internal_installationSite : String;
     private var _internal_runTime : String;
@@ -68,8 +69,8 @@ public class _Super_OLT extends flash.events.EventDispatcher implements com.adob
     private var _internal_oSPFNumber : String;
     private var _internal_oltName : String;
     private var _internal_descp : String;
-    private var _internal_typeSpecification : String;
     private var _internal_lookbackLocation : String;
+    private var _internal_typeSpecification : String;
     private var _internal_showName : String;
     private var _internal_siteId : String;
     private var _internal_oltId : String;
@@ -101,6 +102,12 @@ public class _Super_OLT extends flash.events.EventDispatcher implements com.adob
     public function get constructionUnit() : String
     {
         return _internal_constructionUnit;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get constructionUnitId() : String
+    {
+        return _internal_constructionUnitId;
     }
 
     [Bindable(event="propertyChange")]
@@ -158,15 +165,15 @@ public class _Super_OLT extends flash.events.EventDispatcher implements com.adob
     }
 
     [Bindable(event="propertyChange")]
-    public function get typeSpecification() : String
-    {
-        return _internal_typeSpecification;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get lookbackLocation() : String
     {
         return _internal_lookbackLocation;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get typeSpecification() : String
+    {
+        return _internal_typeSpecification;
     }
 
     [Bindable(event="propertyChange")]
@@ -208,6 +215,16 @@ public class _Super_OLT extends flash.events.EventDispatcher implements com.adob
         {
             _internal_constructionUnit = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnit", oldValue, _internal_constructionUnit));
+        }
+    }
+
+    public function set constructionUnitId(value:String) : void
+    {
+        var oldValue:String = _internal_constructionUnitId;
+        if (oldValue !== value)
+        {
+            _internal_constructionUnitId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnitId", oldValue, _internal_constructionUnitId));
         }
     }
 
@@ -301,16 +318,6 @@ public class _Super_OLT extends flash.events.EventDispatcher implements com.adob
         }
     }
 
-    public function set typeSpecification(value:String) : void
-    {
-        var oldValue:String = _internal_typeSpecification;
-        if (oldValue !== value)
-        {
-            _internal_typeSpecification = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "typeSpecification", oldValue, _internal_typeSpecification));
-        }
-    }
-
     public function set lookbackLocation(value:String) : void
     {
         var oldValue:String = _internal_lookbackLocation;
@@ -318,6 +325,16 @@ public class _Super_OLT extends flash.events.EventDispatcher implements com.adob
         {
             _internal_lookbackLocation = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "lookbackLocation", oldValue, _internal_lookbackLocation));
+        }
+    }
+
+    public function set typeSpecification(value:String) : void
+    {
+        var oldValue:String = _internal_typeSpecification;
+        if (oldValue !== value)
+        {
+            _internal_typeSpecification = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "typeSpecification", oldValue, _internal_typeSpecification));
         }
     }
 
