@@ -29,5 +29,17 @@ package cn.com.dhcc.fzep.topo.poao
 		 * 图片路径
 		 */
 		public var imgPath:String = "";
+		/**
+		 * 起点ID
+		 */
+		public var startId:String = "";
+		/**
+		 * 终点ID
+		 */
+		public var endId:String = "";
+		/**
+		 * 是不是主干
+		 */
+		public var isMainRoad:String = "";
 	}
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:cedomaps="cn.com.dhcc.fzep.topo.maps.*"
+			   minWidth="955" minHeight="600" >
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
+			protected function maps_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				//Alert.show(maps.width + "," + maps.height );
+				maps.scaleX = mapsContainer.width/ maps.width  ;
+				maps.scaleY = mapsContainer.height/maps.height ;
+			}
+			public function onMouseDownMaps(event:MouseEvent):void{
+				
+				var areaContainer:BorderContainer = event.currentTarget as BorderContainer;
+				Alert.show(areaContainer.id);
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Graphic maskType="alpha">
+		<s:Rect width="{textMask.width}" height="{textMask.height}">
+			<s:fill>
+				<s:LinearGradient rotation="90">
+					<s:entries>
+						<s:GradientEntry color="#000000" />
+						<s:GradientEntry color="#DDDDDD" />
+					</s:entries>
+				</s:LinearGradient>
+			</s:fill>
+		</s:Rect>
+		<s:mask>
+			<s:RichText id="textMask" fontFamily="Arial" fontSize="12">
+				<s:content>福州市区域图</s:content>
+			</s:RichText>
+		</s:mask>
+	</s:Graphic>
+	<s:BorderContainer width="50%" height="70%" id="mapsContainer">
+		<cedomaps:FZMapsOutline   id="maps" clickHander="{onMouseDownMaps}" creationComplete="maps_creationCompleteHandler(event)" />
+	</s:BorderContainer>
+</s:Application>
+ 

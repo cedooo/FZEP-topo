@@ -104,7 +104,10 @@
 				this.width = -1;
 				this.visible = false;
 			}
-			
+			protected function gotoPage(event:MouseEvent):void
+			{
+				
+			}
 		]]>
 	</fx:Script>
 	
@@ -118,8 +121,14 @@
 				<s:Button id="selectAll" click="selectAll_clickHandler(event)">
 					<fx:String>全选</fx:String>
 				</s:Button>
-				-->
 				<mx:Image id="selectAll" visible="false" source="@Embed(source='assets/btn_selectAll_24.png')" width="24" height="24" buttonMode="true"  toolTip="全选" click="selectAll_clickHandler(event)"/>
+				
+				-->
+				<mx:HBox backgroundAlpha="0" verticalAlign="middle" horizontalAlign="center" width="100%">
+					<mx:Label   text="0/0" toolTip="分页信息" id="pagedetail"  />  
+					<mx:LinkButton label="&#60;" toolTip="上一页" id="prePage" click="gotoPage(event)" />  
+					<mx:LinkButton label="&#62;" toolTip="下一页" id="nextPage" click="gotoPage(event)" />  
+				</mx:HBox>
 				<!-- Both drag initiator and drop target -->
 				<s:List id="srclist" width="100%" allowMultipleSelection="true" dragEnabled="true"
 						dragMoveEnabled="true" dropEnabled="true" height="400" 
@@ -142,6 +151,7 @@
 				<s:Button id="confm" click="confm_clickHandler(event)">
 					<fx:String>引入</fx:String>
 				</s:Button>
+				<!--
 				<s:Button >
 					<fx:String>取消</fx:String>
 				</s:Button>
@@ -149,8 +159,9 @@
 				<s:Button id="test" click="test_clickHandler(event)">
 					<fx:String>数据</fx:String>
 				</s:Button>
+				-->
 			</s:VGroup>
-		</s:Panel>
+		</s:Panel>  
 	<!--
 	<s:Button x="{this.width}" id="closePanel" click="closePanel_clickHandler(event)">
 		<fx:String>关闭</fx:String>

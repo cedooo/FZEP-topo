@@ -141,7 +141,7 @@
 					var eCom:SchemaElementComponent = new SchemaElementComponent();
 					eCom.imgName = seInfo.imgPath;
 					eCom.eleInfo = seInfo;
-					eCom.doShow = doShowEquipment;
+					//eCom.doShow = doShowEquipment;
 					//eCom.doubleClickEnabled = true;
 					//eCom.addEventListener(MouseEvent.DOUBLE_CLICK, toEquipDetail);
 					var eid:String = seInfo.type + seInfo.id;

@@ -18,14 +18,13 @@
 			
 			import valueObjects.Site;
 			[Bindable]
-			public var siteId:int;    //TODO 接收外部传入参数
+			public var siteId:int;    // 接收外部传入参数
 			private function applicationComplete() : void
 			{
 				if(stage){
 					siteId = root.loaderInfo.parameters['siteId'];
 				}			
 				
-				//siteId = 1;    //测试
 				getSiteInfoById(String(siteId));
 				elist = new EquipList();
 				
@@ -55,19 +54,24 @@
 			protected function getSiteInfoByIdResult_resultHandler(event:ResultEvent):void
 			{
 				//Alert.show(event.result['siteName']);
-				//var ssite:Site = event.result as Site;
 				var siteObj:Object = event.result;
 				var siteId:String = siteObj['siteId'];
 				//Alert.show(siteId);
 				var site:Site = new Site();
 				site.siteId = siteId;
 				site.siteName = siteObj['siteName'];
-				//Alert.show(ssite.toString());
-				test.text = "站点名称: " + siteObj['siteName'] 
-					+ "\n地址: " + siteObj['siteAdress'] 
-					+ "\n联系人: " + siteObj['connactName'] 
-					+ "\n联系电话:" + siteObj['connactNumber'] 
-					+ "\n备注: " + siteObj['descp'];
+				site.connactName = siteObj['connactName'];
+				site.descp = siteObj['descp'];
+				site.connactNumber = siteObj['connactNumber'] ;
+				site.siteAdress = siteObj['siteAdress'] ;
+				
+				siteName.text = site.siteName;
+				siteAddr.text = site.siteAdress;
+				siteConnact.text = site.connactName;
+				siteConnactNumber.text = site.connactNumber;
+				siteNote.text = site.descp;
+				
+				
 				/*
 				‘动态’加载站点信息
 				@Deprecated
@@ -107,21 +111,72 @@
 							showBusyCursor="true"/>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<s:BorderContainer width="100%" height="100%" >
+	<s:BorderContainer width="100%" height="100%" borderVisible="false" >
 		<s:layout>
 			<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="10" paddingRight="10" >
 			</s:VerticalLayout>
 		</s:layout>
-		<s:BorderContainer width="100%" height="100%" >
+		<s:BorderContainer width="100%" height="100%" borderVisible="false"  >
 			<s:layout>
 				<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="10" paddingRight="10" >
 				</s:VerticalLayout>
 			</s:layout>
-			<s:Panel  width="100%" height="30%"  dropShadowVisible="false" title="站点信息">
-				<s:Label id="test">
-				</s:Label>
+			<s:Panel  width="100%" height="25%"  dropShadowVisible="false" title="站点信息">
+				<s:BorderContainer borderVisible="false"  width="100%" height="100%">
+					<s:layout>
+						<s:VerticalLayout paddingBottom="5" paddingLeft="10" paddingRight="10" paddingTop="5" />
+					</s:layout>
+					<mx:Grid width="100%" height="100%">
+						<mx:GridRow verticalAlign="middle">
+							<mx:GridItem>
+								<s:Label text="站点名称:">
+								</s:Label>
+							</mx:GridItem>
+							<mx:GridItem>
+								<s:Label id="siteName" >
+								</s:Label>
+							</mx:GridItem>
+							<mx:GridItem>
+								<s:Label text="站点地址:">
+								</s:Label>
+							</mx:GridItem>
+							<mx:GridItem>
+								<s:Label id="siteAddr" >
+								</s:Label>
+							</mx:GridItem>
+						</mx:GridRow>
+						<mx:GridRow verticalAlign="middle">
+							<mx:GridItem>
+								<s:Label text="联  系  人:">
+								</s:Label>
+							</mx:GridItem>
+							<mx:GridItem>
+								<s:Label id="siteConnact" >
+								</s:Label>
+							</mx:GridItem>
+							<mx:GridItem>
+								<s:Label text="联系电话:">
+								</s:Label>
+							</mx:GridItem>
+							<mx:GridItem>
+								<s:Label id="siteConnactNumber" >
+								</s:Label>
+							</mx:GridItem>
+						</mx:GridRow>
+						<mx:GridRow verticalAlign="middle">
+							<mx:GridItem>
+								<s:Label text="备注信息:">
+								</s:Label>
+							</mx:GridItem>
+							<mx:GridItem>
+								<s:Label id="siteNote">
+								</s:Label>
+							</mx:GridItem>
+						</mx:GridRow>
+					</mx:Grid>
+				</s:BorderContainer>
 			</s:Panel>
-			<s:Panel width="100%" height="70%" title="站点设备"  dropShadowVisible="false" >
+			<s:Panel width="100%" height="75%" title="站点设备"  dropShadowVisible="false" >
 				<s:Group id="xContainer" width="100%" height="100%" x="0" y="0"  >
 					<xtreme:XtremeComponent name="view" id="view" width="100%" height="100%" />
 				</s:Group>

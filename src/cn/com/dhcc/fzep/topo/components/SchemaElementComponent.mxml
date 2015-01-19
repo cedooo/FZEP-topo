@@ -2,7 +2,7 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="300" creationComplete="init()"
-		 contextMenu="{cm}" doubleClickEnabled="true" doubleClick="group1_doubleClickHandler(event)"
+		 doubleClickEnabled="true" 
 		 toolTip="{eleInfo.showName}" >
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
@@ -11,55 +11,14 @@
 		<![CDATA[
 			import cn.com.dhcc.fzep.topo.poao.SchemaElementsInfo;
 			
-   			[Bindable]
-			public var doShow:Function;
 			[Bindable]
 			public var imgName:String = "equip/switch.png";
 			[Bindable]
 			public var eleInfo:SchemaElementsInfo;
 			
-			[Bindable] 
-			private var cm:ContextMenu; 
-			private function showInfo(evt:ContextMenuEvent):void{
-				doShow(this.eleInfo);
-			}
 			//初始化函数   
 			private function init():void{
 				//设定监听source_txa组件的点击函数
-				var cmi:ContextMenuItem = new ContextMenuItem("详细", true); 
-				cmi.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, showInfo);
-				var cmi2:ContextMenuItem = new ContextMenuItem("转到科大GIS", true); 
-				cmi2.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, showInfo);
-				cm = new ContextMenu(); 
-				cm.hideBuiltInItems(); 
-				cm.customItems = [cmi,cmi2]; 
-				
-			}
-			
-			private function openWindow(pageUrl:String,pageName:String):void{ 
-				var jsString:String=""; 
-				jsString+=" var screenWidth = screen.availWidth, screenHeight = screen.availHeight;"; 
-				jsString+=" var args = 'toolbar=no, menubar=no,channelmode=yes, scrollbars=no,resizable=yes,location=yes, status=no';";        
-				//打开全屏的新窗口 
-				jsString+=" var win = window.open('"+pageUrl+"','"+pageName+"',args);"; 
-				jsString+=" if(win){"; 
-				jsString+="    win.resizeTo(screenWidth*0.85,screenHeight*0.85);"; 
-				jsString+="    win.outerWidth = screenWidth;"; 
-				jsString+="    win.outerHeight = screenHeight;"; 
-				jsString+="    win.moveTo(screenWidth*0.075,screenHeight*0.075);"; 
-				jsString+=" }"; 
-				ExternalInterface.call("function(){"+jsString+"}"); 
-			}  
-			
-			protected function group1_doubleClickHandler(event:MouseEvent):void
-			{
-				var allURL:String = root.loaderInfo.url;
-				var reg:RegExp = /(\/+)/;
-				var regR:Array = allURL.split(reg);
-				var basePath:String = regR[0] + regR[1] + regR[2] + regR[3] + regR[4] + regR[5];
-				var topoBasePath:String = basePath + "topo/";
-				
-				openWindow(topoBasePath + "equipDetails.jsp","详细");
 			}
 			
 		]]>

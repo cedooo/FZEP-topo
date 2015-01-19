@@ -69,8 +69,8 @@ public class _Super_OLT extends flash.events.EventDispatcher implements com.adob
     private var _internal_oSPFNumber : String;
     private var _internal_oltName : String;
     private var _internal_descp : String;
-    private var _internal_lookbackLocation : String;
     private var _internal_typeSpecification : String;
+    private var _internal_lookbackLocation : String;
     private var _internal_showName : String;
     private var _internal_siteId : String;
     private var _internal_oltId : String;
@@ -165,15 +165,15 @@ public class _Super_OLT extends flash.events.EventDispatcher implements com.adob
     }
 
     [Bindable(event="propertyChange")]
-    public function get lookbackLocation() : String
-    {
-        return _internal_lookbackLocation;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get typeSpecification() : String
     {
         return _internal_typeSpecification;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get lookbackLocation() : String
+    {
+        return _internal_lookbackLocation;
     }
 
     [Bindable(event="propertyChange")]
@@ -318,16 +318,6 @@ public class _Super_OLT extends flash.events.EventDispatcher implements com.adob
         }
     }
 
-    public function set lookbackLocation(value:String) : void
-    {
-        var oldValue:String = _internal_lookbackLocation;
-        if (oldValue !== value)
-        {
-            _internal_lookbackLocation = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "lookbackLocation", oldValue, _internal_lookbackLocation));
-        }
-    }
-
     public function set typeSpecification(value:String) : void
     {
         var oldValue:String = _internal_typeSpecification;
@@ -335,6 +325,16 @@ public class _Super_OLT extends flash.events.EventDispatcher implements com.adob
         {
             _internal_typeSpecification = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "typeSpecification", oldValue, _internal_typeSpecification));
+        }
+    }
+
+    public function set lookbackLocation(value:String) : void
+    {
+        var oldValue:String = _internal_lookbackLocation;
+        if (oldValue !== value)
+        {
+            _internal_lookbackLocation = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "lookbackLocation", oldValue, _internal_lookbackLocation));
         }
     }
 

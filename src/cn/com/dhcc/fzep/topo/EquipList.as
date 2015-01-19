@@ -59,10 +59,10 @@ package cn.com.dhcc.fzep.topo
 		private static var PADDING_TOP:int = 10;
 		private static var PADDING_LEFT:int = 10;
 		
-		private static var EQUIP_PANEL_WIDTH:int = 180;
-		private static var EQUIP_PANEL_HEIGHT:int = 120;
-		private static var EQUIP_PANEL_PADDING_X:int  = EQUIP_PANEL_WIDTH + 6;
-		private static var EQUIP_PANEL_PADDING_Y:int  = EQUIP_PANEL_HEIGHT + 6;
+		private static var EQUIP_PANEL_WIDTH:int = 240;
+		private static var EQUIP_PANEL_HEIGHT:int = 170;
+		private static var EQUIP_PANEL_PADDING_X:int  = EQUIP_PANEL_WIDTH + 10;
+		private static var EQUIP_PANEL_PADDING_Y:int  = EQUIP_PANEL_HEIGHT + 10;
 		
 		
 		private static var CABLE_TYPE_REGEXP:RegExp = /class.*\.Cable/;
@@ -75,58 +75,77 @@ package cn.com.dhcc.fzep.topo
 		
 		protected function onResult(event:ResultEvent):void{   
 			this.clearup();
+			
 			var root:Root = Root.instance;
 			var sceneHelper:SceneHelper = root.sceneHelper;
 			var sceneMgr:SceneManager = root.sceneManager;
-			var pb:ProgressBar = root.effectGenerator.showProgressBar(true, true);
-			
 			var resArray:ArrayCollection = event.result as ArrayCollection;
-			var x:int = PADDING_LEFT;
-			var y:int = PADDING_TOP;
-			//sceneHelper.beginAddEntity(getEquipMoreInfo);
-			for (var i:int = 0; i < resArray.length; i++) 
-			{
-				var equip:AEquipment = resArray[i] as AEquipment;
+			if(resArray&&resArray.length>0){
+				var pb:ProgressBar = root.effectGenerator.showProgressBar(true, true);
+				var x:int = PADDING_LEFT;
+				var y:int = PADDING_TOP;
 				
-				var comName:String = generatePanelName(equip);
-				if(!sceneMgr.existsEntity(comName)){
-					var panel:Panel = new Panel();
-					panel.width = EQUIP_PANEL_WIDTH;
-					panel.height = EQUIP_PANEL_HEIGHT;
-					panel.title = equip.name;
-					panel.setStyle("dropShadowVisible", false);
+				var viewWidth:int = root.viewportWidth;
+				x =( viewWidth + (EQUIP_PANEL_PADDING_X-EQUIP_PANEL_WIDTH) -  EQUIP_PANEL_PADDING_X *( int(viewWidth/EQUIP_PANEL_PADDING_X) ) )/2;
+				//sceneHelper.beginAddEntity(getEquipMoreInfo);
+				for (var i:int = 0; i < resArray.length; i++) 
+				{
+					var equip:AEquipment = resArray.getItemAt(i) as AEquipment;
 					
-					var jsonObj:Object = JSON.decode(equip.jsonData);
-					var txt:TextArea = new TextArea();
-					txt.percentHeight = 100;
-					txt.percentWidth = 100;
-					if(equip.type.match(CABLE_TYPE_REGEXP)){
-						txt.text = jsonObj['cableName'];
-						txt.text += equip.jsonData;
-					}else{
-						txt.text = equip.jsonData;
-					}
-					panel.addElement(txt)
-					
-					
-					var fCom:FlexComponent = new FlexComponent(comName, panel);
-					fCom.draggable = false;
-					fCom.editable = false;
-					sceneHelper.addEntity(fCom, function():void {
-						root.xtremeComponent.enabled = true;
-						root.effectGenerator.hideProgressBar();
-					});
-					if(x+EQUIP_PANEL_WIDTH>root.stageWidth){
-						x = PADDING_LEFT;
-						y += EQUIP_PANEL_PADDING_Y;
-					}
-					fCom.x = x;
-					fCom.y = y;
-					x += EQUIP_PANEL_PADDING_X;
-				 }else{
-					 Alert.show('已经存在对象：' + comName, '错误');
-				 }
-			}//end for loop
+					var comName:String = generatePanelName(equip);
+					if(!sceneMgr.existsEntity(comName)){
+						var panel:Panel = new Panel();
+						panel.width = EQUIP_PANEL_WIDTH;
+						panel.height = EQUIP_PANEL_HEIGHT;
+						panel.title = equip.name;
+						panel.setStyle("dropShadowVisible", false);
+						
+						var jsonObj:Object = JSON.decode(equip.jsonData);
+						var txt:TextArea = new TextArea();
+						txt.percentHeight = 100;
+						txt.percentWidth = 100;
+						if(equip.type.match(CABLE_TYPE_REGEXP)){
+							txt.text = jsonObj['cableName'];
+							txt.text += equip.jsonData;
+						}else if(equip.type.match(GPRS_TYPE_REGEXP)){
+							txt.text = jsonObj['gprsName'];
+							txt.text += equip.jsonData;
+						}else{
+							txt.text = equip.jsonData;
+						}
+						panel.addElement(txt)
+						
+						
+						var fCom:FlexComponent = new FlexComponent(comName, panel);
+						fCom.draggable = false;
+						fCom.editable = false;
+						sceneHelper.addEntity(fCom, function():void {
+							root.xtremeComponent.enabled = true;
+							root.effectGenerator.hideProgressBar();
+						});
+						if(x+EQUIP_PANEL_WIDTH>root.stageWidth){
+							x =( viewWidth + (EQUIP_PANEL_PADDING_X-EQUIP_PANEL_WIDTH) -  EQUIP_PANEL_PADDING_X *( int(viewWidth/EQUIP_PANEL_PADDING_X) ) )/2;
+							y += EQUIP_PANEL_PADDING_Y;
+						}
+						fCom.x = x;
+						fCom.y = y;
+						x += EQUIP_PANEL_PADDING_X;
+					 }else{
+						 Alert.show('已经存在对象：' + comName, '错误');
+					 }
+				}//end for loop
+			}else{
+				//站点设备数量为0
+				var label:Label = new Label();
+				label.text = "该站点没有可用设备";
+				
+				var remind:FlexComponent = new FlexComponent("testT", label);
+				remind.width = EQUIP_PANEL_WIDTH;
+				remind.height = EQUIP_PANEL_HEIGHT;
+				remind.x = 0;
+				remind.y = 0;
+				sceneMgr.addEntity(remind);
+			}
 			/*
 			var testPanel:TitleWindowWithStatus = new TitleWindowWithStatus();
 			testPanel.inUse = true;

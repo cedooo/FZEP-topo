@@ -69,7 +69,7 @@
 			import cn.com.dhcc.fzep.topo.components.ONUComponent;
 			import cn.com.dhcc.fzep.topo.components.ThreeLayerSwitchComponent;
 			import cn.com.dhcc.fzep.topo.components.TwoLayerSwitchComponent;
-			import cn.com.dhcc.fzep.topo.utils.TopoXMLUtils;
+			import cn.com.dhcc.fzep.topo.utils.TopoUtils;
 			
 			import valueObjects.Carrier;
 			import valueObjects.GPRS;
@@ -373,7 +373,7 @@
 				if(event.detail == Alert.YES)
 				{
 					var sceneMgr:SceneManager = Root.instance.sceneManager;
-					var equipJSONData:String = TopoXMLUtils.generateJSON(sceneMgr.entityList());
+					var equipJSONData:String = TopoUtils.generateJSON(sceneMgr.entityList());
 					var argsObj:Object = new Object();
 					argsObj.viewX = sceneMgr.viewport.x;
 					argsObj.viewY = sceneMgr.viewport.y;

@@ -62,7 +62,9 @@ public class _Super_SearchSite extends flash.events.EventDispatcher implements c
      */
     private var _internal_areaName : String;
     private var _internal_page : valueObjects.Page;
+    private var _internal_exceptList : ArrayCollection;
     private var _internal_searchField : String;
+    private var _internal_areaId : int;
     private var _internal_keyWord : String;
 
     private static var emptyArray:Array = new Array();
@@ -100,9 +102,21 @@ public class _Super_SearchSite extends flash.events.EventDispatcher implements c
     }
 
     [Bindable(event="propertyChange")]
+    public function get exceptList() : ArrayCollection
+    {
+        return _internal_exceptList;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get searchField() : String
     {
         return _internal_searchField;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get areaId() : int
+    {
+        return _internal_areaId;
     }
 
     [Bindable(event="propertyChange")]
@@ -139,6 +153,31 @@ public class _Super_SearchSite extends flash.events.EventDispatcher implements c
         }
     }
 
+    public function set exceptList(value:*) : void
+    {
+        var oldValue:ArrayCollection = _internal_exceptList;
+        if (oldValue !== value)
+        {
+            if (value is ArrayCollection)
+            {
+                _internal_exceptList = value;
+            }
+            else if (value is Array)
+            {
+                _internal_exceptList = new ArrayCollection(value);
+            }
+            else if (value == null)
+            {
+                _internal_exceptList = null;
+            }
+            else
+            {
+                throw new Error("value of exceptList must be a collection");
+            }
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "exceptList", oldValue, _internal_exceptList));
+        }
+    }
+
     public function set searchField(value:String) : void
     {
         var oldValue:String = _internal_searchField;
@@ -146,6 +185,16 @@ public class _Super_SearchSite extends flash.events.EventDispatcher implements c
         {
             _internal_searchField = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "searchField", oldValue, _internal_searchField));
+        }
+    }
+
+    public function set areaId(value:int) : void
+    {
+        var oldValue:int = _internal_areaId;
+        if (oldValue !== value)
+        {
+            _internal_areaId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "areaId", oldValue, _internal_areaId));
         }
     }
 

@@ -7,6 +7,7 @@
 			   xmlns:degrafa="http://www.degrafa.com/2007"
 			   xmlns:paint="com.degrafa.paint.*"
 			   xmlns:geometry="com.degrafa.geometry.*"
+			   xmlns:cedomaps="cn.com.dhcc.fzep.topo.maps.*"
 			   width="100%"  applicationComplete="applicationComplete();" >
 	<fx:Declarations>
 		<s:TitleWindow id="showInfoWin" width="280" title="详细信息" close="showInfoWin_closeHandler(event)" >
@@ -43,14 +44,17 @@
 		<s:CallResponder id="getPageResult" result="getPageResult_resultHandler(event)"/>
 		<s:CallResponder id="getSiteRelationBySiteNameResult" result="getSiteRelationBySiteNameResult_resultHandler(event)"
 						 fault="getSiteRelationBySiteNameResult_faultHandler(event)"/>
+		<s:CallResponder id="getSiteInfoByIdResult"  result="getSiteInfoByIdResult_resultHandler(event)"/>
+		<services:SiteEquip id="siteEquip"
+							fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							showBusyCursor="true"/>
+		
+		
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import com.adobe.serialization.json.JSON;
 			import com.degrafa.GeometryGroup;
-			import com.degrafa.geometry.Path;
-			import com.degrafa.paint.SolidFill;
 			
 			import flash.ux.core.Console;
 			import flash.ux.utils.MathUtil;
@@ -66,6 +70,7 @@
 			import mx.managers.PopUpManager;
 			import mx.rpc.events.FaultEvent;
 			import mx.rpc.events.ResultEvent;
+			import mx.utils.ObjectUtil;
 			
 			import spark.events.IndexChangeEvent;
 			
@@ -73,7 +78,9 @@
 			import cn.com.dhcc.fzep.topo.components.SiteComponent;
 			import cn.com.dhcc.fzep.topo.poao.SchemaElementsInfo;
 			import cn.com.dhcc.fzep.topo.utils.ScriptUtils;
+			import cn.com.dhcc.fzep.topo.utils.TopoUtils;
 			
+			import valueObjects.Cable;
 			import valueObjects.Page;
 			import valueObjects.Schema;
 			import valueObjects.SearchSite;
@@ -82,6 +89,7 @@
 			
 			import xtreme.core.Root;
 			import xtreme.scene.SceneManager;
+			import xtreme.scene.entity.Entity;
 			import xtreme.scene.entity.shapes.DynamicConnector;
 			import xtreme.scene.entity.shapes.FlexComponent;
 			[Embed(source="assets/baidufz.jpg")]
@@ -89,6 +97,8 @@
 			public var mapBgImg:Class;
 			[Bindable]
 			public var schemaName:String = "晋安区";
+			protected var siteContextMenu:ContextMenu = new ContextMenu();    //站点 右键 菜单
+			protected var cableContextMenu:ContextMenu = new ContextMenu();    //站点 右键 菜单
 			private function applicationComplete() : void
 			{
 				stage.align = StageAlign.TOP_LEFT;
@@ -108,18 +118,25 @@
 				page.numPerPage = 6;
 				searchSiteCondition.page = page;
 				searchSiteCondition.areaName = schemaName;
-				loadSVG();
 				schemaNameLabel.text = "【" + searchSiteCondition.areaName + "】";
 				getSchemaByAreaName(schemaName);
 				/**
-				 * 站点列表初始化
+				 * 站点右键菜单
 				 */
+				siteContextMenu.hideBuiltInItems(); 
+				var detail:ContextMenuItem = new ContextMenuItem("站点基础信息", true); 
+				detail.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, showSiteDetails);
+				siteContextMenu.customItems.push(detail); 
 				/**
-				SiteListCntMenu = new ContextMenu();
-				var cmi:ContextMenuItem = new ContextMenuItem("搜站点关系", true); 
-				SiteListCntMenu.hideBuiltInItems(); 
-				SiteListCntMenu.customItems = [cmi]; 
-				 * */
+				 * 光缆右键菜单
+				 */
+				cableContextMenu.hideBuiltInItems(); 
+				var relation:ContextMenuItem = new ContextMenuItem("资产关系图", true); 
+				relation.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, goRelationWithResource);
+				cableContextMenu.customItems.push(relation); 
+			}
+			protected function goRelationWithResource(event:ContextMenuEvent):void{
+				Alert.show("展示资产关系图");
 			}
 			/**
 			 * 关闭信息展示弹出窗口
@@ -127,6 +144,37 @@
 			protected function showInfoWin_closeHandler(event:CloseEvent):void { 
 				PopUpManager.removePopUp(showInfoWin);   
 			}   
+			/**
+			 * 显示站点详细信息
+			 */
+			private function showSiteDetails(evt:ContextMenuEvent):void{
+				var sceneManager:SceneManager = Root.instance.sceneManager;
+				var entity:Entity = sceneManager.getEntity(evt.contextMenuOwner.name);
+				if(entity is FlexComponent){
+					var flexComponent:FlexComponent = entity as FlexComponent;
+					var siteId:String = getSiteId(flexComponent);
+					getSiteInfoById(siteId); 
+				}else{
+					Alert.show(String(evt.contextMenuOwner));
+					Alert.show("错误的位置调用","异常");
+				}
+			}
+			/**
+			 * <b>工具:</b><br />
+			 * 得到对应站点的ID 
+			 */
+			private function getSiteId(flexComponent:FlexComponent):String{
+				if(flexComponent.component is SchemaElementComponent){
+					var eleCom:SchemaElementComponent = flexComponent.component as SchemaElementComponent;
+					var eleInfo:SchemaElementsInfo = eleCom.eleInfo;
+					return eleInfo.id;
+				}else if ( flexComponent.component is SiteComponent ){
+					var siteCom:SiteComponent = flexComponent.component as SiteComponent;
+					var site:Site = siteCom.site;
+					return site.siteId;
+				}
+				return null;
+			}
 			/**
 			 * 根据视图id得到视图对象
 			 */
@@ -140,64 +188,21 @@
 				if(schema){
 					schemaNameLabel.text = schema.schemaName;
 					schemaNote.text = schema.schemaNote;
-					loadSchema(schema.schemaData);
+					TopoUtils.loadSchema(Root.instance.sceneManager, schema.schemaData,siteContextMenu, cableContextMenu, siteComponent_doubleClickHandler);
+					
 				}else{
 					Alert.okLabel = "知道了";
-					clearup();
+					Root.instance.sceneManager.clearScene();
 					Alert.show("无该区域站点视图。\n要添加站点图，请到视图管理页面操作。", "提示");
 				}
 				
 			}
-			/**
-			 * 加载视图数据
-			 */
-			protected function loadSchema(data:String):void {
-				clearup();
-				//get the raw JSON data and cast to String  
-				var rawData:String = String(data);  
-				
-				//decode the data to ActionScript using the JSON API  
-				//in this case, the JSON data is a serialize Array of Objects.  
-				var arr:Array = (JSON.decode(rawData) as Array);  
-				
-				//create a new ArrayCollection passing the de-serialized Array  
-				//ArrayCollections work better as DataProviders, as they can  
-				//be watched for changes.  
-				var dp:ArrayCollection = new ArrayCollection(arr);  
-				
-				var sceneMgr:SceneManager = Root.instance.sceneManager;
-				//Alert.show(String(dp.length));
-				
-				for (var i:int = 0; i < dp.length; i++) 
-				{
-					var obj:Object =  dp.getItemAt(i);
-					var seInfo:SchemaElementsInfo = new SchemaElementsInfo();
-					seInfo.id = obj.id;
-					seInfo.imgPath = obj.imgPath;
-					seInfo.showName = obj.showName;
-					seInfo.type = obj.type;
-					seInfo.x = obj.x;
-					seInfo.y = obj.y;
-					
-					var eCom:SchemaElementComponent = new SchemaElementComponent();
-					eCom.imgName = seInfo.imgPath;
-					eCom.eleInfo = seInfo;
-					eCom.doShow = doShowEquipment;
-					eCom.doubleClickEnabled = true;
-					//eCom.addEventListener(MouseEvent.DOUBLE_CLICK, doShowEquipment);
-					
-					var eid:String = seInfo.type + seInfo.id;
-					var equipFC:FlexComponent = new FlexComponent(eid, eCom);
-					equipFC.draggable = false;
-					equipFC.editable = false;
-					equipFC.x = seInfo.x;
-					equipFC.y = seInfo.y;
-					equipFC.width = 60;
-					equipFC.height = 60;
-					
-					sceneMgr.addEntity(equipFC);
-				}
-				
+			protected function siteComponent_doubleClickHandler(event:MouseEvent):void
+			{
+				var eleCom:SchemaElementComponent = event.currentTarget as SchemaElementComponent;
+				var eleInfo:SchemaElementsInfo = eleCom.eleInfo;
+				var topoBasePath:String = ScriptUtils.getRoot(root.loaderInfo.url) + "topo/";
+				ScriptUtils.openTabWindow(topoBasePath + "siteEquipment.jsp?siteId="+eleInfo.id,"站点详细");
 			}
 			/**
 			 * 展示站点信息
@@ -208,11 +213,6 @@
 				ScriptUtils.openTabWindow(targetURL,"");
 			}
 			
-			public function clearup() : void
-			{
-				// 清空场景
-				Root.instance.sceneManager.clearScene();
-			}
 			protected function getSchemaResult_faultHandler(event:FaultEvent):void
 			{
 				Alert.show("无法获取视图数据。","出错啦！");
@@ -229,9 +229,7 @@
 				var img:Image = event.currentTarget as Image;
 				//img.opaqueBackground = null;
 				img.alpha = 0.2;
-				
 			}
-			
 			
 			protected function getListByArea(arg0:String):void
 			{
@@ -243,98 +241,7 @@
 				getSchemaByAreaNameResult.token = siteSchema.getSchemaByAreaName(arg0);
 			}
 			
-			[Bindable]
-			private var svgSize:Array = new Array();
-			private function searchPath(node:XML):void 
-			{ 
-				var pathRegExp:RegExp = /[.]*::path/;
-				var textRegExp:RegExp = /[.]*::text/;
-				
-				// Loop over all of the child elements of the node 
-				for each ( var element:XML in node.elements( ) ) 
-				{ 
-					var name:String = element.name().toString();
-					if(name.match(pathRegExp)) 
-					{ 
-						var geoGroups:GeometryGroup = new GeometryGroup();
-						geoGroups.addEventListener(MouseEvent.CLICK, loadSchema2);
-						
-						var path:Path = new Path();
-						path.data = element.attribute("d");
-						path.id = element.attribute("id");
-						path.visible = true;
-						var fillColor:String = element.attribute("fill");
-						var fill:SolidFill = new SolidFill(fillColor);
-						path.fill = fill;
-						
-						var label:spark.components.Label = new spark.components.Label();
-						label.text = element.attribute("id");
-						label.x = 10;
-						label.y = 10;
-						geoGroups.addChild(label);
-						geoGroups.draw(null,null);
-						geoGroups.geometryCollection.addItem(path);
-						geoGroups.name = element.attribute("id");
-						geoGroups.buttonMode = true;
-						geoGroups.target = geoSurf;
-						//geoSurf.graphicsCollection.addItem(geoGroups);
-					}else if(name.match(textRegExp)){
-						/*
-						var geoGroups:GeometryGroup = new GeometryGroup();
-						com.degrafa.geometry.text.DegrafaTextFormat
-						var label:Label = new Label();
-						label.text = element.toString();
-						label.x = element.attribute('x');
-						label.y = element.attribute('y');
-						*/
-					}
-				}
-				//设置缩放参数
-				var svgWidthStr:String = node.attribute('width').toString();
-				var svgWidth:int = int(svgWidthStr);
-				var svgHeightStr:String = node.attribute('height').toString();
-				var svgHeight:int = int(svgHeightStr);
-				
-				if(svgWidth>0 && svgHeight>0){
-					svgSize.push(svgWidth);
-					svgSize.push(svgHeight);
-				}
-				
-				//Alert.show(svgWidth + "," + svgHeight);
-				//Alert.show(areaSvgContainer.width + "," + areaSvgContainer.height);
-				//Alert.show(svgWidth/areaSvgContainer.width + "," + svgHeight/areaSvgContainer.height);
-				//缩放SVG
-				geoSurf.scaleX = areaSvgContainer.width/svgWidth;
-				geoSurf.scaleY = areaSvgContainer.height/svgHeight;
-			}
 			
-			
-			[Bindable]  
-			private var datas:XML = new XML();  
-			[Bindable]
-			private var basePath:String = '';
-			[Bindable]
-			private var topoBasePath:String = '';
-			/**
-			 * 加载区域SVG文件
-			 */
-			private function loadSVG():void  
-			{  	
-				var allURL:String = root.loaderInfo.url;
-				var reg:RegExp = /(\/+)/;
-				var regR:Array = allURL.split(reg);
-				basePath= regR[0] + regR[1] + regR[2] + regR[3] + regR[4] + regR[5];
-				topoBasePath = basePath + "topo/";
-				var url:URLRequest = new URLRequest(topoBasePath + "fx/assets/svg/fz_bd.svg");  
-				var loader:URLLoader = new URLLoader();  
-				loader.addEventListener(Event.COMPLETE,onComplete);  
-				loader.load(url);  
-			}  
-			private function onComplete(event:Event):void{  
-				var result:URLLoader = URLLoader(event.target);  
-				datas = XML(result.data);  
-				searchPath(datas);
-			}  
 			private function loadSchema2(event:MouseEvent):void{  
 				var grup:GeometryGroup = event.currentTarget as GeometryGroup;
 				//Alert.show(grup.name);
@@ -396,7 +303,7 @@
 					 * 1-主干
 					 * 2-非主干
 					 */
-					
+					/*
 					var type:int = 1;
 					if(allCable.selected){
 						type = 1;
@@ -405,7 +312,8 @@
 					}else if(notMain.selected){
 						type = 3;
 					}
-					getSiteRelationBySiteName(searchRelationKey.text, type, degree);
+					*/
+					getSiteRelationBySiteName(searchRelationKey.text, degree);
 				}else{
 					//搜索关键字-参数错误
 				}
@@ -460,12 +368,10 @@
 				}
 			}
 			
-			
 			protected function siteDataGrid_creationCompleteHandler(event:FlexEvent):void
 			{
 				getListByCondition(searchSiteCondition);
 			}
-			
 			
 			protected function gotoPage(event:MouseEvent):void
 			{
@@ -482,7 +388,6 @@
 						searchSiteCondition.page.curPage = searchSiteCondition.page.curPage+1;
 					}
 				}else if(event.currentTarget.id=="jumpTo"){
-					//Alert.show("jump to " + inputpage.value );
 					if(inputpage.value<=searchSiteCondition.page.totalPage && inputpage.value >0){
 						searchSiteCondition.page.curPage = inputpage.value;
 					}
@@ -530,9 +435,9 @@
 			}
 			
 			
-			protected function getSiteRelationBySiteName(arg0:String, arg1:int, arg2:int):void
+			protected function getSiteRelationBySiteName(arg0:String, arg1:int):void
 			{
-				getSiteRelationBySiteNameResult.token = siteSchema.getSiteRelationBySiteName(arg0, arg1, arg2);
+				getSiteRelationBySiteNameResult.token = siteSchema.getSiteRelationBySiteName(arg0, arg1);
 			}
 			[Embed(source="assets/location_16.png")]
 			[Bindable]
@@ -541,19 +446,20 @@
 			protected function getSiteRelationBySiteNameResult_resultHandler(event:ResultEvent):void
 			{
 				var siteRelation:SiteRelation = event.result as SiteRelation;
+				var siteComponentPreStr:String = ObjectUtil.getClassInfo(Site).name;
 				if(siteRelation.center){
 					schemaNameLabel.text ="【" + searchRelationKey.text + "】站点关系图";
-					clearup();
+					Root.instance.sceneManager.clearScene();
 					var sceneMgr:SceneManager = Root.instance.sceneManager;
 					
 					var siteComponent:SiteComponent = new SiteComponent();
 					siteComponent.site = siteRelation.center;
-					siteComponent.doShowSite = openInNewTable;
-					
-					var center:FlexComponent = new FlexComponent("site_" + siteComponent.site.siteId, siteComponent);
+					siteComponent.contextMenu = siteContextMenu;
+					var comName:String = siteComponentPreStr + siteComponent.site.siteId;
+					var center:FlexComponent = new FlexComponent(comName, siteComponent);
 					center.width = 60;
 					center.height = 60;
-					center.x = view.width*0.33;
+					center.x = view.width*0.35;
 					center.y = view.height*0.45;
 					center.draggable = false;
 					center.editable = false;
@@ -576,6 +482,7 @@
 						centerMarkerComponent.y = center.y - centerMarker.height ;
 						centerMarkerComponent.editable = false;
 						centerMarkerComponent.draggable = false;
+						centerMarkerComponent.contextMenu = new ContextMenu();
 						sceneMgr.addEntity(centerMarkerComponent);
 					}
 					
@@ -583,7 +490,7 @@
 					 * 一层关系站点
 					 */
 					var radius:Number;
-					radius = 100;
+					radius = 130;
 					var angle:Number = 45;
 					var leveOneList:ArrayCollection = siteRelation.levelOneSite;
 					var intern:Number = 360/(leveOneList.length + 1);
@@ -591,9 +498,9 @@
 					{
 						var siteLevelOneComp:SiteComponent = new SiteComponent();
 						siteLevelOneComp.site = leveOneList.getItemAt(i) as Site;
-						siteLevelOneComp.doShowSite = openInNewTable;
-						var siteLeveOneName:String = "site_" + siteLevelOneComp.site.siteId;
+						var siteLeveOneName:String = siteComponentPreStr + siteLevelOneComp.site.siteId;
 						if(!sceneMgr.existsEntity(siteLeveOneName)){
+							siteLevelOneComp.contextMenu = siteContextMenu;
 							var flexCom:FlexComponent = new FlexComponent(siteLeveOneName, siteLevelOneComp);
 							flexCom.draggable = true;
 							flexCom.editable = false;
@@ -614,19 +521,20 @@
 						{
 							var siteLevelTwoComp:SiteComponent = new SiteComponent();
 							siteLevelTwoComp.site = leveTwoList.getItemAt(k) as Site;
-							var siteLevelTwoName:String = "site_" + siteLevelTwoComp.site.siteId;
+							var siteLevelTwoName:String = siteComponentPreStr + siteLevelTwoComp.site.siteId;
 							if(!sceneMgr.existsEntity(siteLevelTwoName)){
+								siteLevelTwoComp.contextMenu = siteContextMenu;
 								var flexComTwo:FlexComponent = new FlexComponent(siteLevelTwoName, siteLevelTwoComp);
 								flexComTwo.draggable = true;
 								flexComTwo.editable = false;
-								
 								sceneMgr.addEntity(flexComTwo);
+							}else{
+								//do nothing
 							}
 						}
 					}
-					//光缆颜色 彩虹7色
-					var lineColors:Array = [0xFF0000, 0xFF7F00, 0xFFFF00, 0x00FF00, 0x00009C,
-						0x0000FF, 0xDB70DB];
+					//光缆颜色
+					var lineColors:Array =  new Array(0x725746,0x5ca1d7,0x9dd6f4, 0xff9f64);//光缆颜色 彩虹7色: [0xFF0000, 0xFF7F00, 0xFFFF00, 0x00FF00, 0x00009C, 0x0000FF, 0xDB70DB];
 					
 					var cableList:ArrayCollection = siteRelation.listCable;
 					angle = -45;
@@ -636,11 +544,11 @@
 						var cableObj:Object = cableList.getItemAt(j);
 						var startID:String = cableObj["cableStartId"];
 						var endID:String = cableObj["cableEndId"];
-						var startExisted:Boolean = sceneMgr.existsEntity("site_" + startID);
-						var endExisted:Boolean = sceneMgr.existsEntity("site_" + startID);
+						var startExisted:Boolean = sceneMgr.existsEntity(siteComponentPreStr + startID);
+						var endExisted:Boolean = sceneMgr.existsEntity(siteComponentPreStr + startID);
 						if(startExisted && endExisted){
-							var startComponent:FlexComponent = sceneMgr.getEntity("site_" + startID) as FlexComponent;
-							var endComponent:FlexComponent = sceneMgr.getEntity("site_" + endID) as FlexComponent;
+							var startComponent:FlexComponent = sceneMgr.getEntity(siteComponentPreStr + startID) as FlexComponent;
+							var endComponent:FlexComponent = sceneMgr.getEntity(siteComponentPreStr + endID) as FlexComponent;
 							
 							if(startComponent.x==0 || startComponent.y == 0){
 								rad = angle * MathUtil.DEG_2_RAD;
@@ -662,54 +570,30 @@
 							
 							if(startComponent && endComponent){
 								var cableID:String = cableObj['cableId'];
-								var connector:DynamicConnector = new DynamicConnector("connector_" + cableID);
-								connector.lineThickness = 2;
-								connector.lineColor = lineColors[lineColors.length%j];
+								var connector:DynamicConnector = new DynamicConnector(ObjectUtil.getClassInfo(Cable).name + cableID);
+								connector.lineThickness = cableObj['isMainRoad']=='Y'?4:2;
+								connector.lineColor = 0x66A6D9;//lineColors[j%lineColors.length];
 								connector.connect(startComponent.centerAnchor, endComponent.centerAnchor);
-								connector.alpha = 0.5;
+								connector.alpha = 1;
 								connector.editable = false;
+								connector.contextMenu = cableContextMenu;
 								
+								connector.addEventListener(MouseEvent.DOUBLE_CLICK, connectorHander);
 								sceneMgr.addEntity(connector);
 							}
 						}
 					}
-					
-					/*
-					for (var j:int = 0; j < cableList.length; j++) 
-					{
-						var cableObj:Cable = cableList.getItemAt(j) as Cable;
-						var startID:String = cableObj.cableStartId;
-						var endID:String = cableObj.cableEndId;
-						Alert.show(startID + "," + endID);
-						var startExisted:Boolean = sceneMgr.existsEntity("site_" + startID);
-						var endExisted:Boolean = sceneMgr.existsEntity("site_" + startID);
-						if(startExisted && endExisted){
-							var startComponent:FlexComponent = sceneMgr.getEntity("site_" + startID) as FlexComponent;
-							var endComponent:FlexComponent = sceneMgr.getEntity("site_" + endID) as FlexComponent;
-							
-							if(startComponent && endComponent){
-								var connName:String = "connector_" + cableObj.cableId;
-								if(!sceneMgr.existsEntity(connName)){
-									var connector:DynamicConnector = new DynamicConnector(connName);
-									connector.lineThickness = 2;
-									connector.lineColor = 0x52B231;//lineColors[lineColors.length%j];
-									connector.connect(startComponent.centerAnchor, endComponent.centerAnchor);
-									connector.alpha = 0.5;
-									sceneMgr.addEntity(connector);
-								}
-							}
-						}
-					}
-					*/
 				}else{
 					Alert.show("站点不存在，\n请确认站点名称是否正确。","提示");
 				}
 			}
-			protected function openInNewTable(site:Site):void {
-				var targetURL:String = ScriptUtils.getRoot(this.loaderInfo.url)
-					+ "topo/siteEquipment.jsp?siteId=" + site.siteId;
-				ScriptUtils.openTabWindow(targetURL,"【" + site.siteName + " 】站点设备信息");
+			private function connectorHander(event:Event):void {
+				Alert.show("An event occurred.");
 			}
+			protected function clickCable():void{
+				Alert.show("光缆","");
+			}
+			
 			/**
 			 * 查询站点关系 错误提示
 			 */
@@ -793,6 +677,45 @@
 					searchSite(areaName);
 				}
 			}
+			/**
+			 * 地图轮廓大小调整
+			 */
+			protected function fzoutline_creationCompleteHandler(event:FlexEvent):void
+			{
+				var curMap:FZMapsOutline = event.currentTarget as FZMapsOutline;
+				curMap.scaleX = areaSvgContainer.width/curMap.width ;
+				curMap.scaleY = areaSvgContainer.height/curMap.height;
+				//Alert.show( areaSvgContainer.width + ","+ areaSvgContainer.height + ","+  curMap.width + "," + curMap.height) ;
+			}
+			
+			public function onMouseDownMaps(event:MouseEvent):void{
+				
+				var areaContainer:BorderContainer = event.currentTarget as BorderContainer;
+				//Alert.show(areaContainer.id);
+				getSchemaByAreaName(areaContainer.id);
+				searchSite(areaContainer.id);
+				areaSvgPanel.title = "福州市" +  areaContainer.id;
+			}
+			
+			protected function getSiteInfoById(arg0:String):void
+			{
+				getSiteInfoByIdResult.token = siteEquip.getSiteInfoById(arg0);
+			}
+			protected function getSiteInfoByIdResult_resultHandler(event:ResultEvent):void
+			{
+				var site:Site = event.result as Site;
+				showInfoWin.title = site.siteName;    
+				PopUpManager.addPopUp(showInfoWin, this, true);  
+				PopUpManager.centerPopUp(showInfoWin);  
+				equipInfoGrid.dataProvider = new Array(
+					//{name: area.areaId},
+					{name: site.siteName },
+					{name: site.siteAdress},
+					{name: site.connactName},
+					{name: site.connactNumber},
+					{name: site.descp}
+				);
+			}
 			
 		]]>
 	</fx:Script>
@@ -803,32 +726,15 @@
 			<s:layout>
 				<s:HorizontalLayout gap="-1" paddingLeft="10" paddingRight="10" paddingTop="10"  />
 			</s:layout>
-			<s:Panel id="areaSvgPanel"  title="福州" borderAlpha="1" width="40%" height="100%" dropShadowVisible="false"  >
-				<s:BorderContainer id="areaSvgContainer" backgroundAlpha="1" borderVisible="false" width="100%"  backgroundImageFillMode="scale"   height="100%">
-					<!--<mx:Image source="{bgImg}"   /> backgroundImage="{mapBgImg}"
-					<mx:Image source="{fzSVG}" mouseOver="image1_mouseOverHandler(event)" 
-							  mouseOut="image1_mouseOutHandler(event)"  alpha="0.2" 
-							  buttonMode="true" scaleContent="true" click="image1_clickHandler(event)"  />
-					-->
-					<degrafa:Surface id="geoSurf" visible="false">
-					</degrafa:Surface>
-					<s:BorderContainer borderVisible="false" width="100%" backgroundAlpha="0" visible="true" >
-						<s:Label backgroundColor="0x4CB848" x="120" y="200" text="台江区"  click="getSchemaByAreaName('台江区');searchSite('台江区');" buttonMode="true"></s:Label>
-						<s:Label backgroundColor="0x4CB848" x="160" y="110"  text="晋安区" click="getSchemaByAreaName('晋安区');searchSite('晋安区');" buttonMode="true"></s:Label>
-						<s:Label backgroundColor="0x4CB848" x="330" y="270"  text="马尾区" click="getSchemaByAreaName('马尾区');searchSite('马尾区');" buttonMode="true"></s:Label>
-						<s:Label backgroundColor="0x4CB848" x="40" y="210"  text="仓山区" click="getSchemaByAreaName('仓山区');searchSite('仓山区');" buttonMode="true"></s:Label>
-						<s:Label backgroundColor="0x4CB848" x="70" y="105"   text="鼓楼区" click="getSchemaByAreaName('鼓楼区');searchSite('鼓楼区');" buttonMode="true"></s:Label>
-						<!--
-						<s:Button x="120" y="200" label="台江区"  click="getSchemaByAreaName('台江区');searchSite('台江区');"></s:Button>
-						<s:Button x="160" y="110"  label="晋安区" click="getSchemaByAreaName('晋安区');searchSite('晋安区');"></s:Button>
-						<s:Button x="330" y="270"  label="马尾区" click="getSchemaByAreaName('马尾区');searchSite('马尾区');"></s:Button>
-						<s:Button x="40" y="210"  label="仓山区" click="getSchemaByAreaName('仓山区');searchSite('仓山区');"></s:Button>
-						<s:Button x="70" y="105"   label="鼓楼区" click="getSchemaByAreaName('鼓楼区');searchSite('鼓楼区');"></s:Button>
-						-->
-					</s:BorderContainer>
+			<s:Panel id="areaSvgPanel"  title="福州市" borderAlpha="1" width="40%" height="100%" dropShadowVisible="false"  >
+				<s:BorderContainer id="areaSvgContainer" backgroundAlpha="1" borderVisible="false" width="100%"  backgroundImageFillMode="scale"   height="100%"
+								   creationComplete="areaSvgContainer.contentGroup.clipAndEnableScrolling = true" >
+					<cedomaps:FZMapsOutline id="fzoutline" clickHander="{onMouseDownMaps}"  creationComplete="fzoutline_creationCompleteHandler(event)" />
+					<!--
 					<s:DropDownList id="hideSel" x="{areaSvgContainer.width-hideSel.width}" prompt="Select One"
 									 dataProvider="{areaDP}"
 									labelField="name" selectedIndex="0" change="hideSel_changeHandler(event)" />
+					-->
 				</s:BorderContainer>
 			</s:Panel>
 			<s:BorderContainer id="siteContainer"  borderAlpha="1" backgroundAlpha="0" width="60%" height="100%" visible="true" dropShadowVisible="false"
@@ -838,39 +744,60 @@
 					<xtreme:XtremeComponent name="view" id="view" width="100%" height="100%" />
 				</s:Group>
 				<mx:HBox id="xToolBar" backgroundAlpha="0" width="100%" paddingBottom="10" paddingLeft="10" paddingTop="10" paddingRight="10">
-					<mx:Image source="@Embed('assets/btn_info_48.png')" width="16" height="16" toolTip="视图信息">
-					</mx:Image>
-					<s:Label id="schemaNameLabel" text="" fontSize="14" toolTip="视图名称" fontFamily="Times New Roman" >			
-					</s:Label>
-					<s:Label id="schemaNote" text="" fontSize="14" toolTip="备注" fontFamily="Times New Roman">	
-					</s:Label>
+					
+					<s:Group toolTip="网络提示">
+						<s:layout>
+							<s:HorizontalLayout  verticalAlign="middle"/>
+						</s:layout>
+						<mx:Image source="@Embed('assets/btn_info_48.png')" width="16" height="16" toolTip="视图信息">
+						</mx:Image>
+						<s:Label id="schemaNameLabel" text="" fontSize="14" toolTip="视图名称" fontFamily="Times New Roman" >			
+						</s:Label>
+						<s:Label id="schemaNote" text="" fontSize="14" toolTip="备注" fontFamily="Times New Roman">	
+						</s:Label>
+					</s:Group>
 					<!--
 					<mx:Image id="refreshRelationBtn" click="searchBtn_clickHandler(event)"  source="@Embed(source='assets/buttons/btn_refresh_24.png')" buttonMode="true" width="24" height="24" toolTip="刷新"/>
 					-->
 					<mx:Spacer width="100%"/>
-					<s:Group toolTip="搜站点关系">
+					<s:Group toolTip="光缆提示">
 						<s:layout>
-							<s:HorizontalLayout />
-						</s:layout>
-						
-						<s:HGroup toolTip="是否是主干" >
+							<s:HorizontalLayout  verticalAlign="middle"/>
+							</s:layout>
+						<s:HGroup toolTip="是否是主干" visible="false" >
 							<s:RadioButton groupName="isMain" selected="true" value="check"  id="allCable"   label="全部"   />
 							<s:RadioButton groupName="isMain" selected="true"  id="isMain"   label="主干"   />
 							<s:RadioButton groupName="isMain"  id="notMain" label="非主干"  />
 						</s:HGroup>
-						<mx:Spacer width="5%"/>
+						<s:Line xFrom="10" xTo="30" yFrom="20" yTo="20" >
+							<s:stroke>
+								<s:SolidColorStroke color="0x111111" weight="1" caps="square"/>
+							</s:stroke>
+						</s:Line>
+						<s:Label text="非主干" />
+						<s:Line xFrom="40" xTo="60" yFrom="20" yTo="20">
+							<s:stroke>
+								<s:SolidColorStroke color="0x111111" weight="3" caps="square"/>
+							</s:stroke>
+						</s:Line>
+						<s:Label text="主干"   />
+					</s:Group>
+					<s:Group toolTip="搜站点关系">
+						<s:layout>
+							<s:HorizontalLayout />
+						</s:layout>
 						<s:HGroup toolTip="关联层数" >
 							<s:RadioButton groupName="paymentType"  id="degreeOne"   label="1层"  selected="true"  />
 							<s:RadioButton groupName="paymentType"  id="degreeTwo" value="check"   label="2层" />
-							<s:RadioButton groupName="paymentType" id="degreeThree"   value="credit"   label="3层" enabled="false"   />
+							<s:RadioButton groupName="paymentType"  id="degreeThree" enabled="false"   value="credit"    label="3层"   />
 						</s:HGroup>
-						<s:TextInput id="searchRelationKey" keyDown="searchKey_keyDownHandler(event)" maxChars="15">
+						<s:TextInput id="searchRelationKey" keyDown="searchKey_keyDownHandler(event)" maxChars="15" toolTip="关键字">
 						</s:TextInput>
-						
 						<mx:Image id="searchRelationBtn" click="searchBtn_clickHandler(event)"  source="@Embed(source='assets/buttons/btn_search_24.png')" buttonMode="true" width="24" height="24" toolTip="搜索"/>
-						
+						<!--
 						<mx:Image source="@Embed('assets/buttons/btn_full_screen_24.png')" toolTip="全屏" buttonMode="true"  width="20" height="20" >
 						</mx:Image>
+						-->
 					</s:Group>
 				</mx:HBox>
 
@@ -910,7 +837,7 @@
 						<s:RadioButton groupName="scopeType" id="scope_contact"   value="credit"  label="站点联系人"   />
 					</s:HGroup>
 					<s:Label  paddingTop="5" paddingLeft="5" text="中包含关键字" />
-					<s:TextInput id="searchSiteListKey"  maxChars="15"  keyDown="searchSiteListKeyBtn_keyUpHandler(event)" >
+					<s:TextInput id="searchSiteListKey"  maxChars="15"  keyDown="searchSiteListKeyBtn_keyUpHandler(event)" toolTip="关键字">
 					</s:TextInput>
 					<mx:LinkButton id="searchSiteListKeyBtn" fontWeight="bold" label="搜索" click="searchSiteListKeyBtn_clickHandler(event)" 
 								  />   

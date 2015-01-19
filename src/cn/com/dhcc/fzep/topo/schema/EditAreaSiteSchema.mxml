@@ -38,15 +38,19 @@
 		<services:EquipSchema id="equipSchema"
 							  fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 							  showBusyCursor="true"/>
-		<s:CallResponder id="saveSchemaResult" result="saveSchemaResult_resultHandler(event)"/>
+		<s:CallResponder id="saveSchemaResult" result="saveSchemaResult_resultHandler(event)" fault="saveSchemaResult_faultHandler(event)"/>
 		<s:CallResponder id="getSchemaResult" result="getSchemaResult_resultHandler(event)" fault="getSchemaResult_faultHandler(event)"/>
 		<services:ShowSchema id="showSchema"
 							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 							 showBusyCursor="true"/>
-		<s:CallResponder id="getListByAreaResult"/>
-		<services:SiteSchema id="siteSchema"
-							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
-							 showBusyCursor="true"/>
+		<s:CallResponder id="getSiteInfoByIdResult" result="getSiteInfoByIdResult_resultHandler(event)"/>
+		<services:SiteEquip id="siteEquip"
+							fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							showBusyCursor="true"/>
+		<s:CallResponder id="getCableBySiteArrayResult" result="getCableBySiteArrayResult_resultHandler(event)"/>
+		<services:Equip id="equip"
+						fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+						showBusyCursor="true"/>
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
@@ -58,7 +62,6 @@
 			import mx.collections.IList;
 			import mx.controls.Alert;
 			import mx.controls.Image;
-			import mx.core.UIComponent;
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
@@ -66,34 +69,39 @@
 			import mx.rpc.events.ResultEvent;
 			import mx.utils.ObjectUtil;
 			
-			import cn.com.dhcc.fzep.topo.components.ElementSelector;
 			import cn.com.dhcc.fzep.topo.components.SchemaElementComponent;
 			import cn.com.dhcc.fzep.topo.components.SiteComponent;
 			import cn.com.dhcc.fzep.topo.poao.SchemaElementsInfo;
-			import cn.com.dhcc.fzep.topo.utils.TopoXMLUtils;
+			import cn.com.dhcc.fzep.topo.utils.ScriptUtils;
+			import cn.com.dhcc.fzep.topo.utils.TopoUtils;
 			
-			import valueObjects.Carrier;
+			import valueObjects.Cable;
 			import valueObjects.Schema;
 			import valueObjects.Site;
 			
 			import xtreme.core.Root;
 			import xtreme.scene.SceneManager;
+			import xtreme.scene.entity.Entity;
+			import xtreme.scene.entity.shapes.DynamicConnector;
 			import xtreme.scene.entity.shapes.FlexComponent;
-			[Embed(source="assets/buttons/btn_arrow_r_48.png")]
-			public var hideBtn:Class;
 			[Bindable]
-			public var areaId:Array = new Array();
+			public var areaId:int = -1;
 			[Bindable]
-			public var schemaID:String = '';
+			public var schemaID:int = -1;
+			
 			public var dSelectWidth:int;
+			protected var viewContextMenu:ContextMenu;    //视图右键 菜单
+			protected var siteContextMenu:ContextMenu;    //站点 右键 菜单
+			protected var cableContextMenu:ContextMenu;    //光缆右键 菜单
 			private function applicationComplete() : void
 			{
-				var scO:Object = root.loaderInfo.parameters['areaId'];
+				var scO:Object = root.loaderInfo.parameters['schemaID'];
 				if(scO){
-					var sc:String = scO.toString();//root.loaderInfo.parameters['siteID'];
+					var sc:int = int(scO)//root.loaderInfo.parameters['siteID'];
 					if(sc){
 						schemaID = sc;
-						getSchema(schemaID);
+						getSchema(String(schemaID));
+						//Alert.show(schemaID);
 					}else {
 						Alert.show("视图ID无效", "参数错误");
 					}
@@ -103,7 +111,6 @@
 				stage.align = StageAlign.TOP_LEFT;
 				stage.scaleMode = StageScaleMode.NO_SCALE;
 				stage.quality = StageQuality.HIGH;
-				this.contextMenu.hideBuiltInItems();
 				var console:Console = Console.instance;
 				if (console == null)
 					console = new Console(stage);
@@ -112,32 +119,133 @@
 				view.getRoot().navigationView.visible = true;
 				
 				dSelectWidth = operGroup.width;
+				//视图右键菜单
+				/*
+				viewContextMenu = new ContextMenu(); 
+				viewContextMenu.hideBuiltInItems(); 
+				var tets:ContextMenuItem = new ContextMenuItem("从图中删除", true); 
+				viewContextMenu.customItems.push(tets); 
+				view.contextMenu = viewContextMenu;
+				*/
+				//站点
+				siteContextMenu = new ContextMenu(); 
+				siteContextMenu.hideBuiltInItems(); 
+				var delCmi:ContextMenuItem = new ContextMenuItem("从图中删除", true); 
+				delCmi.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, deleteSiteFromSchema);
+				siteContextMenu.customItems.push(delCmi); 
+				var detailCmi:ContextMenuItem = new ContextMenuItem("详细信息", false); 
+				detailCmi.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, showSiteDetails );
+				siteContextMenu.customItems.push(detailCmi); 
+				//光缆
+				cableContextMenu= new ContextMenu(); 
+				cableContextMenu.hideBuiltInItems(); 
+				var relation:ContextMenuItem = new ContextMenuItem("从图中删除", true); 
+				relation.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, deleteCableFromSchema);
+				cableContextMenu.customItems.push(relation); 
 				
 			}
 			
-			public function clearup() : void
-			{
-				// 清空场景
-				Root.instance.sceneManager.clearScene();
+			private function showSiteDetails(evt:ContextMenuEvent):void{
+				var sceneManager:SceneManager = Root.instance.sceneManager;
+				var entity:Entity = sceneManager.getEntity(evt.contextMenuOwner.name);
+				if(entity is FlexComponent){
+					var flexComponent:FlexComponent = entity as FlexComponent;
+					var siteId:String = getSiteId(flexComponent);
+					if(siteId!=null){
+						getSiteInfoById(siteId);
+					}
+				}else{
+					Alert.show("错误的位置调用","异常");
+				}
+			}
+			/**
+			 * <b>工具:</b><br />
+			 * 得到对应站点的ID 
+			 */
+			private function getSiteId(flexComponent:FlexComponent):String{
+				if(flexComponent.component is SchemaElementComponent){
+					var eleCom:SchemaElementComponent = flexComponent.component as SchemaElementComponent;
+					var eleInfo:SchemaElementsInfo = eleCom.eleInfo;
+					return eleInfo.id;
+				}else if ( flexComponent.component is SiteComponent ){
+					var siteCom:SiteComponent = flexComponent.component as SiteComponent;
+					var site:Site = siteCom.site;
+					return site.siteId;
+				}
+				return null;
+			}
+			/**
+			 * 从界面视图中删除站点(包括对应的光缆)
+			 */
+			private function deleteSiteFromSchema(evt:ContextMenuEvent):void{
+				var sceneManager:SceneManager = Root.instance.sceneManager;
+				var delEntity:Entity = sceneManager.getEntity(evt.contextMenuOwner.name);
+				if(delEntity is FlexComponent){
+					var flexComponent:FlexComponent = delEntity as FlexComponent;
+					var siteId:String = getSiteId(flexComponent);
+					
+					var delSuccess:Boolean = sceneManager.removeEntity(delEntity);
+					if(delSuccess){
+						var entityList:Array = sceneManager.entityList();
+						var entityListToDel:Array = new Array();
+						for (var i:int = 0; i < entityList.length; i++) 
+						{
+							var entity:Entity = entityList[i] as Entity;
+							if(entity is DynamicConnector){
+								var connector:DynamicConnector = entity as DynamicConnector;
+								if(connector.customData as Cable){
+									var cableObj:Cable = connector.customData as Cable;
+									var related:Boolean = (siteId==cableObj.cableEndId || siteId==cableObj.cableStartId);
+									if(related){
+										entityListToDel.push(entity);
+									}
+								}
+							}
+						}
+						for (var j:int = 0; j < entityListToDel.length; j++) 
+						{
+							sceneManager.removeEntity(entityListToDel[j]);
+						}
+						
+						selector.searchSite();
+					}else{
+						Alert.show("删除失败","出错了");
+					}
+				
+				}else{
+					//do nothing
+				}
+				
+			}	
+			private function deleteCableFromSchema(evt:ContextMenuEvent):void{
+				var sceneManager:SceneManager = Root.instance.sceneManager;
+				var delEntity:Entity = sceneManager.getEntity(evt.contextMenuOwner.name);
+				var delSuccess:Boolean = sceneManager.removeEntity(delEntity);
+				if(!delSuccess){
+					Alert.show("删除失败","出错了");
+				}
 			}
 			
+			/**
+			 * 添加站点到视图中
+			 */
 			private function addEquip(arr:IList):void {
 				for (var i:int = 0; i < arr.length; i++) 
 				{
 					var sceneMgr:SceneManager = Root.instance.sceneManager;
 					var equipO:Object = arr.getItemAt(i);
-					var equip:UIComponent;
+					var equip:SiteComponent;
 					var fcName:String;
 					if(equipO is Site){
-						var siteComponent:SiteComponent = new SiteComponent();
-						siteComponent.site = equipO as Site;
-						siteComponent.doShowSite = showDetails;
-						equip = siteComponent;
-						fcName = ObjectUtil.getClassInfo(Carrier).name + siteComponent.site.siteId;
+						equip = new SiteComponent();
+						equip.site = equipO as Site;
+						equip.contextMenu = siteContextMenu;
+						fcName = ObjectUtil.getClassInfo(Site).name + equip.site.siteId;
 					}
 					if(!sceneMgr.existsEntity(fcName)){
 						var equipFC:FlexComponent = new FlexComponent(fcName, equip);
 						equipFC.draggable = true;
+						equipFC.editable = false;
 						equipFC.x = sceneMgr.viewport.x + 10;
 						equipFC.y = sceneMgr.viewport.y + 70*(i+1);
 						equipFC.width = 60;
@@ -150,13 +258,14 @@
 			}
 			
 			/**
-			
-			/**
 			 * 关闭信息展示弹出窗口
 			 */
 			protected function showInfoWin_closeHandler(event:CloseEvent):void { 
 				PopUpManager.removePopUp(showInfoWin);   
 			}   
+			/**
+			 * 展示站点详细信息
+			 */
 			public function showDetails(site:Site):void{
 				//Alert.show( site.siteName + site.siteAdress +  site.connactName +  site.connactNumber +  site.descp);
 				showInfoWin.title = site.siteName;    
@@ -197,7 +306,7 @@
 				if(event.detail == Alert.YES)
 				{
 					var sceneMgr:SceneManager = Root.instance.sceneManager;
-					var equipJSONData:String = TopoXMLUtils.generateJSON(sceneMgr.entityList());
+					var equipJSONData:String = TopoUtils.generateJSON(sceneMgr.entityList());
 					
 					//Alert.show(equipJSONData);
 					
@@ -206,9 +315,9 @@
 					argsObj.viewY = sceneMgr.viewport.y;
 					
 					var schema:Schema = new Schema();
-					schema.schemaId = schemaID;
-					if(areaId[0]){
-						schema.areaId = areaId[0];
+					schema.schemaId = String(schemaID);
+					if(areaId){
+						schema.areaId = String(areaId);
 						schema.schemaType = "1";
 					}else{
 						schema.schemaType = "2";
@@ -226,7 +335,31 @@
 			 */
 			protected function buildCable_clickHandler(event:MouseEvent):void
 			{
+				var sceneMgr:SceneManager = Root.instance.sceneManager;
+				var entityList:Array = sceneMgr.entityList();
+				var siteIdArray:ArrayCollection = new ArrayCollection();
+				for (var i:int = 0; i < entityList.length; i++) 
+				{
+					var entity:Entity = entityList[i] as Entity;
+					if(entity is FlexComponent){
+						var flexComponent:FlexComponent = entity as FlexComponent;
+						if(flexComponent.component is SchemaElementComponent){
+							var eleCom:SchemaElementComponent = flexComponent.component as SchemaElementComponent;
+							var eleInfo:SchemaElementsInfo = eleCom.eleInfo;
+							siteIdArray.addItem(int(eleInfo.id));
+						}else if ( flexComponent.component is SiteComponent ){
+							var siteCom:SiteComponent = flexComponent.component as SiteComponent;
+							var site:Site = siteCom.site;
+							siteIdArray.addItem(int(site.siteId));
+						}
+					}else if(entity is DynamicConnector){
+						
+					}
+				}
+				//Alert.show(String(siteIdArray));
+				//TODO 搜索光缆图
 				
+				getCableBySiteArray(siteIdArray);
 			}
 			
 			protected function saveSchema2(arg0:String,arg1:String,arg2:String):void
@@ -239,14 +372,22 @@
 				Alert.okLabel = "继续编辑";
 				Alert.cancelLabel = "关闭窗口";
 				if(event.result==true){
-					Alert.show("保存成功", "执行结果", Alert.CANCEL, this, closeBrowserWindow);
+					Alert.show("保存成功", "执行结果", Alert.OK| Alert.CANCEL, this, closeBrowserWindow);
 				}else{
 					Alert.show( "保存失败", "执行结果", Alert.OK, this, closeBrowserWindow);
 				}
 			}
+			
+			protected function saveSchemaResult_faultHandler(event:FaultEvent):void
+			{
+				Alert.show("保存失败.","错误");
+			}
+			
 			protected function  closeBrowserWindow(event:CloseEvent):void {
 				if(event.detail == Alert.CANCEL){
 					navigateToURL(new URLRequest('javascript:window.opener=null;window.close()'),'_self')
+				}else if(event.detail == Alert.OK){
+					getSchema(String(schemaID));
 				}
 			}
 			protected function getSchema(arg0:String):void
@@ -259,20 +400,13 @@
 				var schema:Schema = event.result as Schema;
 				
 				schemaName.text = schema.schemaName;
-				//schemaNote.text = schema.schemaNote;
-				//Alert.show(schema.siteId);
-				if(schema.siteId){
-					areaId.push(schema.siteId);
-				}else{
-					areaId.push('');
+				if(schema.areaId){
+					areaId = int(schema.areaId);
 				}
-				//默认3层交换机
-				selector.getResult = getListByAreaResult;
-				selector.showField = "siteName";
-				selector.refreshSelectorData = getListByArea;
-				getListByArea(areaId[0]);
-				
-				loadSchema(schema.schemaData);
+				//loadSchema(schema.schemaData);
+				TopoUtils.loadSchema(Root.instance.sceneManager, schema.schemaData,siteContextMenu,cableContextMenu, siteComponent_doubleClickHandler, true);
+				selector.setExceptList(getExceptIdListInSchema().toArray());
+				selector.loadValidSite();
 			}
 			
 			protected function getSchemaResult_faultHandler(event:FaultEvent):void
@@ -280,69 +414,68 @@
 				Alert.show("获取数据失败","错误")
 			}
 			
-			protected function loadSchema(data:String):void {
-				clearup();
-				//get the raw JSON data and cast to String  
-				var rawData:String = String(data);  
-				
-				//decode the data to ActionScript using the JSON API  
-				//in this case, the JSON data is a serialize Array of Objects.  
-				var arr:Array = (JSON.decode(rawData) as Array);  
-				
-				//create a new ArrayCollection passing the de-serialized Array  
-				//ArrayCollections work better as DataProviders, as they can  
-				//be watched for changes.  
-				var dp:ArrayCollection = new ArrayCollection(arr);  
-				
-				var sceneMgr:SceneManager = Root.instance.sceneManager;
-				//Alert.show(String(dp.length));
-				
-				for (var i:int = 0; i < dp.length; i++) 
+			protected function siteComponent_doubleClickHandler(event:MouseEvent):void
+			{
+				var eleCom:SchemaElementComponent = event.currentTarget as SchemaElementComponent;
+				var eleInfo:SchemaElementsInfo = eleCom.eleInfo;
+				var topoBasePath:String = ScriptUtils.getRoot(root.loaderInfo.url) + "topo/";
+				ScriptUtils.openTabWindow(topoBasePath + "siteEquipment.jsp?siteId="+eleInfo.id,"站点详细");
+			}
+			/**
+			 * 得到排除在外的设备ID 集合
+			 */
+			protected function getExceptIdListInSchema():ArrayCollection{
+				var enList:Array = Root.instance.sceneManager.entityList();
+				var idlistExcept:ArrayCollection = new ArrayCollection();
+				for (var i:int = 0; i < enList.length; i++) 
 				{
-					var obj:Object =  dp.getItemAt(i);
-					var seInfo:SchemaElementsInfo = new SchemaElementsInfo();
-					seInfo.id = obj.id;
-					seInfo.imgPath = obj.imgPath;
-					seInfo.showName = obj.showName;
-					seInfo.type = obj.type;
-					seInfo.x = obj.x;
-					seInfo.y = obj.y;
-					
-					var eCom:SchemaElementComponent = new SchemaElementComponent();
-					eCom.imgName = seInfo.imgPath;
-					eCom.eleInfo = seInfo;
-					//eCom.doShow = doShowEquipment;
-					//eCom.doubleClickEnabled = true;
-					//eCom.addEventListener(MouseEvent.DOUBLE_CLICK, toEquipDetail);
-					var eid:String = seInfo.type + seInfo.id;
-					var equipFC:FlexComponent = new FlexComponent(eid, eCom);
-					equipFC.draggable = true;
-					equipFC.x = seInfo.x;
-					equipFC.y = seInfo.y;
-					equipFC.width = 60;
-					equipFC.height = 60;
-					
-					sceneMgr.addEntity(equipFC);
+					if(enList[i] is FlexComponent){
+						var equipFC:FlexComponent = enList[i] as FlexComponent;
+						var equipObj:Object = equipFC.component;
+						if(equipObj is SiteComponent){ 
+							var siteComponent:SiteComponent = equipObj as SiteComponent;
+							var equipId:String = siteComponent.site.siteId;
+							idlistExcept.addItem(int(equipId));
+						}else if(equipObj is SchemaElementComponent){
+							var siteECom:SchemaElementComponent = equipObj as SchemaElementComponent;
+							var seInfo:SchemaElementsInfo = siteECom.eleInfo;
+							idlistExcept.addItem(int(seInfo.id));
+						}
+					}
 				}
-				
-				var ori:Image = new Image();
-				ori.width = 48;
-				ori.height = 48;
-				ori.source = "assets/origin_48.png";
-				ori.alpha = 0.2;
-				var eqOri:FlexComponent = new FlexComponent("origin", ori);
-				eqOri.draggable = false;
-				eqOri.x = -24;
-				eqOri.y = -24;
-				eqOri.width = 48;
-				eqOri.height = 48;
-				sceneMgr.addEntity(eqOri);
+				return idlistExcept;
 			}
 			
-			protected function getListByArea(arg0:String):void
+			
+			
+			protected function getSiteInfoById(arg0:String):void
 			{
-				getListByAreaResult.token = siteSchema.getListByArea(arg0);
+				getSiteInfoByIdResult.token = siteEquip.getSiteInfoById(arg0);
 			}
+			
+			protected function getSiteInfoByIdResult_resultHandler(event:ResultEvent):void
+			{
+				var site:Site = event.result as Site;
+				showDetails(site);
+			}
+			
+			
+			protected function getCableBySiteArray(arg0:ArrayCollection):void
+			{
+				getCableBySiteArrayResult.token = equip.getCableBySiteArray(arg0);
+			}
+			
+			protected function getCableBySiteArrayResult_resultHandler(event:ResultEvent):void
+			{
+				var sceneMgr:SceneManager = Root.instance.sceneManager;
+				var cableList:ArrayCollection = event.result as ArrayCollection;
+				for (var j:int = 0; j < cableList.length; j++) 
+				{
+					var cableObj:Cable = cableList.getItemAt(j) as Cable;
+					TopoUtils.addCableToSchema(sceneMgr, cableObj,cableContextMenu);
+				}
+			}
+			
 			
 		]]>
 	</fx:Script>
@@ -352,14 +485,13 @@
 		</s:HorizontalLayout>
 	</s:layout>
 	<s:VGroup id="operGroup" height="100%" gap="0"  visible="true" >	
-		<cedo:ElementSelector id="selector" selectedItem="addEquip"  args="{areaId}" ></cedo:ElementSelector>
-		
+		<cedo:SiteSelector id="selector" selectedItem="addEquip"  areaId="{areaId}" exceptedInSchema="{getExceptIdListInSchema}" ></cedo:SiteSelector>
 	</s:VGroup>
-	<s:VGroup id="hide" width="10" height="100%" gap="0"
-			  click="hide_clickHandler(event)"  buttonMode="true" toolTip="" opaqueBackground="0xffffff" >
+	<s:VGroup id="hide" width="10" height="100%" gap="0" toolTip="隐藏/展示选择框"
+			  click="hide_clickHandler(event)"  buttonMode="true"  opaqueBackground="0xDCDCDC" >
 	</s:VGroup>
 	<s:Group width="100%" height="100%" x="0" y="5" >
-		<xtreme:XtremeComponent name="view" id="view" width="100%" height="100%" />
+		<xtreme:XtremeComponent name="view" id="view" width="100%" height="100%"  />
 		<mx:HBox backgroundAlpha="0"  horizontalAlign="left" width="100%" paddingTop="10" paddingLeft="10">
 			<mx:Image source="@Embed('assets/btn_info_48.png')" width="16" height="16" toolTip="视图信息">
 			</mx:Image>
@@ -367,7 +499,9 @@
 			</mx:Label>
 			<mx:LinkButton id="saveSchema" label="保存"  click="saveSchema_clickHandler(event)">
 			</mx:LinkButton>
-			<mx:LinkButton id="buildCable" label="检测光缆" click="buildCable_clickHandler(event)">
+			<mx:LinkButton id="buildCable" label="检测光缆连接" toolTip="检测途中站点之间是否存在光缆" click="buildCable_clickHandler(event)">
+			</mx:LinkButton>
+			<mx:LinkButton id="refresh" label="更新" toolTip="更新图中设备状态，去掉其中无效的设备。" click="buildCable_clickHandler(event)">
 			</mx:LinkButton>
 		</mx:HBox>
 	</s:Group>

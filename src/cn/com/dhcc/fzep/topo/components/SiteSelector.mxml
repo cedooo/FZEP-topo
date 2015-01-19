@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:services="services.*"
+		 creationComplete="creationCompleteHandler();" height="100%" >
+	<fx:Declarations>
+		<s:CallResponder id="avalibleSiteResult" result="avalibleSiteResult_resultHandler(event)"/>
+		<services:SiteSearch id="siteSearch"
+							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							 showBusyCursor="true"/>
+		<s:CallResponder id="countAvalibleSiteResult" result="countAvalibleSiteResult_resultHandler(event)"/>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.collections.IList;
+			import mx.rpc.CallResponder;
+			import mx.rpc.events.ResultEvent;
+			
+			import valueObjects.Page;
+			import valueObjects.SearchSite;
+			import valueObjects.Site;
+			[Bindable]
+			public var areaId:int;     //区域ID
+			[Bindable]
+ 			public var selectedItem:Function;     //选择后响应函数    
+			[Bindable]
+			public var exceptedInSchema:Function;     //选择后响应函数    
+
+			import mx.collections.ArrayList;
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
+			
+			[Bindable]
+			public var searchSiteCondition:SearchSite = new SearchSite();    //搜索条件
+			public function creationCompleteHandler():void {
+				destlist.dataProvider = new ArrayList([]);
+				var page:Page = new Page();
+				searchSiteCondition.page = page;
+				searchSiteCondition.page.curPage = 1;
+				searchSiteCondition.page.numPerPage = 20;    //默认每页站点数量
+				searchSiteCondition.searchField = "siteName";
+				searchSiteCondition.keyWord = '';
+				
+			}
+			public function loadValidSite():void {
+				searchSiteCondition.areaId = areaId;
+				//Alert.show(searchSiteCondition.areaId+'');
+				loadAvalibleSite(searchSiteCondition);
+			}
+			/**
+			 * 设置排除在外的站点ID
+			 */
+			public function setExceptList(list:Array):void
+			{
+				searchSiteCondition.exceptList = list;
+			}
+			/**
+			 * 全选
+			 */
+			protected function selectAll_clickHandler(event:MouseEvent):void
+			{
+				var objs:Object = srclist.dataProvider; 
+				var info:String = "选择了" + objs.length + "个对象";
+				if(objs.length>0){
+					Alert.show("确认全选？", info, Alert.YES | Alert.NO, this, doSelectAll);
+				}else{
+					Alert.show("", "未选中任何对象", Alert.YES , this);
+				}
+			}
+			private function doSelectAll(event:CloseEvent):void {
+				if(event.detail == Alert.YES)
+				{
+					var objs:Object = srclist.dataProvider; 
+					for (var i:int = 0; i < objs.length; i++) 
+					{
+						destlist.dataProvider.addItem(objs[i]);		
+					}		
+					//srclist.dataProvider.removeAll();
+				}
+			}
+			/**
+			 * 全部清除
+			 */
+			protected function diselectAll_clickHandler(event:MouseEvent):void
+			{
+				if(destlist.dataProvider.length>0)
+					Alert.show("", "确认清除已选择对象？", Alert.YES | Alert.NO, this, doDeselectAll);
+			}
+			private function doDeselectAll(event:CloseEvent):void {
+				if(event.detail == Alert.YES)
+				{
+					destlist.dataProvider.removeAll();
+					searchSite();
+				}
+			}
+			/**
+			 * 确定选择的数组
+			 */
+			protected function confm_clickHandler(event:MouseEvent):void
+			{
+				selectedItem(destlist.dataProvider);
+				destlist.dataProvider = new ArrayList([]);
+			}
+			
+			protected function closePanel_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				this.width = -1;
+				this.visible = false;
+			}
+			public function searchSite():void
+			{
+				/**
+				 * 排除的ID
+				 */
+				var excIdList:ArrayCollection = exceptedInSchema();
+				searchSiteCondition.exceptList.removeAll();
+				searchSiteCondition.exceptList.addAll(excIdList);
+				if(destlist.dataProvider.length>0){
+					var arr:IList = destlist.dataProvider;
+					var arrayCollection:ArrayCollection = new ArrayCollection();
+					for (var i:int = 0; i < arr.length; i++) 
+					{
+						var site:Site = arr.getItemAt(i) as Site;
+						arrayCollection.addItem(int(site.siteId));
+					}
+					searchSiteCondition.exceptList.addAll(arrayCollection);
+				}
+				/**
+				 * 其他搜索条件
+				 */
+				searchSiteCondition.keyWord = siteNameTextInput.text;
+				if(siteNameTextInput.text.match(/(.){1,15}/)){
+					searchSiteCondition.keyWord = siteNameTextInput.text;
+				}else {
+					searchSiteCondition.keyWord = '';
+				}
+					
+				loadAvalibleSite(searchSiteCondition);
+			}
+			protected function gotoPage(event:MouseEvent):void
+			{
+				if(event.currentTarget.id=="firstPage"){
+					searchSiteCondition.page.curPage = 1;
+				}else if(event.currentTarget.id=="lastPage"){
+					searchSiteCondition.page.curPage = searchSiteCondition.page.totalPage;
+				}else if(event.currentTarget.id=="prePage"){
+					if(searchSiteCondition.page.curPage>1){
+						searchSiteCondition.page.curPage = searchSiteCondition.page.curPage-1;
+					}
+				}else if(event.currentTarget.id=="nextPage"){
+					if(searchSiteCondition.page.curPage<searchSiteCondition.page.totalPage){
+						searchSiteCondition.page.curPage = searchSiteCondition.page.curPage+1;
+					}
+				}
+				searchSite();
+			}
+			
+			protected function siteNameTextInput_keyDownHandler(event:KeyboardEvent):void
+			{
+				if(event.keyCode ==13){ 
+					searchSite();
+				}
+			}
+			
+			
+			protected function loadAvalibleSite(arg0:SearchSite):void
+			{
+				avalibleSiteResult.token = siteSearch.avalibleSite(arg0);
+			}
+			
+			protected function avalibleSiteResult_resultHandler(event:ResultEvent):void
+			{
+				getPageAvalibleSite(searchSiteCondition);
+			}
+			
+			
+			protected function getPageAvalibleSite(arg0:SearchSite):void
+			{
+				countAvalibleSiteResult.token = siteSearch.getPageAvalibleSite(arg0);
+			}
+			/**
+			 * 设置分页信息
+			 */
+			protected function countAvalibleSiteResult_resultHandler(event:ResultEvent):void
+			{
+				var page:Page = event.result as Page;
+				//Alert.show('总数：'+total);
+				searchSiteCondition.page = page;
+				pagedetail.text = "第" + page.curPage + "页/共" + page.totalPage + "页";
+				if(page.curPage==1){
+					prePage.enabled = false;
+					prePage.toolTip = "没有上一页";
+				}else{
+					prePage.enabled = true;
+					prePage.toolTip = "上一页";
+				}
+				if(page.curPage+1>page.totalPage){
+					nextPage.enabled = false;
+					nextPage.toolTip = "没有下一页";
+				}else {
+					nextPage.enabled = true;
+					nextPage.toolTip = "下一页";
+				}
+				
+			}
+			
+		]]>
+	</fx:Script>
+	
+		<s:Panel  title="(拖动)选择展示站点"  dropShadowVisible="false" height="100%">
+			<s:layout>
+				<s:HorizontalLayout paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5"/>
+			</s:layout>
+			
+			<s:VGroup width="50%" height="100%">
+				<mx:HBox backgroundAlpha="0" verticalAlign="middle" horizontalAlign="center" width="100%" height="24">
+					<s:TextInput maxChars="15" id="siteNameTextInput" keyDown="siteNameTextInput_keyDownHandler(event)" />
+					<mx:LinkButton label="搜索" fontWeight="bold" toolTip="搜索" id="search" click="searchSite()" />  
+				</mx:HBox>
+				<s:List id="srclist" width="100%" allowMultipleSelection="true" dragEnabled="true"
+						dragMoveEnabled="true" dropEnabled="true" height="100%" 
+						dataProvider="{avalibleSiteResult.lastResult}" labelField="siteName"
+						 />
+				<mx:HBox backgroundAlpha="0" verticalAlign="middle" horizontalAlign="center" width="100%" height="24">
+					<mx:LinkButton label="&#60;" toolTip="上一页" id="prePage" click="gotoPage(event)" /> 
+					<mx:Label   text="第0页/共0页" toolTip="分页信息" id="pagedetail"  />   
+					<mx:LinkButton label="&#62;" toolTip="下一页" id="nextPage" click="gotoPage(event)" />  
+				</mx:HBox>
+			</s:VGroup>
+			
+			<s:VGroup width="50%" height="100%">
+				<mx:HBox backgroundAlpha="0" verticalAlign="middle" horizontalAlign="center" width="100%" height="24">
+					<mx:LinkButton label="将选中的站点加入图中"   toolTip="搜索" id="confm" click="confm_clickHandler(event)" />  
+				</mx:HBox>
+				<s:List id="destlist" width="100%" allowMultipleSelection="false" dragEnabled="true"
+						dragMoveEnabled="true" dropEnabled="true" height="100%" labelField="siteName"/>
+				<mx:Image id="diselectAll"  source="@Embed(source='assets/btn_empty_24.png')" width="24" height="24" buttonMode="true"  toolTip="清空所有" click="diselectAll_clickHandler(event)"/>
+			</s:VGroup>
+			<s:VGroup>
+			</s:VGroup>
+		</s:Panel>  
+</s:Group>

@@ -51,7 +51,7 @@
 			import mx.managers.PopUpManager;
 			
 			import cn.com.dhcc.fzep.topo.components.SiteComponent;
-			import cn.com.dhcc.fzep.topo.utils.TopoXMLUtils;
+			import cn.com.dhcc.fzep.topo.utils.TopoUtils;
 			
 			import valueObjects.Site;
 			
@@ -98,7 +98,7 @@
 					if(fc==null){
 						var site:SiteComponent = new SiteComponent();
 						site.site = siteO as Site;
-						site.doShowSite = show;
+						//site.doShowSite = show;
 						var equipFC:FlexComponent = new FlexComponent(fcName, site);
 						equipFC.draggable = true;
 						equipFC.x = 0;
@@ -159,7 +159,7 @@
 			protected function saveSchema_clickHandler(event:MouseEvent):void
 			{
 				var sceneMgr:SceneManager = Root.instance.sceneManager;
-				var xmlStr:String = TopoXMLUtils.generateXML(sceneMgr.entityList());
+				var xmlStr:String = TopoUtils.generateXML(sceneMgr.entityList());
 				Alert.show(xmlStr);
 			}
 			/**

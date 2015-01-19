@@ -61,13 +61,13 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
     private var _internal_constructionUnit : String;
     private var _internal_fibreCoreNumber : String;
     private var _internal_bizType : String;
-    private var _internal_cableStartId : String;
-    private var _internal_fiberId : String;
     private var _internal_cableId : String;
+    private var _internal_fiberId : String;
+    private var _internal_cableStartId : String;
     private var _internal_constructionUnitId : String;
     private var _internal_runTime : String;
-    private var _internal_cableName : String;
     private var _internal_cableType : String;
+    private var _internal_cableName : String;
     private var _internal_isMainRoad : String;
     private var _internal_descp : String;
     private var _internal_showName : String;
@@ -117,9 +117,9 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
     }
 
     [Bindable(event="propertyChange")]
-    public function get cableStartId() : String
+    public function get cableId() : String
     {
-        return _internal_cableStartId;
+        return _internal_cableId;
     }
 
     [Bindable(event="propertyChange")]
@@ -129,9 +129,9 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
     }
 
     [Bindable(event="propertyChange")]
-    public function get cableId() : String
+    public function get cableStartId() : String
     {
-        return _internal_cableId;
+        return _internal_cableStartId;
     }
 
     [Bindable(event="propertyChange")]
@@ -147,15 +147,15 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
     }
 
     [Bindable(event="propertyChange")]
-    public function get cableName() : String
-    {
-        return _internal_cableName;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get cableType() : String
     {
         return _internal_cableType;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get cableName() : String
+    {
+        return _internal_cableName;
     }
 
     [Bindable(event="propertyChange")]
@@ -238,13 +238,13 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
         }
     }
 
-    public function set cableStartId(value:String) : void
+    public function set cableId(value:String) : void
     {
-        var oldValue:String = _internal_cableStartId;
+        var oldValue:String = _internal_cableId;
         if (oldValue !== value)
         {
-            _internal_cableStartId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableStartId", oldValue, _internal_cableStartId));
+            _internal_cableId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableId", oldValue, _internal_cableId));
         }
     }
 
@@ -258,13 +258,13 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
         }
     }
 
-    public function set cableId(value:String) : void
+    public function set cableStartId(value:String) : void
     {
-        var oldValue:String = _internal_cableId;
+        var oldValue:String = _internal_cableStartId;
         if (oldValue !== value)
         {
-            _internal_cableId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableId", oldValue, _internal_cableId));
+            _internal_cableStartId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableStartId", oldValue, _internal_cableStartId));
         }
     }
 
@@ -288,16 +288,6 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
         }
     }
 
-    public function set cableName(value:String) : void
-    {
-        var oldValue:String = _internal_cableName;
-        if (oldValue !== value)
-        {
-            _internal_cableName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableName", oldValue, _internal_cableName));
-        }
-    }
-
     public function set cableType(value:String) : void
     {
         var oldValue:String = _internal_cableType;
@@ -305,6 +295,16 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
         {
             _internal_cableType = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableType", oldValue, _internal_cableType));
+        }
+    }
+
+    public function set cableName(value:String) : void
+    {
+        var oldValue:String = _internal_cableName;
+        if (oldValue !== value)
+        {
+            _internal_cableName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableName", oldValue, _internal_cableName));
         }
     }
 
