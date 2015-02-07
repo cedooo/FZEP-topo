@@ -1,4 +1,4 @@
-package cn.com.dhcc.fzep.topo
+package cn.com.dhcc.fzep.topo.common
 {
 	import com.adobe.serialization.json.JSON;
 	
@@ -8,6 +8,7 @@ package cn.com.dhcc.fzep.topo
 	import mx.rpc.CallResponder;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
+	import mx.utils.ObjectUtil;
 	
 	import spark.components.Panel;
 	import spark.components.TextArea;
@@ -15,7 +16,7 @@ package cn.com.dhcc.fzep.topo
 	import services.Equip;
 	import services.SiteEquip;
 	
-	import valueObjects.AEquipment;
+	import valueObjects.EquipmentVO;
 	import valueObjects.Cable;
 	import valueObjects.Carrier;
 	import valueObjects.GPRS;
@@ -50,11 +51,11 @@ package cn.com.dhcc.fzep.topo
 		 * 加载站点设备
 		 */
 		public function loadBySite(site:Site):void{
+			this.clearup();
 			responder.token = siteEquip.getEquipmentListBySiteId(site.siteId);
 			responder.addEventListener(ResultEvent.RESULT, onResult);
 			responder.addEventListener(FaultEvent.FAULT, onFault);
 		}
-		private static var PANEL_PRE_STR:String = "panel_";
 		
 		private static var PADDING_TOP:int = 10;
 		private static var PADDING_LEFT:int = 10;
@@ -90,7 +91,7 @@ package cn.com.dhcc.fzep.topo
 				//sceneHelper.beginAddEntity(getEquipMoreInfo);
 				for (var i:int = 0; i < resArray.length; i++) 
 				{
-					var equip:AEquipment = resArray.getItemAt(i) as AEquipment;
+					var equip:EquipmentVO = resArray.getItemAt(i) as EquipmentVO;
 					
 					var comName:String = generatePanelName(equip);
 					if(!sceneMgr.existsEntity(comName)){
@@ -104,6 +105,7 @@ package cn.com.dhcc.fzep.topo
 						var txt:TextArea = new TextArea();
 						txt.percentHeight = 100;
 						txt.percentWidth = 100;
+						var delFlg:String = jsonObj['delFlg'];
 						if(equip.type.match(CABLE_TYPE_REGEXP)){
 							txt.text = jsonObj['cableName'];
 							txt.text += equip.jsonData;
@@ -168,9 +170,7 @@ package cn.com.dhcc.fzep.topo
 		
 		private static var GET_EQUIP_LIST_FAULT_REMIND:String = "无法获取站点设备列表";
 		private static var ERROR_REMIND_TITLE:String = "错误";
-		protected function onFault(event:ResultEvent):void{   
-			Alert.show(GET_EQUIP_LIST_FAULT_REMIND,ERROR_REMIND_TITLE);			
-		}
+		protected function onFault(event:ResultEvent):void{ Alert.show(GET_EQUIP_LIST_FAULT_REMIND,ERROR_REMIND_TITLE); }
 		
 		private static var CABLE_REGEXP:RegExp = /panel.*\.Cable/;
 		private static var CARRIER_REGEXP:RegExp = /panel.*\.Carrier/;
@@ -240,7 +240,7 @@ package cn.com.dhcc.fzep.topo
 			cable.cableName = event.result['cableName'];
 			cable.descp = event.result['descp'];
 			var sceneMgr:SceneManager = Root.instance.sceneManager;
-			var panelComName:String = PANEL_PRE_STR + "class cn.com.dhcc.fzep.topo.pojo.Cable" + "_" + cable.cableId;
+			var panelComName:String = ObjectUtil.getClassInfo(Cable).name + cable.cableId;
 			if(sceneMgr.existsEntity(panelComName)){
 				var fCom:FlexComponent = sceneMgr.getEntity(panelComName) as FlexComponent; 
 				var panel:Panel = fCom.component as Panel;
@@ -259,7 +259,7 @@ package cn.com.dhcc.fzep.topo
 			var carrier:Carrier = event.result as Carrier;
 			//Alert.show("载波;" + carrier.carrierName);
 			var sceneMgr:SceneManager = Root.instance.sceneManager;
-			var panelComName:String = PANEL_PRE_STR + "class cn.com.dhcc.fzep.topo.pojo.Carrier" + "_" + carrier.carrierId;
+			var panelComName:String =  ObjectUtil.getClassInfo(Carrier).name+ carrier.carrierId;
 			if(sceneMgr.existsEntity(panelComName)){
 				var fCom:FlexComponent = sceneMgr.getEntity(panelComName) as FlexComponent; 
 				var panel:Panel = fCom.component as Panel;
@@ -273,7 +273,7 @@ package cn.com.dhcc.fzep.topo
 			var gprs:GPRS = event.result as GPRS;
 			//Alert.show("载波;" + carrier.carrierName);
 			var sceneMgr:SceneManager = Root.instance.sceneManager;
-			var panelComName:String = PANEL_PRE_STR + "class cn.com.dhcc.fzep.topo.pojo.GPRS" + "_" + gprs.gprsId;
+			var panelComName:String =  ObjectUtil.getClassInfo(GPRS).name + gprs.gprsId;
 			if(sceneMgr.existsEntity(panelComName)){
 				var fCom:FlexComponent = sceneMgr.getEntity(panelComName) as FlexComponent; 
 				var panel:Panel = fCom.component as Panel;
@@ -287,7 +287,7 @@ package cn.com.dhcc.fzep.topo
 			var onu:ONU = event.result as ONU;
 			//Alert.show("载波;" + carrier.carrierName);
 			var sceneMgr:SceneManager = Root.instance.sceneManager;
-			var panelComName:String = PANEL_PRE_STR + "class cn.com.dhcc.fzep.topo.pojo.ONU" + "_" + onu.onuId;
+			var panelComName:String = ObjectUtil.getClassInfo(ONU).name + onu.onuId;
 			if(sceneMgr.existsEntity(panelComName)){
 				var fCom:FlexComponent = sceneMgr.getEntity(panelComName) as FlexComponent; 
 				var panel:Panel = fCom.component as Panel;
@@ -301,7 +301,7 @@ package cn.com.dhcc.fzep.topo
 			var olt:OLT = event.result as OLT;
 			//Alert.show("载波;" + carrier.carrierName);
 			var sceneMgr:SceneManager = Root.instance.sceneManager;
-			var panelComName:String = PANEL_PRE_STR + "class cn.com.dhcc.fzep.topo.pojo.OLT" + "_" + olt.oltId;
+			var panelComName:String = ObjectUtil.getClassInfo(OLT).name + olt.oltId;
 			if(sceneMgr.existsEntity(panelComName)){
 				var fCom:FlexComponent = sceneMgr.getEntity(panelComName) as FlexComponent; 
 				var panel:Panel = fCom.component as Panel;
@@ -318,7 +318,7 @@ package cn.com.dhcc.fzep.topo
 			l3Switch.delFlg = event.result['delFlg'];
 			//Alert.show("3层交换机" + carrier.carrierName);
 			var sceneMgr:SceneManager = Root.instance.sceneManager;
-			var panelComName:String = PANEL_PRE_STR + "class cn.com.dhcc.fzep.topo.pojo.ThreeLayerSwitch" + "_" + l3Switch.switchId;
+			var panelComName:String = ObjectUtil.getClassInfo(ThreeLayerSwitch).name + l3Switch.switchId;
 			if(sceneMgr.existsEntity(panelComName)){
 				var fCom:FlexComponent = sceneMgr.getEntity(panelComName) as FlexComponent; 
 				var panel:Panel = fCom.component as Panel;
@@ -331,7 +331,7 @@ package cn.com.dhcc.fzep.topo
 			var l2Switch:TwoLayerSwitch = event.result as TwoLayerSwitch;
 			//Alert.show("载波;" + carrier.carrierName);
 			var sceneMgr:SceneManager = Root.instance.sceneManager;
-			var panelComName:String = PANEL_PRE_STR + "class cn.com.dhcc.fzep.topo.pojo.TwoLayerSwitch" + "_" + l2Switch.switchId;
+			var panelComName:String = ObjectUtil.getClassInfo(TwoLayerSwitch).name + l2Switch.switchId;
 			if(sceneMgr.existsEntity(panelComName)){
 				var fCom:FlexComponent = sceneMgr.getEntity(panelComName) as FlexComponent; 
 				var panel:Panel = fCom.component as Panel;
@@ -344,8 +344,8 @@ package cn.com.dhcc.fzep.topo
 		/**
 		 * 根据抽象设备得到Panel名称
 		 */	
-		public function generatePanelName(ae:AEquipment):String{
-			var comName:String = PANEL_PRE_STR + ae.type + "_" + ae.id;
+		public function generatePanelName(ae:EquipmentVO):String{
+			var comName:String =  ae.type + "_" + ae.id;
 			return comName;
 		}
 		

@@ -16,55 +16,43 @@ import mx.events.PropertyChangeEvent;
 use namespace model_internal;
 
 [ExcludeClass]
-internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
+internal class _EquipmentVOEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "lookbackLocation", "typeSpecification", "siteId", "oltId", "delFlg", "manufacturersId");
+    model_internal static var allProperties:Array = new Array("typeName", "id", "name", "img", "type", "jsonData");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "lookbackLocation", "typeSpecification", "siteId", "oltId", "delFlg", "manufacturersId");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("typeName", "id", "name", "img", "type", "jsonData");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "lookbackLocation", "typeSpecification", "siteId", "oltId", "delFlg", "manufacturersId");
+    model_internal static var dataProperties:Array = new Array("typeName", "id", "name", "img", "type", "jsonData");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "lookbackLocation", "typeSpecification", "siteId", "oltId", "delFlg", "manufacturersId");
+    model_internal static var nonDerivedProperties:Array = new Array("typeName", "id", "name", "img", "type", "jsonData");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
-    model_internal static var entityName:String = "OLT";
+    model_internal static var entityName:String = "EquipmentVO";
     model_internal static var dependentsOnMap:Object;
     model_internal static var dependedOnServices:Array = new Array();
     model_internal static var propertyTypeMap:Object;
 
 
-    model_internal var _instance:_Super_OLT;
+    model_internal var _instance:_Super_EquipmentVO;
     model_internal static var _nullStyle:com.adobe.fiber.styles.Style = new com.adobe.fiber.styles.Style();
 
-    public function _OLTEntityMetadata(value : _Super_OLT)
+    public function _EquipmentVOEntityMetadata(value : _Super_EquipmentVO)
     {
         // initialize property maps
         if (model_internal::dependentsOnMap == null)
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["constructionUnit"] = new Array();
-            model_internal::dependentsOnMap["manufacturers"] = new Array();
-            model_internal::dependentsOnMap["showName"] = new Array();
-            model_internal::dependentsOnMap["constructionUnitId"] = new Array();
-            model_internal::dependentsOnMap["installationSite"] = new Array();
-            model_internal::dependentsOnMap["runTime"] = new Array();
-            model_internal::dependentsOnMap["projectId"] = new Array();
-            model_internal::dependentsOnMap["vlanId"] = new Array();
-            model_internal::dependentsOnMap["vpnNumber"] = new Array();
-            model_internal::dependentsOnMap["oSPFNumber"] = new Array();
-            model_internal::dependentsOnMap["oltName"] = new Array();
-            model_internal::dependentsOnMap["descp"] = new Array();
-            model_internal::dependentsOnMap["lookbackLocation"] = new Array();
-            model_internal::dependentsOnMap["typeSpecification"] = new Array();
-            model_internal::dependentsOnMap["siteId"] = new Array();
-            model_internal::dependentsOnMap["oltId"] = new Array();
-            model_internal::dependentsOnMap["delFlg"] = new Array();
-            model_internal::dependentsOnMap["manufacturersId"] = new Array();
+            model_internal::dependentsOnMap["typeName"] = new Array();
+            model_internal::dependentsOnMap["id"] = new Array();
+            model_internal::dependentsOnMap["name"] = new Array();
+            model_internal::dependentsOnMap["img"] = new Array();
+            model_internal::dependentsOnMap["type"] = new Array();
+            model_internal::dependentsOnMap["jsonData"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
@@ -72,24 +60,12 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["constructionUnit"] = "String";
-        model_internal::propertyTypeMap["manufacturers"] = "String";
-        model_internal::propertyTypeMap["showName"] = "String";
-        model_internal::propertyTypeMap["constructionUnitId"] = "String";
-        model_internal::propertyTypeMap["installationSite"] = "String";
-        model_internal::propertyTypeMap["runTime"] = "String";
-        model_internal::propertyTypeMap["projectId"] = "String";
-        model_internal::propertyTypeMap["vlanId"] = "String";
-        model_internal::propertyTypeMap["vpnNumber"] = "String";
-        model_internal::propertyTypeMap["oSPFNumber"] = "String";
-        model_internal::propertyTypeMap["oltName"] = "String";
-        model_internal::propertyTypeMap["descp"] = "String";
-        model_internal::propertyTypeMap["lookbackLocation"] = "String";
-        model_internal::propertyTypeMap["typeSpecification"] = "String";
-        model_internal::propertyTypeMap["siteId"] = "String";
-        model_internal::propertyTypeMap["oltId"] = "String";
-        model_internal::propertyTypeMap["delFlg"] = "String";
-        model_internal::propertyTypeMap["manufacturersId"] = "String";
+        model_internal::propertyTypeMap["typeName"] = "String";
+        model_internal::propertyTypeMap["id"] = "String";
+        model_internal::propertyTypeMap["name"] = "String";
+        model_internal::propertyTypeMap["img"] = "String";
+        model_internal::propertyTypeMap["type"] = "String";
+        model_internal::propertyTypeMap["jsonData"] = "String";
 
         model_internal::_instance = value;
     }
@@ -142,7 +118,7 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     override public function getDependants(propertyName:String):Array
     {
        if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a data property of entity OLT");
+            throw new Error(propertyName + " is not a data property of entity EquipmentVO");
             
        return model_internal::dependentsOnMap[propertyName] as Array;  
     }
@@ -160,7 +136,7 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     override public function getCollectionBase(propertyName:String):String
     {
         if (model_internal::collectionProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a collection property of entity OLT");
+            throw new Error(propertyName + " is not a collection property of entity EquipmentVO");
 
         return model_internal::collectionBaseMap[propertyName];
     }
@@ -168,7 +144,7 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     override public function getPropertyType(propertyName:String):String
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a property of OLT");
+            throw new Error(propertyName + " is not a property of EquipmentVO");
 
         return model_internal::propertyTypeMap[propertyName];
     }
@@ -182,7 +158,7 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity OLT");
+            throw new Error(propertyName + " does not exist for entity EquipmentVO");
         }
 
         return model_internal::_instance[propertyName];
@@ -192,7 +168,7 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     {
         if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " is not a modifiable property of entity OLT");
+            throw new Error(propertyName + " is not a modifiable property of entity EquipmentVO");
         }
 
         model_internal::_instance[propertyName] = value;
@@ -224,7 +200,7 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity OLT");
+            throw new Error(propertyName + " does not exist for entity EquipmentVO");
         }
 
         if (model_internal::allAlwaysAvailableProperties.indexOf(propertyName) != -1)
@@ -319,109 +295,37 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     }
 
     [Bindable(event="propertyChange")]
-    public function get isConstructionUnitAvailable():Boolean
+    public function get isTypeNameAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isManufacturersAvailable():Boolean
+    public function get isIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isShowNameAvailable():Boolean
+    public function get isNameAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isConstructionUnitIdAvailable():Boolean
+    public function get isImgAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isInstallationSiteAvailable():Boolean
+    public function get isTypeAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isRunTimeAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isProjectIdAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isVlanIdAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isVpnNumberAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isOSPFNumberAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isOltNameAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isDescpAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isLookbackLocationAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isTypeSpecificationAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isSiteIdAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isOltIdAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isDelFlgAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isManufacturersIdAvailable():Boolean
+    public function get isJsonDataAvailable():Boolean
     {
         return true;
     }
@@ -437,109 +341,37 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     }
 
     [Bindable(event="propertyChange")]   
-    public function get constructionUnitStyle():com.adobe.fiber.styles.Style
+    public function get typeNameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get manufacturersStyle():com.adobe.fiber.styles.Style
+    public function get idStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get showNameStyle():com.adobe.fiber.styles.Style
+    public function get nameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get constructionUnitIdStyle():com.adobe.fiber.styles.Style
+    public function get imgStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get installationSiteStyle():com.adobe.fiber.styles.Style
+    public function get typeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get runTimeStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get projectIdStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get vlanIdStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get vpnNumberStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get oSPFNumberStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get oltNameStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get descpStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get lookbackLocationStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get typeSpecificationStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get siteIdStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get oltIdStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get delFlgStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get manufacturersIdStyle():com.adobe.fiber.styles.Style
+    public function get jsonDataStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

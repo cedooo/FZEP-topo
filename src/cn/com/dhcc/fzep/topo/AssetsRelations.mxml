@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:cedoassets="cn.com.dhcc.fzep.topo.components.assets.*"
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="application1_creationCompleteHandler(event)"
+			   applicationComplete="application1_applicationCompleteHandler(event)">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.serialization.json.JSON;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			import mx.graphics.SolidColorStroke;
+			
+			import spark.components.Label;
+			import spark.primitives.Line;
+			
+			import cn.com.dhcc.fzep.topo.components.assets.SiteContainer;
+			
+			import valueObjects.Cable;
+			import valueObjects.EquipmentVO;
+			import valueObjects.Site;
+			
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				var site:Site = new Site();
+				site.siteName = "台江站点A1";
+				site.siteId = "2";
+				
+				var cableList:Array = new Array();
+				var cable:Cable = new Cable();
+				cable.cableName = "光缆1";
+				cable.cableId = "1";
+				cableList.push(cable);
+				var cable2:Cable = new Cable();
+				cable2.cableName = "光缆2";
+				cable2.cableId = "2";
+				cableList.push(cable2);
+				var cable3:Cable = new Cable();
+				cable3.cableName = "光缆3";
+				cable3.cableId = "3";
+				cableList.push(cable3);
+				
+				lSiteCon.site = site;
+				lSiteCon.cableList = cableList;
+				
+				
+				//设备数据
+				var listEquip:Array = new Array();
+				var equipV1:EquipmentVO = new EquipmentVO();
+				equipV1.name = "3层交换机1";
+				equipV1.type = "l3layer";
+				equipV1.id = "1";
+				listEquip.push(equipV1);
+				var equipV2:EquipmentVO = new EquipmentVO();
+				equipV2.name = "3层交换机2";
+				equipV2.type = "l3layer";
+				equipV2.id = "2";
+				listEquip.push(equipV2);
+				var equipV21:EquipmentVO = new EquipmentVO();
+				equipV21.name = "2层交换机1";
+				equipV21.type = "l2layer";
+				equipV21.id = "1";
+				listEquip.push(equipV21);
+				var equipV22:EquipmentVO = new EquipmentVO();
+				equipV22.name = "2层交换机2";
+				equipV22.type = "l2layer";
+				equipV22.id = "2";
+				listEquip.push(equipV22);
+				var equipV23:EquipmentVO = new EquipmentVO();
+				equipV23.name = "2层交换机3";
+				equipV23.type = "l2layer";
+				equipV23.id = "3";
+				listEquip.push(equipV23);
+				
+				var equipV24:EquipmentVO = new EquipmentVO();
+				equipV24.name = "2层交换机4";
+				equipV24.type = "l2layer";
+				equipV24.id = "4";
+				listEquip.push(equipV24);
+				lSiteCon.equipList = listEquip;
+				
+				var cableConnList:Array = new Array();
+				var objCabl:Object = new Object();
+				objCabl.cableId = '1';
+				objCabl.deviceType = 'l3layer';
+				objCabl.deviceId = '1';
+				objCabl.fiberNum = '1';
+				cableConnList.push(objCabl);
+				var objCabl2:Object = new Object();
+				objCabl2.cableId = '2';
+				objCabl2.deviceType = 'l2layer';
+				objCabl2.deviceId = '2';
+				objCabl2.fiberNum = '13';
+				cableConnList.push(objCabl2);
+				
+				var objCabl3:Object = new Object();
+				objCabl3.cableId = '3';
+				objCabl3.deviceType = 'l2layer';
+				objCabl3.deviceId = '1';
+				objCabl3.fiberNum = '17';
+				cableConnList.push(objCabl3);
+				
+				var objCabl4:Object = new Object();
+				objCabl4.cableId = '2';
+				objCabl4.deviceType = 'l2layer';
+				objCabl4.deviceId = '4';
+				objCabl4.fiberNum = '19';
+				cableConnList.push(objCabl4);
+				
+				var connectionData:String = JSON.encode(cableConnList).toString();
+				lSiteCon.connJsonData = connectionData;
+				
+				//2#站点测试数据
+				var site2:Site = new Site();
+				site2.siteName = "台江站点A2";
+				site2.siteId = "3";
+				
+				var cableList2:Array = new Array();
+				var cable222:Cable = new Cable();
+				cable222.cableName = "光缆1";
+				cable222.cableId = "1";
+				cableList2.push(cable222);
+				var cable22:Cable = new Cable();
+				cable22.cableName = "光缆2";
+				cable22.cableId = "2";
+				cableList2.push(cable2);
+				var cable32:Cable = new Cable();
+				cable32.cableName = "光缆3";
+				cable32.cableId = "3";
+				cableList.push(cable32);
+				
+				
+				
+				//设备数据
+				var listEquip2:Array = new Array();
+				var equipV12:EquipmentVO = new EquipmentVO();
+				equipV12.name = "3层交换机21";
+				equipV12.type = "l3layer";
+				equipV12.id = "1";
+				listEquip2.push(equipV12);
+				var equipV222:EquipmentVO = new EquipmentVO();
+				equipV222.name = "3层交换机22";
+				equipV222.type = "l3layer";
+				equipV222.id = "2";
+				listEquip2.push(equipV222);
+				var equipV212:EquipmentVO = new EquipmentVO();
+				equipV212.name = "2层交换机21";
+				equipV212.type = "l2layer";
+				equipV212.id = "1";
+				listEquip2.push(equipV212);
+				var equipV2222:EquipmentVO = new EquipmentVO();
+				equipV2222.name = "2层交换机22";
+				equipV2222.type = "l2layer";
+				equipV2222.id = "2";
+				listEquip2.push(equipV2222);
+				var equipV242:EquipmentVO = new EquipmentVO();
+				equipV242.name = "2层交换机24";
+				equipV242.type = "l2layer";
+				equipV242.id = "4";
+				listEquip2.push(equipV242);
+				var equipV232:EquipmentVO = new EquipmentVO();
+				equipV232.name = "2层交换机23";
+				equipV232.type = "l2layer";
+				equipV232.id = "3";
+				listEquip2.push(equipV232);
+				
+				
+				var cableConnList2:Array = new Array();
+				var objCabl2222:Object = new Object();
+				objCabl2222.cableId = '1';
+				objCabl2222.deviceType = 'l3layer';
+				objCabl2222.deviceId = '1';
+				objCabl2222.fiberNum = '1';
+				cableConnList2.push(objCabl2222);
+				var objCabl223:Object = new Object();
+				objCabl223.cableId = '2';
+				objCabl223.deviceType = 'l2layer';
+				objCabl223.deviceId = '4';
+				objCabl223.fiberNum = '19';
+				cableConnList2.push(objCabl223);
+				var objCabl22:Object = new Object();
+				objCabl22.cableId = '2';
+				objCabl22.deviceType = 'l2layer';
+				objCabl22.deviceId = '2';
+				objCabl22.fiberNum = '13';
+				cableConnList2.push(objCabl22);
+				
+				
+				var objCabl22d:Object = new Object();
+				objCabl22d.cableId = '1';
+				objCabl22d.deviceType = 'l2layer';
+				objCabl22d.deviceId = '2';
+				objCabl22d.fiberNum = '18';
+				cableConnList2.push(objCabl22d);
+				
+				var connectionData2:String = JSON.encode(cableConnList2).toString();
+				lSiteCon2.connJsonData = connectionData2;
+				
+				lSiteCon2.site = site2;
+				lSiteCon2.equipList = listEquip2;
+				lSiteCon2.cableList = cableList2;
+				lSiteCon2.connJsonData = connectionData2;
+				
+				//connectCable(lSiteCon, lSiteCon2);
+				//Alert.show(lSite2PCon.x +',' + lSite2PCon.y);
+			}
+			private var lineColors:Array =  new Array(0x5ca1d7,0x9dd6f4,0x725746, 0xff9f64);
+			/**
+			 * 连接两个站点的光缆
+			 */
+			protected function connectCable(site1:SiteContainer, site2:SiteContainer):void{
+				var site1Cable:ArrayCollection = new ArrayCollection(site1.cableList);
+				var site2Cable:ArrayCollection = new ArrayCollection(site2.cableList);
+				for (var i:int = 0; i < site1Cable.length; i++) 
+				{
+					var cable1:Cable = site1Cable.getItemAt(i) as Cable;
+					for (var j:int = 0; j < site2Cable.length; j++) 
+					{
+						var cable2:Cable = site2Cable.getItemAt(i) as Cable;
+						if(cable1.cableId == cable2.cableId){
+							//Alert.show(cable1.cableId);
+							var strokes:SolidColorStroke = new SolidColorStroke();
+							strokes.weight = 3;
+							strokes.caps=CapsStyle.ROUND;
+							strokes.color = lineColors[i%lineColors.length];
+							
+							var pointS:Point = site1.connectionToCable(cable1.cableId);
+							var pointE:Point = site2.connectionToCable(cable2.cableId);
+							var offsetY:Number = -22 + i*15;
+							
+							var line:Line = new Line();
+							line.xFrom = pointS.x + lSitePCon.x;
+							line.yFrom = pointS.y + lSitePCon.y + offsetY;
+							line.xTo =  pointE.x + lSite2PCon.x ;
+							line.yTo = pointE.y + lSite2PCon.y + offsetY;
+							line.stroke = strokes;
+							container.addElement(line);
+							
+							
+							var cableInfo:Label = new Label();
+							cableInfo.text = cable1.cableName;
+							cableInfo.width = 100;
+							cableInfo.height = 25;
+							cableInfo.setStyle("fontSize", 12);
+							
+							cableInfo.x = (line.xTo + line.xFrom)/2;// - cableInfo.width/2;
+							cableInfo.buttonMode = true;
+							cableInfo.y = (line.yTo + line.yFrom)/2 - 6;
+							container.addElement(cableInfo);
+							
+							
+							var line2:Line = new Line();
+							line2.xFrom = pointS.x + lSitePCon.x;
+							line2.yFrom = pointS.y + lSitePCon.y + offsetY;
+							line2.xTo =  pointS.x + lSitePCon.x ;
+							line2.yTo = pointS.y + lSitePCon.y ;
+							line2.stroke = strokes;
+							container.addElement(line2);
+							
+							var line3:Line = new Line();
+							line3.xFrom = pointE.x + lSite2PCon.x;
+							line3.yFrom = pointE.y + lSite2PCon.y;
+							line3.xTo =  pointE.x + lSite2PCon.x ;
+							line3.yTo = pointE.y + lSite2PCon.y + offsetY ;
+							line3.stroke = strokes;
+							container.addElement(line3);
+							
+							break;
+						}else{
+							continue;
+						}
+						
+					}
+					
+				}
+				
+			}
+			
+			protected function application1_applicationCompleteHandler(event:FlexEvent):void
+			{
+				connectCable(lSiteCon, lSiteCon2);
+			}
+			
+		]]>
+	</fx:Script>
+	<mx:ApplicationControlBar>
+		<s:Label text="DEMO-仅作展示使用" >
+			
+		</s:Label>
+	</mx:ApplicationControlBar>
+	<s:BorderContainer y="60" width="66%" height="66%" verticalCenter="middle"  borderVisible="false">
+		<s:layout>
+			<s:HorizontalLayout  paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" />
+		</s:layout>
+		<s:BorderContainer   width="100%" height="100%" verticalCenter="middle" id="container" borderVisible="false"  >
+			<s:BorderContainer width="45%" height="100%" verticalCenter="middle" id="lSitePCon"  borderVisible="false"  cornerRadius="10" >
+				<cedoassets:SiteContainer id="lSiteCon"></cedoassets:SiteContainer>
+			</s:BorderContainer>
+			<s:BorderContainer width="45%" x="{lSitePCon.width+50}" height="100%" id="lSite2PCon" verticalCenter="middle"  borderVisible="false"  cornerRadius="10" >
+				<cedoassets:SiteContainer id="lSiteCon2"></cedoassets:SiteContainer>
+			</s:BorderContainer>
+		</s:BorderContainer>
+	</s:BorderContainer>
+</s:Application>

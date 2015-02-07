@@ -179,7 +179,8 @@ package cn.com.dhcc.fzep.topo.utils
 					var connectorName:String = ObjectUtil.getClassInfo(Cable).name+ cableID;
 					if(!sceneMgr.existsEntity(connectorName)){
 						var connector:DynamicConnector = new DynamicConnector(connectorName);
-						connector.lineThickness = cable.isMainRoad=='Y'?4:2;
+						//var connector:CustomDynamicConnector = new CustomDynamicConnector(connectorName);
+						connector.lineThickness = cable.isMainRoad=='是'?4:2;
 						connector.lineColor = 0x66A6D9;//lineColors[(int)(Math.random()*10)%lineColors.length];
 						connector.connect(startComponent.centerAnchor, endComponent.centerAnchor);
 						connector.alpha = 1;

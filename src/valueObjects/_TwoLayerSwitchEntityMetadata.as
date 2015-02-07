@@ -20,14 +20,14 @@ internal class _TwoLayerSwitchEntityMetadata extends com.adobe.fiber.valueobject
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("constructionUnit", "terminalName", "portNumber", "constructionUnitId", "manufacturers", "installationSite", "switchName", "runTime", "projectId", "flow", "VLANID", "ownedBusiness", "switchId", "vlanDescp", "switchType", "subNetwork", "descp", "typeSpecification", "siteId", "showName", "delFlg", "debugging");
+    model_internal static var allProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "terminalName", "portNumber", "constructionUnitId", "twoLayerSwitchName", "installationSite", "runTime", "VLANID", "projectId", "flow", "ownedBusiness", "twoLayerSwitchId", "vlanDescp", "switchType", "subNetwork", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId", "debugging");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "terminalName", "portNumber", "constructionUnitId", "manufacturers", "installationSite", "switchName", "runTime", "projectId", "flow", "VLANID", "ownedBusiness", "switchId", "vlanDescp", "switchType", "subNetwork", "descp", "typeSpecification", "siteId", "showName", "delFlg", "debugging");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "terminalName", "portNumber", "constructionUnitId", "twoLayerSwitchName", "installationSite", "runTime", "VLANID", "projectId", "flow", "ownedBusiness", "twoLayerSwitchId", "vlanDescp", "switchType", "subNetwork", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId", "debugging");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("constructionUnit", "terminalName", "portNumber", "constructionUnitId", "manufacturers", "installationSite", "switchName", "runTime", "projectId", "flow", "VLANID", "ownedBusiness", "switchId", "vlanDescp", "switchType", "subNetwork", "descp", "typeSpecification", "siteId", "showName", "delFlg", "debugging");
+    model_internal static var dataProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "terminalName", "portNumber", "constructionUnitId", "twoLayerSwitchName", "installationSite", "runTime", "VLANID", "projectId", "flow", "ownedBusiness", "twoLayerSwitchId", "vlanDescp", "switchType", "subNetwork", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId", "debugging");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "terminalName", "portNumber", "constructionUnitId", "manufacturers", "installationSite", "switchName", "runTime", "projectId", "flow", "VLANID", "ownedBusiness", "switchId", "vlanDescp", "switchType", "subNetwork", "descp", "typeSpecification", "siteId", "showName", "delFlg", "debugging");
+    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "terminalName", "portNumber", "constructionUnitId", "twoLayerSwitchName", "installationSite", "runTime", "VLANID", "projectId", "flow", "ownedBusiness", "twoLayerSwitchId", "vlanDescp", "switchType", "subNetwork", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId", "debugging");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -48,26 +48,29 @@ internal class _TwoLayerSwitchEntityMetadata extends com.adobe.fiber.valueobject
             // dependents map
             model_internal::dependentsOnMap = new Object();
             model_internal::dependentsOnMap["constructionUnit"] = new Array();
+            model_internal::dependentsOnMap["manufacturers"] = new Array();
+            model_internal::dependentsOnMap["switchName"] = new Array();
+            model_internal::dependentsOnMap["switchId"] = new Array();
+            model_internal::dependentsOnMap["showName"] = new Array();
             model_internal::dependentsOnMap["terminalName"] = new Array();
             model_internal::dependentsOnMap["portNumber"] = new Array();
             model_internal::dependentsOnMap["constructionUnitId"] = new Array();
-            model_internal::dependentsOnMap["manufacturers"] = new Array();
+            model_internal::dependentsOnMap["twoLayerSwitchName"] = new Array();
             model_internal::dependentsOnMap["installationSite"] = new Array();
-            model_internal::dependentsOnMap["switchName"] = new Array();
             model_internal::dependentsOnMap["runTime"] = new Array();
+            model_internal::dependentsOnMap["VLANID"] = new Array();
             model_internal::dependentsOnMap["projectId"] = new Array();
             model_internal::dependentsOnMap["flow"] = new Array();
-            model_internal::dependentsOnMap["VLANID"] = new Array();
             model_internal::dependentsOnMap["ownedBusiness"] = new Array();
-            model_internal::dependentsOnMap["switchId"] = new Array();
+            model_internal::dependentsOnMap["twoLayerSwitchId"] = new Array();
             model_internal::dependentsOnMap["vlanDescp"] = new Array();
             model_internal::dependentsOnMap["switchType"] = new Array();
             model_internal::dependentsOnMap["subNetwork"] = new Array();
             model_internal::dependentsOnMap["descp"] = new Array();
             model_internal::dependentsOnMap["typeSpecification"] = new Array();
             model_internal::dependentsOnMap["siteId"] = new Array();
-            model_internal::dependentsOnMap["showName"] = new Array();
             model_internal::dependentsOnMap["delFlg"] = new Array();
+            model_internal::dependentsOnMap["manufacturersId"] = new Array();
             model_internal::dependentsOnMap["debugging"] = new Array();
 
             // collection base map
@@ -77,26 +80,29 @@ internal class _TwoLayerSwitchEntityMetadata extends com.adobe.fiber.valueobject
         // Property type Map
         model_internal::propertyTypeMap = new Object();
         model_internal::propertyTypeMap["constructionUnit"] = "String";
+        model_internal::propertyTypeMap["manufacturers"] = "String";
+        model_internal::propertyTypeMap["switchName"] = "String";
+        model_internal::propertyTypeMap["switchId"] = "String";
+        model_internal::propertyTypeMap["showName"] = "String";
         model_internal::propertyTypeMap["terminalName"] = "String";
         model_internal::propertyTypeMap["portNumber"] = "String";
         model_internal::propertyTypeMap["constructionUnitId"] = "String";
-        model_internal::propertyTypeMap["manufacturers"] = "String";
+        model_internal::propertyTypeMap["twoLayerSwitchName"] = "String";
         model_internal::propertyTypeMap["installationSite"] = "String";
-        model_internal::propertyTypeMap["switchName"] = "String";
         model_internal::propertyTypeMap["runTime"] = "String";
+        model_internal::propertyTypeMap["VLANID"] = "String";
         model_internal::propertyTypeMap["projectId"] = "String";
         model_internal::propertyTypeMap["flow"] = "String";
-        model_internal::propertyTypeMap["VLANID"] = "String";
         model_internal::propertyTypeMap["ownedBusiness"] = "String";
-        model_internal::propertyTypeMap["switchId"] = "String";
+        model_internal::propertyTypeMap["twoLayerSwitchId"] = "String";
         model_internal::propertyTypeMap["vlanDescp"] = "String";
         model_internal::propertyTypeMap["switchType"] = "String";
         model_internal::propertyTypeMap["subNetwork"] = "String";
         model_internal::propertyTypeMap["descp"] = "String";
         model_internal::propertyTypeMap["typeSpecification"] = "String";
         model_internal::propertyTypeMap["siteId"] = "String";
-        model_internal::propertyTypeMap["showName"] = "String";
         model_internal::propertyTypeMap["delFlg"] = "String";
+        model_internal::propertyTypeMap["manufacturersId"] = "String";
         model_internal::propertyTypeMap["debugging"] = "String";
 
         model_internal::_instance = value;
@@ -333,6 +339,30 @@ internal class _TwoLayerSwitchEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]
+    public function get isManufacturersAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isSwitchNameAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isSwitchIdAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isShowNameAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get isTerminalNameAvailable():Boolean
     {
         return true;
@@ -351,7 +381,7 @@ internal class _TwoLayerSwitchEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]
-    public function get isManufacturersAvailable():Boolean
+    public function get isTwoLayerSwitchNameAvailable():Boolean
     {
         return true;
     }
@@ -363,13 +393,13 @@ internal class _TwoLayerSwitchEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSwitchNameAvailable():Boolean
+    public function get isRunTimeAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isRunTimeAvailable():Boolean
+    public function get isVLANIDAvailable():Boolean
     {
         return true;
     }
@@ -387,19 +417,13 @@ internal class _TwoLayerSwitchEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]
-    public function get isVLANIDAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get isOwnedBusinessAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSwitchIdAvailable():Boolean
+    public function get isTwoLayerSwitchIdAvailable():Boolean
     {
         return true;
     }
@@ -441,13 +465,13 @@ internal class _TwoLayerSwitchEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]
-    public function get isShowNameAvailable():Boolean
+    public function get isDelFlgAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isDelFlgAvailable():Boolean
+    public function get isManufacturersIdAvailable():Boolean
     {
         return true;
     }
@@ -475,6 +499,30 @@ internal class _TwoLayerSwitchEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]   
+    public function get manufacturersStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get switchNameStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get switchIdStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get showNameStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
     public function get terminalNameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
@@ -493,7 +541,7 @@ internal class _TwoLayerSwitchEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]   
-    public function get manufacturersStyle():com.adobe.fiber.styles.Style
+    public function get twoLayerSwitchNameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
@@ -505,13 +553,13 @@ internal class _TwoLayerSwitchEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]   
-    public function get switchNameStyle():com.adobe.fiber.styles.Style
+    public function get runTimeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get runTimeStyle():com.adobe.fiber.styles.Style
+    public function get VLANIDStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
@@ -529,19 +577,13 @@ internal class _TwoLayerSwitchEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]   
-    public function get VLANIDStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
     public function get ownedBusinessStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get switchIdStyle():com.adobe.fiber.styles.Style
+    public function get twoLayerSwitchIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
@@ -583,13 +625,13 @@ internal class _TwoLayerSwitchEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]   
-    public function get showNameStyle():com.adobe.fiber.styles.Style
+    public function get delFlgStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get delFlgStyle():com.adobe.fiber.styles.Style
+    public function get manufacturersIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

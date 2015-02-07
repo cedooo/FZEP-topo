@@ -101,7 +101,6 @@
 					if(sc){
 						schemaID = sc;
 						getSchema(String(schemaID));
-						//Alert.show(schemaID);
 					}else {
 						Alert.show("视图ID无效", "参数错误");
 					}
@@ -111,32 +110,34 @@
 				stage.align = StageAlign.TOP_LEFT;
 				stage.scaleMode = StageScaleMode.NO_SCALE;
 				stage.quality = StageQuality.HIGH;
+				/**
 				var console:Console = Console.instance;
 				if (console == null)
 					console = new Console(stage);
 				view.getRoot().layerManager.enableContextMenu();
 				view.registerBuildInCommand(console);
+				 */ 
 				view.getRoot().navigationView.visible = true;
 				
 				dSelectWidth = operGroup.width;
-				//视图右键菜单
 				/*
+				//视图右键菜单
 				viewContextMenu = new ContextMenu(); 
 				viewContextMenu.hideBuiltInItems(); 
 				var tets:ContextMenuItem = new ContextMenuItem("从图中删除", true); 
 				viewContextMenu.customItems.push(tets); 
 				view.contextMenu = viewContextMenu;
 				*/
-				//站点
+				//站点右键菜单
 				siteContextMenu = new ContextMenu(); 
 				siteContextMenu.hideBuiltInItems(); 
 				var delCmi:ContextMenuItem = new ContextMenuItem("从图中删除", true); 
 				delCmi.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, deleteSiteFromSchema);
 				siteContextMenu.customItems.push(delCmi); 
-				var detailCmi:ContextMenuItem = new ContextMenuItem("详细信息", false); 
+				var detailCmi:ContextMenuItem = new ContextMenuItem("站点基础信息", false); 
 				detailCmi.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, showSiteDetails );
 				siteContextMenu.customItems.push(detailCmi); 
-				//光缆
+				//光缆右键菜单
 				cableContextMenu= new ContextMenu(); 
 				cableContextMenu.hideBuiltInItems(); 
 				var relation:ContextMenuItem = new ContextMenuItem("从图中删除", true); 
@@ -217,6 +218,9 @@
 				}
 				
 			}	
+			/**
+			 * 从图中删除光缆
+			 */
 			private function deleteCableFromSchema(evt:ContextMenuEvent):void{
 				var sceneManager:SceneManager = Root.instance.sceneManager;
 				var delEntity:Entity = sceneManager.getEntity(evt.contextMenuOwner.name);
@@ -497,11 +501,17 @@
 			</mx:Image>
 			<mx:Label id="schemaName"   >
 			</mx:Label>
-			<mx:LinkButton id="saveSchema" label="保存"  click="saveSchema_clickHandler(event)">
+			<mx:Label text="["   >
+			</mx:Label>
+			<mx:LinkButton id="saveSchema" label="保存视图"  click="saveSchema_clickHandler(event)">
 			</mx:LinkButton>
-			<mx:LinkButton id="buildCable" label="检测光缆连接" toolTip="检测途中站点之间是否存在光缆" click="buildCable_clickHandler(event)">
+			<mx:LinkButton id="buildCable" label="检测视图中存在的光缆连接" toolTip="检测途中站点之间是否存在光缆" click="buildCable_clickHandler(event)">
 			</mx:LinkButton>
-			<mx:LinkButton id="refresh" label="更新" toolTip="更新图中设备状态，去掉其中无效的设备。" click="buildCable_clickHandler(event)">
+			
+			<mx:Label text="]"   />
+			<mx:Spacer width="100%" />
+			<mx:Label text="提示：按住鼠标左键不放可以放大缩小视图" />
+			<mx:LinkButton visible="false" id="refresh" label="更新" toolTip="更新图中设备状态，去掉其中无效的设备。" click="buildCable_clickHandler(event)">
 			</mx:LinkButton>
 		</mx:HBox>
 	</s:Group>

@@ -6,17 +6,32 @@
 			   xmlns:xtreme="xtreme.core.*"
 			   xmlns:cedo="cn.com.dhcc.fzep.topo.components.*"
 			   minWidth="955" minHeight="600" applicationComplete="applicationComplete();"  >
+	<fx:Declarations>
+		<s:CallResponder id="getSiteInfoByIdResult" result="getSiteInfoByIdResult_resultHandler(event)" fault="getSiteInfoByIdResult_faultHandler(event)"/>
+		<services:SiteEquip id="siteEquip"
+							fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							showBusyCursor="true"/>
+		<s:CallResponder id="getEquipmentListBySiteIdResult" result="getEquipmentListBySiteIdResult_resultHandler(event)"/>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import flash.ux.core.Console;
+			import com.adobe.serialization.json.JSON;
 			
+			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 			import mx.rpc.events.FaultEvent;
 			import mx.rpc.events.ResultEvent;
 			
+			import spark.components.TextArea;
 			
+			import cn.com.dhcc.fzep.topo.common.EquipList;
+			import cn.com.dhcc.fzep.topo.utils.EquipJsonUtils;
+			
+			import valueObjects.EquipmentVO;
 			import valueObjects.Site;
+			protected var elist:EquipList = new EquipList() ;
 			[Bindable]
 			public var siteId:int;    // 接收外部传入参数
 			private function applicationComplete() : void
@@ -24,24 +39,7 @@
 				if(stage){
 					siteId = root.loaderInfo.parameters['siteId'];
 				}			
-				
 				getSiteInfoById(String(siteId));
-				elist = new EquipList();
-				
-				stage.align = StageAlign.TOP_LEFT;
-				stage.scaleMode = StageScaleMode.NO_SCALE;
-				stage.quality = StageQuality.HIGH;
-				this.contextMenu.hideBuiltInItems();
-				var console:Console = Console.instance;
-				if (console == null)
-					console = new Console(stage);
-				view.getRoot().layerManager.enableContextMenu();
-				view.registerBuildInCommand(console);
-				view.getRoot(). navigationView.visible = false;
-				
-				loadEquipList(String(siteId));
-				//elist.testCase1();
-				
 			}
 			[Bindable]
 			protected var site:Site;
@@ -53,64 +51,124 @@
 			
 			protected function getSiteInfoByIdResult_resultHandler(event:ResultEvent):void
 			{
-				//Alert.show(event.result['siteName']);
-				var siteObj:Object = event.result;
-				var siteId:String = siteObj['siteId'];
-				//Alert.show(siteId);
-				var site:Site = new Site();
-				site.siteId = siteId;
-				site.siteName = siteObj['siteName'];
-				site.connactName = siteObj['connactName'];
-				site.descp = siteObj['descp'];
-				site.connactNumber = siteObj['connactNumber'] ;
-				site.siteAdress = siteObj['siteAdress'] ;
+				var site:Site = event.result as Site;
 				
 				siteName.text = site.siteName;
 				siteAddr.text = site.siteAdress;
 				siteConnact.text = site.connactName;
 				siteConnactNumber.text = site.connactNumber;
 				siteNote.text = site.descp;
-				
-				
+				getEquipmentListBySiteId(site.siteId);
+				//elist.loadBySite(site);
 				/*
-				‘动态’加载站点信息
-				@Deprecated
-				if(site){
-					var elist:EquipList = new EquipList();
-					elist.clearup();
-					elist.loadBySite(site);
-				}else{
-					Alert.show("获取站点数据失败","错误");
-				}
+				equipPanel.title = "站点名称：" + site.siteName 
+					+ "站点地址：" +  site.siteAdress 
+					+ "站点联系人：" + site.connactName 
+					+ "联系电话：" + site.connactNumber 
+					+ "备注：" + site.descp;
 				*/
 			}
 			
-			protected function getSiteInfoByIdResult_faultHandler(event:FaultEvent):void
+			protected function getSiteInfoByIdResult_faultHandler(event:FaultEvent):void { Alert.show("获取数据失败","错误"); }
+			
+			
+			protected function getEquipmentListBySiteId(arg0:String):void
 			{
-				// TODO Auto-generated method stub
-				Alert.show("获取数据失败","错误");
+				getEquipmentListBySiteIdResult.token = siteEquip.getEquipmentListBySiteId(arg0);
 			}
-			[Bindable]
-			protected var elist:EquipList ;
-			/**
-			 * 加载站点设备列表
-			 */
-			protected function loadEquipList(siteId:String):void{
-				var site:Site = new Site();
-				site.siteId = String(siteId);
-				elist.clearup();
-				elist.loadBySite(site);
+			
+			[Embed("assets/status_green.png")]
+			private var iconGreen:Class;
+			[Embed("assets/status_gray.png")]
+			private var iconGray:Class;
+			protected function getEquipmentListBySiteIdResult_resultHandler(event:ResultEvent):void
+			{
+				var resArray:ArrayCollection = event.result as ArrayCollection;
+				if(resArray&&resArray.length>0){
+					for (var i:int = 0; i < resArray.length; i++) 
+					{
+						var equip:EquipmentVO = resArray.getItemAt(i) as EquipmentVO;
+						var equipPanel:Panel = new Panel();
+						equipPanel.title = "【" + equip.typeName  + "】" + equip.name;
+						equipPanel.setStyle("dropShadowVisible",false);
+						var jsonObj:Object = JSON.decode(equip.jsonData);
+						/*
+						var delFlg:String = jsonObj['delFlg'];
+						var image:Image = new Image();
+						if(delFlg=="启用"){
+							image.source = iconGreen;
+						}else{
+							image.source = iconGray;
+						}
+						equipPanel.addElement(image);
+						*/
+						var typeArr:Array = EquipJsonUtils.typeArray(equip.type);
+						if(typeArr!=null){
+							var gridContainer:BorderContainer = new BorderContainer();
+							gridContainer.percentWidth = 100;
+							gridContainer.percentHeight = 100;
+							var gridConLayout:VerticalLayout = new VerticalLayout();
+							gridConLayout.paddingBottom = 10;
+							gridConLayout.paddingLeft = 10;
+							gridConLayout.paddingRight = 10;
+							gridConLayout.paddingTop = 10;
+							gridContainer.layout = gridConLayout;
+							
+							var grid:Grid = new Grid();
+							grid.percentWidth = 100;
+							grid.percentHeight = 100;
+							for (var j:int = 0; j < typeArr.length; j++) 
+							{
+								var arrObj:Object = typeArr[j] as Object;
+								var row:GridRow = new GridRow();
+								
+								var nameItem:GridItem = new  GridItem();
+								var nameLabel:Label = new Label();
+								nameLabel.percentWidth = 100;
+								nameLabel.text = arrObj['showName'];
+								nameItem.addElement(nameLabel);
+								row.addElement(nameItem);
+								
+								var valItem:GridItem = new  GridItem();
+								var valLabel:Label = new Label();
+								valLabel.text = jsonObj[arrObj['attrName']];
+								valItem.addElement(valLabel);
+								row.addElement(valItem);
+								
+								grid.addElement(row);
+							}
+							gridContainer.addElement(grid);
+							equipPanel.addElement(gridContainer);
+							
+						}else{
+							var data:String = equip.jsonData;
+							var label:TextArea = new TextArea();
+							label.text = data;
+							equipPanel.addElement(label);
+						}
+						equipContainer.addElement(equipPanel);
+					}
+				}else{
+					var labContainer:BorderContainer = new BorderContainer();
+					labContainer.percentWidth = 100;
+					labContainer.percentHeight = 100;
+					var labConLayout:VerticalLayout = new VerticalLayout();
+					labConLayout.paddingBottom = 10;
+					labConLayout.paddingLeft = 10;
+					labConLayout.paddingRight = 10;
+					labConLayout.paddingTop = 10;
+					labContainer.layout = labConLayout;
+					
+					var remindInfo:Label = new Label();
+					remindInfo.text = "设备数量为0";
+					labContainer.addElement(remindInfo);
+					
+					equipContainer.addElement(labContainer);
+				}
 			}
 			
 		]]>
 	</fx:Script>
-	<fx:Declarations>
-		<s:CallResponder id="getSiteInfoByIdResult" result="getSiteInfoByIdResult_resultHandler(event)" fault="getSiteInfoByIdResult_faultHandler(event)"/>
-		<services:SiteEquip id="siteEquip"
-							fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
-							showBusyCursor="true"/>
-		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
-	</fx:Declarations>
 	<s:BorderContainer width="100%" height="100%" borderVisible="false" >
 		<s:layout>
 			<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="10" paddingRight="10" >
@@ -121,11 +179,11 @@
 				<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="10" paddingRight="10" >
 				</s:VerticalLayout>
 			</s:layout>
-			<s:Panel  width="100%" height="25%"  dropShadowVisible="false" title="站点信息">
-				<s:BorderContainer borderVisible="false"  width="100%" height="100%">
-					<s:layout>
-						<s:VerticalLayout paddingBottom="5" paddingLeft="10" paddingRight="10" paddingTop="5" />
-					</s:layout>
+			<s:Panel id="infoContainer"  width="100%" height="100%"  dropShadowVisible="false" title="站点信息" >
+				<s:layout>
+					<s:VerticalLayout paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="10" />
+				</s:layout>
+				<s:BorderContainer borderVisible="false"  width="100%" height="15%">
 					<mx:Grid width="100%" height="100%">
 						<mx:GridRow verticalAlign="middle">
 							<mx:GridItem>
@@ -175,12 +233,27 @@
 						</mx:GridRow>
 					</mx:Grid>
 				</s:BorderContainer>
+				
+				<s:BorderContainer  width="100%" height="100%">
+					<s:layout>
+						<s:VerticalLayout paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" />
+					</s:layout>
+					<s:Scroller width="100%" height="100%" >
+						<s:Group id="equipContainer"  width="100%" height="100%">
+							<s:layout>
+								<s:TileLayout  />
+							</s:layout>
+						</s:Group>
+					</s:Scroller>
+				</s:BorderContainer>
 			</s:Panel>
-			<s:Panel width="100%" height="75%" title="站点设备"  dropShadowVisible="false" >
+			<!--
+			<s:Panel width="100%" height="75%" title="站点设备" id="equipPanel"  dropShadowVisible="false" >
 				<s:Group id="xContainer" width="100%" height="100%" x="0" y="0"  >
 					<xtreme:XtremeComponent name="view" id="view" width="100%" height="100%" />
 				</s:Group>
-		</s:Panel>
+			</s:Panel>
+			-->
 		</s:BorderContainer>
 	</s:BorderContainer>
 	

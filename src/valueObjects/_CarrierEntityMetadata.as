@@ -20,14 +20,14 @@ internal class _CarrierEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("constructionUnit", "constructionUnitId", "manufacturers", "installationSite", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "showName", "carrierId", "delFlg", "carrierName", "debugging", "installationLocation");
+    model_internal static var allProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "carrierId", "delFlg", "carrierName", "debugging", "manufacturersId", "installationLocation");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "constructionUnitId", "manufacturers", "installationSite", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "showName", "carrierId", "delFlg", "carrierName", "debugging", "installationLocation");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "carrierId", "delFlg", "carrierName", "debugging", "manufacturersId", "installationLocation");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("constructionUnit", "constructionUnitId", "manufacturers", "installationSite", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "showName", "carrierId", "delFlg", "carrierName", "debugging", "installationLocation");
+    model_internal static var dataProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "carrierId", "delFlg", "carrierName", "debugging", "manufacturersId", "installationLocation");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "constructionUnitId", "manufacturers", "installationSite", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "showName", "carrierId", "delFlg", "carrierName", "debugging", "installationLocation");
+    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "carrierId", "delFlg", "carrierName", "debugging", "manufacturersId", "installationLocation");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -48,8 +48,9 @@ internal class _CarrierEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
             // dependents map
             model_internal::dependentsOnMap = new Object();
             model_internal::dependentsOnMap["constructionUnit"] = new Array();
-            model_internal::dependentsOnMap["constructionUnitId"] = new Array();
             model_internal::dependentsOnMap["manufacturers"] = new Array();
+            model_internal::dependentsOnMap["showName"] = new Array();
+            model_internal::dependentsOnMap["constructionUnitId"] = new Array();
             model_internal::dependentsOnMap["installationSite"] = new Array();
             model_internal::dependentsOnMap["runTime"] = new Array();
             model_internal::dependentsOnMap["projectId"] = new Array();
@@ -57,11 +58,11 @@ internal class _CarrierEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
             model_internal::dependentsOnMap["descp"] = new Array();
             model_internal::dependentsOnMap["typeSpecification"] = new Array();
             model_internal::dependentsOnMap["siteId"] = new Array();
-            model_internal::dependentsOnMap["showName"] = new Array();
             model_internal::dependentsOnMap["carrierId"] = new Array();
             model_internal::dependentsOnMap["delFlg"] = new Array();
             model_internal::dependentsOnMap["carrierName"] = new Array();
             model_internal::dependentsOnMap["debugging"] = new Array();
+            model_internal::dependentsOnMap["manufacturersId"] = new Array();
             model_internal::dependentsOnMap["installationLocation"] = new Array();
 
             // collection base map
@@ -71,8 +72,9 @@ internal class _CarrierEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
         // Property type Map
         model_internal::propertyTypeMap = new Object();
         model_internal::propertyTypeMap["constructionUnit"] = "String";
-        model_internal::propertyTypeMap["constructionUnitId"] = "String";
         model_internal::propertyTypeMap["manufacturers"] = "String";
+        model_internal::propertyTypeMap["showName"] = "String";
+        model_internal::propertyTypeMap["constructionUnitId"] = "String";
         model_internal::propertyTypeMap["installationSite"] = "String";
         model_internal::propertyTypeMap["runTime"] = "String";
         model_internal::propertyTypeMap["projectId"] = "String";
@@ -80,11 +82,11 @@ internal class _CarrierEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
         model_internal::propertyTypeMap["descp"] = "String";
         model_internal::propertyTypeMap["typeSpecification"] = "String";
         model_internal::propertyTypeMap["siteId"] = "String";
-        model_internal::propertyTypeMap["showName"] = "String";
         model_internal::propertyTypeMap["carrierId"] = "String";
         model_internal::propertyTypeMap["delFlg"] = "String";
         model_internal::propertyTypeMap["carrierName"] = "String";
         model_internal::propertyTypeMap["debugging"] = "String";
+        model_internal::propertyTypeMap["manufacturersId"] = "String";
         model_internal::propertyTypeMap["installationLocation"] = "String";
 
         model_internal::_instance = value;
@@ -321,13 +323,19 @@ internal class _CarrierEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
     }
 
     [Bindable(event="propertyChange")]
-    public function get isConstructionUnitIdAvailable():Boolean
+    public function get isManufacturersAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isManufacturersAvailable():Boolean
+    public function get isShowNameAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isConstructionUnitIdAvailable():Boolean
     {
         return true;
     }
@@ -375,12 +383,6 @@ internal class _CarrierEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
     }
 
     [Bindable(event="propertyChange")]
-    public function get isShowNameAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get isCarrierIdAvailable():Boolean
     {
         return true;
@@ -400,6 +402,12 @@ internal class _CarrierEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
 
     [Bindable(event="propertyChange")]
     public function get isDebuggingAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isManufacturersIdAvailable():Boolean
     {
         return true;
     }
@@ -427,13 +435,19 @@ internal class _CarrierEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
     }
 
     [Bindable(event="propertyChange")]   
-    public function get constructionUnitIdStyle():com.adobe.fiber.styles.Style
+    public function get manufacturersStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get manufacturersStyle():com.adobe.fiber.styles.Style
+    public function get showNameStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get constructionUnitIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
@@ -481,12 +495,6 @@ internal class _CarrierEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
     }
 
     [Bindable(event="propertyChange")]   
-    public function get showNameStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
     public function get carrierIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
@@ -506,6 +514,12 @@ internal class _CarrierEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
 
     [Bindable(event="propertyChange")]   
     public function get debuggingStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get manufacturersIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

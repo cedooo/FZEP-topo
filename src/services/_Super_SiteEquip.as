@@ -11,7 +11,7 @@ import mx.rpc.AbstractOperation;
 import mx.rpc.AsyncToken;
 import mx.rpc.remoting.Operation;
 import mx.rpc.remoting.RemoteObject;
-import valueObjects.AEquipment;
+import valueObjects.EquipmentVO;
 import valueObjects.Site;
 
 import mx.collections.ItemResponder;
@@ -28,7 +28,7 @@ internal class _Super_SiteEquip extends com.adobe.fiber.services.wrapper.RemoteO
         _serviceControl = new mx.rpc.remoting.RemoteObject();
 
         // initialize RemoteClass alias for all entities returned by functions of this service
-        valueObjects.AEquipment._initRemoteClassAlias();
+        valueObjects.EquipmentVO._initRemoteClassAlias();
 
         var operations:Object = new Object();
         var operation:mx.rpc.remoting.Operation;
@@ -37,7 +37,7 @@ internal class _Super_SiteEquip extends com.adobe.fiber.services.wrapper.RemoteO
          operation.resultType = valueObjects.Site;
         operations["getSiteInfoById"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "getEquipmentListBySiteId");
-         operation.resultElementType = valueObjects.AEquipment;
+         operation.resultElementType = valueObjects.EquipmentVO;
         operations["getEquipmentListBySiteId"] = operation;
 
         _serviceControl.operations = operations;

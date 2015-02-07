@@ -1,5 +1,8 @@
 package cn.com.dhcc.fzep.topo.poao
 {
+	/**
+	 * 视图元素信息
+	 */
 	public class SchemaElementsInfo
 	{
 		public function SchemaElementsInfo()

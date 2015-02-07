@@ -48,7 +48,6 @@
 			
 			import flash.ux.core.Console;
 			
-			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
@@ -56,8 +55,8 @@
 			import mx.rpc.events.ResultEvent;
 			import mx.utils.ObjectUtil;
 			
-			import cn.com.dhcc.fzep.topo.components.SchemaElementComponent;
 			import cn.com.dhcc.fzep.topo.poao.SchemaElementsInfo;
+			import cn.com.dhcc.fzep.topo.utils.TopoUtils;
 			
 			import valueObjects.Carrier;
 			import valueObjects.GPRS;
@@ -68,8 +67,6 @@
 			import valueObjects.TwoLayerSwitch;
 			
 			import xtreme.core.Root;
-			import xtreme.scene.SceneManager;
-			import xtreme.scene.entity.shapes.FlexComponent;
 			
 			[Bindable]
 			public var schemaID:String = "-1";
@@ -92,9 +89,9 @@
 				view.registerBuildInCommand(console);
 				view.getRoot().navigationView.visible = true;
 				
-				
-				
 			}
+			protected var siteContextMenu:ContextMenu = new ContextMenu();    //站点 右键 菜单
+			protected var cableContextMenu:ContextMenu = new ContextMenu();    //站点 右键 菜单
 			public function clearup() : void
 			{
 				// 清空场景
@@ -110,62 +107,17 @@
 				getSchemaResult.token = showSchema.getSchema(arg0);
 			}
 			
-			protected function loadSchema(data:String):void {
-				clearup();
-				//get the raw JSON data and cast to String  
-				var rawData:String = String(data);  
-				
-				//decode the data to ActionScript using the JSON API  
-				//in this case, the JSON data is a serialize Array of Objects.  
-				var arr:Array = (JSON.decode(rawData) as Array);  
-				
-				//create a new ArrayCollection passing the de-serialized Array  
-				//ArrayCollections work better as DataProviders, as they can  
-				//be watched for changes.  
-				var dp:ArrayCollection = new ArrayCollection(arr);  
-				
-				var sceneMgr:SceneManager = Root.instance.sceneManager;
-				//Alert.show(String(dp.length));
-				
-				for (var i:int = 0; i < dp.length; i++) 
-				{
-					var obj:Object =  dp.getItemAt(i);
-					var seInfo:SchemaElementsInfo = new SchemaElementsInfo();
-					seInfo.id = obj.id;
-					seInfo.imgPath = obj.imgPath;
-					seInfo.showName = obj.showName;
-					seInfo.type = obj.type;
-					seInfo.x = obj.x;
-					seInfo.y = obj.y;
-					
-					var eCom:SchemaElementComponent = new SchemaElementComponent();
-					eCom.imgName = seInfo.imgPath;
-					eCom.eleInfo = seInfo;
-					//eCom.doShow = doShowEquipment;
-					//eCom.doubleClickEnabled = true;
-					//eCom.addEventListener(MouseEvent.DOUBLE_CLICK, toEquipDetail);
-					var eid:String = seInfo.type + seInfo.id;
-					var equipFC:FlexComponent = new FlexComponent(eid, eCom);
-					equipFC.draggable = true;
-					equipFC.x = seInfo.x;
-					equipFC.y = seInfo.y;
-					equipFC.width = 60;
-					equipFC.height = 60;
-					
-					sceneMgr.addEntity(equipFC);
-				}
-				
-			}
-			
-			protected function toEquipDetail(evt:Event):void{
-				Alert.show("dbclick");
+			protected function siteComponent_doubleClickHandler(event:MouseEvent):void
+			{
+				//TODO 双击站点
 			}
 			protected function getSchemaResult_resultHandler(event:ResultEvent):void
 			{
 				var schema:Schema = event.result  as Schema;
 				schemaName.text = schema.schemaName;
 				schemaNote.text = schema.schemaNote;
-				loadSchema(schema.schemaData);
+				//loadSchema(schema.schemaData);
+				TopoUtils.loadSchema(Root.instance.sceneManager, schema.schemaData,siteContextMenu, cableContextMenu, siteComponent_doubleClickHandler);
 				
 				var schemaArgs:Object = JSON.decode(schema.schemaArgs);
 				

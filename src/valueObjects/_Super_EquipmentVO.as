@@ -1,6 +1,6 @@
 /**
  * This is a generated class and is not intended for modification.  To customize behavior
- * of this value object you may modify the generated sub-class of this class - SearchSite.as.
+ * of this value object you may modify the generated sub-class of this class - EquipmentVO.as.
  */
 
 package valueObjects
@@ -10,7 +10,6 @@ import com.adobe.fiber.valueobjects.IValueObject;
 import flash.events.EventDispatcher;
 import mx.collections.ArrayCollection;
 import mx.events.PropertyChangeEvent;
-import valueObjects.Page;
 
 import flash.net.registerClassAlias;
 import flash.net.getClassByAlias;
@@ -21,29 +20,28 @@ import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 use namespace model_internal;
 
 [ExcludeClass]
-public class _Super_SearchSite extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
+public class _Super_EquipmentVO extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
         try
         {
-            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.common.search.SearchSite") == null)
+            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.vo.EquipmentVO") == null)
             {
-                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.common.search.SearchSite", cz);
+                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.vo.EquipmentVO", cz);
             }
         }
         catch (e:Error)
         {
-            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.common.search.SearchSite", cz);
+            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.vo.EquipmentVO", cz);
         }
     }
 
     model_internal static function initRemoteClassAliasAllRelated() : void
     {
-        valueObjects.Page.initRemoteClassAliasSingleChild();
     }
 
-    model_internal var _dminternal_model : _SearchSiteEntityMetadata;
+    model_internal var _dminternal_model : _EquipmentVOEntityMetadata;
     model_internal var _changedObjects:mx.collections.ArrayCollection = new ArrayCollection();
 
     public function getChangedObjects() : Array
@@ -60,12 +58,12 @@ public class _Super_SearchSite extends flash.events.EventDispatcher implements c
     /**
      * properties
      */
-    private var _internal_areaName : String;
-    private var _internal_page : valueObjects.Page;
-    private var _internal_exceptList : ArrayCollection;
-    private var _internal_searchField : String;
-    private var _internal_keyWord : String;
-    private var _internal_areaId : int;
+    private var _internal_typeName : String;
+    private var _internal_id : String;
+    private var _internal_name : String;
+    private var _internal_img : String;
+    private var _internal_type : String;
+    private var _internal_jsonData : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -77,9 +75,9 @@ public class _Super_SearchSite extends flash.events.EventDispatcher implements c
 
     model_internal var _changeWatcherArray:Array = new Array();
 
-    public function _Super_SearchSite()
+    public function _Super_EquipmentVO()
     {
-        _model = new _SearchSiteEntityMetadata(this);
+        _model = new _EquipmentVOEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
 
@@ -90,39 +88,39 @@ public class _Super_SearchSite extends flash.events.EventDispatcher implements c
      */
 
     [Bindable(event="propertyChange")]
-    public function get areaName() : String
+    public function get typeName() : String
     {
-        return _internal_areaName;
+        return _internal_typeName;
     }
 
     [Bindable(event="propertyChange")]
-    public function get page() : valueObjects.Page
+    public function get id() : String
     {
-        return _internal_page;
+        return _internal_id;
     }
 
     [Bindable(event="propertyChange")]
-    public function get exceptList() : ArrayCollection
+    public function get name() : String
     {
-        return _internal_exceptList;
+        return _internal_name;
     }
 
     [Bindable(event="propertyChange")]
-    public function get searchField() : String
+    public function get img() : String
     {
-        return _internal_searchField;
+        return _internal_img;
     }
 
     [Bindable(event="propertyChange")]
-    public function get keyWord() : String
+    public function get type() : String
     {
-        return _internal_keyWord;
+        return _internal_type;
     }
 
     [Bindable(event="propertyChange")]
-    public function get areaId() : int
+    public function get jsonData() : String
     {
-        return _internal_areaId;
+        return _internal_jsonData;
     }
 
     public function clearAssociations() : void
@@ -133,78 +131,63 @@ public class _Super_SearchSite extends flash.events.EventDispatcher implements c
      * data/source property setters
      */
 
-    public function set areaName(value:String) : void
+    public function set typeName(value:String) : void
     {
-        var oldValue:String = _internal_areaName;
+        var oldValue:String = _internal_typeName;
         if (oldValue !== value)
         {
-            _internal_areaName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "areaName", oldValue, _internal_areaName));
+            _internal_typeName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "typeName", oldValue, _internal_typeName));
         }
     }
 
-    public function set page(value:valueObjects.Page) : void
+    public function set id(value:String) : void
     {
-        var oldValue:valueObjects.Page = _internal_page;
+        var oldValue:String = _internal_id;
         if (oldValue !== value)
         {
-            _internal_page = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "page", oldValue, _internal_page));
+            _internal_id = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "id", oldValue, _internal_id));
         }
     }
 
-    public function set exceptList(value:*) : void
+    public function set name(value:String) : void
     {
-        var oldValue:ArrayCollection = _internal_exceptList;
+        var oldValue:String = _internal_name;
         if (oldValue !== value)
         {
-            if (value is ArrayCollection)
-            {
-                _internal_exceptList = value;
-            }
-            else if (value is Array)
-            {
-                _internal_exceptList = new ArrayCollection(value);
-            }
-            else if (value == null)
-            {
-                _internal_exceptList = null;
-            }
-            else
-            {
-                throw new Error("value of exceptList must be a collection");
-            }
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "exceptList", oldValue, _internal_exceptList));
+            _internal_name = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "name", oldValue, _internal_name));
         }
     }
 
-    public function set searchField(value:String) : void
+    public function set img(value:String) : void
     {
-        var oldValue:String = _internal_searchField;
+        var oldValue:String = _internal_img;
         if (oldValue !== value)
         {
-            _internal_searchField = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "searchField", oldValue, _internal_searchField));
+            _internal_img = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "img", oldValue, _internal_img));
         }
     }
 
-    public function set keyWord(value:String) : void
+    public function set type(value:String) : void
     {
-        var oldValue:String = _internal_keyWord;
+        var oldValue:String = _internal_type;
         if (oldValue !== value)
         {
-            _internal_keyWord = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "keyWord", oldValue, _internal_keyWord));
+            _internal_type = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "type", oldValue, _internal_type));
         }
     }
 
-    public function set areaId(value:int) : void
+    public function set jsonData(value:String) : void
     {
-        var oldValue:int = _internal_areaId;
+        var oldValue:String = _internal_jsonData;
         if (oldValue !== value)
         {
-            _internal_areaId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "areaId", oldValue, _internal_areaId));
+            _internal_jsonData = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "jsonData", oldValue, _internal_jsonData));
         }
     }
 
@@ -268,14 +251,14 @@ public class _Super_SearchSite extends flash.events.EventDispatcher implements c
 
     [Transient]
     [Bindable(event="propertyChange")]
-    public function get _model() : _SearchSiteEntityMetadata
+    public function get _model() : _EquipmentVOEntityMetadata
     {
         return model_internal::_dminternal_model;
     }
 
-    public function set _model(value : _SearchSiteEntityMetadata) : void
+    public function set _model(value : _EquipmentVOEntityMetadata) : void
     {
-        var oldValue : _SearchSiteEntityMetadata = model_internal::_dminternal_model;
+        var oldValue : _EquipmentVOEntityMetadata = model_internal::_dminternal_model;
         if (oldValue !== value)
         {
             model_internal::_dminternal_model = value;

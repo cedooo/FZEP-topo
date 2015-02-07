@@ -59,8 +59,9 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
      * properties
      */
     private var _internal_constructionUnit : String;
-    private var _internal_constructionUnitId : String;
     private var _internal_manufacturers : String;
+    private var _internal_showName : String;
+    private var _internal_constructionUnitId : String;
     private var _internal_installationSite : String;
     private var _internal_runTime : String;
     private var _internal_projectId : String;
@@ -70,9 +71,9 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
     private var _internal_descp : String;
     private var _internal_typeSpecification : String;
     private var _internal_siteId : String;
-    private var _internal_showName : String;
-    private var _internal_delFlg : String;
     private var _internal_onuName : String;
+    private var _internal_delFlg : String;
+    private var _internal_manufacturersId : String;
     private var _internal_ospfNumber : String;
 
     private static var emptyArray:Array = new Array();
@@ -104,15 +105,21 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
     }
 
     [Bindable(event="propertyChange")]
-    public function get constructionUnitId() : String
-    {
-        return _internal_constructionUnitId;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get manufacturers() : String
     {
         return _internal_manufacturers;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get showName() : String
+    {
+        return _internal_showName;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get constructionUnitId() : String
+    {
+        return _internal_constructionUnitId;
     }
 
     [Bindable(event="propertyChange")]
@@ -170,9 +177,9 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
     }
 
     [Bindable(event="propertyChange")]
-    public function get showName() : String
+    public function get onuName() : String
     {
-        return _internal_showName;
+        return _internal_onuName;
     }
 
     [Bindable(event="propertyChange")]
@@ -182,9 +189,9 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
     }
 
     [Bindable(event="propertyChange")]
-    public function get onuName() : String
+    public function get manufacturersId() : String
     {
-        return _internal_onuName;
+        return _internal_manufacturersId;
     }
 
     [Bindable(event="propertyChange")]
@@ -211,16 +218,6 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
         }
     }
 
-    public function set constructionUnitId(value:String) : void
-    {
-        var oldValue:String = _internal_constructionUnitId;
-        if (oldValue !== value)
-        {
-            _internal_constructionUnitId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnitId", oldValue, _internal_constructionUnitId));
-        }
-    }
-
     public function set manufacturers(value:String) : void
     {
         var oldValue:String = _internal_manufacturers;
@@ -228,6 +225,26 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
         {
             _internal_manufacturers = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "manufacturers", oldValue, _internal_manufacturers));
+        }
+    }
+
+    public function set showName(value:String) : void
+    {
+        var oldValue:String = _internal_showName;
+        if (oldValue !== value)
+        {
+            _internal_showName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "showName", oldValue, _internal_showName));
+        }
+    }
+
+    public function set constructionUnitId(value:String) : void
+    {
+        var oldValue:String = _internal_constructionUnitId;
+        if (oldValue !== value)
+        {
+            _internal_constructionUnitId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnitId", oldValue, _internal_constructionUnitId));
         }
     }
 
@@ -321,13 +338,13 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
         }
     }
 
-    public function set showName(value:String) : void
+    public function set onuName(value:String) : void
     {
-        var oldValue:String = _internal_showName;
+        var oldValue:String = _internal_onuName;
         if (oldValue !== value)
         {
-            _internal_showName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "showName", oldValue, _internal_showName));
+            _internal_onuName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "onuName", oldValue, _internal_onuName));
         }
     }
 
@@ -341,13 +358,13 @@ public class _Super_ONU extends flash.events.EventDispatcher implements com.adob
         }
     }
 
-    public function set onuName(value:String) : void
+    public function set manufacturersId(value:String) : void
     {
-        var oldValue:String = _internal_onuName;
+        var oldValue:String = _internal_manufacturersId;
         if (oldValue !== value)
         {
-            _internal_onuName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "onuName", oldValue, _internal_onuName));
+            _internal_manufacturersId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "manufacturersId", oldValue, _internal_manufacturersId));
         }
     }
 

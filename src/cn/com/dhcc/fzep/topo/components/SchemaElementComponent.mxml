@@ -24,6 +24,6 @@
 		]]>
 	</fx:Script>
 	
-	<mx:Image id="imgVisitor" source="{imgName}" x="14" y="9" width="32" height="32"/>
-	<s:Label id="lblUserName" text="{eleInfo.showName}" y="45"  textAlign="center" width="100%"  fontWeight="bold"/>
+	<mx:Image id="imgVisitor" source="{imgName}" x="14" y="9" width="32" height="32" buttonMode="true"/>
+	<s:Label id="lblUserName" text="{eleInfo.showName}" y="45"  textAlign="center" width="100%"  fontWeight="bold"  buttonMode="true" />
 </s:Group>

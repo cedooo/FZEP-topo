@@ -59,23 +59,26 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
      * properties
      */
     private var _internal_constructionUnit : String;
+    private var _internal_manufacturers : String;
+    private var _internal_switchName : String;
+    private var _internal_switchId : String;
+    private var _internal_showName : String;
     private var _internal_portNumber : String;
     private var _internal_constructionUnitId : String;
-    private var _internal_manufacturers : String;
+    private var _internal_threeLayerSwitchId : String;
     private var _internal_installationSite : String;
-    private var _internal_switchName : String;
+    private var _internal_threeLayerSwitchName : String;
     private var _internal_runTime : String;
     private var _internal_flow : String;
     private var _internal_projectId : String;
     private var _internal_vlanId : String;
     private var _internal_ip : String;
-    private var _internal_switchId : String;
     private var _internal_vlanDescp : String;
     private var _internal_descp : String;
     private var _internal_typeSpecification : String;
-    private var _internal_showName : String;
     private var _internal_siteId : String;
     private var _internal_delFlg : String;
+    private var _internal_manufacturersId : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -106,6 +109,30 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
     }
 
     [Bindable(event="propertyChange")]
+    public function get manufacturers() : String
+    {
+        return _internal_manufacturers;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get switchName() : String
+    {
+        return _internal_switchName;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get switchId() : String
+    {
+        return _internal_switchId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get showName() : String
+    {
+        return _internal_showName;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get portNumber() : String
     {
         return _internal_portNumber;
@@ -118,9 +145,9 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
     }
 
     [Bindable(event="propertyChange")]
-    public function get manufacturers() : String
+    public function get threeLayerSwitchId() : String
     {
-        return _internal_manufacturers;
+        return _internal_threeLayerSwitchId;
     }
 
     [Bindable(event="propertyChange")]
@@ -130,9 +157,9 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
     }
 
     [Bindable(event="propertyChange")]
-    public function get switchName() : String
+    public function get threeLayerSwitchName() : String
     {
-        return _internal_switchName;
+        return _internal_threeLayerSwitchName;
     }
 
     [Bindable(event="propertyChange")]
@@ -166,12 +193,6 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
     }
 
     [Bindable(event="propertyChange")]
-    public function get switchId() : String
-    {
-        return _internal_switchId;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get vlanDescp() : String
     {
         return _internal_vlanDescp;
@@ -190,12 +211,6 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
     }
 
     [Bindable(event="propertyChange")]
-    public function get showName() : String
-    {
-        return _internal_showName;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get siteId() : String
     {
         return _internal_siteId;
@@ -205,6 +220,12 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
     public function get delFlg() : String
     {
         return _internal_delFlg;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get manufacturersId() : String
+    {
+        return _internal_manufacturersId;
     }
 
     public function clearAssociations() : void
@@ -222,6 +243,46 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         {
             _internal_constructionUnit = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnit", oldValue, _internal_constructionUnit));
+        }
+    }
+
+    public function set manufacturers(value:String) : void
+    {
+        var oldValue:String = _internal_manufacturers;
+        if (oldValue !== value)
+        {
+            _internal_manufacturers = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "manufacturers", oldValue, _internal_manufacturers));
+        }
+    }
+
+    public function set switchName(value:String) : void
+    {
+        var oldValue:String = _internal_switchName;
+        if (oldValue !== value)
+        {
+            _internal_switchName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "switchName", oldValue, _internal_switchName));
+        }
+    }
+
+    public function set switchId(value:String) : void
+    {
+        var oldValue:String = _internal_switchId;
+        if (oldValue !== value)
+        {
+            _internal_switchId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "switchId", oldValue, _internal_switchId));
+        }
+    }
+
+    public function set showName(value:String) : void
+    {
+        var oldValue:String = _internal_showName;
+        if (oldValue !== value)
+        {
+            _internal_showName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "showName", oldValue, _internal_showName));
         }
     }
 
@@ -245,13 +306,13 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         }
     }
 
-    public function set manufacturers(value:String) : void
+    public function set threeLayerSwitchId(value:String) : void
     {
-        var oldValue:String = _internal_manufacturers;
+        var oldValue:String = _internal_threeLayerSwitchId;
         if (oldValue !== value)
         {
-            _internal_manufacturers = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "manufacturers", oldValue, _internal_manufacturers));
+            _internal_threeLayerSwitchId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "threeLayerSwitchId", oldValue, _internal_threeLayerSwitchId));
         }
     }
 
@@ -265,13 +326,13 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         }
     }
 
-    public function set switchName(value:String) : void
+    public function set threeLayerSwitchName(value:String) : void
     {
-        var oldValue:String = _internal_switchName;
+        var oldValue:String = _internal_threeLayerSwitchName;
         if (oldValue !== value)
         {
-            _internal_switchName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "switchName", oldValue, _internal_switchName));
+            _internal_threeLayerSwitchName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "threeLayerSwitchName", oldValue, _internal_threeLayerSwitchName));
         }
     }
 
@@ -325,16 +386,6 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         }
     }
 
-    public function set switchId(value:String) : void
-    {
-        var oldValue:String = _internal_switchId;
-        if (oldValue !== value)
-        {
-            _internal_switchId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "switchId", oldValue, _internal_switchId));
-        }
-    }
-
     public function set vlanDescp(value:String) : void
     {
         var oldValue:String = _internal_vlanDescp;
@@ -365,16 +416,6 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         }
     }
 
-    public function set showName(value:String) : void
-    {
-        var oldValue:String = _internal_showName;
-        if (oldValue !== value)
-        {
-            _internal_showName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "showName", oldValue, _internal_showName));
-        }
-    }
-
     public function set siteId(value:String) : void
     {
         var oldValue:String = _internal_siteId;
@@ -392,6 +433,16 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         {
             _internal_delFlg = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "delFlg", oldValue, _internal_delFlg));
+        }
+    }
+
+    public function set manufacturersId(value:String) : void
+    {
+        var oldValue:String = _internal_manufacturersId;
+        if (oldValue !== value)
+        {
+            _internal_manufacturersId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "manufacturersId", oldValue, _internal_manufacturersId));
         }
     }
 

@@ -59,8 +59,9 @@ public class _Super_Carrier extends flash.events.EventDispatcher implements com.
      * properties
      */
     private var _internal_constructionUnit : String;
-    private var _internal_constructionUnitId : String;
     private var _internal_manufacturers : String;
+    private var _internal_showName : String;
+    private var _internal_constructionUnitId : String;
     private var _internal_installationSite : String;
     private var _internal_runTime : String;
     private var _internal_projectId : String;
@@ -68,11 +69,11 @@ public class _Super_Carrier extends flash.events.EventDispatcher implements com.
     private var _internal_descp : String;
     private var _internal_typeSpecification : String;
     private var _internal_siteId : String;
-    private var _internal_showName : String;
     private var _internal_carrierId : String;
     private var _internal_delFlg : String;
     private var _internal_carrierName : String;
     private var _internal_debugging : String;
+    private var _internal_manufacturersId : String;
     private var _internal_installationLocation : String;
 
     private static var emptyArray:Array = new Array();
@@ -104,15 +105,21 @@ public class _Super_Carrier extends flash.events.EventDispatcher implements com.
     }
 
     [Bindable(event="propertyChange")]
-    public function get constructionUnitId() : String
-    {
-        return _internal_constructionUnitId;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get manufacturers() : String
     {
         return _internal_manufacturers;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get showName() : String
+    {
+        return _internal_showName;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get constructionUnitId() : String
+    {
+        return _internal_constructionUnitId;
     }
 
     [Bindable(event="propertyChange")]
@@ -158,12 +165,6 @@ public class _Super_Carrier extends flash.events.EventDispatcher implements com.
     }
 
     [Bindable(event="propertyChange")]
-    public function get showName() : String
-    {
-        return _internal_showName;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get carrierId() : String
     {
         return _internal_carrierId;
@@ -185,6 +186,12 @@ public class _Super_Carrier extends flash.events.EventDispatcher implements com.
     public function get debugging() : String
     {
         return _internal_debugging;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get manufacturersId() : String
+    {
+        return _internal_manufacturersId;
     }
 
     [Bindable(event="propertyChange")]
@@ -211,16 +218,6 @@ public class _Super_Carrier extends flash.events.EventDispatcher implements com.
         }
     }
 
-    public function set constructionUnitId(value:String) : void
-    {
-        var oldValue:String = _internal_constructionUnitId;
-        if (oldValue !== value)
-        {
-            _internal_constructionUnitId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnitId", oldValue, _internal_constructionUnitId));
-        }
-    }
-
     public function set manufacturers(value:String) : void
     {
         var oldValue:String = _internal_manufacturers;
@@ -228,6 +225,26 @@ public class _Super_Carrier extends flash.events.EventDispatcher implements com.
         {
             _internal_manufacturers = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "manufacturers", oldValue, _internal_manufacturers));
+        }
+    }
+
+    public function set showName(value:String) : void
+    {
+        var oldValue:String = _internal_showName;
+        if (oldValue !== value)
+        {
+            _internal_showName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "showName", oldValue, _internal_showName));
+        }
+    }
+
+    public function set constructionUnitId(value:String) : void
+    {
+        var oldValue:String = _internal_constructionUnitId;
+        if (oldValue !== value)
+        {
+            _internal_constructionUnitId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnitId", oldValue, _internal_constructionUnitId));
         }
     }
 
@@ -301,16 +318,6 @@ public class _Super_Carrier extends flash.events.EventDispatcher implements com.
         }
     }
 
-    public function set showName(value:String) : void
-    {
-        var oldValue:String = _internal_showName;
-        if (oldValue !== value)
-        {
-            _internal_showName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "showName", oldValue, _internal_showName));
-        }
-    }
-
     public function set carrierId(value:String) : void
     {
         var oldValue:String = _internal_carrierId;
@@ -348,6 +355,16 @@ public class _Super_Carrier extends flash.events.EventDispatcher implements com.
         {
             _internal_debugging = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "debugging", oldValue, _internal_debugging));
+        }
+    }
+
+    public function set manufacturersId(value:String) : void
+    {
+        var oldValue:String = _internal_manufacturersId;
+        if (oldValue !== value)
+        {
+            _internal_manufacturersId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "manufacturersId", oldValue, _internal_manufacturersId));
         }
     }
 

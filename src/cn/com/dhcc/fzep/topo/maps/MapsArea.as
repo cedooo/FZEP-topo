@@ -23,6 +23,7 @@ package cn.com.dhcc.fzep.topo.maps
 		{
 			return _area;
 		}
+		public var scale:int = 300;    //缩放比例
 		public function set areas(areas:Array):void{
 			_area = areas;
 			if(_area!=null){    //确定区域边界
@@ -32,8 +33,8 @@ package cn.com.dhcc.fzep.topo.maps
 					var obj:Object = areas[i];
 					var lng:Number = obj['lng'] as Number;
 					var lat:Number = obj['lat'] as Number;
-					var targetX:Number = (lng-originX)*300;
-					var targetY:Number = -(lat-originY)*300;    //经度 与flex坐标系方向 相反
+					var targetX:Number = (lng-originX)*scale;
+					var targetY:Number = -(lat-originY)*scale;    //经度 与flex坐标系方向 相反
 					//Alert.show(''+targetX + ',' + targetY)
 					if(lng==-1||lat==-1){
 						newStart = true;
@@ -91,8 +92,8 @@ package cn.com.dhcc.fzep.topo.maps
 					var obj:Object = areas[i];
 					var lng:Number = obj['lng'] as Number;
 					var lat:Number = obj['lat'] as Number;
-					var targetX:Number = (lng-originX)*300;
-					var targetY:Number = -(lat-originY)*300;    //经度 与flex坐标系方向 相反
+					var targetX:Number = (lng-originX)*scale;
+					var targetY:Number = -(lat-originY)*scale;    //经度 与flex坐标系方向 相反
 					if(lng==-1||lat==-1){
 						newStart = true;
 						continue;

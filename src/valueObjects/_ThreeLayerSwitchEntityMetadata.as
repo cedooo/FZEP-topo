@@ -20,14 +20,14 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("constructionUnit", "portNumber", "constructionUnitId", "manufacturers", "installationSite", "switchName", "runTime", "flow", "projectId", "vlanId", "ip", "switchId", "vlanDescp", "descp", "typeSpecification", "showName", "siteId", "delFlg");
+    model_internal static var allProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "flow", "projectId", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "portNumber", "constructionUnitId", "manufacturers", "installationSite", "switchName", "runTime", "flow", "projectId", "vlanId", "ip", "switchId", "vlanDescp", "descp", "typeSpecification", "showName", "siteId", "delFlg");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "flow", "projectId", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("constructionUnit", "portNumber", "constructionUnitId", "manufacturers", "installationSite", "switchName", "runTime", "flow", "projectId", "vlanId", "ip", "switchId", "vlanDescp", "descp", "typeSpecification", "showName", "siteId", "delFlg");
+    model_internal static var dataProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "flow", "projectId", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "portNumber", "constructionUnitId", "manufacturers", "installationSite", "switchName", "runTime", "flow", "projectId", "vlanId", "ip", "switchId", "vlanDescp", "descp", "typeSpecification", "showName", "siteId", "delFlg");
+    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "flow", "projectId", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -48,23 +48,26 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
             // dependents map
             model_internal::dependentsOnMap = new Object();
             model_internal::dependentsOnMap["constructionUnit"] = new Array();
+            model_internal::dependentsOnMap["manufacturers"] = new Array();
+            model_internal::dependentsOnMap["switchName"] = new Array();
+            model_internal::dependentsOnMap["switchId"] = new Array();
+            model_internal::dependentsOnMap["showName"] = new Array();
             model_internal::dependentsOnMap["portNumber"] = new Array();
             model_internal::dependentsOnMap["constructionUnitId"] = new Array();
-            model_internal::dependentsOnMap["manufacturers"] = new Array();
+            model_internal::dependentsOnMap["threeLayerSwitchId"] = new Array();
             model_internal::dependentsOnMap["installationSite"] = new Array();
-            model_internal::dependentsOnMap["switchName"] = new Array();
+            model_internal::dependentsOnMap["threeLayerSwitchName"] = new Array();
             model_internal::dependentsOnMap["runTime"] = new Array();
             model_internal::dependentsOnMap["flow"] = new Array();
             model_internal::dependentsOnMap["projectId"] = new Array();
             model_internal::dependentsOnMap["vlanId"] = new Array();
             model_internal::dependentsOnMap["ip"] = new Array();
-            model_internal::dependentsOnMap["switchId"] = new Array();
             model_internal::dependentsOnMap["vlanDescp"] = new Array();
             model_internal::dependentsOnMap["descp"] = new Array();
             model_internal::dependentsOnMap["typeSpecification"] = new Array();
-            model_internal::dependentsOnMap["showName"] = new Array();
             model_internal::dependentsOnMap["siteId"] = new Array();
             model_internal::dependentsOnMap["delFlg"] = new Array();
+            model_internal::dependentsOnMap["manufacturersId"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
@@ -73,23 +76,26 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
         // Property type Map
         model_internal::propertyTypeMap = new Object();
         model_internal::propertyTypeMap["constructionUnit"] = "String";
+        model_internal::propertyTypeMap["manufacturers"] = "String";
+        model_internal::propertyTypeMap["switchName"] = "String";
+        model_internal::propertyTypeMap["switchId"] = "String";
+        model_internal::propertyTypeMap["showName"] = "String";
         model_internal::propertyTypeMap["portNumber"] = "String";
         model_internal::propertyTypeMap["constructionUnitId"] = "String";
-        model_internal::propertyTypeMap["manufacturers"] = "String";
+        model_internal::propertyTypeMap["threeLayerSwitchId"] = "String";
         model_internal::propertyTypeMap["installationSite"] = "String";
-        model_internal::propertyTypeMap["switchName"] = "String";
+        model_internal::propertyTypeMap["threeLayerSwitchName"] = "String";
         model_internal::propertyTypeMap["runTime"] = "String";
         model_internal::propertyTypeMap["flow"] = "String";
         model_internal::propertyTypeMap["projectId"] = "String";
         model_internal::propertyTypeMap["vlanId"] = "String";
         model_internal::propertyTypeMap["ip"] = "String";
-        model_internal::propertyTypeMap["switchId"] = "String";
         model_internal::propertyTypeMap["vlanDescp"] = "String";
         model_internal::propertyTypeMap["descp"] = "String";
         model_internal::propertyTypeMap["typeSpecification"] = "String";
-        model_internal::propertyTypeMap["showName"] = "String";
         model_internal::propertyTypeMap["siteId"] = "String";
         model_internal::propertyTypeMap["delFlg"] = "String";
+        model_internal::propertyTypeMap["manufacturersId"] = "String";
 
         model_internal::_instance = value;
     }
@@ -325,6 +331,30 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     }
 
     [Bindable(event="propertyChange")]
+    public function get isManufacturersAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isSwitchNameAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isSwitchIdAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isShowNameAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get isPortNumberAvailable():Boolean
     {
         return true;
@@ -337,7 +367,7 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     }
 
     [Bindable(event="propertyChange")]
-    public function get isManufacturersAvailable():Boolean
+    public function get isThreeLayerSwitchIdAvailable():Boolean
     {
         return true;
     }
@@ -349,7 +379,7 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSwitchNameAvailable():Boolean
+    public function get isThreeLayerSwitchNameAvailable():Boolean
     {
         return true;
     }
@@ -385,12 +415,6 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSwitchIdAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get isVlanDescpAvailable():Boolean
     {
         return true;
@@ -409,12 +433,6 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     }
 
     [Bindable(event="propertyChange")]
-    public function get isShowNameAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get isSiteIdAvailable():Boolean
     {
         return true;
@@ -422,6 +440,12 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
 
     [Bindable(event="propertyChange")]
     public function get isDelFlgAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isManufacturersIdAvailable():Boolean
     {
         return true;
     }
@@ -443,6 +467,30 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     }
 
     [Bindable(event="propertyChange")]   
+    public function get manufacturersStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get switchNameStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get switchIdStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get showNameStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
     public function get portNumberStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
@@ -455,7 +503,7 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     }
 
     [Bindable(event="propertyChange")]   
-    public function get manufacturersStyle():com.adobe.fiber.styles.Style
+    public function get threeLayerSwitchIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
@@ -467,7 +515,7 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     }
 
     [Bindable(event="propertyChange")]   
-    public function get switchNameStyle():com.adobe.fiber.styles.Style
+    public function get threeLayerSwitchNameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
@@ -503,12 +551,6 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     }
 
     [Bindable(event="propertyChange")]   
-    public function get switchIdStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
     public function get vlanDescpStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
@@ -527,12 +569,6 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     }
 
     [Bindable(event="propertyChange")]   
-    public function get showNameStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
     public function get siteIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
@@ -540,6 +576,12 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
 
     [Bindable(event="propertyChange")]   
     public function get delFlgStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get manufacturersIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
