@@ -79,7 +79,6 @@
 		<services:Equip id="equip"
 						fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 						showBusyCursor="true"/>
-		
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
 	<fx:Script>
@@ -150,7 +149,6 @@
 				searchSiteCondition.areaName = areaName;
 				schemaNameLabel.text = "【" + searchSiteCondition.areaName + "】";
 				getSchemaByAreaName(areaName);
-				
 				
 				var gotoGIS:ContextMenuItem = new ContextMenuItem("跳转到科大GIS", false); 
 				//gotoGIS.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, goRelationWithResource);
