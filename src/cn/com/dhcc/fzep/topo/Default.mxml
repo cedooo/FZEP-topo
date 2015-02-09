@@ -79,6 +79,8 @@
 		<services:Equip id="equip"
 						fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 						showBusyCursor="true"/>
+		<s:CallResponder id="getCableByIdResult" result="getCableByIdResult_resultHandler(event)"/>
+		<s:CallResponder id="getSiteInfoByIdResult2" result="getSiteInfoByIdResult2_resultHandler(event)"/>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
 	<fx:Script>
@@ -288,23 +290,91 @@
 				
 			}
 			
+			private var elementList:Array=new Array();
 			/**
 			 * 加载视图附加信息
 			 */
-			public static function loadSchemaAddInfo():void{
+			public function loadSchemaAddInfo():void{
 				var sceneMgr:SceneManager = Root.instance.sceneManager;
 				var entityList:Array = sceneMgr.entityList();
 				for (var i:int = 0; i < entityList.length; i++) 
 				{
 					var entity:Entity = entityList[i] as Entity;
-					if(entity is FlexComponent){
-						
-					}else if(entity is DynamicConnector){
-						
+					elementList.push(entity);
+				}
+				nextElementAddInfo();
+			}
+			/**
+			 * 依次加载设备附加信息
+			 */
+			private var loadAddCounter:Number = 0;
+			protected function nextElementAddInfo():void{
+				if(loadAddCounter<elementList.length){
+					if(elementList[loadAddCounter] is FlexComponent){
+						//Alert.show(elementList[loadAddCounter].name);
+						var siteId:String = elementList[loadAddCounter].name.split(ObjectUtil.getClassInfo(Site).name)[1];
+						getSiteInfoById2(siteId);
+						loadAddCounter++;
+					}else if(elementList[loadAddCounter] is DynamicConnector){
+						var cableId:String = elementList[loadAddCounter].name.split(ObjectUtil.getClassInfo(Cable).name)[1];
+						getCableById(cableId);
+						loadAddCounter++;
 					}
 				}
-				
 			}
+			protected function getCableById(arg0:String):void
+			{
+				getCableByIdResult.token = equip.getCableById(arg0);
+			}
+			
+			protected function getCableByIdResult_resultHandler(event:ResultEvent):void
+			{
+				var sceneMgr:SceneManager = Root.instance.sceneManager;
+				var cable:Cable = event.result as Cable;
+				var entity:Entity = sceneMgr.getEntity(ObjectUtil.getClassInfo(Cable).name+cable.cableId);
+				var connector:DynamicConnector = entity as DynamicConnector;
+				connector.lineThickness =  cable.isMainRoad=='是'?4:2;
+				//connector.lineColor = 0xE53E38;
+				if(cable.delFlg!='启用'){
+					connector.alpha = 0.1;
+				}else{
+					connector.alpha = 1;
+				}
+				//Alert.show(cable.cableName);
+				if(loadAddCounter<elementList.length){
+					nextElementAddInfo();
+				}else{
+					loadAddCounter=0;
+					elementList=new Array();
+				}
+			}
+			protected function getSiteInfoById2(arg0:String):void
+			{
+				getSiteInfoByIdResult2.token = siteEquip.getSiteInfoById(arg0);
+			}
+			
+			protected function getSiteInfoByIdResult2_resultHandler(event:ResultEvent):void
+			{
+				var sceneMgr:SceneManager = Root.instance.sceneManager;
+				var site:Site = event.result as Site;
+				var entity:Entity = sceneMgr.getEntity(ObjectUtil.getClassInfo(Site).name+site.siteId);
+				var siteCompoent:FlexComponent = entity as FlexComponent;
+				var elementCom:SchemaElementComponent = siteCompoent.component as SchemaElementComponent;
+				//Alert.show(site.siteName);
+				if(site.delFlg=='启用'){
+					elementCom.alpha = 1;
+				}else{
+					elementCom.alpha = 0.1;
+				}
+				siteCompoent.fillColor = 0xE53E38;
+				if(loadAddCounter<elementList.length){
+					nextElementAddInfo();
+				}else{
+					loadAddCounter=0;
+					elementList=new Array();
+				}
+			}
+			
 			
 			protected function siteComponent_doubleClickHandler(event:MouseEvent):void
 			{
@@ -360,7 +430,6 @@
 			{
 				getSchemaByAreaNameResult.token = siteSchema.getSchemaByAreaName(arg0);
 			}
-			
 			
 			private function loadSchema2(event:MouseEvent):void{  
 				var grup:GeometryGroup = event.currentTarget as GeometryGroup;
@@ -634,6 +703,7 @@
 						if(!sceneMgr.existsEntity(siteLeveOneName)){
 							siteLevelOneComp.contextMenu = siteContextMenu;
 							siteLevelOneComp.doubleClickEnabled = true;
+							siteLevelOneComp.alpha = siteLevelOneComp.site.delFlg=="启用"?1:0.1;
 							siteLevelOneComp.addEventListener(MouseEvent.DOUBLE_CLICK, siteComponent_doubleClickHandler);
 							var flexCom:FlexComponent = new FlexComponent(siteLeveOneName, siteLevelOneComp);
 							flexCom.draggable = true;
@@ -659,6 +729,7 @@
 								siteLevelTwoComp.doubleClickEnabled = true;
 								siteLevelTwoComp.addEventListener(MouseEvent.DOUBLE_CLICK, siteComponent_doubleClickHandler);
 								siteLevelTwoComp.contextMenu = siteContextMenu;
+								siteLevelTwoComp.alpha = siteLevelTwoComp.site.delFlg=="启用"?1:0.1;
 								var flexComTwo:FlexComponent = new FlexComponent(siteLevelTwoName, siteLevelTwoComp);
 								flexComTwo.draggable = true;
 								flexComTwo.editable = false;
@@ -709,7 +780,8 @@
 								connector.lineThickness = cableObj['isMainRoad']=='是'?4:2;
 								connector.lineColor = 0x66A6D9;//lineColors[j%lineColors.length];
 								connector.connect(startComponent.centerAnchor, endComponent.centerAnchor);
-								connector.alpha = 1;
+								//Alert.show("" + cableObj['delFlg']);
+								connector.alpha = cableObj['delFlg']=="启用"?1:0.1;
 								connector.editable = false; 
 								connector.contextMenu = cableContextMenu;
 								var cable:Cable  = new Cable();
@@ -854,7 +926,9 @@
 				getSchemaByAreaName(areaName);
 			}
 			
-			
+			/**
+			 * 得到光缆视图数据对象
+			 */
 			protected function getCableVOById(arg0:String):void
 			{
 				getCableVOByIdResult.token = equip.getCableVOById(arg0);
@@ -881,6 +955,9 @@
 				);
 				
 			}
+			
+			
+			
 			
 		]]>
 	</fx:Script>

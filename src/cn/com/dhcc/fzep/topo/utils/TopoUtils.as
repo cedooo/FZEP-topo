@@ -183,7 +183,11 @@ package cn.com.dhcc.fzep.topo.utils
 						connector.lineThickness = cable.isMainRoad=='是'?4:2;
 						connector.lineColor = 0x66A6D9;//lineColors[(int)(Math.random()*10)%lineColors.length];
 						connector.connect(startComponent.centerAnchor, endComponent.centerAnchor);
-						connector.alpha = 1;
+						if(cable.delFlg){
+							connector.alpha = cable.delFlg=="启用"?1:0.1;
+						}else{
+							connector.alpha = 1;
+						}
 						connector.editable = false;
 						connector.contextMenu = cableContextMenu;
 						connector.customData = cable;
@@ -223,6 +227,10 @@ package cn.com.dhcc.fzep.topo.utils
 						var elementCom:SchemaElementComponent = new SchemaElementComponent();
 						elementCom.imgName = seInfo.imgPath;
 						elementCom.eleInfo = seInfo;
+						//Alert.show((obj.delFlg=="启用") + '' + obj.delFlg);
+						if(obj.delFlg){
+							elementCom.alpha = obj.delFlg=="启用"?1:0.1;
+						}
 						
 						elementCom.contextMenu = siteContextMenu;
 						elementCom.addEventListener(MouseEvent.DOUBLE_CLICK, siteComponent_doubleClickHandler);
@@ -242,6 +250,7 @@ package cn.com.dhcc.fzep.topo.utils
 						cable.cableStartId = obj.startId;
 						cable.cableEndId = obj.endId;
 						cable.isMainRoad = obj.isMainRoad;
+						cable.delFlg = obj.delFlg;
 						cableArray.push(cable);
 					}
 				}
