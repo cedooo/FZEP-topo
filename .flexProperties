@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexProperties enableServiceManager="false" flexServerFeatures="4" flexServerType="2" fmlDataModelLocation=".model/FZEP_topo.fml" serverContextRoot="/fuzhou" serverRoot="G:/apache-tomcat-6.0.41/webapps/fuzhou" serverRootURL="http://localhost:8080/fuzhou" toolCompile="true" useServerFlexSDK="false" version="2"/>
+<flexProperties enableServiceManager="false" flexServerFeatures="4" flexServerType="2" fmlDataModelLocation=".model/FZEP_topo.fml" serverContextRoot="/fuzhou" serverRoot="F:/apache-tomcat-7.0.59-windows-x64/apache-tomcat-7.0.59/me-webapps/fuzhou" serverRootURL="http://localhost:8080/fuzhou" toolCompile="true" useServerFlexSDK="false" version="2"/>
