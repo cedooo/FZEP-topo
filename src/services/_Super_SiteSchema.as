@@ -13,6 +13,7 @@ import mx.rpc.remoting.Operation;
 import mx.rpc.remoting.RemoteObject;
 import valueObjects.Page;
 import valueObjects.Schema;
+import valueObjects.SchemaVO;
 import valueObjects.SearchSite;
 import valueObjects.Site;
 import valueObjects.SiteRelation;
@@ -57,6 +58,12 @@ internal class _Super_SiteSchema extends com.adobe.fiber.services.wrapper.Remote
         operation = new mx.rpc.remoting.Operation(null, "getSiteRelationBySiteName");
          operation.resultType = valueObjects.SiteRelation;
         operations["getSiteRelationBySiteName"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "getDefaultSchema");
+         operation.resultType = valueObjects.SchemaVO;
+        operations["getDefaultSchema"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "getSchemaVOByAreaName");
+         operation.resultType = valueObjects.SchemaVO;
+        operations["getSchemaVOByAreaName"] = operation;
 
         _serviceControl.operations = operations;
         _serviceControl.convertResultHandler = com.adobe.serializers.utility.TypeUtility.convertResultHandler;
@@ -197,6 +204,42 @@ internal class _Super_SiteSchema extends com.adobe.fiber.services.wrapper.Remote
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getSiteRelationBySiteName");
 		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0,arg1) ;
+        return _internal_token;
+    }
+     
+    /**
+      * This method is a generated wrapper used to call the 'getDefaultSchema' operation. It returns an mx.rpc.AsyncToken whose 
+      * result property will be populated with the result of the operation when the server response is received. 
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
+      *
+      * @see mx.rpc.AsyncToken
+      * @see mx.rpc.CallResponder 
+      *
+      * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
+      */
+    public function getDefaultSchema() : mx.rpc.AsyncToken
+    {
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getDefaultSchema");
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
+        return _internal_token;
+    }
+     
+    /**
+      * This method is a generated wrapper used to call the 'getSchemaVOByAreaName' operation. It returns an mx.rpc.AsyncToken whose 
+      * result property will be populated with the result of the operation when the server response is received. 
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
+      *
+      * @see mx.rpc.AsyncToken
+      * @see mx.rpc.CallResponder 
+      *
+      * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
+      */
+    public function getSchemaVOByAreaName(arg0:String) : mx.rpc.AsyncToken
+    {
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getSchemaVOByAreaName");
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0) ;
         return _internal_token;
     }
      

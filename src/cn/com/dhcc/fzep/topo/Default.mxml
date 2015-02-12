@@ -62,11 +62,9 @@
 		<services:SiteSchema id="siteSchema"
 							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 							 showBusyCursor="true"/>
-		<s:CallResponder id="getSchemaResult" result="getSchemaResult_resultHandler(event)" fault="getSchemaResult_faultHandler(event)"/>
 		<services:ShowSchema id="showSchema"
 							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 							 showBusyCursor="true"/>
-		<s:CallResponder id="getSchemaByAreaNameResult" result="getSchemaResult_resultHandler(event)" fault="getSchemaResult_faultHandler(event)"/>
 		<s:CallResponder id="getListByConditionResult"/>
 		<s:CallResponder id="getPageResult" result="getPageResult_resultHandler(event)"/>
 		<s:CallResponder id="getSiteRelationBySiteNameResult" result="getSiteRelationBySiteNameResult_resultHandler(event)"
@@ -81,6 +79,8 @@
 						showBusyCursor="true"/>
 		<s:CallResponder id="getCableByIdResult" result="getCableByIdResult_resultHandler(event)"/>
 		<s:CallResponder id="getSiteInfoByIdResult2" result="getSiteInfoByIdResult2_resultHandler(event)"/>
+		<s:CallResponder id="getDefaultSchemaResult"  result="getSchemaResult_resultHandler(event)"/>
+		<s:CallResponder id="getSchemaVOByAreaNameResult" result="getSchemaResult_resultHandler(event)" fault="getSchemaVOByAreaNameResult_faultHandler(event)" />
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
 	<fx:Script>
@@ -102,8 +102,6 @@
 			import mx.rpc.events.ResultEvent;
 			import mx.utils.ObjectUtil;
 			
-			import spark.events.IndexChangeEvent;
-			
 			import cn.com.dhcc.fzep.topo.components.SchemaElementComponent;
 			import cn.com.dhcc.fzep.topo.components.SiteComponent;
 			import cn.com.dhcc.fzep.topo.poao.SchemaElementsInfo;
@@ -112,7 +110,7 @@
 			
 			import valueObjects.Cable;
 			import valueObjects.Page;
-			import valueObjects.Schema;
+			import valueObjects.SchemaVO;
 			import valueObjects.SearchSite;
 			import valueObjects.Site;
 			import valueObjects.SiteRelation;
@@ -144,13 +142,16 @@
 				/**
 				 * 设置默认分页搜索参数
 				 */
-				areaName =  fzoutline.defaultAreaName;
 				page.curPage = 1;
 				page.numPerPage = 6;
 				searchSiteCondition.page = page;
 				searchSiteCondition.areaName = areaName;
+				areaName =  fzoutline.defaultAreaName;
+				/*
 				schemaNameLabel.text = "【" + searchSiteCondition.areaName + "】";
 				getSchemaByAreaName(areaName);
+				*/
+				getDefaultSchema();
 				
 				var gotoGIS:ContextMenuItem = new ContextMenuItem("跳转到科大GIS", false); 
 				//gotoGIS.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, goRelationWithResource);
@@ -170,8 +171,7 @@
 							searchSiteSchema();
 						}
 					}else{
-						Alert.show(String(evt.contextMenuOwner));
-						Alert.show("错误的位置调用","异常");
+						Alert.show(String(evt.contextMenuOwner)+"错误的位置调用","异常");
 					}
 				});
 				siteContextMenu.customItems.push(searchSiteRelation); 
@@ -265,21 +265,18 @@
 				}
 				return null;
 			}
-			/**
-			 * 根据视图id得到视图对象
-			 */
-			protected function getSchema(arg0:String):void
-			{
-				getSchemaResult.token = showSchema.getSchema(arg0);
-			}
 			
 			protected function getSchemaResult_resultHandler(event:ResultEvent):void
 			{
-				var schema:Schema = event.result  as Schema;
+				var schema:SchemaVO = event.result  as SchemaVO;
 				if(schema){
 					schemaNameLabel.text = schema.schemaName;
 					schemaNote.text = schema.schemaNote;
 					TopoUtils.loadSchema(Root.instance.sceneManager, schema.schemaData,siteContextMenu, cableContextMenu, siteComponent_doubleClickHandler);
+					
+					searchSiteCondition.areaId = int(schema.areaId);
+					areaName =  schema.areaName;
+					getListByCondition(searchSiteCondition);
 					
 					loadSchemaAddInfo();
 				}else{
@@ -403,10 +400,6 @@
 				ScriptUtils.openTabWindow(targetURL,"");
 			}
 			*/
-			protected function getSchemaResult_faultHandler(event:FaultEvent):void
-			{
-				Alert.show("无法获取视图数据。","出错啦！");
-			}
 			protected function image1_mouseOverHandler(event:MouseEvent):void
 			{
 				var img:Image = event.currentTarget as Image;
@@ -426,10 +419,6 @@
 				getListByAreaResult.token = siteSchema.getListByArea(arg0);
 			}
 			
-			protected function getSchemaByAreaName(arg0:String):void
-			{
-				getSchemaByAreaNameResult.token = siteSchema.getSchemaByAreaName(arg0);
-			}
 			
 			private function loadSchema2(event:MouseEvent):void{  
 				var grup:GeometryGroup = event.currentTarget as GeometryGroup;
@@ -437,7 +426,7 @@
 				
 				schemaNameLabel.text = "【" + grup.name + "】";
 				
-				getSchemaByAreaName(grup.name);
+				getSchemaVOByAreaName(grup.name);
 				searchSite(grup.name);
 			} 
 			
@@ -473,7 +462,7 @@
 				if(searchRelationKey.text.match(/.{1,15}/)){
 					searchSiteSchema();
 				}else {
-					getSchemaByAreaName(areaName);
+					getSchemaVOByAreaName(areaName);
 				}
 			}
 			/**
@@ -869,15 +858,6 @@
 				areaMapsOutlineContainer.visible = areaMapsOutlineContainer.visible?false:true;
 			}
 			
-			protected function hideSel_changeHandler(event:IndexChangeEvent):void
-			{
-				if(event.newIndex>-1){
-					var selectedObj:Object = event.currentTarget.selectedItem;
-					var areaName:String = selectedObj['val'];
-					getSchemaByAreaName(areaName);
-					searchSite(areaName);
-				}
-			}
 			/**
 			 * 地图轮廓大小调整
 			 */
@@ -894,7 +874,7 @@
 				var areaContainer:BorderContainer = event.currentTarget as BorderContainer;
 				areaName = areaContainer.id;
 				//Alert.show(areaContainer.id);
-				getSchemaByAreaName(areaName);
+				getSchemaVOByAreaName(areaName);
 				searchSite(areaName);
 				//areaMapsOutlineContainer.title = "福州市" +  areaName;
 				toggleMap();
@@ -923,7 +903,7 @@
 			protected function curAreaName_clickHandler(event:MouseEvent):void
 			{
 				searchRelationKey.text = '';
-				getSchemaByAreaName(areaName);
+				getSchemaVOByAreaName(areaName);
 			}
 			
 			/**
@@ -957,7 +937,21 @@
 			}
 			
 			
+			protected function getDefaultSchema():void
+			{
+				getDefaultSchemaResult.token = siteSchema.getDefaultSchema();
+			}
 			
+			
+			protected function getSchemaVOByAreaName(arg0:String):void
+			{
+				getSchemaVOByAreaNameResult.token = siteSchema.getSchemaVOByAreaName(arg0);
+			}
+			
+			protected function getSchemaVOByAreaNameResult_faultHandler(event:FaultEvent):void
+			{
+				Alert.show("获取视图失败","出错啦");
+			}
 			
 		]]>
 	</fx:Script>
@@ -994,8 +988,6 @@
 						</s:Label>
 						<s:Label id="schemaNote" text="" fontSize="14" toolTip="备注" fontFamily="Times New Roman">	
 						</s:Label>
-						<mx:Image source="@Embed('assets/indicator_radar.gif')" toolTip="视图信息">
-						</mx:Image>
 					</s:Group>
 					<!--
 					<mx:Image id="refreshRelationBtn" click="searchBtn_clickHandler(event)"  source="@Embed(source='assets/buttons/btn_refresh_24.png')" buttonMode="true" width="24" height="24" toolTip="刷新"/>
@@ -1050,12 +1042,6 @@
 					<s:BorderContainer id="areaSvgContainer" backgroundAlpha="1" borderVisible="false" width="100%"  height="100%"
 									   creationComplete="areaSvgContainer.contentGroup.clipAndEnableScrolling = true"  >
 						<cedomaps:FZMapsOutline id="fzoutline" clickHander="{onMouseDownMaps}"  creationComplete="fzoutline_creationCompleteHandler(event)" />
-						<!--
-						<s:DropDownList id="hideSel" x="{areaSvgContainer.width-hideSel.width}" prompt="Select One"
-						dataProvider="{areaDP}"
-						labelField="name" selectedIndex="0" change="hideSel_changeHandler(event)" />
-						<s:Button label="隐藏地图" click="toggleMap()" ></s:Button>
-						-->
 					</s:BorderContainer>
 					
 					<mx:HBox backgroundAlpha="0" width="100%" paddingBottom="10" paddingLeft="10" paddingTop="10" paddingRight="10">
@@ -1088,8 +1074,10 @@
 					<s:Label  paddingTop="5" paddingLeft="5" text="拖动站点到 ↑视图窗口↑，搜索站点关系。" />
 				</mx:HBox>  
 				<mx:DataGrid id="siteDataGrid" paddingTop="0" width="100%" dataProvider="{getListByConditionResult.lastResult}"
-						 	creationComplete="siteDataGrid_creationCompleteHandler(event)" contextMenu="{SiteListCntMenu}" dragEnabled="true" 
+							contextMenu="{SiteListCntMenu}" dragEnabled="true" 
 							dragStart="siteDataGrid_dragStartHandler(event,'siteInfo')">
+					
+					<!-- creationComplete="siteDataGrid_creationCompleteHandler(event)" --> 
 					<mx:columns>
 						<!--<mx:DataGridColumn dataField="siteId" headerText="站点编码" />-->
 						<mx:DataGridColumn dataField="siteName" headerText="站点名称" />

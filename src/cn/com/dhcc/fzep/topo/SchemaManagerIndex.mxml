@@ -18,6 +18,7 @@
 		<s:CallResponder id="saveSchemaBriefInfoResult" result="saveSchemaBriefInfoResult_resultHandler(event)"/>
 		<s:CallResponder id="getSchemaBriefInfoByAreaIdResult" result="getSchemaBriefInfoByAreaIdResult_resultHandler(event)"/>
 		<s:CallResponder id="addSchemaResult" result="addSchemaResult_resultHandler(event)"/>
+		<s:CallResponder id="setDefaultSchemaResult" result="setDefaultSchemaResult_resultHandler(event)"/>
 	</fx:Declarations>
 	<fx:Style>
 		@namespace services "services.*";
@@ -221,6 +222,8 @@
 			protected var modified:Boolean = false;
 			[Bindable]
 			protected var noSchema:Boolean = true;
+			[Bindable]
+			protected var defautlSettable:Boolean = false;
 			protected function getSchemaBriefInfoByAreaIdResult_resultHandler(event:ResultEvent):void
 			{
 				if(event.result){
@@ -230,6 +233,7 @@
 					sId.text = schema.schemaId;
 					sCreateTime.text = schema.schemaAddTime;
 					noSchema = false;
+					defautlSettable = schema.isDefault!='Y';// Boolean(schema.isDefault);
 				}else{
 					Alert.yesLabel = "新建";
 					Alert.noLabel = "以后再说";
@@ -239,8 +243,10 @@
 					sCreateTime.text = "";
 					modified = false;
 					noSchema = true;
+					defautlSettable = false;
 					//Alert.show("该区域还没有关注站点视图，是否新建？","提示", Alert.YES|Alert.NO, this, alertClickHandler);
 				}
+				defaultSchemaBtn.label = defautlSettable?"设置成默认视图":"默认视图";
 			}
 			private function alertClickHandler(evt:CloseEvent):void {
 				var item:SchemaTreeNode = schemaTree.selectedItem as SchemaTreeNode;
@@ -303,6 +309,30 @@
 					getSchemaBriefInfoByAreaId(areaId);
 				}
 				Alert.show(event.result?"添加成功":"添加失败","操作结果");
+			}
+			
+			protected function defaultSchemaBtn_clickHandler(event:MouseEvent):void
+			{
+				var schema:Schema = new Schema();
+				schema.schemaId = sId.text;
+				
+				setDefaultSchema(schema);
+			}
+			
+			
+			protected function setDefaultSchema(arg0:Schema):void
+			{
+				setDefaultSchemaResult.token = schemaTree2.setDefaultSchema(arg0);
+			}
+			
+			protected function setDefaultSchemaResult_resultHandler(event:ResultEvent):void
+			{
+				var item:SchemaTreeNode = schemaTree.selectedItem as SchemaTreeNode;
+				if (TREE_NODE_AREA== item.type){    //站点视图
+					var areaId:String = item.id;
+					getSchemaBriefInfoByAreaId(areaId);
+				}
+				Alert.show(event.result?"已设置成默认":"设置失败","操作结果");	
 			}
 			
 		]]>
@@ -373,6 +403,8 @@
 							<mx:LinkButton id="editSchemaBtn"  label="编辑视图" click="editSchema_clickHandler(event)" enabled="{!noSchema}"  /> 
 							<mx:LinkButton id="viewSchemaBtn"  label="查看视图" click="viewSchema_clickHandler(event)" enabled="{!noSchema}"  /> 
 							<mx:LinkButton id="newSchemaBtn"  label="新建并保存" click="newSchema_clickHandler(event)" enabled="{noSchema}" /> 
+							
+							<mx:LinkButton id="defaultSchemaBtn"  label="设置成默认视图" click="defaultSchemaBtn_clickHandler(event)" enabled="{defautlSettable}" /> 
 						</mx:HBox>
 					</s:BorderContainer>
 				</s:BorderContainer>

@@ -100,10 +100,6 @@
 				*/
 			}
 			
-			[Embed(source="assets/fz.svg")] 
-			[Bindable] 
-			public var SvgFrog:Class;  
-			
 			protected function getAllArea():void
 			{
 				getAllAreaResult.token = areaSchema.getAllArea();

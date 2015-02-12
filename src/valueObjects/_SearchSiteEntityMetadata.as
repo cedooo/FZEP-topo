@@ -22,14 +22,14 @@ internal class _SearchSiteEntityMetadata extends com.adobe.fiber.valueobjects.Ab
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("areaName", "page", "exceptList", "searchField", "keyWord", "areaId");
+    model_internal static var allProperties:Array = new Array("areaName", "page", "exceptList", "searchField", "areaId", "keyWord");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("areaName", "page", "exceptList", "searchField", "keyWord", "areaId");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("areaName", "page", "exceptList", "searchField", "areaId", "keyWord");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("areaName", "page", "exceptList", "searchField", "keyWord", "areaId");
+    model_internal static var dataProperties:Array = new Array("areaName", "page", "exceptList", "searchField", "areaId", "keyWord");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("areaName", "page", "exceptList", "searchField", "keyWord", "areaId");
+    model_internal static var nonDerivedProperties:Array = new Array("areaName", "page", "exceptList", "searchField", "areaId", "keyWord");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array("exceptList");
     model_internal static var collectionBaseMap:Object;
@@ -53,8 +53,8 @@ internal class _SearchSiteEntityMetadata extends com.adobe.fiber.valueobjects.Ab
             model_internal::dependentsOnMap["page"] = new Array();
             model_internal::dependentsOnMap["exceptList"] = new Array();
             model_internal::dependentsOnMap["searchField"] = new Array();
-            model_internal::dependentsOnMap["keyWord"] = new Array();
             model_internal::dependentsOnMap["areaId"] = new Array();
+            model_internal::dependentsOnMap["keyWord"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
@@ -67,8 +67,8 @@ internal class _SearchSiteEntityMetadata extends com.adobe.fiber.valueobjects.Ab
         model_internal::propertyTypeMap["page"] = "valueObjects.Page";
         model_internal::propertyTypeMap["exceptList"] = "ArrayCollection";
         model_internal::propertyTypeMap["searchField"] = "String";
-        model_internal::propertyTypeMap["keyWord"] = "String";
         model_internal::propertyTypeMap["areaId"] = "int";
+        model_internal::propertyTypeMap["keyWord"] = "String";
 
         model_internal::_instance = value;
     }
@@ -322,13 +322,13 @@ internal class _SearchSiteEntityMetadata extends com.adobe.fiber.valueobjects.Ab
     }
 
     [Bindable(event="propertyChange")]
-    public function get isKeyWordAvailable():Boolean
+    public function get isAreaIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isAreaIdAvailable():Boolean
+    public function get isKeyWordAvailable():Boolean
     {
         return true;
     }
@@ -368,13 +368,13 @@ internal class _SearchSiteEntityMetadata extends com.adobe.fiber.valueobjects.Ab
     }
 
     [Bindable(event="propertyChange")]   
-    public function get keyWordStyle():com.adobe.fiber.styles.Style
+    public function get areaIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get areaIdStyle():com.adobe.fiber.styles.Style
+    public function get keyWordStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

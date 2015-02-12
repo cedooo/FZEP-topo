@@ -62,6 +62,7 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
     private var _internal_schemaType : String;
     private var _internal_schemaName : String;
     private var _internal_siteId : String;
+    private var _internal_isDefault : String;
     private var _internal_schemaAddTime : String;
     private var _internal_schemaId : String;
     private var _internal_schemaDelTime : String;
@@ -113,6 +114,12 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
     public function get siteId() : String
     {
         return _internal_siteId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isDefault() : String
+    {
+        return _internal_isDefault;
     }
 
     [Bindable(event="propertyChange")]
@@ -196,6 +203,16 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
         {
             _internal_siteId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteId", oldValue, _internal_siteId));
+        }
+    }
+
+    public function set isDefault(value:String) : void
+    {
+        var oldValue:String = _internal_isDefault;
+        if (oldValue !== value)
+        {
+            _internal_isDefault = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "isDefault", oldValue, _internal_isDefault));
         }
     }
 
