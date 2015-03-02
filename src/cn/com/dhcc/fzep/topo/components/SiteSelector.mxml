@@ -20,6 +20,8 @@
 			import mx.rpc.CallResponder;
 			import mx.rpc.events.ResultEvent;
 			
+			import spark.events.TextOperationEvent;
+			
 			import valueObjects.Page;
 			import valueObjects.SearchSite;
 			import valueObjects.Site;
@@ -209,6 +211,11 @@
 				
 			}
 			
+			protected function siteNameTextInput_changeHandler(event:TextOperationEvent):void
+			{
+				searchSiteCondition.page.curPage = 1;
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -219,7 +226,7 @@
 			
 			<s:VGroup width="50%" height="100%">
 				<mx:HBox backgroundAlpha="0" verticalAlign="middle" horizontalAlign="center" width="100%" height="24">
-					<s:TextInput maxChars="15" id="siteNameTextInput" keyDown="siteNameTextInput_keyDownHandler(event)" />
+					<s:TextInput maxChars="15" id="siteNameTextInput" keyDown="siteNameTextInput_keyDownHandler(event)" change="siteNameTextInput_changeHandler(event)" />
 					<mx:LinkButton label="搜索" fontWeight="bold" toolTip="搜索" id="search" click="searchSite()" />  
 				</mx:HBox>
 				<s:List id="srclist" width="100%" allowMultipleSelection="true" dragEnabled="true"

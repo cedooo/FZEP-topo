@@ -56,8 +56,6 @@
 		<![CDATA[
 			import com.adobe.serialization.json.JSON;
 			
-			import flash.ux.core.Console;
-			
 			import mx.collections.ArrayCollection;
 			import mx.collections.IList;
 			import mx.controls.Alert;
