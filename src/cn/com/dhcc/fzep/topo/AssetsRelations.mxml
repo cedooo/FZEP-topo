@@ -293,7 +293,7 @@
 			
 		</s:Label>
 	</mx:ApplicationControlBar>
-	<s:BorderContainer y="60" width="66%" height="66%" verticalCenter="middle"  borderVisible="false">
+	<s:BorderContainer y="60" width="100%" height="66%" verticalCenter="middle"  borderVisible="false">
 		<s:layout>
 			<s:HorizontalLayout  paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" />
 		</s:layout>

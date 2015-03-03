@@ -19,9 +19,11 @@
 			import spark.components.VGroup;
 			import spark.primitives.Line;
 			
+			import cn.com.dhcc.fzep.topo.components.GPRSComponent;
 			import cn.com.dhcc.fzep.topo.components.ThreeLayerSwitchComponent;
 			
 			import valueObjects.Cable;
+			import valueObjects.GPRS;
 			import valueObjects.Site;
 			import valueObjects.ThreeLayerSwitch;
 			[Embed(source="assets/buttons/btn_square_32.png")]
@@ -58,17 +60,20 @@
 					var tagImg:Image = new Image();
 					tagImg.source = tagsImg;
 					tagImg.width = TAG_WIDTH;
-					tagImg.height = TAG_WIDTH;
+					hGroup.height = TAG_WIDTH;
 					hGroup.id = equip['type'] + equip['id'];
 					//Alert.show(hGroup.id);
 					hGroup.addElement(tagImg);
+					hGroup.verticalAlign = "middle";
 					
 					var label:Label = new Label();
 					label.text = equip['name'];
-					hGroup.addElement(label);
-					hGroup.y = i*25;
+					//hGroup.addElement(label);
+					hGroup.y = i*60;
 					var equipComponent:UIComponent = getEquipComponent(equip);
-					//hGroup.addElement(equipComponent);
+					if(equipComponent){
+						hGroup.addElement(equipComponent);
+					}
 					equipContainer.addElement(hGroup);
 					
 				}
@@ -77,12 +82,20 @@
 			 * 得到设备显示组件
 			 */
 			private function getEquipComponent(equip:Object):UIComponent{
-				if(equip['type']=='l3layer'){
+				var eType:String = equip['type'];
+				var eName:String =  equip['name'];
+				if(eType=='l3layer'){
 					var l3Layer:ThreeLayerSwitchComponent = new ThreeLayerSwitchComponent();
 					var l3Switch:ThreeLayerSwitch = new ThreeLayerSwitch();
-					l3Switch.switchName = equip['name'];
+					l3Switch.switchName = eName;
 					l3Layer.l3switch = l3Switch;
 					return l3Layer;
+				}else if(eType){
+					var gprsComponet:GPRSComponent = new GPRSComponent();
+					var gprs:GPRS = new GPRS();
+					gprs.gprsName = eName;
+					gprsComponet.gprs = gprs;
+					return gprsComponet;
 				}else{
 					return null;
 				}
@@ -134,7 +147,7 @@
 					
 					var stroke:SolidColorStroke = new SolidColorStroke();
 					stroke.weight = 3;
-					stroke.caps=CapsStyle.ROUND;
+					stroke.caps = CapsStyle.ROUND;
 					stroke.color = lineColors[i%lineColors.length];
 					line.stroke = stroke;
 					
@@ -196,7 +209,7 @@
 							if(isTargetEquip){
 								var targetX:Number = equipContainer.x;
 								//Alert.show(eles.y+'');
-								var targetY:Number = equipContainer.y + eles.y +TAG_WIDTH/2;//  + k*12;
+								var targetY:Number = equipContainer.y + eles.y;// +TAG_WIDTH/2;//  + k*12;
 								var line:Line = new Line();
 								line.xFrom = cableX;
 								line.yFrom = targetY;

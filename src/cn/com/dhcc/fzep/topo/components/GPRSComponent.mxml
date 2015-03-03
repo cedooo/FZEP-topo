@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="300" creationComplete="init()"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"  creationComplete="init()"
 		 contextMenu="{cm}">
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
@@ -36,6 +36,6 @@
 		]]>
 	</fx:Script>
 	
-	<mx:Image id="imgVisitor" source="assets/{imgName}"  x="14" y="9" width="32" height="32"/>
+	<mx:Image id="imgVisitor" source="@Embed(source='assets/equip/AP.png')"  x="14" y="9" width="32" height="32"/>
 	<s:Label id="lblUserName" text="{gprs.gprsName}" y="45"  textAlign="center" width="100%" fontSize="12"  fontWeight="bold"/>
 </s:Group>

@@ -13,8 +13,6 @@
 			[Bindable]
 			public var doShow:Function;
 			[Bindable]
-			public var imgName:String = "equip/l3switch.png";
-			[Bindable]
 			public var l3switch:ThreeLayerSwitch;
 			
 			[Bindable] 
@@ -27,15 +25,15 @@
 				//设定监听source_txa组件的点击函数
 				var cmi:ContextMenuItem = new ContextMenuItem("设备详情", true); 
 				cmi.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, showInfo);
-				var cmi2:ContextMenuItem = new ContextMenuItem("转到科大GIS", true); 
+				var cmi2:ContextMenuItem = new ContextMenuItem("转到科大GIS", false); 
 				cmi2.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, showInfo);
 				cm = new ContextMenu(); 
 				cm.hideBuiltInItems(); 
-				cm.customItems = [cmi,cmi2]; 
+				cm.customItems = [cmi]; 
 			}
 		]]>
 	</fx:Script>
 	
-	<mx:Image id="imgVisitor" source="assets/{imgName}"  x="14" y="9" width="32" height="32"/>
+	<mx:Image id="imgVisitor" source="@Embed(source='assets/equip/l3switch.png')"  x="14" y="9" width="32" height="32"/>
 	<s:Label id="lblUserName" text="{l3switch.switchName}" y="45"  textAlign="center" width="100%" fontSize="12"  fontWeight="bold"/>
 </s:Group>

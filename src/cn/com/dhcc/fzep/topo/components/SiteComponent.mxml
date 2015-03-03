@@ -19,7 +19,7 @@
 		]]>
 	</fx:Script>
 	<s:BorderContainer id="siteContainer" width="60" height="60" borderVisible="false" backgroundAlpha="0">
-		<mx:Image id="imgVisitor" source="assets/tower.png" x="14" y="9" width="32" height="32" />
+		<mx:Image id="imgVisitor" source="@Embed(source='assets/tower.png')" x="14" y="9" width="32" height="32" />
 		<s:Label id="lblUserName" text="{site.siteName}" y="45"  textAlign="center" width="100%" fontSize="12"  fontWeight="bold"/>
 	</s:BorderContainer>
 </s:Group>
