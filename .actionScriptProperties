@@ -35,6 +35,7 @@
     <application path="cn/com/dhcc/fzep/topo/SchemaManagerIndex.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/EquipSchema.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/Default.mxml"/>
+    <application path="SiteAssetsExample.mxml"/>
   </applications>
   <modules/>
   <workers/>

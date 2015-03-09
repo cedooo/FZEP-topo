@@ -4,9 +4,6 @@
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:xtreme="xtreme.core.*"
 			   xmlns:services="services.*"  minWidth="955" minHeight="600" 
-			   xmlns:degrafa="http://www.degrafa.com/2007"
-			   xmlns:paint="com.degrafa.paint.*"
-			   xmlns:geometry="com.degrafa.geometry.*"
 			   xmlns:cedomaps="cn.com.dhcc.fzep.topo.maps.*"
 			   width="100%"  applicationComplete="applicationComplete()" >
 	<fx:Declarations>

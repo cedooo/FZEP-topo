@@ -63,7 +63,7 @@
 					hGroup.height = TAG_WIDTH;
 					hGroup.id = equip['type'] + equip['id'];
 					//Alert.show(hGroup.id);
-					hGroup.addElement(tagImg);
+					//hGroup.addElement(tagImg);
 					hGroup.verticalAlign = "middle";
 					
 					var label:Label = new Label();
@@ -207,7 +207,7 @@
 							var isTargetEquip:Boolean = false;
 							isTargetEquip = (eles.id== connInfo['deviceType']+deviceId);
 							if(isTargetEquip){
-								var targetX:Number = equipContainer.x;
+								var targetX:Number = equipContainer.x + eles.width ;
 								//Alert.show(eles.y+'');
 								var targetY:Number = equipContainer.y + eles.y;// +TAG_WIDTH/2;//  + k*12;
 								var line:Line = new Line();

@@ -128,11 +128,11 @@
 				var cable22:Cable = new Cable();
 				cable22.cableName = "光缆2";
 				cable22.cableId = "2";
-				cableList2.push(cable2);
+				cableList2.push(cable22);
 				var cable32:Cable = new Cable();
 				cable32.cableName = "光缆3";
 				cable32.cableId = "3";
-				cableList.push(cable32);
+				cableList2.push(cable32);
 				
 				
 				
@@ -288,11 +288,12 @@
 			
 		]]>
 	</fx:Script>
+	<!--
 	<mx:ApplicationControlBar>
 		<s:Label text="DEMO-仅作展示使用" >
-			
 		</s:Label>
 	</mx:ApplicationControlBar>
+	-->
 	<s:BorderContainer y="60" width="100%" height="66%" verticalCenter="middle"  borderVisible="false">
 		<s:layout>
 			<s:HorizontalLayout  paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" />
