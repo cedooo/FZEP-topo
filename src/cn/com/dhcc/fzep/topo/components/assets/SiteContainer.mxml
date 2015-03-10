@@ -11,6 +11,7 @@
 			import com.adobe.serialization.json.JSON;
 			
 			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
 			import mx.core.UIComponent;
 			import mx.graphics.SolidColorStroke;
 			import mx.utils.ObjectUtil;
@@ -54,28 +55,29 @@
 				_equipList = equipList;
 				for (var i:int = 0; i < _equipList.length; i++) 
 				{
-					//var e:EquipmentVO = new EquipmentVO();
+					/*
 					var equip:Object =  _equipList[i];
 					var hGroup:HGroup = new HGroup();
-					var tagImg:Image = new Image();
-					tagImg.source = tagsImg;
-					tagImg.width = TAG_WIDTH;
 					hGroup.height = TAG_WIDTH;
 					hGroup.id = equip['type'] + equip['id'];
-					//Alert.show(hGroup.id);
-					//hGroup.addElement(tagImg);
 					hGroup.verticalAlign = "middle";
-					
-					var label:Label = new Label();
-					label.text = equip['name'];
-					//hGroup.addElement(label);
 					hGroup.y = i*60;
 					var equipComponent:UIComponent = getEquipComponent(equip);
 					if(equipComponent){
 						hGroup.addElement(equipComponent);
 					}
 					equipContainer.addElement(hGroup);
+					*/
 					
+					var equip:Object =  _equipList[i];
+					var equipComponent:UIComponent = getEquipComponent(equip);
+					var assetsEquip:AssetsEquipment = new AssetsEquipment();
+					assetsEquip.y = i*assetsEquip.componentHeight;
+					assetsEquip.id = equip['type'] + equip['id'];
+					if(equipComponent){
+						assetsEquip.equipment = equipComponent;
+					}
+					equipContainer.addElement(assetsEquip);
 				}
 			}
 			/**
@@ -101,6 +103,7 @@
 				}
 			}
 			private var CABLE_IN_WIDTH:Number = 10;    //光缆连接点长宽度
+			private var CABLE_WEIGHT:Number = 3;    //光缆宽度
 			/**
 			 * 设置光缆列表
 			 */
@@ -109,7 +112,9 @@
 				_cableList = cabList;
 				for (var i:int = 0; i < cabList.length; i++) 
 				{
-					
+					if(i>1){
+						break;
+					}
 					var vGroup:VGroup = new VGroup();
 					var cable:Object = cabList[i];
 					/*
@@ -127,9 +132,10 @@
 					vGroup.addElement(img);
 					vGroup.horizontalAlign = "center";
 					vGroup.id = CABLE_INTERFACE_ID_TAG + cable['cableId'];
-					vGroup.x = i*30;
+					vGroup.x = i*relationContainer.width;
 					vGroup.width = 30;
-					vGroup.y = 0;
+					vGroup.y = i==0?0:SContainer.height;
+					
 					cableGroup.addElement(vGroup);
 					/*
 					var cableInfo:Label = new Label();
@@ -140,13 +146,19 @@
 					*/
 					var line:Line = new Line();
 					line.xFrom = cableGroup.x + vGroup.x;//(i+1)*CABLE_IN_WIDTH;
-					line.yFrom = 0;
+					line.yFrom = i*10;
 					line.xTo =  cableGroup.x +  vGroup.x;//(i+1)*CABLE_IN_WIDTH;
-					line.yTo = relationContainer.height-10;
+					//line.yTo = relationContainer.height+(i-1)*10;
+					if(i==0){
+						line.yTo = relationContainer.height-10;
+					}else if(i==1){
+						line.yTo = relationContainer.height;
+					}
+					
 					line.id = ObjectUtil.getClassInfo(Cable).name + cable['cableId'];
 					
 					var stroke:SolidColorStroke = new SolidColorStroke();
-					stroke.weight = 3;
+					stroke.weight = CABLE_WEIGHT;
 					stroke.caps = CapsStyle.ROUND;
 					stroke.color = lineColors[i%lineColors.length];
 					line.stroke = stroke;
@@ -249,17 +261,18 @@
 			/**
 			 * 连接到光缆 返回出口坐标信息
 			 */
-			public function connectionToCable(cableId:String):Point{
+			public function connectionToCable(targetCableId:String):Point{
 				for (var i:int = 0; i < cableGroup.numElements; i++) 
 				{
 					var cable:VGroup = cableGroup.getElementAt(i) as VGroup;
 					var gName:String = cable.id;
 					var cablesId:String = gName.split(CABLE_INTERFACE_ID_TAG)[1];
-					if(cablesId == cableId){
+					if(cablesId == targetCableId){
 						
 						var pos:Point = new Point();
 						pos.x = cableGroup.x + cable.width/2 + cable.x;
 						pos.y = cableGroup.y  + cable.y;
+						//Alert.show(cable.height+'');
 						/*
 						var xInSiteCon:Number = cable.width/2 + cable.x;
 						var yInSiteCon:Number = cable.y;
@@ -296,7 +309,7 @@
 				</s:BorderContainer>
 			</s:BorderContainer>
 			<s:BorderContainer id="titCon" borderAlpha="0.7" y="5"  cornerRadius="10" height="56" maxWidth="300" >
-				<s:HGroup  id="tit" width="100%"  paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" verticalAlign="middle" >
+				<s:HGroup  id="siteBar" width="100%"  paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" verticalAlign="middle" >
 					<mx:Image source="assets/tower.png" width="32" height="32" />
 					<s:Label text="{site.siteName}" id="siteName" toolTip="站点名称" />
 				</s:HGroup>
