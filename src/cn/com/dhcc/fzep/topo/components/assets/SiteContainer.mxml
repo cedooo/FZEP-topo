@@ -68,7 +68,6 @@
 					}
 					equipContainer.addElement(hGroup);
 					*/
-					
 					var equip:Object =  _equipList[i];
 					var equipComponent:UIComponent = getEquipComponent(equip);
 					var assetsEquip:AssetsEquipment = new AssetsEquipment();
@@ -132,7 +131,7 @@
 					vGroup.addElement(img);
 					vGroup.horizontalAlign = "center";
 					vGroup.id = CABLE_INTERFACE_ID_TAG + cable['cableId'];
-					vGroup.x = i*relationContainer.width;
+					vGroup.x = i*relationContainer.width+CABLE_WEIGHT/2;
 					vGroup.width = 30;
 					vGroup.y = i==0?0:SContainer.height;
 					
@@ -215,13 +214,23 @@
 						 */
 						for (var k:int = 0; k < equipContainer.numElements; k++) 
 						{
-							var eles:HGroup = equipContainer.getElementAt(k) as HGroup;
+							//var eles:HGroup = equipContainer.getElementAt(k) as HGroup;
+							
+							var assetsEquip:AssetsEquipment = equipContainer.getElementAt(k) as AssetsEquipment;
+							
 							var isTargetEquip:Boolean = false;
-							isTargetEquip = (eles.id== connInfo['deviceType']+deviceId);
+							isTargetEquip = (assetsEquip.id== connInfo['deviceType']+deviceId);
+							
 							if(isTargetEquip){
-								var targetX:Number = equipContainer.x + eles.width ;
-								//Alert.show(eles.y+'');
-								var targetY:Number = equipContainer.y + eles.y;// +TAG_WIDTH/2;//  + k*12;
+								
+								var connectPoint:Point = null;
+								connectPoint = assetsEquip.connectLeftPoint();
+								var targetX:Number = equipContainer.x + assetsEquip.x +  connectPoint.x ;
+								if(cableX>targetX) {
+									connectPoint = assetsEquip.connectRightPoint();
+									targetX = equipContainer.x + assetsEquip.x +  connectPoint.x ;
+								}
+								var targetY:Number = equipContainer.y + assetsEquip.y +  connectPoint.y;
 								var line:Line = new Line();
 								line.xFrom = cableX;
 								line.yFrom = targetY;
@@ -304,8 +313,9 @@
 			<s:VerticalLayout />
 		</s:layout>
 		<s:BorderContainer id="SContainer" height="100%" width="100%" borderVisible="false"  cornerRadius="10" >
-			<s:BorderContainer id="relationContainer" x="15" y="{(titCon.height + titCon.y)/2}" height="100%"  width="100%" borderAlpha="0.5" cornerRadius="10" borderVisible="true">
-				<s:BorderContainer x="150" y="50" id="equipContainer"  height="100%" width="90%" cornerRadius="10"  borderVisible="false" >
+			<s:BorderContainer id="relationContainer" x="15" y="{(titCon.height + titCon.y)/2}" height="100%" 
+							   width="100%" borderAlpha="0.5" cornerRadius="10" borderVisible="true">
+				<s:BorderContainer x="{SContainer.width/2-equipContainer.width/2}" y="30" id="equipContainer"  height="100%" borderAlpha="0"  cornerRadius="10"  borderVisible="false" >
 				</s:BorderContainer>
 			</s:BorderContainer>
 			<s:BorderContainer id="titCon" borderAlpha="0.7" y="5"  cornerRadius="10" height="56" maxWidth="300" >

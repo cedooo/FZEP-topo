@@ -40,10 +40,6 @@
 				cable2.cableName = "光缆2";
 				cable2.cableId = "2";
 				cableList.push(cable2);
-				var cable3:Cable = new Cable();
-				cable3.cableName = "光缆3";
-				cable3.cableId = "3";
-				//cableList.push(cable3);
 				
 				lSiteCon.site = site;
 				lSiteCon.cableList = cableList;
@@ -76,12 +72,6 @@
 				equipV23.type = "l2layer";
 				equipV23.id = "3";
 				listEquip.push(equipV23);
-				
-				var equipV24:EquipmentVO = new EquipmentVO();
-				equipV24.name = "2层交换机4";
-				equipV24.type = "l2layer";
-				equipV24.id = "4";
-				listEquip.push(equipV24);
 				lSiteCon.equipList = listEquip;
 				
 				var cableConnList:Array = new Array();
@@ -92,23 +82,16 @@
 				objCabl.fiberNum = '1';
 				cableConnList.push(objCabl);
 				var objCabl2:Object = new Object();
-				objCabl2.cableId = '2';
+				objCabl2.cableId = '1';
 				objCabl2.deviceType = 'l2layer';
 				objCabl2.deviceId = '2';
 				objCabl2.fiberNum = '13';
 				cableConnList.push(objCabl2);
 				
-				var objCabl3:Object = new Object();
-				objCabl3.cableId = '3';
-				objCabl3.deviceType = 'l2layer';
-				objCabl3.deviceId = '1';
-				objCabl3.fiberNum = '17';
-				cableConnList.push(objCabl3);
-				
 				var objCabl4:Object = new Object();
 				objCabl4.cableId = '2';
 				objCabl4.deviceType = 'l2layer';
-				objCabl4.deviceId = '4';
+				objCabl4.deviceId = '2';
 				objCabl4.fiberNum = '19';
 				cableConnList.push(objCabl4);
 				
@@ -167,7 +150,7 @@
 				equipV232.name = "2层交换机23";
 				equipV232.type = "l2layer";
 				equipV232.id = "3";
-				listEquip2.push(equipV232);
+				//listEquip2.push(equipV232);
 				
 				
 				var cableConnList2:Array = new Array();
@@ -295,17 +278,22 @@
 		</s:Label>
 	</mx:ApplicationControlBar>
 	-->
-	<s:BorderContainer y="60" width="100%" height="66%" verticalCenter="middle"  borderVisible="false">
-		<s:layout>
-			<s:HorizontalLayout  paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" />
-		</s:layout>
-		<s:BorderContainer   width="100%" height="100%" verticalCenter="middle" id="container" borderVisible="false"  >
-			<s:BorderContainer width="45%" height="400" verticalCenter="middle" id="lSitePCon"  borderVisible="false"  cornerRadius="10" >
-				<cedoassets:SiteContainer id="lSiteCon"></cedoassets:SiteContainer>
-			</s:BorderContainer>
-			<s:BorderContainer width="45%" x="{lSitePCon.width+50}" height="400" id="lSite2PCon" verticalCenter="middle"  borderVisible="false"  cornerRadius="10" >
-				<cedoassets:SiteContainer id="lSiteCon2"></cedoassets:SiteContainer>
+	
+	<s:Panel title="福州电业局资产关系示意图"
+			 width="90%" height="90%"
+			 horizontalCenter="0" verticalCenter="0">
+		<s:BorderContainer y="60" width="100%" height="66%" verticalCenter="middle"  borderVisible="false">
+			<s:layout>
+				<s:HorizontalLayout  paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" />
+			</s:layout>
+			<s:BorderContainer   width="100%" height="100%" verticalCenter="middle" id="container" borderVisible="false"  >
+				<s:BorderContainer width="45%" height="400" verticalCenter="middle" id="lSitePCon"  borderVisible="false"  cornerRadius="10" >
+					<cedoassets:SiteContainer id="lSiteCon"></cedoassets:SiteContainer>
+				</s:BorderContainer>
+				<s:BorderContainer width="45%" x="{lSitePCon.width+50}" height="400" id="lSite2PCon" verticalCenter="middle"  borderVisible="false"  cornerRadius="10" >
+					<cedoassets:SiteContainer id="lSiteCon2"></cedoassets:SiteContainer>
+				</s:BorderContainer>
 			</s:BorderContainer>
 		</s:BorderContainer>
-	</s:BorderContainer>
+	</s:Panel>
 </s:Application>
