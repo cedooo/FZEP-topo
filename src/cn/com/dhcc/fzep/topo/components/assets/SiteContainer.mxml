@@ -11,7 +11,6 @@
 			import com.adobe.serialization.json.JSON;
 			
 			import mx.collections.ArrayCollection;
-			import mx.controls.Alert;
 			import mx.core.UIComponent;
 			import mx.graphics.SolidColorStroke;
 			import mx.utils.ObjectUtil;
@@ -109,13 +108,13 @@
 			[ArrayElementType("valueObjects.Cable")]
 			public function set cableList(cabList:Array):void{
 				_cableList = cabList;
-				for (var i:int = 0; i < cabList.length; i++) 
+				for (var i:int = 0; i < _cableList.length; i++) 
 				{
 					if(i>1){
 						break;
 					}
 					var vGroup:VGroup = new VGroup();
-					var cable:Object = cabList[i];
+					var cable:Object = _cableList[i];
 					/*
 					var label:Label = new Label();
 					label.text = cable['cableName'];
@@ -153,6 +152,8 @@
 					}else if(i==1){
 						line.yTo = relationContainer.height;
 					}
+					
+					//line.yTo = 0;
 					
 					line.id = ObjectUtil.getClassInfo(Cable).name + cable['cableId'];
 					
@@ -209,6 +210,8 @@
 					}
 					
 					if(cableX>-1){
+						var cablePoint:Point = new Point();
+						cablePoint.x = cableX;
 						/*
 						 * 查找设备 并和光缆连接
 						 */
@@ -224,13 +227,15 @@
 							if(isTargetEquip){
 								
 								var connectPoint:Point = null;
-								connectPoint = assetsEquip.connectLeftPoint();
-								var targetX:Number = equipContainer.x + assetsEquip.x +  connectPoint.x ;
+								connectPoint = assetsEquip.connectPoint(cablePoint);//assetsEquip.connectLeftPoint();
+								var targetX:Number = equipContainer.x + assetsEquip.x +  connectPoint.x + (targetX>cableX?0:7);
+								/*
 								if(cableX>targetX) {
 									connectPoint = assetsEquip.connectRightPoint();
 									targetX = equipContainer.x + assetsEquip.x +  connectPoint.x ;
 								}
-								var targetY:Number = equipContainer.y + assetsEquip.y +  connectPoint.y;
+								*/
+								var targetY:Number = equipContainer.y + assetsEquip.y +  connectPoint.y ;
 								var line:Line = new Line();
 								line.xFrom = cableX;
 								line.yFrom = targetY;
@@ -248,10 +253,10 @@
 								label.toolTip = "纤芯编号:" + connInfo['fiberNum'];
 								label.setStyle("color", cableColor);
 								
-								var fiNumSize:uint = 10;
+								var fiNumSize:uint = 11;    //编号字体大小
 								label.setStyle("fontSize",fiNumSize);
 								relationContainer.addElement(label);
-								label.x = line.xTo-fiNumSize*2;
+								label.x = line.xTo+(targetX>cableX?-1.5:1)*fiNumSize*2;
 								label.y = line.yTo-fiNumSize;
 								
 								relationContainer.addElement(line);

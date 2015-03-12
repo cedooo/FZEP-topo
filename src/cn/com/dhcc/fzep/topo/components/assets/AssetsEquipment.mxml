@@ -8,12 +8,11 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import mx.controls.Alert;
 			import mx.core.UIComponent;
 			import mx.events.FlexEvent;
 			
 			public function get componentWidth():Number{
-				return 80;
+				return 74;
 			}public function get componentHeight():Number{
 				return 60;
 			}
@@ -44,6 +43,16 @@
 				return validConnectPoint(rightConnectPoints);
 			}
 			
+			public function connectPoint(cablePoint:Point):Point{
+				var absLeft:Number = Math.abs(cablePoint.x - leftConnectPoints.x);
+				var absRight:Number = Math.abs(cablePoint.x - rightConnectPoints.x);
+				if(absLeft > absRight){
+					//Alert.show('连接右边连接点');
+					return connectRightPoint();
+				}else{
+					return connectLeftPoint();
+				}
+			}
 			private function validConnectPoint(vGroup:Group):Point{
 				var totalPoint:Number = vGroup.numElements;
 				var validNum:Boolean = totalPoint<POINT_NUM_LIMIT && totalPoint>0;
@@ -54,10 +63,15 @@
 					{
 						var imgs:Image = vGroup.getElementAt(i) as Image;
 						if(imgs.name!='used'){
-							targetPoint.x =  vGroup.getElementAt(i).x;
-							targetPoint.y = imgs.y + imgs.height/2+1;//.height*i;
-							var img:Image = vGroup.getElementAt(i) as Image;
-							img.name='used';
+							if(i==1){
+								//vGroup.getElementAt(0).y=1*componentHeight/5; 
+								//vGroup.getElementAt(1).y=2*componentHeight/5; 
+							}
+							targetPoint.x =  vGroup.x + imgs.x;
+							targetPoint.y = imgs.y + imgs.height/2+1;
+							imgs.name='used';
+							imgs.visible = true;
+							
 							break;
 						}else{
 							continue;
@@ -69,27 +83,25 @@
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{
 				equipmentContainer.addElement(_component);
+				//rightConnectPoints.x = componentWidth-7;
+				//Alert.show(componentWidth + '右侧：'+rightConnectPoints.x+'');
 			}
 			
 		]]>
 	</fx:Script>
-	<s:BorderContainer width="100%" height="{componentHeight}"  borderAlpha="0.5" backgroundAlpha="0" >
-		<s:layout>
-			<s:HorizontalLayout>
-			</s:HorizontalLayout>
-		</s:layout>
-		<s:Group id="leftConnectPoints" x="0">
-			<mx:Image x="5" y="{2*componentHeight/5}"  source="@Embed(source='assets/tag_green_16.png')" width="7" height="7">
+	<s:BorderContainer width="100%"  borderAlpha="0" backgroundAlpha="0" >
+		<s:Group id="leftConnectPoints" x="{0*componentWidth/2}">
+			<mx:Image  y="{2*componentHeight/5}" id="leftFirstImg" visible="false" source="@Embed(source='assets/tag_green_16.png')" width="7" height="7">
 			</mx:Image>
-			<mx:Image x="5" y="{3*componentHeight/5}"   source="@Embed(source='assets/tag_green_16.png')" width="7" height="7">
+			<mx:Image  y="{3*componentHeight/5}" id="leftSecondImg" visible="false" source="@Embed(source='assets/tag_green_16.png')" width="7" height="7">
 			</mx:Image>
 		</s:Group>
 		<s:BorderContainer x="7" id="equipmentContainer" width="{componentWidth-14}" height="{componentHeight}" borderAlpha="0" >
 		</s:BorderContainer>
-		<s:Group id="rightConnectPoints" x="{componentWidth-7}">
-			<mx:Image x="5" y="{2*componentHeight/5}"  source="@Embed(source='assets/tag_green_16.png')" width="7" height="7">
+		<s:Group id="rightConnectPoints" x="{equipmentContainer.width + equipmentContainer.x }">
+			<mx:Image  y="{2*componentHeight/5}"  visible="false" id="rightFirstImg" source="@Embed(source='assets/tag_green_16.png')" width="7" height="7">
 			</mx:Image>
-			<mx:Image x="5" y="{3*componentHeight/5}" source="@Embed(source='assets/tag_green_16.png')" width="7" height="7">
+			<mx:Image  y="{3*componentHeight/5}"  visible="false" id="rightSecondImg" source="@Embed(source='assets/tag_green_16.png')" width="7" height="7">
 			</mx:Image>
 		</s:Group>
 	</s:BorderContainer>

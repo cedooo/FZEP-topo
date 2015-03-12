@@ -28,7 +28,7 @@
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
 				var site:Site = new Site();
-				site.siteName = "台江站点A1";
+				site.siteName = "站点A1";
 				site.siteId = "2";
 				
 				var cableList:Array = new Array();
@@ -100,7 +100,7 @@
 				
 				//2#站点测试数据
 				var site2:Site = new Site();
-				site2.siteName = "台江站点A2";
+				site2.siteName = "站点A2";
 				site2.siteId = "3";
 				
 				var cableList2:Array = new Array();
@@ -163,13 +163,13 @@
 				var objCabl223:Object = new Object();
 				objCabl223.cableId = '2';
 				objCabl223.deviceType = 'l2layer';
-				objCabl223.deviceId = '4';
+				objCabl223.deviceId = '1';
 				objCabl223.fiberNum = '19';
 				cableConnList2.push(objCabl223);
 				var objCabl22:Object = new Object();
 				objCabl22.cableId = '2';
 				objCabl22.deviceType = 'l2layer';
-				objCabl22.deviceId = '2';
+				objCabl22.deviceId = '1';
 				objCabl22.fiberNum = '13';
 				cableConnList2.push(objCabl22);
 				
