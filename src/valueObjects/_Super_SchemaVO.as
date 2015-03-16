@@ -60,17 +60,17 @@ public class _Super_SchemaVO extends flash.events.EventDispatcher implements com
      */
     private var _internal_schemaArgs : String;
     private var _internal_schemaType : String;
-    private var _internal_areaName : String;
     private var _internal_schemaName : String;
-    private var _internal_siteId : String;
-    private var _internal_isDefault : String;
     private var _internal_schemaAddTime : String;
     private var _internal_schemaId : String;
     private var _internal_schemaDelTime : String;
     private var _internal_schemaData : String;
     private var _internal_schemaNote : String;
-    private var _internal_siteName : String;
     private var _internal_areaId : String;
+    private var _internal_siteId : String;
+    private var _internal_areaName : String;
+    private var _internal_isDefault : String;
+    private var _internal_siteName : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -107,27 +107,9 @@ public class _Super_SchemaVO extends flash.events.EventDispatcher implements com
     }
 
     [Bindable(event="propertyChange")]
-    public function get areaName() : String
-    {
-        return _internal_areaName;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get schemaName() : String
     {
         return _internal_schemaName;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get siteId() : String
-    {
-        return _internal_siteId;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isDefault() : String
-    {
-        return _internal_isDefault;
     }
 
     [Bindable(event="propertyChange")]
@@ -161,15 +143,33 @@ public class _Super_SchemaVO extends flash.events.EventDispatcher implements com
     }
 
     [Bindable(event="propertyChange")]
-    public function get siteName() : String
-    {
-        return _internal_siteName;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get areaId() : String
     {
         return _internal_areaId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get siteId() : String
+    {
+        return _internal_siteId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get areaName() : String
+    {
+        return _internal_areaName;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isDefault() : String
+    {
+        return _internal_isDefault;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get siteName() : String
+    {
+        return _internal_siteName;
     }
 
     public function clearAssociations() : void
@@ -200,16 +200,6 @@ public class _Super_SchemaVO extends flash.events.EventDispatcher implements com
         }
     }
 
-    public function set areaName(value:String) : void
-    {
-        var oldValue:String = _internal_areaName;
-        if (oldValue !== value)
-        {
-            _internal_areaName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "areaName", oldValue, _internal_areaName));
-        }
-    }
-
     public function set schemaName(value:String) : void
     {
         var oldValue:String = _internal_schemaName;
@@ -217,26 +207,6 @@ public class _Super_SchemaVO extends flash.events.EventDispatcher implements com
         {
             _internal_schemaName = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaName", oldValue, _internal_schemaName));
-        }
-    }
-
-    public function set siteId(value:String) : void
-    {
-        var oldValue:String = _internal_siteId;
-        if (oldValue !== value)
-        {
-            _internal_siteId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteId", oldValue, _internal_siteId));
-        }
-    }
-
-    public function set isDefault(value:String) : void
-    {
-        var oldValue:String = _internal_isDefault;
-        if (oldValue !== value)
-        {
-            _internal_isDefault = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "isDefault", oldValue, _internal_isDefault));
         }
     }
 
@@ -290,16 +260,6 @@ public class _Super_SchemaVO extends flash.events.EventDispatcher implements com
         }
     }
 
-    public function set siteName(value:String) : void
-    {
-        var oldValue:String = _internal_siteName;
-        if (oldValue !== value)
-        {
-            _internal_siteName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteName", oldValue, _internal_siteName));
-        }
-    }
-
     public function set areaId(value:String) : void
     {
         var oldValue:String = _internal_areaId;
@@ -307,6 +267,46 @@ public class _Super_SchemaVO extends flash.events.EventDispatcher implements com
         {
             _internal_areaId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "areaId", oldValue, _internal_areaId));
+        }
+    }
+
+    public function set siteId(value:String) : void
+    {
+        var oldValue:String = _internal_siteId;
+        if (oldValue !== value)
+        {
+            _internal_siteId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteId", oldValue, _internal_siteId));
+        }
+    }
+
+    public function set areaName(value:String) : void
+    {
+        var oldValue:String = _internal_areaName;
+        if (oldValue !== value)
+        {
+            _internal_areaName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "areaName", oldValue, _internal_areaName));
+        }
+    }
+
+    public function set isDefault(value:String) : void
+    {
+        var oldValue:String = _internal_isDefault;
+        if (oldValue !== value)
+        {
+            _internal_isDefault = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "isDefault", oldValue, _internal_isDefault));
+        }
+    }
+
+    public function set siteName(value:String) : void
+    {
+        var oldValue:String = _internal_siteName;
+        if (oldValue !== value)
+        {
+            _internal_siteName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteName", oldValue, _internal_siteName));
         }
     }
 

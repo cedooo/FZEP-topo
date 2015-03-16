@@ -65,8 +65,8 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
     private var _internal_isDefault : String;
     private var _internal_schemaAddTime : String;
     private var _internal_schemaId : String;
-    private var _internal_schemaDelTime : String;
     private var _internal_schemaData : String;
+    private var _internal_schemaDelTime : String;
     private var _internal_schemaNote : String;
     private var _internal_areaId : String;
 
@@ -135,15 +135,15 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
     }
 
     [Bindable(event="propertyChange")]
-    public function get schemaDelTime() : String
-    {
-        return _internal_schemaDelTime;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get schemaData() : String
     {
         return _internal_schemaData;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get schemaDelTime() : String
+    {
+        return _internal_schemaDelTime;
     }
 
     [Bindable(event="propertyChange")]
@@ -236,16 +236,6 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
         }
     }
 
-    public function set schemaDelTime(value:String) : void
-    {
-        var oldValue:String = _internal_schemaDelTime;
-        if (oldValue !== value)
-        {
-            _internal_schemaDelTime = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaDelTime", oldValue, _internal_schemaDelTime));
-        }
-    }
-
     public function set schemaData(value:String) : void
     {
         var oldValue:String = _internal_schemaData;
@@ -253,6 +243,16 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
         {
             _internal_schemaData = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaData", oldValue, _internal_schemaData));
+        }
+    }
+
+    public function set schemaDelTime(value:String) : void
+    {
+        var oldValue:String = _internal_schemaDelTime;
+        if (oldValue !== value)
+        {
+            _internal_schemaDelTime = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaDelTime", oldValue, _internal_schemaDelTime));
         }
     }
 

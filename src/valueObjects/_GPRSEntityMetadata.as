@@ -20,14 +20,14 @@ internal class _GPRSEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("pperators", "constructionUnit", "manufacturers", "showName", "gprsId", "constructionUnitId", "technologyType", "installationSite", "gprsName", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "delFlg", "operators", "debugging", "manufacturersId", "cardNumber");
+    model_internal static var allProperties:Array = new Array("pperators", "constructionUnit", "manufacturers", "showName", "gprsId", "constructionUnitId", "technologyType", "installationSite", "gprsName", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "delFlg", "operators", "manufacturersId", "debugging", "cardNumber");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("pperators", "constructionUnit", "manufacturers", "showName", "gprsId", "constructionUnitId", "technologyType", "installationSite", "gprsName", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "delFlg", "operators", "debugging", "manufacturersId", "cardNumber");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("pperators", "constructionUnit", "manufacturers", "showName", "gprsId", "constructionUnitId", "technologyType", "installationSite", "gprsName", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "delFlg", "operators", "manufacturersId", "debugging", "cardNumber");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("pperators", "constructionUnit", "manufacturers", "showName", "gprsId", "constructionUnitId", "technologyType", "installationSite", "gprsName", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "delFlg", "operators", "debugging", "manufacturersId", "cardNumber");
+    model_internal static var dataProperties:Array = new Array("pperators", "constructionUnit", "manufacturers", "showName", "gprsId", "constructionUnitId", "technologyType", "installationSite", "gprsName", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "delFlg", "operators", "manufacturersId", "debugging", "cardNumber");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("pperators", "constructionUnit", "manufacturers", "showName", "gprsId", "constructionUnitId", "technologyType", "installationSite", "gprsName", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "delFlg", "operators", "debugging", "manufacturersId", "cardNumber");
+    model_internal static var nonDerivedProperties:Array = new Array("pperators", "constructionUnit", "manufacturers", "showName", "gprsId", "constructionUnitId", "technologyType", "installationSite", "gprsName", "runTime", "projectId", "ip", "descp", "typeSpecification", "siteId", "delFlg", "operators", "manufacturersId", "debugging", "cardNumber");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -64,8 +64,8 @@ internal class _GPRSEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
             model_internal::dependentsOnMap["siteId"] = new Array();
             model_internal::dependentsOnMap["delFlg"] = new Array();
             model_internal::dependentsOnMap["operators"] = new Array();
-            model_internal::dependentsOnMap["debugging"] = new Array();
             model_internal::dependentsOnMap["manufacturersId"] = new Array();
+            model_internal::dependentsOnMap["debugging"] = new Array();
             model_internal::dependentsOnMap["cardNumber"] = new Array();
 
             // collection base map
@@ -91,8 +91,8 @@ internal class _GPRSEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
         model_internal::propertyTypeMap["siteId"] = "String";
         model_internal::propertyTypeMap["delFlg"] = "String";
         model_internal::propertyTypeMap["operators"] = "String";
-        model_internal::propertyTypeMap["debugging"] = "String";
         model_internal::propertyTypeMap["manufacturersId"] = "String";
+        model_internal::propertyTypeMap["debugging"] = "String";
         model_internal::propertyTypeMap["cardNumber"] = "String";
 
         model_internal::_instance = value;
@@ -425,13 +425,13 @@ internal class _GPRSEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     }
 
     [Bindable(event="propertyChange")]
-    public function get isDebuggingAvailable():Boolean
+    public function get isManufacturersIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isManufacturersIdAvailable():Boolean
+    public function get isDebuggingAvailable():Boolean
     {
         return true;
     }
@@ -555,13 +555,13 @@ internal class _GPRSEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     }
 
     [Bindable(event="propertyChange")]   
-    public function get debuggingStyle():com.adobe.fiber.styles.Style
+    public function get manufacturersIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get manufacturersIdStyle():com.adobe.fiber.styles.Style
+    public function get debuggingStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

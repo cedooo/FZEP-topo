@@ -20,14 +20,14 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("curPage", "numPerPage", "totalRecords", "totalPage");
+    model_internal static var allProperties:Array = new Array("numPerPage", "curPage", "totalRecords", "totalPage");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("curPage", "numPerPage", "totalRecords", "totalPage");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("numPerPage", "curPage", "totalRecords", "totalPage");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("curPage", "numPerPage", "totalRecords", "totalPage");
+    model_internal static var dataProperties:Array = new Array("numPerPage", "curPage", "totalRecords", "totalPage");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("curPage", "numPerPage", "totalRecords", "totalPage");
+    model_internal static var nonDerivedProperties:Array = new Array("numPerPage", "curPage", "totalRecords", "totalPage");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -47,8 +47,8 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["curPage"] = new Array();
             model_internal::dependentsOnMap["numPerPage"] = new Array();
+            model_internal::dependentsOnMap["curPage"] = new Array();
             model_internal::dependentsOnMap["totalRecords"] = new Array();
             model_internal::dependentsOnMap["totalPage"] = new Array();
 
@@ -58,8 +58,8 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["curPage"] = "int";
         model_internal::propertyTypeMap["numPerPage"] = "int";
+        model_internal::propertyTypeMap["curPage"] = "int";
         model_internal::propertyTypeMap["totalRecords"] = "int";
         model_internal::propertyTypeMap["totalPage"] = "int";
 
@@ -291,13 +291,13 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     }
 
     [Bindable(event="propertyChange")]
-    public function get isCurPageAvailable():Boolean
+    public function get isNumPerPageAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isNumPerPageAvailable():Boolean
+    public function get isCurPageAvailable():Boolean
     {
         return true;
     }
@@ -325,13 +325,13 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     }
 
     [Bindable(event="propertyChange")]   
-    public function get curPageStyle():com.adobe.fiber.styles.Style
+    public function get numPerPageStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get numPerPageStyle():com.adobe.fiber.styles.Style
+    public function get curPageStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

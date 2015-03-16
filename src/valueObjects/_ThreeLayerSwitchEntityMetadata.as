@@ -20,14 +20,14 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "flow", "projectId", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
+    model_internal static var allProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "projectId", "flow", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "flow", "projectId", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "projectId", "flow", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "flow", "projectId", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
+    model_internal static var dataProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "projectId", "flow", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "flow", "projectId", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
+    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "projectId", "flow", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -58,8 +58,8 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
             model_internal::dependentsOnMap["installationSite"] = new Array();
             model_internal::dependentsOnMap["threeLayerSwitchName"] = new Array();
             model_internal::dependentsOnMap["runTime"] = new Array();
-            model_internal::dependentsOnMap["flow"] = new Array();
             model_internal::dependentsOnMap["projectId"] = new Array();
+            model_internal::dependentsOnMap["flow"] = new Array();
             model_internal::dependentsOnMap["vlanId"] = new Array();
             model_internal::dependentsOnMap["ip"] = new Array();
             model_internal::dependentsOnMap["vlanDescp"] = new Array();
@@ -86,8 +86,8 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
         model_internal::propertyTypeMap["installationSite"] = "String";
         model_internal::propertyTypeMap["threeLayerSwitchName"] = "String";
         model_internal::propertyTypeMap["runTime"] = "String";
-        model_internal::propertyTypeMap["flow"] = "String";
         model_internal::propertyTypeMap["projectId"] = "String";
+        model_internal::propertyTypeMap["flow"] = "String";
         model_internal::propertyTypeMap["vlanId"] = "String";
         model_internal::propertyTypeMap["ip"] = "String";
         model_internal::propertyTypeMap["vlanDescp"] = "String";
@@ -391,13 +391,13 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     }
 
     [Bindable(event="propertyChange")]
-    public function get isFlowAvailable():Boolean
+    public function get isProjectIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isProjectIdAvailable():Boolean
+    public function get isFlowAvailable():Boolean
     {
         return true;
     }
@@ -527,13 +527,13 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     }
 
     [Bindable(event="propertyChange")]   
-    public function get flowStyle():com.adobe.fiber.styles.Style
+    public function get projectIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get projectIdStyle():com.adobe.fiber.styles.Style
+    public function get flowStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

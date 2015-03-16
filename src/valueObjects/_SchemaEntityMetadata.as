@@ -20,14 +20,14 @@ internal class _SchemaEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "siteId", "isDefault", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote", "areaId");
+    model_internal static var allProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "siteId", "isDefault", "schemaAddTime", "schemaId", "schemaData", "schemaDelTime", "schemaNote", "areaId");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "siteId", "isDefault", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote", "areaId");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "siteId", "isDefault", "schemaAddTime", "schemaId", "schemaData", "schemaDelTime", "schemaNote", "areaId");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "siteId", "isDefault", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote", "areaId");
+    model_internal static var dataProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "siteId", "isDefault", "schemaAddTime", "schemaId", "schemaData", "schemaDelTime", "schemaNote", "areaId");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "siteId", "isDefault", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote", "areaId");
+    model_internal static var nonDerivedProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "siteId", "isDefault", "schemaAddTime", "schemaId", "schemaData", "schemaDelTime", "schemaNote", "areaId");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -54,8 +54,8 @@ internal class _SchemaEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
             model_internal::dependentsOnMap["isDefault"] = new Array();
             model_internal::dependentsOnMap["schemaAddTime"] = new Array();
             model_internal::dependentsOnMap["schemaId"] = new Array();
-            model_internal::dependentsOnMap["schemaDelTime"] = new Array();
             model_internal::dependentsOnMap["schemaData"] = new Array();
+            model_internal::dependentsOnMap["schemaDelTime"] = new Array();
             model_internal::dependentsOnMap["schemaNote"] = new Array();
             model_internal::dependentsOnMap["areaId"] = new Array();
 
@@ -72,8 +72,8 @@ internal class _SchemaEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
         model_internal::propertyTypeMap["isDefault"] = "String";
         model_internal::propertyTypeMap["schemaAddTime"] = "String";
         model_internal::propertyTypeMap["schemaId"] = "String";
-        model_internal::propertyTypeMap["schemaDelTime"] = "String";
         model_internal::propertyTypeMap["schemaData"] = "String";
+        model_internal::propertyTypeMap["schemaDelTime"] = "String";
         model_internal::propertyTypeMap["schemaNote"] = "String";
         model_internal::propertyTypeMap["areaId"] = "String";
 
@@ -347,13 +347,13 @@ internal class _SchemaEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSchemaDelTimeAvailable():Boolean
+    public function get isSchemaDataAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSchemaDataAvailable():Boolean
+    public function get isSchemaDelTimeAvailable():Boolean
     {
         return true;
     }
@@ -423,13 +423,13 @@ internal class _SchemaEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     }
 
     [Bindable(event="propertyChange")]   
-    public function get schemaDelTimeStyle():com.adobe.fiber.styles.Style
+    public function get schemaDataStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get schemaDataStyle():com.adobe.fiber.styles.Style
+    public function get schemaDelTimeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

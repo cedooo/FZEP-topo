@@ -58,8 +58,8 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
     /**
      * properties
      */
-    private var _internal_curPage : int;
     private var _internal_numPerPage : int;
+    private var _internal_curPage : int;
     private var _internal_totalRecords : int;
     private var _internal_totalPage : int;
 
@@ -86,15 +86,15 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
      */
 
     [Bindable(event="propertyChange")]
-    public function get curPage() : int
-    {
-        return _internal_curPage;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get numPerPage() : int
     {
         return _internal_numPerPage;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get curPage() : int
+    {
+        return _internal_curPage;
     }
 
     [Bindable(event="propertyChange")]
@@ -117,16 +117,6 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
      * data/source property setters
      */
 
-    public function set curPage(value:int) : void
-    {
-        var oldValue:int = _internal_curPage;
-        if (oldValue !== value)
-        {
-            _internal_curPage = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "curPage", oldValue, _internal_curPage));
-        }
-    }
-
     public function set numPerPage(value:int) : void
     {
         var oldValue:int = _internal_numPerPage;
@@ -134,6 +124,16 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
         {
             _internal_numPerPage = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "numPerPage", oldValue, _internal_numPerPage));
+        }
+    }
+
+    public function set curPage(value:int) : void
+    {
+        var oldValue:int = _internal_curPage;
+        if (oldValue !== value)
+        {
+            _internal_curPage = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "curPage", oldValue, _internal_curPage));
         }
     }
 

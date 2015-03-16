@@ -1,6 +1,6 @@
 /**
  * This is a generated class and is not intended for modification.  To customize behavior
- * of this value object you may modify the generated sub-class of this class - SchemaTreeNode.as.
+ * of this value object you may modify the generated sub-class of this class - FiberCoreNumber.as.
  */
 
 package valueObjects
@@ -10,7 +10,6 @@ import com.adobe.fiber.valueobjects.IValueObject;
 import flash.events.EventDispatcher;
 import mx.collections.ArrayCollection;
 import mx.events.PropertyChangeEvent;
-import valueObjects.SchemaTreeNode;
 
 import flash.net.registerClassAlias;
 import flash.net.getClassByAlias;
@@ -21,29 +20,28 @@ import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 use namespace model_internal;
 
 [ExcludeClass]
-public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
+public class _Super_FiberCoreNumber extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
         try
         {
-            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.pojo.SchemaTreeNode") == null)
+            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.pojo.FiberCoreNumber") == null)
             {
-                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.SchemaTreeNode", cz);
+                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.FiberCoreNumber", cz);
             }
         }
         catch (e:Error)
         {
-            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.SchemaTreeNode", cz);
+            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.FiberCoreNumber", cz);
         }
     }
 
     model_internal static function initRemoteClassAliasAllRelated() : void
     {
-        valueObjects.SchemaTreeNode.initRemoteClassAliasSingleChild();
     }
 
-    model_internal var _dminternal_model : _SchemaTreeNodeEntityMetadata;
+    model_internal var _dminternal_model : _FiberCoreNumberEntityMetadata;
     model_internal var _changedObjects:mx.collections.ArrayCollection = new ArrayCollection();
 
     public function getChangedObjects() : Array
@@ -60,13 +58,16 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
     /**
      * properties
      */
-    private var _internal_id : String;
-    private var _internal_parentNode : String;
-    private var _internal_treeLevel : String;
-    private var _internal_name : String;
-    private var _internal_children : ArrayCollection;
-    model_internal var _internal_children_leaf:valueObjects.SchemaTreeNode;
-    private var _internal_type : String;
+    private var _internal_transceiver : String;
+    private var _internal_cableId : String;
+    private var _internal_descp : String;
+    private var _internal_isUsed : String;
+    private var _internal_fiberCoreNumberName : String;
+    private var _internal_isJump : String;
+    private var _internal_delFlg : String;
+    private var _internal_bizType : String;
+    private var _internal_fiberCoreNumberId : String;
+    private var _internal_connections : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -78,9 +79,9 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
 
     model_internal var _changeWatcherArray:Array = new Array();
 
-    public function _Super_SchemaTreeNode()
+    public function _Super_FiberCoreNumber()
     {
-        _model = new _SchemaTreeNodeEntityMetadata(this);
+        _model = new _FiberCoreNumberEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
 
@@ -91,39 +92,63 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
      */
 
     [Bindable(event="propertyChange")]
-    public function get id() : String
+    public function get transceiver() : String
     {
-        return _internal_id;
+        return _internal_transceiver;
     }
 
     [Bindable(event="propertyChange")]
-    public function get parentNode() : String
+    public function get cableId() : String
     {
-        return _internal_parentNode;
+        return _internal_cableId;
     }
 
     [Bindable(event="propertyChange")]
-    public function get treeLevel() : String
+    public function get descp() : String
     {
-        return _internal_treeLevel;
+        return _internal_descp;
     }
 
     [Bindable(event="propertyChange")]
-    public function get name() : String
+    public function get isUsed() : String
     {
-        return _internal_name;
+        return _internal_isUsed;
     }
 
     [Bindable(event="propertyChange")]
-    public function get children() : ArrayCollection
+    public function get fiberCoreNumberName() : String
     {
-        return _internal_children;
+        return _internal_fiberCoreNumberName;
     }
 
     [Bindable(event="propertyChange")]
-    public function get type() : String
+    public function get isJump() : String
     {
-        return _internal_type;
+        return _internal_isJump;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get delFlg() : String
+    {
+        return _internal_delFlg;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get bizType() : String
+    {
+        return _internal_bizType;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get fiberCoreNumberId() : String
+    {
+        return _internal_fiberCoreNumberId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get connections() : String
+    {
+        return _internal_connections;
     }
 
     public function clearAssociations() : void
@@ -134,78 +159,103 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
      * data/source property setters
      */
 
-    public function set id(value:String) : void
+    public function set transceiver(value:String) : void
     {
-        var oldValue:String = _internal_id;
+        var oldValue:String = _internal_transceiver;
         if (oldValue !== value)
         {
-            _internal_id = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "id", oldValue, _internal_id));
+            _internal_transceiver = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "transceiver", oldValue, _internal_transceiver));
         }
     }
 
-    public function set parentNode(value:String) : void
+    public function set cableId(value:String) : void
     {
-        var oldValue:String = _internal_parentNode;
+        var oldValue:String = _internal_cableId;
         if (oldValue !== value)
         {
-            _internal_parentNode = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "parentNode", oldValue, _internal_parentNode));
+            _internal_cableId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableId", oldValue, _internal_cableId));
         }
     }
 
-    public function set treeLevel(value:String) : void
+    public function set descp(value:String) : void
     {
-        var oldValue:String = _internal_treeLevel;
+        var oldValue:String = _internal_descp;
         if (oldValue !== value)
         {
-            _internal_treeLevel = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "treeLevel", oldValue, _internal_treeLevel));
+            _internal_descp = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "descp", oldValue, _internal_descp));
         }
     }
 
-    public function set name(value:String) : void
+    public function set isUsed(value:String) : void
     {
-        var oldValue:String = _internal_name;
+        var oldValue:String = _internal_isUsed;
         if (oldValue !== value)
         {
-            _internal_name = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "name", oldValue, _internal_name));
+            _internal_isUsed = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "isUsed", oldValue, _internal_isUsed));
         }
     }
 
-    public function set children(value:*) : void
+    public function set fiberCoreNumberName(value:String) : void
     {
-        var oldValue:ArrayCollection = _internal_children;
+        var oldValue:String = _internal_fiberCoreNumberName;
         if (oldValue !== value)
         {
-            if (value is ArrayCollection)
-            {
-                _internal_children = value;
-            }
-            else if (value is Array)
-            {
-                _internal_children = new ArrayCollection(value);
-            }
-            else if (value == null)
-            {
-                _internal_children = null;
-            }
-            else
-            {
-                throw new Error("value of children must be a collection");
-            }
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "children", oldValue, _internal_children));
+            _internal_fiberCoreNumberName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "fiberCoreNumberName", oldValue, _internal_fiberCoreNumberName));
         }
     }
 
-    public function set type(value:String) : void
+    public function set isJump(value:String) : void
     {
-        var oldValue:String = _internal_type;
+        var oldValue:String = _internal_isJump;
         if (oldValue !== value)
         {
-            _internal_type = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "type", oldValue, _internal_type));
+            _internal_isJump = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "isJump", oldValue, _internal_isJump));
+        }
+    }
+
+    public function set delFlg(value:String) : void
+    {
+        var oldValue:String = _internal_delFlg;
+        if (oldValue !== value)
+        {
+            _internal_delFlg = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "delFlg", oldValue, _internal_delFlg));
+        }
+    }
+
+    public function set bizType(value:String) : void
+    {
+        var oldValue:String = _internal_bizType;
+        if (oldValue !== value)
+        {
+            _internal_bizType = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "bizType", oldValue, _internal_bizType));
+        }
+    }
+
+    public function set fiberCoreNumberId(value:String) : void
+    {
+        var oldValue:String = _internal_fiberCoreNumberId;
+        if (oldValue !== value)
+        {
+            _internal_fiberCoreNumberId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "fiberCoreNumberId", oldValue, _internal_fiberCoreNumberId));
+        }
+    }
+
+    public function set connections(value:String) : void
+    {
+        var oldValue:String = _internal_connections;
+        if (oldValue !== value)
+        {
+            _internal_connections = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "connections", oldValue, _internal_connections));
         }
     }
 
@@ -269,14 +319,14 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
 
     [Transient]
     [Bindable(event="propertyChange")]
-    public function get _model() : _SchemaTreeNodeEntityMetadata
+    public function get _model() : _FiberCoreNumberEntityMetadata
     {
         return model_internal::_dminternal_model;
     }
 
-    public function set _model(value : _SchemaTreeNodeEntityMetadata) : void
+    public function set _model(value : _FiberCoreNumberEntityMetadata) : void
     {
-        var oldValue : _SchemaTreeNodeEntityMetadata = model_internal::_dminternal_model;
+        var oldValue : _FiberCoreNumberEntityMetadata = model_internal::_dminternal_model;
         if (oldValue !== value)
         {
             model_internal::_dminternal_model = value;

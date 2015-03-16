@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
-			   xmlns:s="library://ns.adobe.com/flex/spark" 
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:cedoassets="cn.com.dhcc.fzep.topo.components.assets.*"
-			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="application1_creationCompleteHandler(event)"
-			   applicationComplete="application1_applicationCompleteHandler(event)">
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:services="services.*"
+			   minWidth="955" minHeight="600"
+			   applicationComplete="application1_applicationCompleteHandler(event)"
+			   creationComplete="application1_creationCompleteHandler(event)">
 	<fx:Declarations>
+		<s:CallResponder id="siteAssetsRelationsResult" result="siteAssetsRelationsResult_resultHandler(event)"
+						 fault="siteAssetsRelationsResult_faultHandler(event)" />
+		<services:AssetsRelation id="assetsRelation"
+								 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+								 showBusyCursor="true"/>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
 	<fx:Script>
@@ -12,8 +20,11 @@
 			import com.adobe.serialization.json.JSON;
 			
 			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 			import mx.graphics.SolidColorStroke;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
 			
 			import spark.components.Label;
 			import spark.primitives.Line;
@@ -23,10 +34,18 @@
 			import valueObjects.Cable;
 			import valueObjects.EquipmentVO;
 			import valueObjects.Site;
+			import valueObjects.SiteAssetsRelations;
+			import valueObjects.SiteVO;
 			
 			
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
+				var site:Site = new Site();
+				site.siteId = "1";
+				var site2:Site = new Site();
+				site2.siteId = "2";
+				siteAssetsRelations(site, site2);
+				/*
 				var site:Site = new Site();
 				site.siteName = "站点A1";
 				site.siteId = "2";
@@ -188,9 +207,10 @@
 				lSiteCon2.equipList = listEquip2;
 				lSiteCon2.cableList = cableList2;
 				lSiteCon2.connJsonData = connectionData2;
-				
+				*/
 				//connectCable(lSiteCon, lSiteCon2);
 				//Alert.show(lSite2PCon.x +',' + lSite2PCon.y);
+				
 			}
 			private var lineColors:Array =  new Array(0x5ca1d7,0x9dd6f4,0x725746, 0xff9f64);
 			private var OFFSET_Y:Number = 33;
@@ -267,7 +287,34 @@
 			
 			protected function application1_applicationCompleteHandler(event:FlexEvent):void
 			{
+				//connectCable(lSiteCon, lSiteCon2);
+			}
+			
+			
+			protected function siteAssetsRelations(arg0:Site, arg1:Site):void
+			{
+				siteAssetsRelationsResult.token = assetsRelation.siteAssetsRelations(arg0, arg1);
+			}
+			
+			protected function siteAssetsRelationsResult_resultHandler(event:ResultEvent):void
+			{
+				Alert.show(''+ event.message);
+				var relation:SiteAssetsRelations = event.result as SiteAssetsRelations;
+				
+				//lSiteCon.site = relation.siteOne as SiteVO;
+				lSiteCon.equipList = relation.siteOne.listCable.toArray();
+				lSiteCon.cableList = relation.siteOne.listEquip.toArray();
+				
+				//lSiteCon2.site = relation.siteTwo as Site;
+				lSiteCon2.equipList = relation.siteTwo.listCable.toArray();
+				lSiteCon2.cableList = relation.siteTwo.listEquip.toArray();
+				
 				connectCable(lSiteCon, lSiteCon2);
+			}
+			
+			protected function siteAssetsRelationsResult_faultHandler(event:FaultEvent):void
+			{
+				Alert.show("获取资产数据失败");
 			}
 			
 		]]>

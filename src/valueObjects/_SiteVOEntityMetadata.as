@@ -10,7 +10,9 @@ import com.adobe.fiber.valueobjects.AbstractEntityMetadata;
 import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 import com.adobe.fiber.valueobjects.IPropertyIterator;
 import mx.collections.ArrayCollection;
-import valueObjects.SchemaTreeNode;
+import valueObjects.Cable;
+import valueObjects.EquipmentVO;
+import valueObjects.FiberCoreNumber;
 import com.adobe.fiber.core.model_internal;
 import com.adobe.fiber.valueobjects.IModelType;
 import mx.events.PropertyChangeEvent;
@@ -18,57 +20,71 @@ import mx.events.PropertyChangeEvent;
 use namespace model_internal;
 
 [ExcludeClass]
-internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
+internal class _SiteVOEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("id", "parentNode", "treeLevel", "name", "children", "type");
+    model_internal static var allProperties:Array = new Array("connectionJSON", "listEquip", "descp", "siteId", "listCable", "siteAdress", "delFlg", "listFCN", "connactNumber", "connactName", "siteName", "areaId");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("id", "parentNode", "treeLevel", "name", "children", "type");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("connectionJSON", "listEquip", "descp", "siteId", "listCable", "siteAdress", "delFlg", "listFCN", "connactNumber", "connactName", "siteName", "areaId");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("id", "parentNode", "treeLevel", "name", "children", "type");
+    model_internal static var dataProperties:Array = new Array("connectionJSON", "listEquip", "descp", "siteId", "listCable", "siteAdress", "delFlg", "listFCN", "connactNumber", "connactName", "siteName", "areaId");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("id", "parentNode", "treeLevel", "name", "children", "type");
+    model_internal static var nonDerivedProperties:Array = new Array("connectionJSON", "listEquip", "descp", "siteId", "listCable", "siteAdress", "delFlg", "listFCN", "connactNumber", "connactName", "siteName", "areaId");
     model_internal static var derivedProperties:Array = new Array();
-    model_internal static var collectionProperties:Array = new Array("children");
+    model_internal static var collectionProperties:Array = new Array("listEquip", "listCable", "listFCN");
     model_internal static var collectionBaseMap:Object;
-    model_internal static var entityName:String = "SchemaTreeNode";
+    model_internal static var entityName:String = "SiteVO";
     model_internal static var dependentsOnMap:Object;
     model_internal static var dependedOnServices:Array = new Array();
     model_internal static var propertyTypeMap:Object;
 
 
-    model_internal var _instance:_Super_SchemaTreeNode;
+    model_internal var _instance:_Super_SiteVO;
     model_internal static var _nullStyle:com.adobe.fiber.styles.Style = new com.adobe.fiber.styles.Style();
 
-    public function _SchemaTreeNodeEntityMetadata(value : _Super_SchemaTreeNode)
+    public function _SiteVOEntityMetadata(value : _Super_SiteVO)
     {
         // initialize property maps
         if (model_internal::dependentsOnMap == null)
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["id"] = new Array();
-            model_internal::dependentsOnMap["parentNode"] = new Array();
-            model_internal::dependentsOnMap["treeLevel"] = new Array();
-            model_internal::dependentsOnMap["name"] = new Array();
-            model_internal::dependentsOnMap["children"] = new Array();
-            model_internal::dependentsOnMap["type"] = new Array();
+            model_internal::dependentsOnMap["connectionJSON"] = new Array();
+            model_internal::dependentsOnMap["listEquip"] = new Array();
+            model_internal::dependentsOnMap["descp"] = new Array();
+            model_internal::dependentsOnMap["siteId"] = new Array();
+            model_internal::dependentsOnMap["listCable"] = new Array();
+            model_internal::dependentsOnMap["siteAdress"] = new Array();
+            model_internal::dependentsOnMap["delFlg"] = new Array();
+            model_internal::dependentsOnMap["listFCN"] = new Array();
+            model_internal::dependentsOnMap["connactNumber"] = new Array();
+            model_internal::dependentsOnMap["connactName"] = new Array();
+            model_internal::dependentsOnMap["siteName"] = new Array();
+            model_internal::dependentsOnMap["areaId"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
-            model_internal::collectionBaseMap["children"] = "valueObjects.SchemaTreeNode";
+            model_internal::collectionBaseMap["listEquip"] = "valueObjects.EquipmentVO";
+            model_internal::collectionBaseMap["listCable"] = "valueObjects.Cable";
+            model_internal::collectionBaseMap["listFCN"] = "valueObjects.FiberCoreNumber";
         }
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["id"] = "String";
-        model_internal::propertyTypeMap["parentNode"] = "String";
-        model_internal::propertyTypeMap["treeLevel"] = "String";
-        model_internal::propertyTypeMap["name"] = "String";
-        model_internal::propertyTypeMap["children"] = "ArrayCollection";
-        model_internal::propertyTypeMap["type"] = "String";
+        model_internal::propertyTypeMap["connectionJSON"] = "String";
+        model_internal::propertyTypeMap["listEquip"] = "ArrayCollection";
+        model_internal::propertyTypeMap["descp"] = "String";
+        model_internal::propertyTypeMap["siteId"] = "String";
+        model_internal::propertyTypeMap["listCable"] = "ArrayCollection";
+        model_internal::propertyTypeMap["siteAdress"] = "String";
+        model_internal::propertyTypeMap["delFlg"] = "String";
+        model_internal::propertyTypeMap["listFCN"] = "ArrayCollection";
+        model_internal::propertyTypeMap["connactNumber"] = "String";
+        model_internal::propertyTypeMap["connactName"] = "String";
+        model_internal::propertyTypeMap["siteName"] = "String";
+        model_internal::propertyTypeMap["areaId"] = "String";
 
         model_internal::_instance = value;
     }
@@ -121,7 +137,7 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     override public function getDependants(propertyName:String):Array
     {
        if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a data property of entity SchemaTreeNode");
+            throw new Error(propertyName + " is not a data property of entity SiteVO");
             
        return model_internal::dependentsOnMap[propertyName] as Array;  
     }
@@ -139,7 +155,7 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     override public function getCollectionBase(propertyName:String):String
     {
         if (model_internal::collectionProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a collection property of entity SchemaTreeNode");
+            throw new Error(propertyName + " is not a collection property of entity SiteVO");
 
         return model_internal::collectionBaseMap[propertyName];
     }
@@ -147,7 +163,7 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     override public function getPropertyType(propertyName:String):String
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a property of SchemaTreeNode");
+            throw new Error(propertyName + " is not a property of SiteVO");
 
         return model_internal::propertyTypeMap[propertyName];
     }
@@ -161,7 +177,7 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity SchemaTreeNode");
+            throw new Error(propertyName + " does not exist for entity SiteVO");
         }
 
         return model_internal::_instance[propertyName];
@@ -171,7 +187,7 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     {
         if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " is not a modifiable property of entity SchemaTreeNode");
+            throw new Error(propertyName + " is not a modifiable property of entity SiteVO");
         }
 
         model_internal::_instance[propertyName] = value;
@@ -203,7 +219,7 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity SchemaTreeNode");
+            throw new Error(propertyName + " does not exist for entity SiteVO");
         }
 
         if (model_internal::allAlwaysAvailableProperties.indexOf(propertyName) != -1)
@@ -298,37 +314,73 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]
-    public function get isIdAvailable():Boolean
+    public function get isConnectionJSONAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isParentNodeAvailable():Boolean
+    public function get isListEquipAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isTreeLevelAvailable():Boolean
+    public function get isDescpAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isNameAvailable():Boolean
+    public function get isSiteIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isChildrenAvailable():Boolean
+    public function get isListCableAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isTypeAvailable():Boolean
+    public function get isSiteAdressAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isDelFlgAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isListFCNAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isConnactNumberAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isConnactNameAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isSiteNameAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isAreaIdAvailable():Boolean
     {
         return true;
     }
@@ -344,37 +396,73 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]   
-    public function get idStyle():com.adobe.fiber.styles.Style
+    public function get connectionJSONStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get parentNodeStyle():com.adobe.fiber.styles.Style
+    public function get listEquipStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get treeLevelStyle():com.adobe.fiber.styles.Style
+    public function get descpStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get nameStyle():com.adobe.fiber.styles.Style
+    public function get siteIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get childrenStyle():com.adobe.fiber.styles.Style
+    public function get listCableStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get typeStyle():com.adobe.fiber.styles.Style
+    public function get siteAdressStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get delFlgStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get listFCNStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get connactNumberStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get connactNameStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get siteNameStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get areaIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

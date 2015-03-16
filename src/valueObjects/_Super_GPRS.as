@@ -75,8 +75,8 @@ public class _Super_GPRS extends flash.events.EventDispatcher implements com.ado
     private var _internal_siteId : String;
     private var _internal_delFlg : String;
     private var _internal_operators : String;
-    private var _internal_debugging : String;
     private var _internal_manufacturersId : String;
+    private var _internal_debugging : String;
     private var _internal_cardNumber : String;
 
     private static var emptyArray:Array = new Array();
@@ -204,15 +204,15 @@ public class _Super_GPRS extends flash.events.EventDispatcher implements com.ado
     }
 
     [Bindable(event="propertyChange")]
-    public function get debugging() : String
-    {
-        return _internal_debugging;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get manufacturersId() : String
     {
         return _internal_manufacturersId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get debugging() : String
+    {
+        return _internal_debugging;
     }
 
     [Bindable(event="propertyChange")]
@@ -399,16 +399,6 @@ public class _Super_GPRS extends flash.events.EventDispatcher implements com.ado
         }
     }
 
-    public function set debugging(value:String) : void
-    {
-        var oldValue:String = _internal_debugging;
-        if (oldValue !== value)
-        {
-            _internal_debugging = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "debugging", oldValue, _internal_debugging));
-        }
-    }
-
     public function set manufacturersId(value:String) : void
     {
         var oldValue:String = _internal_manufacturersId;
@@ -416,6 +406,16 @@ public class _Super_GPRS extends flash.events.EventDispatcher implements com.ado
         {
             _internal_manufacturersId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "manufacturersId", oldValue, _internal_manufacturersId));
+        }
+    }
+
+    public function set debugging(value:String) : void
+    {
+        var oldValue:String = _internal_debugging;
+        if (oldValue !== value)
+        {
+            _internal_debugging = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "debugging", oldValue, _internal_debugging));
         }
     }
 

@@ -9,8 +9,7 @@ import com.adobe.fiber.styles.Style;
 import com.adobe.fiber.valueobjects.AbstractEntityMetadata;
 import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 import com.adobe.fiber.valueobjects.IPropertyIterator;
-import mx.collections.ArrayCollection;
-import valueObjects.SchemaTreeNode;
+import valueObjects.SiteVO;
 import com.adobe.fiber.core.model_internal;
 import com.adobe.fiber.valueobjects.IModelType;
 import mx.events.PropertyChangeEvent;
@@ -18,57 +17,48 @@ import mx.events.PropertyChangeEvent;
 use namespace model_internal;
 
 [ExcludeClass]
-internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
+internal class _SiteAssetsRelationsEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("id", "parentNode", "treeLevel", "name", "children", "type");
+    model_internal static var allProperties:Array = new Array("siteOne", "siteTwo");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("id", "parentNode", "treeLevel", "name", "children", "type");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("siteOne", "siteTwo");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("id", "parentNode", "treeLevel", "name", "children", "type");
+    model_internal static var dataProperties:Array = new Array("siteOne", "siteTwo");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("id", "parentNode", "treeLevel", "name", "children", "type");
+    model_internal static var nonDerivedProperties:Array = new Array("siteOne", "siteTwo");
     model_internal static var derivedProperties:Array = new Array();
-    model_internal static var collectionProperties:Array = new Array("children");
+    model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
-    model_internal static var entityName:String = "SchemaTreeNode";
+    model_internal static var entityName:String = "SiteAssetsRelations";
     model_internal static var dependentsOnMap:Object;
     model_internal static var dependedOnServices:Array = new Array();
     model_internal static var propertyTypeMap:Object;
 
 
-    model_internal var _instance:_Super_SchemaTreeNode;
+    model_internal var _instance:_Super_SiteAssetsRelations;
     model_internal static var _nullStyle:com.adobe.fiber.styles.Style = new com.adobe.fiber.styles.Style();
 
-    public function _SchemaTreeNodeEntityMetadata(value : _Super_SchemaTreeNode)
+    public function _SiteAssetsRelationsEntityMetadata(value : _Super_SiteAssetsRelations)
     {
         // initialize property maps
         if (model_internal::dependentsOnMap == null)
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["id"] = new Array();
-            model_internal::dependentsOnMap["parentNode"] = new Array();
-            model_internal::dependentsOnMap["treeLevel"] = new Array();
-            model_internal::dependentsOnMap["name"] = new Array();
-            model_internal::dependentsOnMap["children"] = new Array();
-            model_internal::dependentsOnMap["type"] = new Array();
+            model_internal::dependentsOnMap["siteOne"] = new Array();
+            model_internal::dependentsOnMap["siteTwo"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
-            model_internal::collectionBaseMap["children"] = "valueObjects.SchemaTreeNode";
         }
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["id"] = "String";
-        model_internal::propertyTypeMap["parentNode"] = "String";
-        model_internal::propertyTypeMap["treeLevel"] = "String";
-        model_internal::propertyTypeMap["name"] = "String";
-        model_internal::propertyTypeMap["children"] = "ArrayCollection";
-        model_internal::propertyTypeMap["type"] = "String";
+        model_internal::propertyTypeMap["siteOne"] = "valueObjects.SiteVO";
+        model_internal::propertyTypeMap["siteTwo"] = "valueObjects.SiteVO";
 
         model_internal::_instance = value;
     }
@@ -121,7 +111,7 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     override public function getDependants(propertyName:String):Array
     {
        if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a data property of entity SchemaTreeNode");
+            throw new Error(propertyName + " is not a data property of entity SiteAssetsRelations");
             
        return model_internal::dependentsOnMap[propertyName] as Array;  
     }
@@ -139,7 +129,7 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     override public function getCollectionBase(propertyName:String):String
     {
         if (model_internal::collectionProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a collection property of entity SchemaTreeNode");
+            throw new Error(propertyName + " is not a collection property of entity SiteAssetsRelations");
 
         return model_internal::collectionBaseMap[propertyName];
     }
@@ -147,7 +137,7 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     override public function getPropertyType(propertyName:String):String
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a property of SchemaTreeNode");
+            throw new Error(propertyName + " is not a property of SiteAssetsRelations");
 
         return model_internal::propertyTypeMap[propertyName];
     }
@@ -161,7 +151,7 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity SchemaTreeNode");
+            throw new Error(propertyName + " does not exist for entity SiteAssetsRelations");
         }
 
         return model_internal::_instance[propertyName];
@@ -171,7 +161,7 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     {
         if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " is not a modifiable property of entity SchemaTreeNode");
+            throw new Error(propertyName + " is not a modifiable property of entity SiteAssetsRelations");
         }
 
         model_internal::_instance[propertyName] = value;
@@ -203,7 +193,7 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity SchemaTreeNode");
+            throw new Error(propertyName + " does not exist for entity SiteAssetsRelations");
         }
 
         if (model_internal::allAlwaysAvailableProperties.indexOf(propertyName) != -1)
@@ -298,37 +288,13 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]
-    public function get isIdAvailable():Boolean
+    public function get isSiteOneAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isParentNodeAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isTreeLevelAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isNameAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isChildrenAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isTypeAvailable():Boolean
+    public function get isSiteTwoAvailable():Boolean
     {
         return true;
     }
@@ -344,37 +310,13 @@ internal class _SchemaTreeNodeEntityMetadata extends com.adobe.fiber.valueobject
     }
 
     [Bindable(event="propertyChange")]   
-    public function get idStyle():com.adobe.fiber.styles.Style
+    public function get siteOneStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get parentNodeStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get treeLevelStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get nameStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get childrenStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get typeStyle():com.adobe.fiber.styles.Style
+    public function get siteTwoStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

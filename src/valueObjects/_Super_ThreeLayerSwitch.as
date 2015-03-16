@@ -69,8 +69,8 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
     private var _internal_installationSite : String;
     private var _internal_threeLayerSwitchName : String;
     private var _internal_runTime : String;
-    private var _internal_flow : String;
     private var _internal_projectId : String;
+    private var _internal_flow : String;
     private var _internal_vlanId : String;
     private var _internal_ip : String;
     private var _internal_vlanDescp : String;
@@ -169,15 +169,15 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
     }
 
     [Bindable(event="propertyChange")]
-    public function get flow() : String
-    {
-        return _internal_flow;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get projectId() : String
     {
         return _internal_projectId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get flow() : String
+    {
+        return _internal_flow;
     }
 
     [Bindable(event="propertyChange")]
@@ -346,16 +346,6 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         }
     }
 
-    public function set flow(value:String) : void
-    {
-        var oldValue:String = _internal_flow;
-        if (oldValue !== value)
-        {
-            _internal_flow = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "flow", oldValue, _internal_flow));
-        }
-    }
-
     public function set projectId(value:String) : void
     {
         var oldValue:String = _internal_projectId;
@@ -363,6 +353,16 @@ public class _Super_ThreeLayerSwitch extends flash.events.EventDispatcher implem
         {
             _internal_projectId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "projectId", oldValue, _internal_projectId));
+        }
+    }
+
+    public function set flow(value:String) : void
+    {
+        var oldValue:String = _internal_flow;
+        if (oldValue !== value)
+        {
+            _internal_flow = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "flow", oldValue, _internal_flow));
         }
     }
 

@@ -20,14 +20,14 @@ internal class _SchemaVOEntityMetadata extends com.adobe.fiber.valueobjects.Abst
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("schemaArgs", "schemaType", "areaName", "schemaName", "siteId", "isDefault", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote", "siteName", "areaId");
+    model_internal static var allProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote", "areaId", "siteId", "areaName", "isDefault", "siteName");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("schemaArgs", "schemaType", "areaName", "schemaName", "siteId", "isDefault", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote", "siteName", "areaId");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote", "areaId", "siteId", "areaName", "isDefault", "siteName");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("schemaArgs", "schemaType", "areaName", "schemaName", "siteId", "isDefault", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote", "siteName", "areaId");
+    model_internal static var dataProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote", "areaId", "siteId", "areaName", "isDefault", "siteName");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("schemaArgs", "schemaType", "areaName", "schemaName", "siteId", "isDefault", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote", "siteName", "areaId");
+    model_internal static var nonDerivedProperties:Array = new Array("schemaArgs", "schemaType", "schemaName", "schemaAddTime", "schemaId", "schemaDelTime", "schemaData", "schemaNote", "areaId", "siteId", "areaName", "isDefault", "siteName");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -49,17 +49,17 @@ internal class _SchemaVOEntityMetadata extends com.adobe.fiber.valueobjects.Abst
             model_internal::dependentsOnMap = new Object();
             model_internal::dependentsOnMap["schemaArgs"] = new Array();
             model_internal::dependentsOnMap["schemaType"] = new Array();
-            model_internal::dependentsOnMap["areaName"] = new Array();
             model_internal::dependentsOnMap["schemaName"] = new Array();
-            model_internal::dependentsOnMap["siteId"] = new Array();
-            model_internal::dependentsOnMap["isDefault"] = new Array();
             model_internal::dependentsOnMap["schemaAddTime"] = new Array();
             model_internal::dependentsOnMap["schemaId"] = new Array();
             model_internal::dependentsOnMap["schemaDelTime"] = new Array();
             model_internal::dependentsOnMap["schemaData"] = new Array();
             model_internal::dependentsOnMap["schemaNote"] = new Array();
-            model_internal::dependentsOnMap["siteName"] = new Array();
             model_internal::dependentsOnMap["areaId"] = new Array();
+            model_internal::dependentsOnMap["siteId"] = new Array();
+            model_internal::dependentsOnMap["areaName"] = new Array();
+            model_internal::dependentsOnMap["isDefault"] = new Array();
+            model_internal::dependentsOnMap["siteName"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
@@ -69,17 +69,17 @@ internal class _SchemaVOEntityMetadata extends com.adobe.fiber.valueobjects.Abst
         model_internal::propertyTypeMap = new Object();
         model_internal::propertyTypeMap["schemaArgs"] = "String";
         model_internal::propertyTypeMap["schemaType"] = "String";
-        model_internal::propertyTypeMap["areaName"] = "String";
         model_internal::propertyTypeMap["schemaName"] = "String";
-        model_internal::propertyTypeMap["siteId"] = "String";
-        model_internal::propertyTypeMap["isDefault"] = "String";
         model_internal::propertyTypeMap["schemaAddTime"] = "String";
         model_internal::propertyTypeMap["schemaId"] = "String";
         model_internal::propertyTypeMap["schemaDelTime"] = "String";
         model_internal::propertyTypeMap["schemaData"] = "String";
         model_internal::propertyTypeMap["schemaNote"] = "String";
-        model_internal::propertyTypeMap["siteName"] = "String";
         model_internal::propertyTypeMap["areaId"] = "String";
+        model_internal::propertyTypeMap["siteId"] = "String";
+        model_internal::propertyTypeMap["areaName"] = "String";
+        model_internal::propertyTypeMap["isDefault"] = "String";
+        model_internal::propertyTypeMap["siteName"] = "String";
 
         model_internal::_instance = value;
     }
@@ -321,25 +321,7 @@ internal class _SchemaVOEntityMetadata extends com.adobe.fiber.valueobjects.Abst
     }
 
     [Bindable(event="propertyChange")]
-    public function get isAreaNameAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get isSchemaNameAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isSiteIdAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isIsDefaultAvailable():Boolean
     {
         return true;
     }
@@ -375,13 +357,31 @@ internal class _SchemaVOEntityMetadata extends com.adobe.fiber.valueobjects.Abst
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSiteNameAvailable():Boolean
+    public function get isAreaIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isAreaIdAvailable():Boolean
+    public function get isSiteIdAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isAreaNameAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isIsDefaultAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isSiteNameAvailable():Boolean
     {
         return true;
     }
@@ -409,25 +409,7 @@ internal class _SchemaVOEntityMetadata extends com.adobe.fiber.valueobjects.Abst
     }
 
     [Bindable(event="propertyChange")]   
-    public function get areaNameStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
     public function get schemaNameStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get siteIdStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get isDefaultStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
@@ -463,13 +445,31 @@ internal class _SchemaVOEntityMetadata extends com.adobe.fiber.valueobjects.Abst
     }
 
     [Bindable(event="propertyChange")]   
-    public function get siteNameStyle():com.adobe.fiber.styles.Style
+    public function get areaIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get areaIdStyle():com.adobe.fiber.styles.Style
+    public function get siteIdStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get areaNameStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get isDefaultStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get siteNameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
