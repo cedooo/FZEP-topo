@@ -24,14 +24,14 @@ internal class _SiteVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("connectionJSON", "listEquip", "descp", "siteId", "listCable", "siteAdress", "delFlg", "listFCN", "connactNumber", "connactName", "siteName", "areaId");
+    model_internal static var allProperties:Array = new Array("listEquip", "descp", "siteId", "siteAdress", "listCable", "delFlg", "listFCN", "connactNumber", "areaId", "connactName", "siteName");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("connectionJSON", "listEquip", "descp", "siteId", "listCable", "siteAdress", "delFlg", "listFCN", "connactNumber", "connactName", "siteName", "areaId");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("listEquip", "descp", "siteId", "siteAdress", "listCable", "delFlg", "listFCN", "connactNumber", "areaId", "connactName", "siteName");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("connectionJSON", "listEquip", "descp", "siteId", "listCable", "siteAdress", "delFlg", "listFCN", "connactNumber", "connactName", "siteName", "areaId");
+    model_internal static var dataProperties:Array = new Array("listEquip", "descp", "siteId", "siteAdress", "listCable", "delFlg", "listFCN", "connactNumber", "areaId", "connactName", "siteName");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("connectionJSON", "listEquip", "descp", "siteId", "listCable", "siteAdress", "delFlg", "listFCN", "connactNumber", "connactName", "siteName", "areaId");
+    model_internal static var nonDerivedProperties:Array = new Array("listEquip", "descp", "siteId", "siteAdress", "listCable", "delFlg", "listFCN", "connactNumber", "areaId", "connactName", "siteName");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array("listEquip", "listCable", "listFCN");
     model_internal static var collectionBaseMap:Object;
@@ -51,18 +51,17 @@ internal class _SiteVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["connectionJSON"] = new Array();
             model_internal::dependentsOnMap["listEquip"] = new Array();
             model_internal::dependentsOnMap["descp"] = new Array();
             model_internal::dependentsOnMap["siteId"] = new Array();
-            model_internal::dependentsOnMap["listCable"] = new Array();
             model_internal::dependentsOnMap["siteAdress"] = new Array();
+            model_internal::dependentsOnMap["listCable"] = new Array();
             model_internal::dependentsOnMap["delFlg"] = new Array();
             model_internal::dependentsOnMap["listFCN"] = new Array();
             model_internal::dependentsOnMap["connactNumber"] = new Array();
+            model_internal::dependentsOnMap["areaId"] = new Array();
             model_internal::dependentsOnMap["connactName"] = new Array();
             model_internal::dependentsOnMap["siteName"] = new Array();
-            model_internal::dependentsOnMap["areaId"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
@@ -73,18 +72,17 @@ internal class _SiteVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["connectionJSON"] = "String";
         model_internal::propertyTypeMap["listEquip"] = "ArrayCollection";
         model_internal::propertyTypeMap["descp"] = "String";
         model_internal::propertyTypeMap["siteId"] = "String";
-        model_internal::propertyTypeMap["listCable"] = "ArrayCollection";
         model_internal::propertyTypeMap["siteAdress"] = "String";
+        model_internal::propertyTypeMap["listCable"] = "ArrayCollection";
         model_internal::propertyTypeMap["delFlg"] = "String";
         model_internal::propertyTypeMap["listFCN"] = "ArrayCollection";
         model_internal::propertyTypeMap["connactNumber"] = "String";
+        model_internal::propertyTypeMap["areaId"] = "String";
         model_internal::propertyTypeMap["connactName"] = "String";
         model_internal::propertyTypeMap["siteName"] = "String";
-        model_internal::propertyTypeMap["areaId"] = "String";
 
         model_internal::_instance = value;
     }
@@ -314,12 +312,6 @@ internal class _SiteVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     }
 
     [Bindable(event="propertyChange")]
-    public function get isConnectionJSONAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get isListEquipAvailable():Boolean
     {
         return true;
@@ -338,13 +330,13 @@ internal class _SiteVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     }
 
     [Bindable(event="propertyChange")]
-    public function get isListCableAvailable():Boolean
+    public function get isSiteAdressAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSiteAdressAvailable():Boolean
+    public function get isListCableAvailable():Boolean
     {
         return true;
     }
@@ -368,6 +360,12 @@ internal class _SiteVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     }
 
     [Bindable(event="propertyChange")]
+    public function get isAreaIdAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get isConnactNameAvailable():Boolean
     {
         return true;
@@ -375,12 +373,6 @@ internal class _SiteVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
 
     [Bindable(event="propertyChange")]
     public function get isSiteNameAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isAreaIdAvailable():Boolean
     {
         return true;
     }
@@ -393,12 +385,6 @@ internal class _SiteVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     model_internal function fireChangeEvent(propertyName:String, oldValue:Object, newValue:Object):void
     {
         this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, propertyName, oldValue, newValue));
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get connectionJSONStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
@@ -420,13 +406,13 @@ internal class _SiteVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     }
 
     [Bindable(event="propertyChange")]   
-    public function get listCableStyle():com.adobe.fiber.styles.Style
+    public function get siteAdressStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get siteAdressStyle():com.adobe.fiber.styles.Style
+    public function get listCableStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
@@ -450,6 +436,12 @@ internal class _SiteVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
     }
 
     [Bindable(event="propertyChange")]   
+    public function get areaIdStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
     public function get connactNameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
@@ -457,12 +449,6 @@ internal class _SiteVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstra
 
     [Bindable(event="propertyChange")]   
     public function get siteNameStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get areaIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

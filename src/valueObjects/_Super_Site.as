@@ -63,9 +63,9 @@ public class _Super_Site extends flash.events.EventDispatcher implements com.ado
     private var _internal_siteAdress : String;
     private var _internal_delFlg : String;
     private var _internal_connactNumber : String;
-    private var _internal_siteName : String;
-    private var _internal_connactName : String;
     private var _internal_areaId : String;
+    private var _internal_connactName : String;
+    private var _internal_siteName : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -120,9 +120,9 @@ public class _Super_Site extends flash.events.EventDispatcher implements com.ado
     }
 
     [Bindable(event="propertyChange")]
-    public function get siteName() : String
+    public function get areaId() : String
     {
-        return _internal_siteName;
+        return _internal_areaId;
     }
 
     [Bindable(event="propertyChange")]
@@ -132,9 +132,9 @@ public class _Super_Site extends flash.events.EventDispatcher implements com.ado
     }
 
     [Bindable(event="propertyChange")]
-    public function get areaId() : String
+    public function get siteName() : String
     {
-        return _internal_areaId;
+        return _internal_siteName;
     }
 
     public function clearAssociations() : void
@@ -195,13 +195,13 @@ public class _Super_Site extends flash.events.EventDispatcher implements com.ado
         }
     }
 
-    public function set siteName(value:String) : void
+    public function set areaId(value:String) : void
     {
-        var oldValue:String = _internal_siteName;
+        var oldValue:String = _internal_areaId;
         if (oldValue !== value)
         {
-            _internal_siteName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteName", oldValue, _internal_siteName));
+            _internal_areaId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "areaId", oldValue, _internal_areaId));
         }
     }
 
@@ -215,13 +215,13 @@ public class _Super_Site extends flash.events.EventDispatcher implements com.ado
         }
     }
 
-    public function set areaId(value:String) : void
+    public function set siteName(value:String) : void
     {
-        var oldValue:String = _internal_areaId;
+        var oldValue:String = _internal_siteName;
         if (oldValue !== value)
         {
-            _internal_areaId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "areaId", oldValue, _internal_areaId));
+            _internal_siteName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteName", oldValue, _internal_siteName));
         }
     }
 

@@ -20,14 +20,14 @@ internal class _EquipmentVOEntityMetadata extends com.adobe.fiber.valueobjects.A
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("id", "typeName", "name", "img", "type", "jsonData");
+    model_internal static var allProperties:Array = new Array("typeName", "id", "name", "img", "type", "jsonData");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("id", "typeName", "name", "img", "type", "jsonData");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("typeName", "id", "name", "img", "type", "jsonData");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("id", "typeName", "name", "img", "type", "jsonData");
+    model_internal static var dataProperties:Array = new Array("typeName", "id", "name", "img", "type", "jsonData");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("id", "typeName", "name", "img", "type", "jsonData");
+    model_internal static var nonDerivedProperties:Array = new Array("typeName", "id", "name", "img", "type", "jsonData");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -47,8 +47,8 @@ internal class _EquipmentVOEntityMetadata extends com.adobe.fiber.valueobjects.A
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["id"] = new Array();
             model_internal::dependentsOnMap["typeName"] = new Array();
+            model_internal::dependentsOnMap["id"] = new Array();
             model_internal::dependentsOnMap["name"] = new Array();
             model_internal::dependentsOnMap["img"] = new Array();
             model_internal::dependentsOnMap["type"] = new Array();
@@ -60,8 +60,8 @@ internal class _EquipmentVOEntityMetadata extends com.adobe.fiber.valueobjects.A
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["id"] = "String";
         model_internal::propertyTypeMap["typeName"] = "String";
+        model_internal::propertyTypeMap["id"] = "String";
         model_internal::propertyTypeMap["name"] = "String";
         model_internal::propertyTypeMap["img"] = "String";
         model_internal::propertyTypeMap["type"] = "String";
@@ -295,13 +295,13 @@ internal class _EquipmentVOEntityMetadata extends com.adobe.fiber.valueobjects.A
     }
 
     [Bindable(event="propertyChange")]
-    public function get isIdAvailable():Boolean
+    public function get isTypeNameAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isTypeNameAvailable():Boolean
+    public function get isIdAvailable():Boolean
     {
         return true;
     }
@@ -341,13 +341,13 @@ internal class _EquipmentVOEntityMetadata extends com.adobe.fiber.valueobjects.A
     }
 
     [Bindable(event="propertyChange")]   
-    public function get idStyle():com.adobe.fiber.styles.Style
+    public function get typeNameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get typeNameStyle():com.adobe.fiber.styles.Style
+    public function get idStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

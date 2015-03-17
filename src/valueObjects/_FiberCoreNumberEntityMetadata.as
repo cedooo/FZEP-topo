@@ -20,14 +20,14 @@ internal class _FiberCoreNumberEntityMetadata extends com.adobe.fiber.valueobjec
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("transceiver", "cableId", "descp", "isUsed", "fiberCoreNumberName", "isJump", "delFlg", "bizType", "fiberCoreNumberId", "connections");
+    model_internal static var allProperties:Array = new Array("transceiver", "cableId", "descp", "isUsed", "fiberCoreNumberName", "isJump", "delFlg", "fiberCoreNumberId", "bizType", "connections");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("transceiver", "cableId", "descp", "isUsed", "fiberCoreNumberName", "isJump", "delFlg", "bizType", "fiberCoreNumberId", "connections");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("transceiver", "cableId", "descp", "isUsed", "fiberCoreNumberName", "isJump", "delFlg", "fiberCoreNumberId", "bizType", "connections");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("transceiver", "cableId", "descp", "isUsed", "fiberCoreNumberName", "isJump", "delFlg", "bizType", "fiberCoreNumberId", "connections");
+    model_internal static var dataProperties:Array = new Array("transceiver", "cableId", "descp", "isUsed", "fiberCoreNumberName", "isJump", "delFlg", "fiberCoreNumberId", "bizType", "connections");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("transceiver", "cableId", "descp", "isUsed", "fiberCoreNumberName", "isJump", "delFlg", "bizType", "fiberCoreNumberId", "connections");
+    model_internal static var nonDerivedProperties:Array = new Array("transceiver", "cableId", "descp", "isUsed", "fiberCoreNumberName", "isJump", "delFlg", "fiberCoreNumberId", "bizType", "connections");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -54,8 +54,8 @@ internal class _FiberCoreNumberEntityMetadata extends com.adobe.fiber.valueobjec
             model_internal::dependentsOnMap["fiberCoreNumberName"] = new Array();
             model_internal::dependentsOnMap["isJump"] = new Array();
             model_internal::dependentsOnMap["delFlg"] = new Array();
-            model_internal::dependentsOnMap["bizType"] = new Array();
             model_internal::dependentsOnMap["fiberCoreNumberId"] = new Array();
+            model_internal::dependentsOnMap["bizType"] = new Array();
             model_internal::dependentsOnMap["connections"] = new Array();
 
             // collection base map
@@ -71,8 +71,8 @@ internal class _FiberCoreNumberEntityMetadata extends com.adobe.fiber.valueobjec
         model_internal::propertyTypeMap["fiberCoreNumberName"] = "String";
         model_internal::propertyTypeMap["isJump"] = "String";
         model_internal::propertyTypeMap["delFlg"] = "String";
-        model_internal::propertyTypeMap["bizType"] = "String";
         model_internal::propertyTypeMap["fiberCoreNumberId"] = "String";
+        model_internal::propertyTypeMap["bizType"] = "String";
         model_internal::propertyTypeMap["connections"] = "String";
 
         model_internal::_instance = value;
@@ -345,13 +345,13 @@ internal class _FiberCoreNumberEntityMetadata extends com.adobe.fiber.valueobjec
     }
 
     [Bindable(event="propertyChange")]
-    public function get isBizTypeAvailable():Boolean
+    public function get isFiberCoreNumberIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isFiberCoreNumberIdAvailable():Boolean
+    public function get isBizTypeAvailable():Boolean
     {
         return true;
     }
@@ -415,13 +415,13 @@ internal class _FiberCoreNumberEntityMetadata extends com.adobe.fiber.valueobjec
     }
 
     [Bindable(event="propertyChange")]   
-    public function get bizTypeStyle():com.adobe.fiber.styles.Style
+    public function get fiberCoreNumberIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get fiberCoreNumberIdStyle():com.adobe.fiber.styles.Style
+    public function get bizTypeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

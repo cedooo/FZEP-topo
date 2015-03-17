@@ -65,8 +65,8 @@ public class _Super_FiberCoreNumber extends flash.events.EventDispatcher impleme
     private var _internal_fiberCoreNumberName : String;
     private var _internal_isJump : String;
     private var _internal_delFlg : String;
-    private var _internal_bizType : String;
     private var _internal_fiberCoreNumberId : String;
+    private var _internal_bizType : String;
     private var _internal_connections : String;
 
     private static var emptyArray:Array = new Array();
@@ -134,15 +134,15 @@ public class _Super_FiberCoreNumber extends flash.events.EventDispatcher impleme
     }
 
     [Bindable(event="propertyChange")]
-    public function get bizType() : String
-    {
-        return _internal_bizType;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get fiberCoreNumberId() : String
     {
         return _internal_fiberCoreNumberId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get bizType() : String
+    {
+        return _internal_bizType;
     }
 
     [Bindable(event="propertyChange")]
@@ -229,16 +229,6 @@ public class _Super_FiberCoreNumber extends flash.events.EventDispatcher impleme
         }
     }
 
-    public function set bizType(value:String) : void
-    {
-        var oldValue:String = _internal_bizType;
-        if (oldValue !== value)
-        {
-            _internal_bizType = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "bizType", oldValue, _internal_bizType));
-        }
-    }
-
     public function set fiberCoreNumberId(value:String) : void
     {
         var oldValue:String = _internal_fiberCoreNumberId;
@@ -246,6 +236,16 @@ public class _Super_FiberCoreNumber extends flash.events.EventDispatcher impleme
         {
             _internal_fiberCoreNumberId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "fiberCoreNumberId", oldValue, _internal_fiberCoreNumberId));
+        }
+    }
+
+    public function set bizType(value:String) : void
+    {
+        var oldValue:String = _internal_bizType;
+        if (oldValue !== value)
+        {
+            _internal_bizType = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "bizType", oldValue, _internal_bizType));
         }
     }
 

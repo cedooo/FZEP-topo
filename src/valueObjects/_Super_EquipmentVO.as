@@ -58,8 +58,8 @@ public class _Super_EquipmentVO extends flash.events.EventDispatcher implements 
     /**
      * properties
      */
-    private var _internal_id : String;
     private var _internal_typeName : String;
+    private var _internal_id : String;
     private var _internal_name : String;
     private var _internal_img : String;
     private var _internal_type : String;
@@ -88,15 +88,15 @@ public class _Super_EquipmentVO extends flash.events.EventDispatcher implements 
      */
 
     [Bindable(event="propertyChange")]
-    public function get id() : String
-    {
-        return _internal_id;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get typeName() : String
     {
         return _internal_typeName;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get id() : String
+    {
+        return _internal_id;
     }
 
     [Bindable(event="propertyChange")]
@@ -131,16 +131,6 @@ public class _Super_EquipmentVO extends flash.events.EventDispatcher implements 
      * data/source property setters
      */
 
-    public function set id(value:String) : void
-    {
-        var oldValue:String = _internal_id;
-        if (oldValue !== value)
-        {
-            _internal_id = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "id", oldValue, _internal_id));
-        }
-    }
-
     public function set typeName(value:String) : void
     {
         var oldValue:String = _internal_typeName;
@@ -148,6 +138,16 @@ public class _Super_EquipmentVO extends flash.events.EventDispatcher implements 
         {
             _internal_typeName = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "typeName", oldValue, _internal_typeName));
+        }
+    }
+
+    public function set id(value:String) : void
+    {
+        var oldValue:String = _internal_id;
+        if (oldValue !== value)
+        {
+            _internal_id = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "id", oldValue, _internal_id));
         }
     }
 

@@ -298,9 +298,10 @@
 			
 			protected function siteAssetsRelationsResult_resultHandler(event:ResultEvent):void
 			{
-				Alert.show(''+ event.message);
+				Alert.show(''+event.result['siteOne']);
 				var relation:SiteAssetsRelations = event.result as SiteAssetsRelations;
-				
+				Alert.show(''+ event.message + '\n\n' + relation.siteOne + '---' + relation.siteTwo);
+				/*
 				//lSiteCon.site = relation.siteOne as SiteVO;
 				lSiteCon.equipList = relation.siteOne.listCable.toArray();
 				lSiteCon.cableList = relation.siteOne.listEquip.toArray();
@@ -308,7 +309,7 @@
 				//lSiteCon2.site = relation.siteTwo as Site;
 				lSiteCon2.equipList = relation.siteTwo.listCable.toArray();
 				lSiteCon2.cableList = relation.siteTwo.listEquip.toArray();
-				
+				*/
 				connectCable(lSiteCon, lSiteCon2);
 			}
 			
