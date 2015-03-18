@@ -16,45 +16,38 @@ import mx.events.PropertyChangeEvent;
 use namespace model_internal;
 
 [ExcludeClass]
-internal class _SiteEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
+internal class _BEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("descp", "siteId", "siteAdress", "delFlg", "connactNumber", "siteName", "connactName", "areaId");
+    model_internal static var allProperties:Array = new Array("bsName");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("descp", "siteId", "siteAdress", "delFlg", "connactNumber", "siteName", "connactName", "areaId");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("bsName");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("descp", "siteId", "siteAdress", "delFlg", "connactNumber", "siteName", "connactName", "areaId");
+    model_internal static var dataProperties:Array = new Array("bsName");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("descp", "siteId", "siteAdress", "delFlg", "connactNumber", "siteName", "connactName", "areaId");
+    model_internal static var nonDerivedProperties:Array = new Array("bsName");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
-    model_internal static var entityName:String = "Site";
+    model_internal static var entityName:String = "B";
     model_internal static var dependentsOnMap:Object;
     model_internal static var dependedOnServices:Array = new Array();
     model_internal static var propertyTypeMap:Object;
 
 
-    model_internal var _instance:_Super_Site;
+    model_internal var _instance:_Super_B;
     model_internal static var _nullStyle:com.adobe.fiber.styles.Style = new com.adobe.fiber.styles.Style();
 
-    public function _SiteEntityMetadata(value : _Super_Site)
+    public function _BEntityMetadata(value : _Super_B)
     {
         // initialize property maps
         if (model_internal::dependentsOnMap == null)
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["descp"] = new Array();
-            model_internal::dependentsOnMap["siteId"] = new Array();
-            model_internal::dependentsOnMap["siteAdress"] = new Array();
-            model_internal::dependentsOnMap["delFlg"] = new Array();
-            model_internal::dependentsOnMap["connactNumber"] = new Array();
-            model_internal::dependentsOnMap["siteName"] = new Array();
-            model_internal::dependentsOnMap["connactName"] = new Array();
-            model_internal::dependentsOnMap["areaId"] = new Array();
+            model_internal::dependentsOnMap["bsName"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
@@ -62,14 +55,7 @@ internal class _SiteEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["descp"] = "String";
-        model_internal::propertyTypeMap["siteId"] = "String";
-        model_internal::propertyTypeMap["siteAdress"] = "String";
-        model_internal::propertyTypeMap["delFlg"] = "String";
-        model_internal::propertyTypeMap["connactNumber"] = "String";
-        model_internal::propertyTypeMap["siteName"] = "String";
-        model_internal::propertyTypeMap["connactName"] = "String";
-        model_internal::propertyTypeMap["areaId"] = "String";
+        model_internal::propertyTypeMap["bsName"] = "String";
 
         model_internal::_instance = value;
     }
@@ -122,7 +108,7 @@ internal class _SiteEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     override public function getDependants(propertyName:String):Array
     {
        if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a data property of entity Site");
+            throw new Error(propertyName + " is not a data property of entity B");
             
        return model_internal::dependentsOnMap[propertyName] as Array;  
     }
@@ -140,7 +126,7 @@ internal class _SiteEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     override public function getCollectionBase(propertyName:String):String
     {
         if (model_internal::collectionProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a collection property of entity Site");
+            throw new Error(propertyName + " is not a collection property of entity B");
 
         return model_internal::collectionBaseMap[propertyName];
     }
@@ -148,7 +134,7 @@ internal class _SiteEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     override public function getPropertyType(propertyName:String):String
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a property of Site");
+            throw new Error(propertyName + " is not a property of B");
 
         return model_internal::propertyTypeMap[propertyName];
     }
@@ -162,7 +148,7 @@ internal class _SiteEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity Site");
+            throw new Error(propertyName + " does not exist for entity B");
         }
 
         return model_internal::_instance[propertyName];
@@ -172,7 +158,7 @@ internal class _SiteEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     {
         if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " is not a modifiable property of entity Site");
+            throw new Error(propertyName + " is not a modifiable property of entity B");
         }
 
         model_internal::_instance[propertyName] = value;
@@ -204,7 +190,7 @@ internal class _SiteEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity Site");
+            throw new Error(propertyName + " does not exist for entity B");
         }
 
         if (model_internal::allAlwaysAvailableProperties.indexOf(propertyName) != -1)
@@ -299,49 +285,7 @@ internal class _SiteEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     }
 
     [Bindable(event="propertyChange")]
-    public function get isDescpAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isSiteIdAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isSiteAdressAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isDelFlgAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isConnactNumberAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isSiteNameAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isConnactNameAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isAreaIdAvailable():Boolean
+    public function get isBsNameAvailable():Boolean
     {
         return true;
     }
@@ -357,49 +301,7 @@ internal class _SiteEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     }
 
     [Bindable(event="propertyChange")]   
-    public function get descpStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get siteIdStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get siteAdressStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get delFlgStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get connactNumberStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get siteNameStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get connactNameStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get areaIdStyle():com.adobe.fiber.styles.Style
+    public function get bsNameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

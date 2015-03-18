@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <actionScriptProperties analytics="false" mainApplicationPath="Main.mxml" projectUUID="7ea9fa3d-651e-4bbb-926e-ca9c4e9cdf0e" version="11">
-  <compiler additionalCompilerArguments="-services &quot;G:\apache-tomcat-6.0.41\webapps\fuzhou\WEB-INF\flex\services-config.xml&quot; -locale en_US" autoRSLOrdering="true" copyDependentFiles="true" flexSDK="Flex 4.1" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderLocation="G:/apache-tomcat-6.0.41/webapps/fuzhou/topo/fx" outputFolderPath="bin-debug" removeUnusedRSL="true" rootURL="" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" useFlashSDK="false" verifyDigests="true" warn="true">
+  <compiler additionalCompilerArguments="-services &quot;F:\apache-tomcat-7.0.59-windows-x64\apache-tomcat-7.0.59\me-webapps\fuzhou\\WEB-INF\flex\services-config.xml&quot; -locale en_US" autoRSLOrdering="true" copyDependentFiles="true" flexSDK="Flex 4.1" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderLocation="F:/apache-tomcat-7.0.59-windows-x64/apache-tomcat-7.0.59/me-webapps/fuzhou/topo/fx" outputFolderPath="bin-debug" removeUnusedRSL="true" rootURL="" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" useFlashSDK="false" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
@@ -24,17 +24,19 @@
   </compiler>
   <applications>
     <application path="cn/com/dhcc/fzep/topo/schema/ShowSchema.mxml"/>
-    <application path="cn/com/dhcc/fzep/topo/SiteEquipList.mxml"/>
-    <application path="cn/com/dhcc/fzep/topo/schema/NewEquipSchema.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/AreaSchema.mxml"/>
-    <application path="cn/com/dhcc/fzep/topo/AssetsRelations.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/schema/NewEquipSchema.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/SiteEquipList.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/EditEquipSchema.mxml"/>
-    <application path="cn/com/dhcc/fzep/topo/schema/SiteSchema.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/AssetsRelations.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/EditAreaSiteSchema.mxml"/>
+    <application path="cn/com/dhcc/fzep/topo/schema/SiteSchema.mxml"/>
+    <application path="test/TestAS.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/NewSiteSchema.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/SchemaManagerIndex.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/schema/EquipSchema.mxml"/>
     <application path="cn/com/dhcc/fzep/topo/Default.mxml"/>
+    <application path="SiteAssetsTest.mxml"/>
   </applications>
   <modules/>
   <workers/>

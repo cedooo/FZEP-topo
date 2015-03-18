@@ -1,6 +1,6 @@
 /**
  * This is a generated class and is not intended for modification.  To customize behavior
- * of this value object you may modify the generated sub-class of this class - Site.as.
+ * of this value object you may modify the generated sub-class of this class - A.as.
  */
 
 package valueObjects
@@ -10,6 +10,7 @@ import com.adobe.fiber.valueobjects.IValueObject;
 import flash.events.EventDispatcher;
 import mx.collections.ArrayCollection;
 import mx.events.PropertyChangeEvent;
+import valueObjects.B;
 
 import flash.net.registerClassAlias;
 import flash.net.getClassByAlias;
@@ -20,28 +21,29 @@ import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 use namespace model_internal;
 
 [ExcludeClass]
-public class _Super_Site extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
+public class _Super_A extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
         try
         {
-            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.pojo.Site") == null)
+            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.service.test.A") == null)
             {
-                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.Site", cz);
+                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.service.test.A", cz);
             }
         }
         catch (e:Error)
         {
-            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.Site", cz);
+            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.service.test.A", cz);
         }
     }
 
     model_internal static function initRemoteClassAliasAllRelated() : void
     {
+        valueObjects.B.initRemoteClassAliasSingleChild();
     }
 
-    model_internal var _dminternal_model : _SiteEntityMetadata;
+    model_internal var _dminternal_model : _AEntityMetadata;
     model_internal var _changedObjects:mx.collections.ArrayCollection = new ArrayCollection();
 
     public function getChangedObjects() : Array
@@ -58,14 +60,9 @@ public class _Super_Site extends flash.events.EventDispatcher implements com.ado
     /**
      * properties
      */
-    private var _internal_descp : String;
-    private var _internal_siteId : String;
-    private var _internal_siteAdress : String;
-    private var _internal_delFlg : String;
-    private var _internal_connactNumber : String;
-    private var _internal_siteName : String;
-    private var _internal_connactName : String;
-    private var _internal_areaId : String;
+    private var _internal_b : valueObjects.B;
+    private var _internal_age : int;
+    private var _internal_name : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -77,9 +74,9 @@ public class _Super_Site extends flash.events.EventDispatcher implements com.ado
 
     model_internal var _changeWatcherArray:Array = new Array();
 
-    public function _Super_Site()
+    public function _Super_A()
     {
-        _model = new _SiteEntityMetadata(this);
+        _model = new _AEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
 
@@ -90,51 +87,21 @@ public class _Super_Site extends flash.events.EventDispatcher implements com.ado
      */
 
     [Bindable(event="propertyChange")]
-    public function get descp() : String
+    public function get b() : valueObjects.B
     {
-        return _internal_descp;
+        return _internal_b;
     }
 
     [Bindable(event="propertyChange")]
-    public function get siteId() : String
+    public function get age() : int
     {
-        return _internal_siteId;
+        return _internal_age;
     }
 
     [Bindable(event="propertyChange")]
-    public function get siteAdress() : String
+    public function get name() : String
     {
-        return _internal_siteAdress;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get delFlg() : String
-    {
-        return _internal_delFlg;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get connactNumber() : String
-    {
-        return _internal_connactNumber;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get siteName() : String
-    {
-        return _internal_siteName;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get connactName() : String
-    {
-        return _internal_connactName;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get areaId() : String
-    {
-        return _internal_areaId;
+        return _internal_name;
     }
 
     public function clearAssociations() : void
@@ -145,83 +112,33 @@ public class _Super_Site extends flash.events.EventDispatcher implements com.ado
      * data/source property setters
      */
 
-    public function set descp(value:String) : void
+    public function set b(value:valueObjects.B) : void
     {
-        var oldValue:String = _internal_descp;
+        var oldValue:valueObjects.B = _internal_b;
         if (oldValue !== value)
         {
-            _internal_descp = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "descp", oldValue, _internal_descp));
+            _internal_b = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "b", oldValue, _internal_b));
         }
     }
 
-    public function set siteId(value:String) : void
+    public function set age(value:int) : void
     {
-        var oldValue:String = _internal_siteId;
+        var oldValue:int = _internal_age;
         if (oldValue !== value)
         {
-            _internal_siteId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteId", oldValue, _internal_siteId));
+            _internal_age = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "age", oldValue, _internal_age));
         }
     }
 
-    public function set siteAdress(value:String) : void
+    public function set name(value:String) : void
     {
-        var oldValue:String = _internal_siteAdress;
+        var oldValue:String = _internal_name;
         if (oldValue !== value)
         {
-            _internal_siteAdress = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteAdress", oldValue, _internal_siteAdress));
-        }
-    }
-
-    public function set delFlg(value:String) : void
-    {
-        var oldValue:String = _internal_delFlg;
-        if (oldValue !== value)
-        {
-            _internal_delFlg = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "delFlg", oldValue, _internal_delFlg));
-        }
-    }
-
-    public function set connactNumber(value:String) : void
-    {
-        var oldValue:String = _internal_connactNumber;
-        if (oldValue !== value)
-        {
-            _internal_connactNumber = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "connactNumber", oldValue, _internal_connactNumber));
-        }
-    }
-
-    public function set siteName(value:String) : void
-    {
-        var oldValue:String = _internal_siteName;
-        if (oldValue !== value)
-        {
-            _internal_siteName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteName", oldValue, _internal_siteName));
-        }
-    }
-
-    public function set connactName(value:String) : void
-    {
-        var oldValue:String = _internal_connactName;
-        if (oldValue !== value)
-        {
-            _internal_connactName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "connactName", oldValue, _internal_connactName));
-        }
-    }
-
-    public function set areaId(value:String) : void
-    {
-        var oldValue:String = _internal_areaId;
-        if (oldValue !== value)
-        {
-            _internal_areaId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "areaId", oldValue, _internal_areaId));
+            _internal_name = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "name", oldValue, _internal_name));
         }
     }
 
@@ -285,14 +202,14 @@ public class _Super_Site extends flash.events.EventDispatcher implements com.ado
 
     [Transient]
     [Bindable(event="propertyChange")]
-    public function get _model() : _SiteEntityMetadata
+    public function get _model() : _AEntityMetadata
     {
         return model_internal::_dminternal_model;
     }
 
-    public function set _model(value : _SiteEntityMetadata) : void
+    public function set _model(value : _AEntityMetadata) : void
     {
-        var oldValue : _SiteEntityMetadata = model_internal::_dminternal_model;
+        var oldValue : _AEntityMetadata = model_internal::_dminternal_model;
         if (oldValue !== value)
         {
             model_internal::_dminternal_model = value;
