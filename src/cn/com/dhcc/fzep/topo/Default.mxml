@@ -99,6 +99,7 @@
 			import mx.rpc.events.ResultEvent;
 			import mx.utils.ObjectUtil;
 			
+			import cn.com.dhcc.fzep.topo.common.EquipConstants;
 			import cn.com.dhcc.fzep.topo.components.SchemaElementComponent;
 			import cn.com.dhcc.fzep.topo.components.SiteComponent;
 			import cn.com.dhcc.fzep.topo.poao.SchemaElementsInfo;
@@ -327,9 +328,9 @@
 				var cable:Cable = event.result as Cable;
 				var entity:Entity = sceneMgr.getEntity(ObjectUtil.getClassInfo(Cable).name+cable.cableId);
 				var connector:DynamicConnector = entity as DynamicConnector;
-				connector.lineThickness =  cable.isMainRoad=='是'?4:2;
+				connector.lineThickness =  cable.isMainRoad==EquipConstants.CABLE_IS_MAIN?4:2;
 				//connector.lineColor = 0xE53E38;
-				if(cable.delFlg!='启用'){
+				if(cable.delFlg!=EquipConstants.EQUIP_DEL_FLAG_USED){
 					connector.alpha = 0.1;
 				}else{
 					connector.alpha = 1;
@@ -355,7 +356,7 @@
 				var siteCompoent:FlexComponent = entity as FlexComponent;
 				var elementCom:SchemaElementComponent = siteCompoent.component as SchemaElementComponent;
 				//Alert.show(site.siteName);
-				if(site.delFlg=='启用'){
+				if(site.delFlg==EquipConstants.EQUIP_DEL_FLAG_USED){
 					elementCom.alpha = 1;
 				}else{
 					elementCom.alpha = 0.1;

@@ -36,6 +36,6 @@
 		]]>
 	</fx:Script>
 	
-	<mx:Image id="imgVisitor" source="assets/{imgName}"  x="14" y="9" width="32" height="32"/>
+	<mx:Image id="imgVisitor" source="@Embed(source='assets/equip/carrier.png')"  x="14" y="9" width="32" height="32"/>
 	<s:Label id="lblUserName" text="{carrier.carrierName}" y="45"  textAlign="center" width="100%"  fontWeight="bold"/>
 </s:Group>

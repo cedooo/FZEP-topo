@@ -22,7 +22,6 @@
 			import valueObjects.Cable;
 			
 			
-			private var lineColors:Array =  new Array(0x5ca1d7,0x9dd6f4,0x725746, 0xff9f64);
 			private var OFFSET_Y:Number = 33;
 			/**
 			 * 连接两个站点的光缆
@@ -38,10 +37,7 @@
 						var cable2:Cable = site2Cable.getItemAt(i) as Cable;
 						if(cable1.cableId == cable2.cableId){
 							//Alert.show(cable1.cableId);
-							var strokes:SolidColorStroke = new SolidColorStroke();
-							strokes.weight = 3;
-							strokes.caps=CapsStyle.ROUND;
-							strokes.color = lineColors[i%lineColors.length];
+							var strokes:SolidColorStroke = site1.cableStroke(cable1.cableId);// new SolidColorStroke();
 							
 							var pointS:Point = site1.connectionToCable(cable1.cableId);
 							var pointE:Point = site2.connectionToCable(cable2.cableId);
@@ -99,6 +95,7 @@
 			{
 				lSiteCon.siteId = "1";
 				lSiteCon.endCallback = connectSite;
+				
 				lSiteCon2.siteId = "2";
 				lSiteCon2.endCallback = connectSite;
 				

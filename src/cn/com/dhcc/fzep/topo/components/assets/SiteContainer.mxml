@@ -32,14 +32,24 @@
 			import spark.components.VGroup;
 			import spark.primitives.Line;
 			
+			import cn.com.dhcc.fzep.topo.common.EquipConstants;
+			import cn.com.dhcc.fzep.topo.components.CarrierComponent;
 			import cn.com.dhcc.fzep.topo.components.GPRSComponent;
+			import cn.com.dhcc.fzep.topo.components.OLTComponent;
+			import cn.com.dhcc.fzep.topo.components.ONUComponent;
 			import cn.com.dhcc.fzep.topo.components.ThreeLayerSwitchComponent;
+			import cn.com.dhcc.fzep.topo.components.TwoLayerSwitchComponent;
+			import cn.com.dhcc.fzep.topo.components.UnknownComponent;
 			
 			import valueObjects.Cable;
+			import valueObjects.Carrier;
 			import valueObjects.FiberCoreNumber;
 			import valueObjects.GPRS;
+			import valueObjects.OLT;
+			import valueObjects.ONU;
 			import valueObjects.Site;
 			import valueObjects.ThreeLayerSwitch;
+			import valueObjects.TwoLayerSwitch;
 			[Embed(source="assets/buttons/btn_square_32.png")]
 			public var interImg:Class;
 			
@@ -96,7 +106,7 @@
 					equipContainer.addElement(hGroup);
 					*/
 					var equip:Object =  _equipList[i];
-					if(equip['type'] == 'class cn.com.dhcc.fzep.topo.pojo.Cable'){    //光缆
+					if(equip['type'] == EquipConstants.EQUIP_TYPE_Cable){    //光缆
 						cableEquipList.push(getCableObj(equip));
 						continue;
 					}
@@ -121,20 +131,44 @@
 				var eType:String = equip['type'];
 				
 				var eName:String =  equip['name'];
-				if(eType=='class cn.com.dhcc.fzep.topo.pojo.GPRS'){
+				if(eType==EquipConstants.EQUIP_TYPE_GPRS){
 					var gprsComponet:GPRSComponent = new GPRSComponent();
 					var gprs:GPRS = new GPRS();
 					gprs.gprsName = eName;
 					gprsComponet.gprs = gprs;
 					return gprsComponet;
-				}else if(eType){
+				}else if(eType==EquipConstants.EQUIP_TYPE_ThreeLayerSwitch){
 					var l3Layer:ThreeLayerSwitchComponent = new ThreeLayerSwitchComponent();
 					var l3Switch:ThreeLayerSwitch = new ThreeLayerSwitch();
 					l3Switch.switchName = eName;
 					l3Layer.l3switch = l3Switch;
 					return l3Layer;
+				}else if(eType==EquipConstants.EQUIP_TYPE_Carrier){
+					var carrierCom:CarrierComponent = new CarrierComponent();
+					var carrier:Carrier = new Carrier();
+					carrier.carrierName = eName;
+					carrierCom.carrier = carrier;
+					return carrierCom;
+				}else if(eType==EquipConstants.EQUIP_TYPE_OLT){
+					var oltCom:OLTComponent = new OLTComponent();
+					var olt:OLT = new OLT();
+					olt.oltName = eName;
+					oltCom.olt = olt;
+					return oltCom;
+				}else if(eType==EquipConstants.EQUIP_TYPE_TwoLayerSwitch){
+					var l2Layer:TwoLayerSwitchComponent = new TwoLayerSwitchComponent();
+					var l2Switch:TwoLayerSwitch = new TwoLayerSwitch();
+					l2Switch.switchName = eName;
+					l2Layer.l2switch = l2Switch;
+					return l2Layer;
+				}else if(eType==EquipConstants.EQUIP_TYPE_ONU){
+					var onuCom:ONUComponent = new ONUComponent();
+					var onu:ONU = new ONU();
+					onu.onuName = eName;
+					onuCom.onu = onu;
+					return onuCom;
 				}else{
-					return null;
+					return new UnknownComponent();
 				}
 			}
 			private var CABLE_IN_WIDTH:Number = 10;    //光缆连接点长宽度
@@ -198,7 +232,16 @@
 					stroke.weight = CABLE_WEIGHT;
 					stroke.caps = CapsStyle.ROUND;
 					stroke.color = lineColors[i%lineColors.length];
+					
+					
+					var delFlg:String = cable['delFlg'];
+					if(delFlg!=EquipConstants.EQUIP_DEL_FLAG_USED){
+						stroke.alpha = 0.1;
+					}
+					
 					line.stroke = stroke;
+					
+					
 					
 					relationContainer.addElement(line);
 				}
@@ -223,7 +266,7 @@
 			public function connectCableAndEquip():void{
 				var arrCol:ArrayCollection = new ArrayCollection(_fiberCoreNumberArray);  
 				var cableX:Number = -1;
-				var cableColor:uint = 0;
+				//var cableColor:uint = 0;
 				
 				for (var i:int = 0; i < arrCol.length; i++) 
 				{
@@ -239,6 +282,7 @@
 					//Alert.show("id=" + deviceId + ",type=" + deviceType);
 					
 					var cableComName:String = ObjectUtil.getClassInfo(Cable).name + cableId;
+					var cableStroke:SolidColorStroke = null;
 					/*
 					 * 定位对应光缆
 					 */
@@ -248,8 +292,8 @@
 						if(ele.id == cableComName){
 							var cableLine:Line = ele as Line;
 							cableX = cableLine.xFrom;
-							var stroke:SolidColorStroke = cableLine.stroke as SolidColorStroke;
-							cableColor = stroke.color;
+							cableStroke = cableLine.stroke as SolidColorStroke;
+							//cableColor = cableStroke.color;
 							break;
 						}
 						
@@ -289,15 +333,16 @@
 								line.yTo = targetY;
 								
 								var strokes:SolidColorStroke = new SolidColorStroke();
-								strokes.weight = 2;
+								strokes.weight = cableStroke.weight-2;
 								strokes.caps=CapsStyle.ROUND;
-								strokes.color = cableColor;
-								line.stroke = strokes;
+								strokes.color = cableStroke.color;
+								strokes.alpha = cableStroke.alpha;
+								line.stroke =  strokes;
 								
 								var label:Label = new Label();
 								label.text = fiberCoreNumber.fiberCoreNumberName;
 								label.toolTip = "纤芯编号:" + fiberCoreNumber.fiberCoreNumberName;
-								label.setStyle("color", cableColor);
+								label.setStyle("color", cableStroke.color);
 								
 								var fiNumSize:uint = 11;    //编号字体大小
 								label.setStyle("fontSize",fiNumSize);
@@ -431,6 +476,26 @@
 			
 			[Bindable]
 			public var endCallback:Function;
+			
+			public function cableStroke(cableId:String):SolidColorStroke{
+				
+				var cableComName:String = ObjectUtil.getClassInfo(Cable).name + cableId;
+				var cableStroke:SolidColorStroke = null;
+				/*
+				* 定位对应光缆
+				*/
+				for (var j:int = 0; j < relationContainer.numElements; j++) 
+				{
+					var ele:Object = relationContainer.getElementAt(j);
+					if(ele.id == cableComName){
+						var cableLine:Line = ele as Line;
+						cableStroke = cableLine.stroke as SolidColorStroke;
+						//cableColor = cableStroke.color;
+						break;
+					}
+				}
+				return cableStroke;
+			}
 			
 		]]>
 	</fx:Script>
