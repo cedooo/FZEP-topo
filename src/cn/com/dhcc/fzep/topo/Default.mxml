@@ -214,11 +214,18 @@
 				});
 				//cableContextMenu.customItems.push(fiberDetail); 
 				
-				var relation:ContextMenuItem = new ContextMenuItem("资产关系图(demo)", false); 
+				var relation:ContextMenuItem = new ContextMenuItem("资产关系图", false); 
 				relation.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, function(event:ContextMenuEvent):void{
-					var topoBasePath:String = ScriptUtils.getRoot(root.loaderInfo.url) + "topo/";
-					var url:String = topoBasePath + "assetsRelation.jsp";
-					ScriptUtils.openTabWindow(url, "资产关系图");
+					var sceneManager:SceneManager = Root.instance.sceneManager;
+					var entity:Entity = sceneManager.getEntity(event.contextMenuOwner.name);
+					if(entity is DynamicConnector){
+						var connector:DynamicConnector = entity as DynamicConnector;
+						var cable:Cable = connector.customData as Cable;
+					
+						var topoBasePath:String = ScriptUtils.getRoot(root.loaderInfo.url) + "topo/";
+						var url:String = topoBasePath + "assetsRelation.jsp?s1=" + cable.cableStartId + "&s2=" + cable.cableEndId;
+						ScriptUtils.openTabWindow(url, "资产关系图");
+					}
 				});
 				cableContextMenu.customItems.push(relation); 
 				
@@ -716,7 +723,7 @@
 								siteLevelTwoComp.doubleClickEnabled = true;
 								siteLevelTwoComp.addEventListener(MouseEvent.DOUBLE_CLICK, siteComponent_doubleClickHandler);
 								siteLevelTwoComp.contextMenu = siteContextMenu;
-								siteLevelTwoComp.alpha = siteLevelTwoComp.site.delFlg=="启用"?1:0.1;
+								siteLevelTwoComp.alpha = siteLevelTwoComp.site.delFlg==EquipConstants.EQUIP_DEL_FLAG_USED?1:0.1;
 								var flexComTwo:FlexComponent = new FlexComponent(siteLevelTwoName, siteLevelTwoComp);
 								flexComTwo.draggable = true;
 								flexComTwo.editable = false;

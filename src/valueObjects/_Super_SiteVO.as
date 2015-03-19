@@ -75,9 +75,9 @@ public class _Super_SiteVO extends flash.events.EventDispatcher implements com.a
     private var _internal_listFCN : ArrayCollection;
     model_internal var _internal_listFCN_leaf:valueObjects.FiberCoreNumber;
     private var _internal_connactNumber : String;
-    private var _internal_areaId : String;
-    private var _internal_siteName : String;
     private var _internal_connactName : String;
+    private var _internal_siteName : String;
+    private var _internal_areaId : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -150,9 +150,9 @@ public class _Super_SiteVO extends flash.events.EventDispatcher implements com.a
     }
 
     [Bindable(event="propertyChange")]
-    public function get areaId() : String
+    public function get connactName() : String
     {
-        return _internal_areaId;
+        return _internal_connactName;
     }
 
     [Bindable(event="propertyChange")]
@@ -162,9 +162,9 @@ public class _Super_SiteVO extends flash.events.EventDispatcher implements com.a
     }
 
     [Bindable(event="propertyChange")]
-    public function get connactName() : String
+    public function get areaId() : String
     {
-        return _internal_connactName;
+        return _internal_areaId;
     }
 
     public function clearAssociations() : void
@@ -300,13 +300,13 @@ public class _Super_SiteVO extends flash.events.EventDispatcher implements com.a
         }
     }
 
-    public function set areaId(value:String) : void
+    public function set connactName(value:String) : void
     {
-        var oldValue:String = _internal_areaId;
+        var oldValue:String = _internal_connactName;
         if (oldValue !== value)
         {
-            _internal_areaId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "areaId", oldValue, _internal_areaId));
+            _internal_connactName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "connactName", oldValue, _internal_connactName));
         }
     }
 
@@ -320,13 +320,13 @@ public class _Super_SiteVO extends flash.events.EventDispatcher implements com.a
         }
     }
 
-    public function set connactName(value:String) : void
+    public function set areaId(value:String) : void
     {
-        var oldValue:String = _internal_connactName;
+        var oldValue:String = _internal_areaId;
         if (oldValue !== value)
         {
-            _internal_connactName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "connactName", oldValue, _internal_connactName));
+            _internal_areaId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "areaId", oldValue, _internal_areaId));
         }
     }
 

@@ -4,13 +4,14 @@
 			   xmlns:cedoassets="cn.com.dhcc.fzep.topo.components.assets.*"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:services="services.*"
-			   minWidth="955" minHeight="600" creationComplete="application1_creationCompleteHandler(event)">
+			   minWidth="955" minHeight="600" applicationComplete="application1_applicationCompleteHandler(event)" >
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 			import mx.graphics.SolidColorStroke;
 			
@@ -51,7 +52,6 @@
 							line.stroke = strokes;
 							container.addElement(line);
 							
-							
 							var cableInfo:Label = new Label();
 							cableInfo.text = cable1.cableName;
 							cableInfo.width = 100;
@@ -90,21 +90,33 @@
 				}
 				
 			}
-			
-			protected function application1_creationCompleteHandler(event:FlexEvent):void
-			{
-				lSiteCon.siteId = "1";
-				lSiteCon.endCallback = connectSite;
-				
-				lSiteCon2.siteId = "2";
-				lSiteCon2.endCallback = connectSite;
-				
-			}
-			
+			/**
+			 * 链接站点之间的光缆
+			 */
 			public function connectSite():void{
-				
 				connectCable(lSiteCon, lSiteCon2);
 			}
+			
+			protected function application1_applicationCompleteHandler(event:FlexEvent):void
+			{
+				if(stage){
+					var s1:String = root.loaderInfo.parameters['s1'];
+					var s2:String = root.loaderInfo.parameters['s2'];
+					if(s1&&s2){
+						lSiteCon.initSite(s1,s2,connectSite);
+						lSiteCon2.initSite(s2,s1,connectSite);
+						/*
+						lSiteCon.site2Id = s2;
+						lSiteCon.siteId = s1;
+						lSiteCon.endCallback = connectSite;
+						lSiteCon2.site2Id = s1;
+						lSiteCon2.siteId = s2;
+						lSiteCon2.endCallback = connectSite;
+						*/
+					}
+				}
+			}
+			
 		]]>
 	</fx:Script>
 	<!--

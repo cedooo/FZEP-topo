@@ -14,6 +14,7 @@
 							fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 							showBusyCursor="true"/>
 		<s:CallResponder id="listFCNResult" result="listFCNResult_resultHandler(event)"/>
+		<s:CallResponder id="listCableResult" result="listCableResult_resultHandler(event)"/>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 		
 	</fx:Declarations>
@@ -56,13 +57,29 @@
 			
 			
 			[Bindable]
-			public var _siteId:String;    //站点ID
+			private var _siteId:String;    //站点ID
+			[Bindable]
+			private var _site2Id:String;    //站点ID
+			
+			public function initSite(siteId:String, connectedSiteId:String, callBack:Function):void{
+				_siteId = siteId;
+				_site2Id = connectedSiteId;
+				endCallback = callBack;
+				siteInfo(_siteId);
+			}
+			
 			public function set siteId(siteId:String):void{
 				_siteId = siteId;
 				siteInfo(_siteId);
 			}
+			public function set site2Id(siteId:String):void{
+				_site2Id = siteId;
+			}
 			public  function get siteId():String{
 				return _siteId;
+			}
+			public  function get site2Id():String{
+				return _site2Id;
 			}
 			
 			[Bindable]
@@ -87,7 +104,7 @@
 			 * 设置设备view对象数组
 			 */
 			[ArrayElementType("valueObjects.EquipmentVO")]
-			public function set equipList(equipList:Array):void{
+			private function set equipList(equipList:Array):void{
 				_equipList = equipList;
 				var cableEquipList:Array = new Array();
 				for (var i:int = 0; i < _equipList.length; i++) 
@@ -107,7 +124,7 @@
 					*/
 					var equip:Object =  _equipList[i];
 					if(equip['type'] == EquipConstants.EQUIP_TYPE_Cable){    //光缆
-						cableEquipList.push(getCableObj(equip));
+						//cableEquipList.push(getCableObj(equip));
 						continue;
 					}
 					var equipComponent:UIComponent = getEquipComponent(equip);
@@ -119,9 +136,7 @@
 					}
 					equipContainer.addElement(assetsEquip);
 				}
-				
-				//设置站点光缆集合
-				cableList = cableEquipList;
+				listCable(siteId,site2Id);
 				
 			}
 			/**
@@ -263,7 +278,7 @@
 				_fiberCoreNumberArray = array;
 				connectCableAndEquip();
 			}
-			public function connectCableAndEquip():void{
+			private function connectCableAndEquip():void{
 				var arrCol:ArrayCollection = new ArrayCollection(_fiberCoreNumberArray);  
 				var cableX:Number = -1;
 				//var cableColor:uint = 0;
@@ -360,18 +375,17 @@
 				endCallback();
 				
 			}
-			public var CLASS_PRE:String = "class cn.com.dhcc.fzep.topo.pojo.";
 			
-			public function equipType(type:String):String{
+			private function equipType(type:String):String{
 				var mapstr:String = '';
 				if(type=='gprs'){
-					mapstr = "GPRS";
+					mapstr = EquipConstants.EQUIP_TYPE_GPRS;
 				}else if(type=='olt'){
-					mapstr = "OLT";
+					mapstr = EquipConstants.EQUIP_TYPE_OLT
 				}else if(type=='onu'){
-					mapstr = "ONU";
+					mapstr = EquipConstants.EQUIP_TYPE_ONU;
 				}
-				return CLASS_PRE + mapstr;
+				return mapstr;
 			}
 			
 			//光缆颜色
@@ -495,6 +509,19 @@
 					}
 				}
 				return cableStroke;
+			}
+			
+			
+			protected function listCable(arg0:String, arg1:String):void
+			{
+				listCableResult.token = assetsRelation.listCable(arg0, arg1);
+			}
+			
+			protected function listCableResult_resultHandler(event:ResultEvent):void
+			{
+				var cableEquipList:ArrayCollection = event.result as ArrayCollection;
+				//设置站点光缆集合
+				cableList = cableEquipList.source;
 			}
 			
 		]]>
