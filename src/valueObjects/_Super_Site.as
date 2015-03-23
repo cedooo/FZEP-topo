@@ -63,9 +63,9 @@ public class _Super_Site extends flash.events.EventDispatcher implements com.ado
     private var _internal_siteAdress : String;
     private var _internal_delFlg : String;
     private var _internal_connactNumber : String;
-    private var _internal_siteName : String;
     private var _internal_areaId : String;
     private var _internal_connactName : String;
+    private var _internal_siteName : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -120,12 +120,6 @@ public class _Super_Site extends flash.events.EventDispatcher implements com.ado
     }
 
     [Bindable(event="propertyChange")]
-    public function get siteName() : String
-    {
-        return _internal_siteName;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get areaId() : String
     {
         return _internal_areaId;
@@ -135,6 +129,12 @@ public class _Super_Site extends flash.events.EventDispatcher implements com.ado
     public function get connactName() : String
     {
         return _internal_connactName;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get siteName() : String
+    {
+        return _internal_siteName;
     }
 
     public function clearAssociations() : void
@@ -195,16 +195,6 @@ public class _Super_Site extends flash.events.EventDispatcher implements com.ado
         }
     }
 
-    public function set siteName(value:String) : void
-    {
-        var oldValue:String = _internal_siteName;
-        if (oldValue !== value)
-        {
-            _internal_siteName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteName", oldValue, _internal_siteName));
-        }
-    }
-
     public function set areaId(value:String) : void
     {
         var oldValue:String = _internal_areaId;
@@ -222,6 +212,16 @@ public class _Super_Site extends flash.events.EventDispatcher implements com.ado
         {
             _internal_connactName = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "connactName", oldValue, _internal_connactName));
+        }
+    }
+
+    public function set siteName(value:String) : void
+    {
+        var oldValue:String = _internal_siteName;
+        if (oldValue !== value)
+        {
+            _internal_siteName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteName", oldValue, _internal_siteName));
         }
     }
 

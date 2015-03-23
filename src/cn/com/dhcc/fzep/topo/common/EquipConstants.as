@@ -28,5 +28,14 @@ package cn.com.dhcc.fzep.topo.common
 		 * 主干光缆
 		 */
 		public static var CABLE_IS_MAIN:String = "是";
+		
+		
+		/** 连接设备类型 */
+		public static var  TYPE_CONNECTION_GPRS:String = "gprs";
+		public static var  TYPE_CONNECTION_OLT:String = "olt";
+		public static var  TYPE_CONNECTION_ONU:String = "onu";
+		public static var  TYPE_CONNECTION_CARRIER:String = "载波";
+		public static var  TYPE_CONNECTION_TWOLAYERSWITCH:String = "二层交换机";
+		public static var  TYPE_CONNECTION_THREELAYERSWITCH:String = "三层交换机";
 	}
 }

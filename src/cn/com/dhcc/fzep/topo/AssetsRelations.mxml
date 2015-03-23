@@ -21,6 +21,7 @@
 			import cn.com.dhcc.fzep.topo.components.assets.SiteContainer;
 			
 			import valueObjects.Cable;
+			import valueObjects.CableVO;
 			
 			
 			private var OFFSET_Y:Number = 33;
@@ -32,10 +33,10 @@
 				var site2Cable:ArrayCollection = new ArrayCollection(site2.cableList);
 				for (var i:int = 0; i < site1Cable.length; i++) 
 				{
-					var cable1:Cable = site1Cable.getItemAt(i) as Cable;
+					var cable1:CableVO = site1Cable.getItemAt(i) as CableVO;
 					for (var j:int = 0; j < site2Cable.length; j++) 
 					{
-						var cable2:Cable = site2Cable.getItemAt(i) as Cable;
+						var cable2:CableVO = site2Cable.getItemAt(i) as CableVO;
 						if(cable1.cableId == cable2.cableId){
 							//Alert.show(cable1.cableId);
 							var strokes:SolidColorStroke = site1.cableStroke(cable1.cableId);// new SolidColorStroke();
@@ -94,6 +95,7 @@
 			 * 链接站点之间的光缆
 			 */
 			public function connectSite():void{
+				//Alert.show('connect site');
 				connectCable(lSiteCon, lSiteCon2);
 			}
 			

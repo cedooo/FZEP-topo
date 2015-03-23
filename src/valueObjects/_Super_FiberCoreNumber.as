@@ -58,16 +58,17 @@ public class _Super_FiberCoreNumber extends flash.events.EventDispatcher impleme
     /**
      * properties
      */
+    private var _internal_startConnections : String;
     private var _internal_transceiver : String;
-    private var _internal_descp : String;
     private var _internal_cableId : String;
+    private var _internal_descp : String;
     private var _internal_isUsed : String;
     private var _internal_fiberCoreNumberName : String;
     private var _internal_isJump : String;
     private var _internal_delFlg : String;
     private var _internal_fiberCoreNumberId : String;
     private var _internal_bizType : String;
-    private var _internal_connections : String;
+    private var _internal_endConnections : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -92,21 +93,27 @@ public class _Super_FiberCoreNumber extends flash.events.EventDispatcher impleme
      */
 
     [Bindable(event="propertyChange")]
+    public function get startConnections() : String
+    {
+        return _internal_startConnections;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get transceiver() : String
     {
         return _internal_transceiver;
     }
 
     [Bindable(event="propertyChange")]
-    public function get descp() : String
-    {
-        return _internal_descp;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get cableId() : String
     {
         return _internal_cableId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get descp() : String
+    {
+        return _internal_descp;
     }
 
     [Bindable(event="propertyChange")]
@@ -146,9 +153,9 @@ public class _Super_FiberCoreNumber extends flash.events.EventDispatcher impleme
     }
 
     [Bindable(event="propertyChange")]
-    public function get connections() : String
+    public function get endConnections() : String
     {
-        return _internal_connections;
+        return _internal_endConnections;
     }
 
     public function clearAssociations() : void
@@ -158,6 +165,16 @@ public class _Super_FiberCoreNumber extends flash.events.EventDispatcher impleme
     /**
      * data/source property setters
      */
+
+    public function set startConnections(value:String) : void
+    {
+        var oldValue:String = _internal_startConnections;
+        if (oldValue !== value)
+        {
+            _internal_startConnections = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "startConnections", oldValue, _internal_startConnections));
+        }
+    }
 
     public function set transceiver(value:String) : void
     {
@@ -169,16 +186,6 @@ public class _Super_FiberCoreNumber extends flash.events.EventDispatcher impleme
         }
     }
 
-    public function set descp(value:String) : void
-    {
-        var oldValue:String = _internal_descp;
-        if (oldValue !== value)
-        {
-            _internal_descp = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "descp", oldValue, _internal_descp));
-        }
-    }
-
     public function set cableId(value:String) : void
     {
         var oldValue:String = _internal_cableId;
@@ -186,6 +193,16 @@ public class _Super_FiberCoreNumber extends flash.events.EventDispatcher impleme
         {
             _internal_cableId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableId", oldValue, _internal_cableId));
+        }
+    }
+
+    public function set descp(value:String) : void
+    {
+        var oldValue:String = _internal_descp;
+        if (oldValue !== value)
+        {
+            _internal_descp = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "descp", oldValue, _internal_descp));
         }
     }
 
@@ -249,13 +266,13 @@ public class _Super_FiberCoreNumber extends flash.events.EventDispatcher impleme
         }
     }
 
-    public function set connections(value:String) : void
+    public function set endConnections(value:String) : void
     {
-        var oldValue:String = _internal_connections;
+        var oldValue:String = _internal_endConnections;
         if (oldValue !== value)
         {
-            _internal_connections = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "connections", oldValue, _internal_connections));
+            _internal_endConnections = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "endConnections", oldValue, _internal_endConnections));
         }
     }
 

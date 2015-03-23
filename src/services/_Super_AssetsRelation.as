@@ -12,6 +12,7 @@ import mx.rpc.AsyncToken;
 import mx.rpc.remoting.Operation;
 import mx.rpc.remoting.RemoteObject;
 import valueObjects.Cable;
+import valueObjects.CableVO;
 import valueObjects.FiberCoreNumber;
 import valueObjects.Site;
 import valueObjects.SiteAssetsRelations;
@@ -30,24 +31,28 @@ internal class _Super_AssetsRelation extends com.adobe.fiber.services.wrapper.Re
         _serviceControl = new mx.rpc.remoting.RemoteObject();
 
         // initialize RemoteClass alias for all entities returned by functions of this service
-        valueObjects.FiberCoreNumber._initRemoteClassAlias();
         valueObjects.Cable._initRemoteClassAlias();
+        valueObjects.FiberCoreNumber._initRemoteClassAlias();
+        valueObjects.CableVO._initRemoteClassAlias();
 
         var operations:Object = new Object();
         var operation:mx.rpc.remoting.Operation;
 
-        operation = new mx.rpc.remoting.Operation(null, "siteAssetsRelations");
-         operation.resultType = valueObjects.SiteAssetsRelations;
-        operations["siteAssetsRelations"] = operation;
-        operation = new mx.rpc.remoting.Operation(null, "listFCN");
-         operation.resultElementType = valueObjects.FiberCoreNumber;
-        operations["listFCN"] = operation;
-        operation = new mx.rpc.remoting.Operation(null, "siteInfo");
-         operation.resultType = valueObjects.Site;
-        operations["siteInfo"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "listCable");
          operation.resultElementType = valueObjects.Cable;
         operations["listCable"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "listFCN");
+         operation.resultElementType = valueObjects.FiberCoreNumber;
+        operations["listFCN"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "siteAssetsRelations");
+         operation.resultType = valueObjects.SiteAssetsRelations;
+        operations["siteAssetsRelations"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "siteInfo");
+         operation.resultType = valueObjects.Site;
+        operations["siteInfo"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "listCableVO");
+         operation.resultElementType = valueObjects.CableVO;
+        operations["listCableVO"] = operation;
 
         _serviceControl.operations = operations;
         _serviceControl.convertResultHandler = com.adobe.serializers.utility.TypeUtility.convertResultHandler;
@@ -66,7 +71,7 @@ internal class _Super_AssetsRelation extends com.adobe.fiber.services.wrapper.Re
     
 
     /**
-      * This method is a generated wrapper used to call the 'siteAssetsRelations' operation. It returns an mx.rpc.AsyncToken whose 
+      * This method is a generated wrapper used to call the 'listCable' operation. It returns an mx.rpc.AsyncToken whose 
       * result property will be populated with the result of the operation when the server response is received. 
       * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
@@ -76,9 +81,9 @@ internal class _Super_AssetsRelation extends com.adobe.fiber.services.wrapper.Re
       *
       * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
       */
-    public function siteAssetsRelations(arg0:valueObjects.Site, arg1:valueObjects.Site) : mx.rpc.AsyncToken
+    public function listCable(arg0:String, arg1:String) : mx.rpc.AsyncToken
     {
-        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("siteAssetsRelations");
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("listCable");
 		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0,arg1) ;
         return _internal_token;
     }
@@ -102,6 +107,24 @@ internal class _Super_AssetsRelation extends com.adobe.fiber.services.wrapper.Re
     }
      
     /**
+      * This method is a generated wrapper used to call the 'siteAssetsRelations' operation. It returns an mx.rpc.AsyncToken whose 
+      * result property will be populated with the result of the operation when the server response is received. 
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
+      *
+      * @see mx.rpc.AsyncToken
+      * @see mx.rpc.CallResponder 
+      *
+      * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
+      */
+    public function siteAssetsRelations(arg0:valueObjects.Site, arg1:valueObjects.Site) : mx.rpc.AsyncToken
+    {
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("siteAssetsRelations");
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0,arg1) ;
+        return _internal_token;
+    }
+     
+    /**
       * This method is a generated wrapper used to call the 'siteInfo' operation. It returns an mx.rpc.AsyncToken whose 
       * result property will be populated with the result of the operation when the server response is received. 
       * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
@@ -120,7 +143,7 @@ internal class _Super_AssetsRelation extends com.adobe.fiber.services.wrapper.Re
     }
      
     /**
-      * This method is a generated wrapper used to call the 'listCable' operation. It returns an mx.rpc.AsyncToken whose 
+      * This method is a generated wrapper used to call the 'listCableVO' operation. It returns an mx.rpc.AsyncToken whose 
       * result property will be populated with the result of the operation when the server response is received. 
       * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
@@ -130,9 +153,9 @@ internal class _Super_AssetsRelation extends com.adobe.fiber.services.wrapper.Re
       *
       * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
       */
-    public function listCable(arg0:String, arg1:String) : mx.rpc.AsyncToken
+    public function listCableVO(arg0:String, arg1:String) : mx.rpc.AsyncToken
     {
-        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("listCable");
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("listCableVO");
 		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0,arg1) ;
         return _internal_token;
     }

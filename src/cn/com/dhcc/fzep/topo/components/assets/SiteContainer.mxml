@@ -13,8 +13,7 @@
 		<services:SiteEquip id="siteEquip"
 							fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 							showBusyCursor="true"/>
-		<s:CallResponder id="listFCNResult" result="listFCNResult_resultHandler(event)"/>
-		<s:CallResponder id="listCableResult" result="listCableResult_resultHandler(event)"/>
+		<s:CallResponder id="listCableVOResult" result="listCableVOResult_resultHandler(event)"/>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 		
 	</fx:Declarations>
@@ -43,6 +42,7 @@
 			import cn.com.dhcc.fzep.topo.components.UnknownComponent;
 			
 			import valueObjects.Cable;
+			import valueObjects.CableVO;
 			import valueObjects.Carrier;
 			import valueObjects.FiberCoreNumber;
 			import valueObjects.GPRS;
@@ -127,15 +127,13 @@
 					}
 					equipContainer.addElement(assetsEquip);
 				}
-				listCable(siteId,site2Id);
-				
+				listCableVO(siteId,site2Id);
 			}
 			/**
 			 * 得到设备显示组件
 			 */
 			private function getEquipComponent(equip:Object):UIComponent{
 				var eType:String = equip['type'];
-				
 				var eName:String =  equip['name'];
 				if(eType==EquipConstants.EQUIP_TYPE_GPRS){
 					var gprsComponet:GPRSComponent = new GPRSComponent();
@@ -182,16 +180,18 @@
 			/**
 			 * 设置光缆列表
 			 */
-			[ArrayElementType("valueObjects.Cable")]
+			[ArrayElementType("valueObjects.CableVO")]
 			public function set cableList(cabList:Array):void{
 				_cableList = cabList;
+				var fcna:Array = new Array();
 				for (var i:int = 0; i < _cableList.length; i++) 
 				{
 					if(i>1){
 						break;
 					}
 					var vGroup:VGroup = new VGroup();
-					var cable:Object = _cableList[i];
+					//var cable:Object = _cableList[i];
+					var cableVO:CableVO = _cableList[i] as CableVO;
 					/*
 					var label:Label = new Label();
 					label.text = cable['cableName'];
@@ -203,10 +203,10 @@
 					img.width = CABLE_IN_WIDTH;
 					img.height = CABLE_IN_WIDTH;
 					img.source = tagsImg;
-					img.toolTip = cable['cableName'];
+					img.toolTip = cableVO.cableName;//cable['cableName'];
 					vGroup.addElement(img);
 					vGroup.horizontalAlign = "center";
-					vGroup.id = CABLE_INTERFACE_ID_TAG + cable['cableId'];
+					vGroup.id = CABLE_INTERFACE_ID_TAG + cableVO.cableId;//cable['cableId'];
 					vGroup.x = i*relationContainer.width+CABLE_WEIGHT/2;
 					vGroup.width = 30;
 					vGroup.y = i==0?0:SContainer.height;
@@ -230,9 +230,7 @@
 						line.yTo = relationContainer.height;
 					}
 					
-					//line.yTo = 0;
-					
-					line.id = ObjectUtil.getClassInfo(Cable).name + cable['cableId'];
+					line.id = ObjectUtil.getClassInfo(Cable).name + cableVO.cableId;
 					
 					var stroke:SolidColorStroke = new SolidColorStroke();
 					stroke.weight = CABLE_WEIGHT;
@@ -240,19 +238,24 @@
 					stroke.color = lineColors[i%lineColors.length];
 					
 					
-					var delFlg:String = cable['delFlg'];
+					var delFlg:String = cableVO.delFlg;//cable['delFlg'];
 					if(delFlg!=EquipConstants.EQUIP_DEL_FLAG_USED){
 						stroke.alpha = 0.1;
 					}
 					
 					line.stroke = stroke;
 					
-					
-					
 					relationContainer.addElement(line);
+					
+					for each (var j:FiberCoreNumber in cableVO.listFibeCoreNumber) 
+					{
+						fcna.push(j);
+					}
+					
+					
 				}
-				
-				listFCN(siteId);
+				fiberCoreNumberArray = fcna;
+				//listFCN(siteId);
 			}
 			public function get cableList():Array{
 				return _cableList;
@@ -272,8 +275,6 @@
 			private function connectCableAndEquip():void{
 				var arrCol:ArrayCollection = new ArrayCollection(_fiberCoreNumberArray);  
 				var cableX:Number = -1;
-				//var cableColor:uint = 0;
-				
 				for (var i:int = 0; i < arrCol.length; i++) 
 				{
 					var fiberCoreNumber:FiberCoreNumber = arrCol.getItemAt(i) as FiberCoreNumber;
@@ -281,12 +282,18 @@
 					/*
 					 * {'deviceId':'1','deviceType':'gprs','deviceName':'safsdfa'}
 					 */
-					var connections:String = fiberCoreNumber.connections.replace(/'/g,"\"") ;//'{"deviceId":"1","deviceType":"gprs","deviceName":"safsdfa"}';//
+					
+					var connections:String = "";//fiberCoreNumber.connections.replace(/'/g,"\"") ;//'{"deviceId":"1","deviceType":"gprs","deviceName":"safsdfa"}';//
+					if( fiberCoreNumber.startConnections!=null){
+						connections = fiberCoreNumber.startConnections.replace(/'/g,"\"") ;
+					}else if( fiberCoreNumber.endConnections != null){
+						connections = fiberCoreNumber.endConnections.replace(/'/g,"\"") ;
+					}
+					//Alert.show(connections);
 					var connectionObj:Object = JSON.decode(connections) as Object;
 					var deviceId:String = connectionObj['deviceId'];
 					var deviceType:String = equipType(connectionObj['deviceType']);
-					//Alert.show("id=" + deviceId + ",type=" + deviceType);
-					
+					//Alert.show(connectionObj['deviceType'] + "==>" + deviceType);
 					var cableComName:String = ObjectUtil.getClassInfo(Cable).name + cableId;
 					var cableStroke:SolidColorStroke = null;
 					/*
@@ -318,10 +325,10 @@
 							var assetsEquip:AssetsEquipment = equipContainer.getElementAt(k) as AssetsEquipment;
 							
 							var isTargetEquip:Boolean = false;
-							isTargetEquip = (assetsEquip.id== deviceType+deviceId);
+							isTargetEquip = (assetsEquip.id== (deviceType+deviceId));
 							
+							//Alert.show(assetsEquip.id + "  "  + deviceType+deviceId);
 							if(isTargetEquip){
-								
 								var connectPoint:Point = null;
 								connectPoint = assetsEquip.connectPoint(cablePoint);//assetsEquip.connectLeftPoint();
 								var targetX:Number = equipContainer.x + assetsEquip.x +  connectPoint.x + (targetX>cableX?0:7);
@@ -372,12 +379,18 @@
 			 */
 			private function equipType(type:String):String{
 				var mapstr:String = '';
-				if(type=='gprs'){
+				if(type==EquipConstants.TYPE_CONNECTION_GPRS){
 					mapstr = EquipConstants.EQUIP_TYPE_GPRS;
-				}else if(type=='olt'){
+				}else if(type==EquipConstants.TYPE_CONNECTION_OLT){
 					mapstr = EquipConstants.EQUIP_TYPE_OLT
-				}else if(type=='onu'){
+				}else if(type==EquipConstants.TYPE_CONNECTION_ONU){
 					mapstr = EquipConstants.EQUIP_TYPE_ONU;
+				}else if(type==EquipConstants.TYPE_CONNECTION_CARRIER){
+					mapstr = EquipConstants.EQUIP_TYPE_Carrier;
+				}else if(type==EquipConstants.TYPE_CONNECTION_THREELAYERSWITCH){
+					mapstr = EquipConstants.EQUIP_TYPE_ThreeLayerSwitch;
+				}else if(type==EquipConstants.TYPE_CONNECTION_TWOLAYERSWITCH){
+					mapstr = EquipConstants.EQUIP_TYPE_TwoLayerSwitch;
 				}
 				return mapstr;
 			}
@@ -451,7 +464,6 @@
 			
 			protected function getCableObj(obj:Object):Cable{
 				var jsonObj:Object = JSON.decode(obj['jsonData']);
-				
 				var cable:Cable = new Cable();
 				cable.cableId = jsonObj['cableId'];
 				cable.cableName = jsonObj['cableName'];
@@ -468,18 +480,6 @@
 				cable.bizType = jsonObj['bizType'];
 				cable.isMainRoad = jsonObj['isMainRoad'];
 				return cable;
-			}
-			
-			
-			protected function listFCN(arg0:String):void
-			{
-				listFCNResult.token = assetsRelation.listFCN(arg0);
-			}
-			
-			protected function listFCNResult_resultHandler(event:ResultEvent):void
-			{
-				var arrCol:ArrayCollection = event.result as ArrayCollection;
-				fiberCoreNumberArray = arrCol.source;
 			}
 			
 			[Bindable]
@@ -506,12 +506,12 @@
 			}
 			
 			
-			protected function listCable(arg0:String, arg1:String):void
+			protected function listCableVO(arg0:String, arg1:String):void
 			{
-				listCableResult.token = assetsRelation.listCable(arg0, arg1);
+				listCableVOResult.token = assetsRelation.listCableVO(arg0, arg1);
 			}
 			
-			protected function listCableResult_resultHandler(event:ResultEvent):void
+			protected function listCableVOResult_resultHandler(event:ResultEvent):void
 			{
 				var cableEquipList:ArrayCollection = event.result as ArrayCollection;
 				//设置站点光缆集合

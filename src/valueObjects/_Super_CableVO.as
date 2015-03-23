@@ -1,6 +1,6 @@
 /**
  * This is a generated class and is not intended for modification.  To customize behavior
- * of this value object you may modify the generated sub-class of this class - Cable.as.
+ * of this value object you may modify the generated sub-class of this class - CableVO.as.
  */
 
 package valueObjects
@@ -10,6 +10,7 @@ import com.adobe.fiber.valueobjects.IValueObject;
 import flash.events.EventDispatcher;
 import mx.collections.ArrayCollection;
 import mx.events.PropertyChangeEvent;
+import valueObjects.FiberCoreNumber;
 
 import flash.net.registerClassAlias;
 import flash.net.getClassByAlias;
@@ -20,28 +21,29 @@ import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 use namespace model_internal;
 
 [ExcludeClass]
-public class _Super_Cable extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
+public class _Super_CableVO extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
         try
         {
-            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.pojo.Cable") == null)
+            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.vo.CableVO") == null)
             {
-                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.Cable", cz);
+                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.vo.CableVO", cz);
             }
         }
         catch (e:Error)
         {
-            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.Cable", cz);
+            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.vo.CableVO", cz);
         }
     }
 
     model_internal static function initRemoteClassAliasAllRelated() : void
     {
+        valueObjects.FiberCoreNumber.initRemoteClassAliasSingleChild();
     }
 
-    model_internal var _dminternal_model : _CableEntityMetadata;
+    model_internal var _dminternal_model : _CableVOEntityMetadata;
     model_internal var _changedObjects:mx.collections.ArrayCollection = new ArrayCollection();
 
     public function getChangedObjects() : Array
@@ -58,19 +60,18 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
     /**
      * properties
      */
-    private var _internal_constructionUnit : String;
-    private var _internal_fibreCoreNumber : String;
-    private var _internal_showName : String;
-    private var _internal_fiberId : String;
-    private var _internal_cableStartId : String;
     private var _internal_cableId : String;
+    private var _internal_cableStartId : String;
+    private var _internal_fiberId : String;
     private var _internal_constructionUnitId : String;
     private var _internal_runTime : String;
-    private var _internal_cableName : String;
     private var _internal_cableType : String;
+    private var _internal_cableName : String;
     private var _internal_isMainRoad : String;
     private var _internal_descp : String;
     private var _internal_layingType : String;
+    private var _internal_listFibeCoreNumber : ArrayCollection;
+    model_internal var _internal_listFibeCoreNumber_leaf:valueObjects.FiberCoreNumber;
     private var _internal_delFlg : String;
     private var _internal_bizType : String;
     private var _internal_cableLength : String;
@@ -86,9 +87,9 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
 
     model_internal var _changeWatcherArray:Array = new Array();
 
-    public function _Super_Cable()
+    public function _Super_CableVO()
     {
-        _model = new _CableEntityMetadata(this);
+        _model = new _CableVOEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
 
@@ -99,27 +100,9 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
      */
 
     [Bindable(event="propertyChange")]
-    public function get constructionUnit() : String
+    public function get cableId() : String
     {
-        return _internal_constructionUnit;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get fibreCoreNumber() : String
-    {
-        return _internal_fibreCoreNumber;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get showName() : String
-    {
-        return _internal_showName;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get fiberId() : String
-    {
-        return _internal_fiberId;
+        return _internal_cableId;
     }
 
     [Bindable(event="propertyChange")]
@@ -129,9 +112,9 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
     }
 
     [Bindable(event="propertyChange")]
-    public function get cableId() : String
+    public function get fiberId() : String
     {
-        return _internal_cableId;
+        return _internal_fiberId;
     }
 
     [Bindable(event="propertyChange")]
@@ -147,15 +130,15 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
     }
 
     [Bindable(event="propertyChange")]
-    public function get cableName() : String
-    {
-        return _internal_cableName;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get cableType() : String
     {
         return _internal_cableType;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get cableName() : String
+    {
+        return _internal_cableName;
     }
 
     [Bindable(event="propertyChange")]
@@ -174,6 +157,12 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
     public function get layingType() : String
     {
         return _internal_layingType;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get listFibeCoreNumber() : ArrayCollection
+    {
+        return _internal_listFibeCoreNumber;
     }
 
     [Bindable(event="propertyChange")]
@@ -208,43 +197,13 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
      * data/source property setters
      */
 
-    public function set constructionUnit(value:String) : void
+    public function set cableId(value:String) : void
     {
-        var oldValue:String = _internal_constructionUnit;
+        var oldValue:String = _internal_cableId;
         if (oldValue !== value)
         {
-            _internal_constructionUnit = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "constructionUnit", oldValue, _internal_constructionUnit));
-        }
-    }
-
-    public function set fibreCoreNumber(value:String) : void
-    {
-        var oldValue:String = _internal_fibreCoreNumber;
-        if (oldValue !== value)
-        {
-            _internal_fibreCoreNumber = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "fibreCoreNumber", oldValue, _internal_fibreCoreNumber));
-        }
-    }
-
-    public function set showName(value:String) : void
-    {
-        var oldValue:String = _internal_showName;
-        if (oldValue !== value)
-        {
-            _internal_showName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "showName", oldValue, _internal_showName));
-        }
-    }
-
-    public function set fiberId(value:String) : void
-    {
-        var oldValue:String = _internal_fiberId;
-        if (oldValue !== value)
-        {
-            _internal_fiberId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "fiberId", oldValue, _internal_fiberId));
+            _internal_cableId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableId", oldValue, _internal_cableId));
         }
     }
 
@@ -258,13 +217,13 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
         }
     }
 
-    public function set cableId(value:String) : void
+    public function set fiberId(value:String) : void
     {
-        var oldValue:String = _internal_cableId;
+        var oldValue:String = _internal_fiberId;
         if (oldValue !== value)
         {
-            _internal_cableId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableId", oldValue, _internal_cableId));
+            _internal_fiberId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "fiberId", oldValue, _internal_fiberId));
         }
     }
 
@@ -288,16 +247,6 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
         }
     }
 
-    public function set cableName(value:String) : void
-    {
-        var oldValue:String = _internal_cableName;
-        if (oldValue !== value)
-        {
-            _internal_cableName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableName", oldValue, _internal_cableName));
-        }
-    }
-
     public function set cableType(value:String) : void
     {
         var oldValue:String = _internal_cableType;
@@ -305,6 +254,16 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
         {
             _internal_cableType = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableType", oldValue, _internal_cableType));
+        }
+    }
+
+    public function set cableName(value:String) : void
+    {
+        var oldValue:String = _internal_cableName;
+        if (oldValue !== value)
+        {
+            _internal_cableName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableName", oldValue, _internal_cableName));
         }
     }
 
@@ -335,6 +294,31 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
         {
             _internal_layingType = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "layingType", oldValue, _internal_layingType));
+        }
+    }
+
+    public function set listFibeCoreNumber(value:*) : void
+    {
+        var oldValue:ArrayCollection = _internal_listFibeCoreNumber;
+        if (oldValue !== value)
+        {
+            if (value is ArrayCollection)
+            {
+                _internal_listFibeCoreNumber = value;
+            }
+            else if (value is Array)
+            {
+                _internal_listFibeCoreNumber = new ArrayCollection(value);
+            }
+            else if (value == null)
+            {
+                _internal_listFibeCoreNumber = null;
+            }
+            else
+            {
+                throw new Error("value of listFibeCoreNumber must be a collection");
+            }
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "listFibeCoreNumber", oldValue, _internal_listFibeCoreNumber));
         }
     }
 
@@ -438,14 +422,14 @@ public class _Super_Cable extends flash.events.EventDispatcher implements com.ad
 
     [Transient]
     [Bindable(event="propertyChange")]
-    public function get _model() : _CableEntityMetadata
+    public function get _model() : _CableVOEntityMetadata
     {
         return model_internal::_dminternal_model;
     }
 
-    public function set _model(value : _CableEntityMetadata) : void
+    public function set _model(value : _CableVOEntityMetadata) : void
     {
-        var oldValue : _CableEntityMetadata = model_internal::_dminternal_model;
+        var oldValue : _CableVOEntityMetadata = model_internal::_dminternal_model;
         if (oldValue !== value)
         {
             model_internal::_dminternal_model = value;
