@@ -13,8 +13,12 @@
 			
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
-				lSiteCon.siteId = '1';
+				var s1:String = '1';
+				var s2:String = '2';
+				
+				lSiteCon.initSite(s1,s2,connectSite);
 			}
+			protected function connectSite():void{}
 			
 		]]>
 	</fx:Script>

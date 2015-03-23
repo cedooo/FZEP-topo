@@ -67,21 +67,12 @@
 				endCallback = callBack;
 				siteInfo(_siteId);
 			}
-			
-			public function set siteId(siteId:String):void{
-				_siteId = siteId;
-				siteInfo(_siteId);
-			}
-			public function set site2Id(siteId:String):void{
-				_site2Id = siteId;
-			}
 			public  function get siteId():String{
 				return _siteId;
 			}
 			public  function get site2Id():String{
 				return _site2Id;
 			}
-			
 			[Bindable]
 			public var site:Site;
 			
@@ -375,7 +366,10 @@
 				endCallback();
 				
 			}
-			
+			/**
+			 * 将连接情况里的设备类型转换为 对象VO中的设备类型字符串 
+			 * 来将设备区分开
+			 */
 			private function equipType(type:String):String{
 				var mapstr:String = '';
 				if(type=='gprs'){
@@ -506,7 +500,7 @@
 						cableStroke = cableLine.stroke as SolidColorStroke;
 						//cableColor = cableStroke.color;
 						break;
-					}
+					}else{continue;}
 				}
 				return cableStroke;
 			}

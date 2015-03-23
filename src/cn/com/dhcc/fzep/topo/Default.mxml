@@ -218,10 +218,11 @@
 				relation.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, function(event:ContextMenuEvent):void{
 					var sceneManager:SceneManager = Root.instance.sceneManager;
 					var entity:Entity = sceneManager.getEntity(event.contextMenuOwner.name);
+					//Alert.show(event.contextMenuOwner.name +'\n' + entity.toString());
 					if(entity is DynamicConnector){
 						var connector:DynamicConnector = entity as DynamicConnector;
 						var cable:Cable = connector.customData as Cable;
-					
+						//Alert.show(cable.cableStartId + '-' + cable.cableEndId);
 						var topoBasePath:String = ScriptUtils.getRoot(root.loaderInfo.url) + "topo/";
 						var url:String = topoBasePath + "assetsRelation.jsp?s1=" + cable.cableStartId + "&s2=" + cable.cableEndId;
 						ScriptUtils.openTabWindow(url, "资产关系图");
@@ -780,6 +781,8 @@
 								connector.contextMenu = cableContextMenu;
 								var cable:Cable  = new Cable();
 								cable.cableId = cableID;
+								cable.cableStartId = startID
+								cable.cableEndId = endID;
 								connector.customData = cable;   
 								
 								sceneMgr.addEntity(connector);

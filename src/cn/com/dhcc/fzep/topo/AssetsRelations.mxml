@@ -105,14 +105,6 @@
 					if(s1&&s2){
 						lSiteCon.initSite(s1,s2,connectSite);
 						lSiteCon2.initSite(s2,s1,connectSite);
-						/*
-						lSiteCon.site2Id = s2;
-						lSiteCon.siteId = s1;
-						lSiteCon.endCallback = connectSite;
-						lSiteCon2.site2Id = s1;
-						lSiteCon2.siteId = s2;
-						lSiteCon2.endCallback = connectSite;
-						*/
 					}
 				}
 			}
