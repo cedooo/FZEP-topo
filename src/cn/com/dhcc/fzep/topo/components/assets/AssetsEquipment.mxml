@@ -22,8 +22,6 @@
 			 * 添加设备
 			 */
 			public function set equipment(equip:UIComponent):void{
-				//Alert.show(equip.name);
-				//equipmentContainer.addElement(equip);
 				_component = equip;
 			}
 			/**
@@ -53,25 +51,20 @@
 					return connectLeftPoint();
 				}
 			}
+			private var POINT_IN_USED:String = "used";
 			private function validConnectPoint(vGroup:Group):Point{
 				var totalPoint:Number = vGroup.numElements;
 				var validNum:Boolean = totalPoint<POINT_NUM_LIMIT && totalPoint>0;
 				var targetPoint:Point = new Point(-1,-1);
-				//Alert.show(totalPoint+'');
 				if(validNum){
 					for (var i:int = 0; i < totalPoint; i++) 
 					{
 						var imgs:Image = vGroup.getElementAt(i) as Image;
-						if(imgs.name!='used'){
-							if(i==1){
-								//vGroup.getElementAt(0).y=1*componentHeight/5; 
-								//vGroup.getElementAt(1).y=2*componentHeight/5; 
-							}
+						if(imgs.name!=POINT_IN_USED){
 							targetPoint.x =  vGroup.x + imgs.x;
 							targetPoint.y = imgs.y + imgs.height/2+1;
-							imgs.name='used';
+							imgs.name=POINT_IN_USED;
 							imgs.visible = true;
-							
 							break;
 						}else{
 							continue;
@@ -83,8 +76,6 @@
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{
 				equipmentContainer.addElement(_component);
-				//rightConnectPoints.x = componentWidth-7;
-				//Alert.show(componentWidth + '右侧：'+rightConnectPoints.x+'');
 			}
 			
 		]]>
