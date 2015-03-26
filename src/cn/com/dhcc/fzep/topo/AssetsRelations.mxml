@@ -11,18 +11,14 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
-			import mx.controls.Alert;
 			import mx.controls.LinkButton;
 			import mx.events.FlexEvent;
 			import mx.graphics.SolidColorStroke;
 			
-			import spark.components.Button;
-			import spark.components.Label;
 			import spark.primitives.Line;
 			
 			import cn.com.dhcc.fzep.topo.components.assets.SiteContainer;
 			
-			import valueObjects.Cable;
 			import valueObjects.CableVO;
 			
 			
@@ -41,66 +37,46 @@
 					{
 						var cable2:CableVO = site2Cable.getItemAt(i) as CableVO;
 						if(cable1.cableId == cable2.cableId){
-							//Alert.show(cable1.cableId);
-							var strokes:SolidColorStroke = site1.cableStroke(cable1.cableId);// new SolidColorStroke();
+							var strokes:SolidColorStroke = site1.cableStroke(cable1.cableId);
 							
 							var pointS:Point = site1.connectionToCable(cable1.cableId);
 							var pointE:Point = site2.connectionToCable(cable2.cableId);
 							var offsetY:Number = (i%2==0?-OFFSET_Y:OFFSET_Y);
 							
 							var line:Line = new Line();
-							line.xFrom = pointS.x + lSitePCon.x;
-							line.yFrom = pointS.y + lSitePCon.y + offsetY;
-							line.xTo =  pointE.x + lSite2PCon.x ;
-							line.yTo = pointE.y + lSite2PCon.y + offsetY;
+							line.xFrom = pointS.x + leftSiteAssetsContainer.x;
+							line.yFrom = pointS.y + leftSiteAssetsContainer.y + offsetY;
+							line.xTo =  pointE.x + rightSiteAssetsContainer.x ;
+							line.yTo = pointE.y + rightSiteAssetsContainer.y + offsetY;
 							line.stroke = strokes;
-							container.addElement(line);
-							/*
-							var cableInfo:Label = new Label();
-							cableInfo.text = cable1.cableName;
-							cableInfo.width = cable1.cableName.length * CABLE_INFO_FONT_SIZE;
-							cableInfo.height = 25;
-							cableInfo.buttonMode = true;
-							cableInfo.toolTip = "展示光缆信息";
-							cableInfo.setStyle("fontSize", CABLE_INFO_FONT_SIZE);
-							cableInfo.x = (line.xTo + line.xFrom)/2-cableInfo.width/2;// - cableInfo.width/2;
-							cableInfo.y = (line.yTo + line.yFrom)/2 - CABLE_INFO_FONT_SIZE;
-							container.addElement(cableInfo);
-							
-							
-							var detailsLink:LinkButton = new LinkButton();
-							detailsLink.label = "详细>>";
-							detailsLink.x = cableInfo.x + cableInfo.width;
-							detailsLink.y = cableInfo.y;
-							container.addElement(detailsLink);
-							*/
+							assetsContainer.addElement(line);
 							var cableInfo:LinkButton = new LinkButton();
-							cableInfo.label = cable1.cableName;
+							cableInfo.label = "[ " + cable1.cableName + " ]";
 							cableInfo.width = cable1.cableName.length * CABLE_INFO_FONT_SIZE;
 							cableInfo.height = 25;
 							cableInfo.buttonMode = true;
-							cableInfo.toolTip = "展示光缆详细信息";
+							cableInfo.toolTip = "光缆详细信息";
 							//cableInfo.setStyle("fontSize", CABLE_INFO_FONT_SIZE);
 							cableInfo.x = (line.xTo + line.xFrom)/2-cableInfo.width/2;// - cableInfo.width/2;
-							cableInfo.y = (line.yTo + line.yFrom)/2 - CABLE_INFO_FONT_SIZE;
-							container.addElement(cableInfo);
+							cableInfo.y = (line.yTo + line.yFrom)/2 - cableInfo.height ;
+							assetsContainer.addElement(cableInfo);
 							
 							
 							var line2:Line = new Line();
-							line2.xFrom = pointS.x + lSitePCon.x;
-							line2.yFrom = pointS.y + lSitePCon.y + offsetY;
-							line2.xTo =  pointS.x + lSitePCon.x ;
-							line2.yTo = pointS.y + lSitePCon.y ;
+							line2.xFrom = pointS.x + leftSiteAssetsContainer.x;
+							line2.yFrom = pointS.y + leftSiteAssetsContainer.y + offsetY;
+							line2.xTo =  pointS.x + leftSiteAssetsContainer.x ;
+							line2.yTo = pointS.y + leftSiteAssetsContainer.y ;
 							line2.stroke = strokes;
-							container.addElement(line2);
+							assetsContainer.addElement(line2);
 							
 							var line3:Line = new Line();
-							line3.xFrom = pointE.x + lSite2PCon.x;
-							line3.yFrom = pointE.y + lSite2PCon.y;
-							line3.xTo =  pointE.x + lSite2PCon.x ;
-							line3.yTo = pointE.y + lSite2PCon.y + offsetY ;
+							line3.xFrom = pointE.x + rightSiteAssetsContainer.x;
+							line3.yFrom = pointE.y + rightSiteAssetsContainer.y;
+							line3.xTo =  pointE.x + rightSiteAssetsContainer.x ;
+							line3.yTo = pointE.y + rightSiteAssetsContainer.y + offsetY ;
 							line3.stroke = strokes;
-							container.addElement(line3);
+							assetsContainer.addElement(line3);
 							
 							break;
 						}else{
@@ -116,18 +92,17 @@
 			 * 链接站点之间的光缆
 			 */
 			public function connectSite():void{
-				//Alert.show('connect site');
-				connectCable(lSiteCon, lSiteCon2);
+				connectCable(leftSiteContainer, rightSiteContainer);
 			}
 			
 			protected function application1_applicationCompleteHandler(event:FlexEvent):void
 			{
 				if(stage){
-					var s1:String = root.loaderInfo.parameters['s1'];
-					var s2:String = root.loaderInfo.parameters['s2'];
-					if(s1&&s2){
-						lSiteCon.initSite(s1,s2,connectSite);
-						lSiteCon2.initSite(s2,s1,connectSite);
+					var leftSiteId:String = root.loaderInfo.parameters['s1'];
+					var rightSiteId:String = root.loaderInfo.parameters['s2'];
+					if(leftSiteId&&rightSiteId){
+						leftSiteContainer.construct(leftSiteId,rightSiteId,connectSite);
+						rightSiteContainer.construct(rightSiteId,leftSiteId,connectSite);
 					}
 				}
 			}
@@ -146,12 +121,12 @@
 			<s:layout>
 				<s:HorizontalLayout  paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" />
 			</s:layout>
-			<s:BorderContainer   width="100%" height="100%" verticalCenter="middle" id="container" borderVisible="false"  >
-				<s:BorderContainer width="45%" height="400" verticalCenter="middle" id="lSitePCon"  borderVisible="false"  cornerRadius="10" >
-					<cedoassets:SiteContainer id="lSiteCon" ></cedoassets:SiteContainer>
+			<s:BorderContainer   width="100%" height="100%" verticalCenter="middle" id="assetsContainer" borderVisible="false"  >
+				<s:BorderContainer width="45%" height="400" verticalCenter="middle" id="leftSiteAssetsContainer"  borderVisible="false"  cornerRadius="10" >
+					<cedoassets:SiteContainer id="leftSiteContainer" ></cedoassets:SiteContainer>
 				</s:BorderContainer>
-				<s:BorderContainer width="45%" x="{lSitePCon.width+50}" height="400" id="lSite2PCon" verticalCenter="middle"  borderVisible="false"  cornerRadius="10" >
-					<cedoassets:SiteContainer id="lSiteCon2" ></cedoassets:SiteContainer>
+				<s:BorderContainer width="45%" x="{leftSiteContainer.width+50}" height="400" id="rightSiteAssetsContainer" verticalCenter="middle"  borderVisible="false"  cornerRadius="10" >
+					<cedoassets:SiteContainer id="rightSiteContainer" ></cedoassets:SiteContainer>
 				</s:BorderContainer>
 			</s:BorderContainer>
 		</s:BorderContainer>

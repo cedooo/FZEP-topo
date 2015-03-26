@@ -61,7 +61,7 @@
 			[Bindable]
 			private var _site2Id:String;    //站点ID
 			
-			public function initSite(siteId:String, connectedSiteId:String, callBack:Function):void{
+			public function construct(siteId:String, connectedSiteId:String, callBack:Function):void{
 				_siteId = siteId;
 				_site2Id = connectedSiteId;
 				endCallback = callBack;
