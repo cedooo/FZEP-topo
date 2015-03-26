@@ -136,6 +136,11 @@
 								row.addElement(valItem);
 								
 								grid.addElement(row);
+								
+								if(jsonObj['delFlg']!='启用'){
+									//Alert.show(jsonObj['delFlg']);
+									equipPanel.alpha = 0.3;    //隐藏'停用'的设备
+								}
 							}
 							gridContainer.addElement(grid);
 							equipPanel.addElement(gridContainer);

@@ -12,9 +12,11 @@
 		<![CDATA[
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
+			import mx.controls.LinkButton;
 			import mx.events.FlexEvent;
 			import mx.graphics.SolidColorStroke;
 			
+			import spark.components.Button;
 			import spark.components.Label;
 			import spark.primitives.Line;
 			
@@ -25,6 +27,7 @@
 			
 			
 			private var OFFSET_Y:Number = 33;
+			private var CABLE_INFO_FONT_SIZE:Number = 12;
 			/**
 			 * 连接两个站点的光缆
 			 */
@@ -52,16 +55,34 @@
 							line.yTo = pointE.y + lSite2PCon.y + offsetY;
 							line.stroke = strokes;
 							container.addElement(line);
-							
+							/*
 							var cableInfo:Label = new Label();
 							cableInfo.text = cable1.cableName;
-							cableInfo.width = 100;
+							cableInfo.width = cable1.cableName.length * CABLE_INFO_FONT_SIZE;
 							cableInfo.height = 25;
-							cableInfo.setStyle("fontSize", 12);
-							
-							cableInfo.x = (line.xTo + line.xFrom)/2;// - cableInfo.width/2;
 							cableInfo.buttonMode = true;
-							cableInfo.y = (line.yTo + line.yFrom)/2 - 6;
+							cableInfo.toolTip = "展示光缆信息";
+							cableInfo.setStyle("fontSize", CABLE_INFO_FONT_SIZE);
+							cableInfo.x = (line.xTo + line.xFrom)/2-cableInfo.width/2;// - cableInfo.width/2;
+							cableInfo.y = (line.yTo + line.yFrom)/2 - CABLE_INFO_FONT_SIZE;
+							container.addElement(cableInfo);
+							
+							
+							var detailsLink:LinkButton = new LinkButton();
+							detailsLink.label = "详细>>";
+							detailsLink.x = cableInfo.x + cableInfo.width;
+							detailsLink.y = cableInfo.y;
+							container.addElement(detailsLink);
+							*/
+							var cableInfo:LinkButton = new LinkButton();
+							cableInfo.label = cable1.cableName;
+							cableInfo.width = cable1.cableName.length * CABLE_INFO_FONT_SIZE;
+							cableInfo.height = 25;
+							cableInfo.buttonMode = true;
+							cableInfo.toolTip = "展示光缆详细信息";
+							//cableInfo.setStyle("fontSize", CABLE_INFO_FONT_SIZE);
+							cableInfo.x = (line.xTo + line.xFrom)/2-cableInfo.width/2;// - cableInfo.width/2;
+							cableInfo.y = (line.yTo + line.yFrom)/2 - CABLE_INFO_FONT_SIZE;
 							container.addElement(cableInfo);
 							
 							

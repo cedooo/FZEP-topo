@@ -2,6 +2,9 @@ package cn.com.dhcc.fzep.topo.utils
 {
 	public class EquipJsonUtils
 	{
+		/**
+		 * 设备类型匹配 正则表达式
+		 */
 		public static var CABLE_TYPE_REGEXP:RegExp = /class.*\.Cable/;
 		public static var CARRIER_TYPE_REGEXP:RegExp = /class.*\.Carrier/;
 		public static var GPRS_TYPE_REGEXP:RegExp = /class.*\.GPRS/;
