@@ -93,9 +93,9 @@
 			protected var cableContextMenu:ContextMenu;    //光缆右键 菜单
 			private function applicationComplete() : void
 			{
-				var scO:Object = root.loaderInfo.parameters['schemaID'];
-				if(scO){
-					var sc:int = int(scO)//root.loaderInfo.parameters['siteID'];
+				var schemaId:Object = root.loaderInfo.parameters['schemaID'];
+				if(schemaId){
+					var sc:int = int(schemaId)//root.loaderInfo.parameters['siteID'];
 					if(sc){
 						schemaID = sc;
 						getSchema(String(schemaID));
@@ -215,6 +215,8 @@
 					//do nothing
 				}
 				
+				computeSiteNumber();
+				
 			}	
 			/**
 			 * 从图中删除光缆
@@ -232,30 +234,35 @@
 			 * 添加站点到视图中
 			 */
 			private function addEquip(arr:IList):void {
-				for (var i:int = 0; i < arr.length; i++) 
-				{
-					var sceneMgr:SceneManager = Root.instance.sceneManager;
-					var equipO:Object = arr.getItemAt(i);
-					var equip:SiteComponent;
-					var fcName:String;
-					if(equipO is Site){
-						equip = new SiteComponent();
-						equip.site = equipO as Site;
-						equip.contextMenu = siteContextMenu;
-						fcName = ObjectUtil.getClassInfo(Site).name + equip.site.siteId;
+				if(siteNumber+arr.length<=SITE_NUMBER_LIMIT){
+					for (var i:int = 0; i < arr.length; i++) 
+					{
+						var sceneMgr:SceneManager = Root.instance.sceneManager;
+						var equipO:Object = arr.getItemAt(i);
+						var equip:SiteComponent;
+						var fcName:String;
+						if(equipO is Site){
+							equip = new SiteComponent();
+							equip.site = equipO as Site;
+							equip.contextMenu = siteContextMenu;
+							fcName = ObjectUtil.getClassInfo(Site).name + equip.site.siteId;
+						}
+						if(!sceneMgr.existsEntity(fcName)){
+							var equipFC:FlexComponent = new FlexComponent(fcName, equip);
+							equipFC.draggable = true;
+							equipFC.editable = false;
+							equipFC.x = sceneMgr.viewport.x + 10;
+							equipFC.y = sceneMgr.viewport.y + 70*(i+1);
+							equipFC.width = 60;
+							equipFC.height = 60;
+							sceneMgr.addEntity(equipFC);
+						}else{
+							Alert.show("设备已存在,不能重复添加。");
+						}
 					}
-					if(!sceneMgr.existsEntity(fcName)){
-						var equipFC:FlexComponent = new FlexComponent(fcName, equip);
-						equipFC.draggable = true;
-						equipFC.editable = false;
-						equipFC.x = sceneMgr.viewport.x + 10;
-						equipFC.y = sceneMgr.viewport.y + 70*(i+1);
-						equipFC.width = 60;
-						equipFC.height = 60;
-						sceneMgr.addEntity(equipFC);
-					}else{
-						Alert.show("设备已存在,不能重复添加。");
-					}
+					computeSiteNumber();
+				}else {
+					Alert.show("超过站点视图的最大数量限制:" + SITE_NUMBER_LIMIT);
 				}
 			}
 			
@@ -409,6 +416,8 @@
 				TopoUtils.loadSchema(Root.instance.sceneManager, schema.schemaData,siteContextMenu,cableContextMenu, siteComponent_doubleClickHandler, true);
 				selector.setExceptList(getExceptIdListInSchema().toArray());
 				selector.loadValidSite();
+				
+				computeSiteNumber();
 			}
 			
 			protected function getSchemaResult_faultHandler(event:FaultEvent):void
@@ -477,7 +486,29 @@
 					TopoUtils.addCableToSchema(sceneMgr, cableObj,cableContextMenu);
 				}
 			}
+			[Bindable]
+			protected var siteNumber:Number=0;
 			
+			protected function computeSiteNumber():Number{
+				var enList:Array = Root.instance.sceneManager.entityList();
+				var idlistExcept:ArrayCollection = new ArrayCollection();
+				var siteTotalNumber:Number = 0;
+				for (var i:int = 0; i < enList.length; i++) 
+				{
+					if(enList[i] is FlexComponent){
+						var equipFC:FlexComponent = enList[i] as FlexComponent;
+						var equipObj:Object = equipFC.component;
+						if(equipObj is SiteComponent|| equipObj is SchemaElementComponent){
+							siteTotalNumber++;
+						}
+					}
+				}
+				siteNumber = siteTotalNumber;
+				return siteTotalNumber;
+			}
+			
+			[Bindable]
+			protected var SITE_NUMBER_LIMIT:Number = 500;    //加入站点的最大限制数量
 			
 		]]>
 	</fx:Script>
@@ -505,8 +536,9 @@
 			</mx:LinkButton>
 			<mx:LinkButton id="buildCable" label="检测视图中存在的光缆连接" toolTip="检测途中站点之间是否存在光缆" click="buildCable_clickHandler(event)">
 			</mx:LinkButton>
-			
 			<mx:Label text="]"   />
+			
+			<mx:Label text="已包含{siteNumber}个站点,还能加入{SITE_NUMBER_LIMIT-siteNumber}个站点"   />
 			<mx:Spacer width="100%" />
 			<mx:Label text="提示：按住鼠标左键不放可以放大缩小视图" />
 			<mx:LinkButton visible="false" id="refresh" label="更新" toolTip="更新图中设备状态，去掉其中无效的设备。" click="buildCable_clickHandler(event)">

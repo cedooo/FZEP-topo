@@ -69,7 +69,7 @@
 		<s:CallResponder id="getSiteInfoByIdResult"  result="getSiteInfoByIdResult_resultHandler(event)"/>
 		<services:SiteEquip id="siteEquip"
 							fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
-							showBusyCursor="true"/>
+							showBusyCursor="false"/>
 		<s:CallResponder id="getCableVOByIdResult" result="getCableVOByIdResult_resultHandler(event)"/>
 		<services:Equip id="equip"
 						fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
@@ -216,8 +216,8 @@
 					if(entity is DynamicConnector){
 						var connector:DynamicConnector = entity as DynamicConnector;
 						var cable:Cable = connector.customData as Cable;
-						var pageUrl:String = ScriptUtils.getRoot(root.loaderInfo.url) 
-							+ "zdy/a_fiberCoreNumber_forward.jsp?cableId=" + cable.cableId;;
+						var pageUrl:String = ScriptUtils.getRoot(root.loaderInfo.url) + 
+												"zdy/a_fiberCoreNumber_forward.jsp?cableId=" + cable.cableId;;
 						var pageName:String = "光缆详细信息";
 						ScriptUtils.openTabWindow(pageUrl,pageName);
 					}else{
@@ -231,19 +231,15 @@
 				relation.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, function(event:ContextMenuEvent):void{
 					var sceneManager:SceneManager = Root.instance.sceneManager;
 					var entity:Entity = sceneManager.getEntity(event.contextMenuOwner.name);
-					//Alert.show(event.contextMenuOwner.name +'\n' + entity.toString());
 					if(entity is DynamicConnector){
 						var connector:DynamicConnector = entity as DynamicConnector;
 						var cable:Cable = connector.customData as Cable;
-						//Alert.show(cable.cableStartId + '-' + cable.cableEndId);
 						var topoBasePath:String = ScriptUtils.getRoot(root.loaderInfo.url) + "topo/";
 						var url:String = topoBasePath + "assetsRelation.jsp?s1=" + cable.cableStartId + "&s2=" + cable.cableEndId;
 						ScriptUtils.openTabWindow(url, "资产关系图");
 					}
 				});
 				cableContextMenu.customItems.push(relation); 
-				
-				
 				//cableContextMenu.customItems.push(gotoGIS); 
 			}
 			/**
@@ -382,6 +378,7 @@
 					elementCom.alpha = 1;
 				}else{
 					elementCom.alpha = 0.1;
+					elementCom.toolTip =  site.siteName + "[ 已停用 ]";
 				}
 				siteCompoent.fillColor = 0xE53E38;
 				if(loadAddCounter<elementList.length){
