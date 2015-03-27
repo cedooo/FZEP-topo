@@ -9,7 +9,6 @@
 		<![CDATA[
 			import mx.events.FlexEvent;
 			
-			import test.ForTest;
 			[Bindable]
 			protected var forT:ForTest ;
 			protected function application1_applicationCompleteHandler(event:FlexEvent):void
