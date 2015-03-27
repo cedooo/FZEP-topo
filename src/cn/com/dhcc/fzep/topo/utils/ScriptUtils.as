@@ -38,7 +38,7 @@ package cn.com.dhcc.fzep.topo.utils
 			ExternalInterface.call("function(){"+jsString+"}"); 
 		} 
 		/**
-		 * 打开弹出窗口
+		 * 打开新的标签页
 		 */
 		public static function openTabWindow(pageUrl:String,pageName:String):void{ 
 			var jsString:String=""; 

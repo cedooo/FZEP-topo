@@ -11,6 +11,7 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
 			import mx.controls.LinkButton;
 			import mx.events.FlexEvent;
 			import mx.graphics.SolidColorStroke;
@@ -18,12 +19,15 @@
 			import spark.primitives.Line;
 			
 			import cn.com.dhcc.fzep.topo.components.assets.SiteContainer;
+			import cn.com.dhcc.fzep.topo.utils.ScriptUtils;
 			
 			import valueObjects.CableVO;
 			
 			
 			private var OFFSET_Y:Number = 33;
 			private var CABLE_INFO_FONT_SIZE:Number = 12;
+			private var CABLE_INFO_PRE:String = "CABLE_INFO_PRE-";
+			private var CABLE_INFO_PRE_REGEX:RegExp = /CABLE_INFO_PRE-/;
 			/**
 			 * 连接两个站点的光缆
 			 */
@@ -51,6 +55,7 @@
 							line.stroke = strokes;
 							assetsContainer.addElement(line);
 							var cableInfo:LinkButton = new LinkButton();
+							cableInfo.id = CABLE_INFO_PRE + cable1.cableId;
 							cableInfo.label = "[ " + cable1.cableName + " ]";
 							cableInfo.width = cable1.cableName.length * CABLE_INFO_FONT_SIZE;
 							cableInfo.height = 25;
@@ -59,6 +64,14 @@
 							//cableInfo.setStyle("fontSize", CABLE_INFO_FONT_SIZE);
 							cableInfo.x = (line.xTo + line.xFrom)/2-cableInfo.width/2;// - cableInfo.width/2;
 							cableInfo.y = (line.yTo + line.yFrom)/2 - cableInfo.height ;
+							cableInfo.addEventListener(MouseEvent.CLICK, function(event:MouseEvent):void{
+								var clickedBtn:LinkButton = event.currentTarget as LinkButton;
+								var cableId:String = clickedBtn.id.split(CABLE_INFO_PRE_REGEX)[1];
+								//Alert.show(cableId+'');
+								var pageUrl:String = ScriptUtils.getRoot(root.loaderInfo.url) + "zdy/a_fiberCoreNumber_forward.jsp?cableId=" + cableId;;
+								var pageName:String = "光缆详细信息";
+								ScriptUtils.openTabWindow(pageUrl,pageName);
+							});
 							assetsContainer.addElement(cableInfo);
 							
 							
@@ -82,11 +95,8 @@
 						}else{
 							continue;
 						}
-						
 					}
-					
 				}
-				
 			}
 			/**
 			 * 链接站点之间的光缆
