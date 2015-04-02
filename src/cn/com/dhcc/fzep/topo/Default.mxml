@@ -127,7 +127,7 @@
 			import xtreme.scene.entity.shapes.FlexComponent;
 			
 			[Bindable]
-			public var areaName:String;    //区域名称
+			public var g_areaName:String;    //区域名称
 			protected var siteContextMenu:ContextMenu = new ContextMenu();    //站点 右键 菜单
 			protected var cableContextMenu:ContextMenu = new ContextMenu();    //站点 右键 菜单
 			private function applicationComplete() : void
@@ -149,9 +149,9 @@
 				 */
 				page.curPage = 1;
 				page.numPerPage = 6;
-				searchSiteCondition.page = page;
-				searchSiteCondition.areaName = areaName;
-				areaName =  fzoutline.defaultAreaName;
+				g_SearchSiteCondition.page = page;
+				g_SearchSiteCondition.areaName = g_areaName;
+				g_areaName =  fzoutline.defaultAreaName;
 				/*
 				schemaNameLabel.text = "【" + searchSiteCondition.areaName + "】";
 				getSchemaByAreaName(areaName);
@@ -297,20 +297,22 @@
 					schemaNote.text = schema.schemaNote;
 					TopoUtils.loadSchema(Root.instance.sceneManager, schema.schemaData,siteContextMenu, cableContextMenu, siteComponent_doubleClickHandler);
 					
-					searchSiteCondition.areaId = int(schema.areaId);
-					areaName =  schema.areaName;
-					getListByCondition(searchSiteCondition);
+					g_SearchSiteCondition.areaId = int(schema.areaId);
+					g_areaName =  schema.areaName;
+					getListByCondition(g_SearchSiteCondition);
 					
 					loadSchemaAddInfo();
 				}else{
+					schemaNameLabel.text = '视图未创建';
+					schemaNote.text = '';
 					Alert.okLabel = "知道了";
 					Root.instance.sceneManager.clearScene();
 					Alert.show("无该区域站点视图。\n请到视图管理页面添加。", "提示");
 				}
-				for (var i:int = 0; i < complexDP.source.length; i++) 
+				for (var i:int = 0; i < allArea.source.length; i++) 
 				{
-					var area:Area = complexDP.source[i] as Area;
-					if(area.areaName == areaName){
+					var area:Area = allArea.source[i] as Area;
+					if(area.areaName == g_areaName){
 						areaComboBox.selectedIndex = i;
 						break;
 					}
@@ -335,18 +337,18 @@
 			/**
 			 * 依次加载设备附加信息
 			 */
-			private var loadAddCounter:Number = 0;
+			private var g_LoadAddCounter:Number = 0;
 			protected function nextElementAddInfo():void{
-				if(loadAddCounter<elementList.length){
-					if(elementList[loadAddCounter] is FlexComponent){
+				if(g_LoadAddCounter<elementList.length){
+					if(elementList[g_LoadAddCounter] is FlexComponent){
 						//Alert.show(elementList[loadAddCounter].name);
-						var siteId:String = elementList[loadAddCounter].name.split(ObjectUtil.getClassInfo(Site).name)[1];
+						var siteId:String = elementList[g_LoadAddCounter].name.split(ObjectUtil.getClassInfo(Site).name)[1];
 						getSiteInfoById2(siteId);
-						loadAddCounter++;
-					}else if(elementList[loadAddCounter] is DynamicConnector){
-						var cableId:String = elementList[loadAddCounter].name.split(ObjectUtil.getClassInfo(Cable).name)[1];
+						g_LoadAddCounter++;
+					}else if(elementList[g_LoadAddCounter] is DynamicConnector){
+						var cableId:String = elementList[g_LoadAddCounter].name.split(ObjectUtil.getClassInfo(Cable).name)[1];
 						getCableById(cableId);
-						loadAddCounter++;
+						g_LoadAddCounter++;
 					}
 				}
 			}
@@ -359,20 +361,22 @@
 			{
 				var sceneMgr:SceneManager = Root.instance.sceneManager;
 				var cable:Cable = event.result as Cable;
-				var entity:Entity = sceneMgr.getEntity(ObjectUtil.getClassInfo(Cable).name+cable.cableId);
-				var connector:DynamicConnector = entity as DynamicConnector;
-				connector.lineThickness =  cable.isMainRoad==EquipConstants.CABLE_IS_MAIN?4:2;
-				//connector.lineColor = 0xE53E38;
-				if(cable.delFlg!=EquipConstants.EQUIP_DEL_FLAG_USED){
-					connector.alpha = 0.1;
-				}else{
-					connector.alpha = 1;
-				}
+				if(cable){
+					var entity:Entity = sceneMgr.getEntity(ObjectUtil.getClassInfo(Cable).name+cable.cableId);
+					var connector:DynamicConnector = entity as DynamicConnector;
+					connector.lineThickness =  cable.isMainRoad==EquipConstants.CABLE_IS_MAIN?4:2;
+					//connector.lineColor = 0xE53E38;
+					if(cable.delFlg!=EquipConstants.EQUIP_DEL_FLAG_USED){
+						connector.alpha = 0.1;
+					}else{
+						connector.alpha = 1;
+					}
+				}else{}
 				//Alert.show(cable.cableName);
-				if(loadAddCounter<elementList.length){
+				if(g_LoadAddCounter<elementList.length){
 					nextElementAddInfo();
 				}else{
-					loadAddCounter=0;
+					g_LoadAddCounter=0;
 					elementList=new Array();
 				}
 			}
@@ -385,21 +389,23 @@
 			{
 				var sceneMgr:SceneManager = Root.instance.sceneManager;
 				var site:Site = event.result as Site;
-				var entity:Entity = sceneMgr.getEntity(ObjectUtil.getClassInfo(Site).name+site.siteId);
-				var siteCompoent:FlexComponent = entity as FlexComponent;
-				var elementCom:SchemaElementComponent = siteCompoent.component as SchemaElementComponent;
-				//Alert.show(site.siteName);
-				if(site.delFlg==EquipConstants.EQUIP_DEL_FLAG_USED){
-					elementCom.alpha = 1;
-				}else{
-					elementCom.alpha = 0.1;
-					elementCom.toolTip =  site.siteName + "[ 已停用 ]";
+				if(site){
+					var entity:Entity = sceneMgr.getEntity(ObjectUtil.getClassInfo(Site).name+site.siteId);
+					var siteCompoent:FlexComponent = entity as FlexComponent;
+					var elementCom:SchemaElementComponent = siteCompoent.component as SchemaElementComponent;
+					//Alert.show(site.siteName);
+					if(site.delFlg==EquipConstants.EQUIP_DEL_FLAG_USED){
+						elementCom.alpha = 1;
+					}else{
+						elementCom.alpha = 0.1;
+						elementCom.toolTip =  site.siteName + "[ 已停用  ]";
+					}
+					siteCompoent.fillColor = 0xE53E38;
 				}
-				siteCompoent.fillColor = 0xE53E38;
-				if(loadAddCounter<elementList.length){
+				if(g_LoadAddCounter<elementList.length){
 					nextElementAddInfo();
 				}else{
-					loadAddCounter=0;
+					g_LoadAddCounter=0;
 					elementList=new Array();
 				}
 			}
@@ -494,7 +500,7 @@
 				if(searchRelationKey.text.match(/.{1,15}/)){
 					searchSiteSchema();
 				}else {
-					getSchemaVOByAreaName(areaName);
+					getSchemaVOByAreaName(g_areaName);
 				}
 			}
 			/**
@@ -545,16 +551,16 @@
 			}
 			
 			[Bindable]
-			public var searchSiteCondition:SearchSite = new SearchSite();
+			public var g_SearchSiteCondition:SearchSite = new SearchSite();
 			[Bindable]
 			public var page:Page = new Page();
 			/**
 			 * 搜索区域对应站点
 			 */
 			protected function searchSite(areaName:String):void {
-				searchSiteCondition.areaName = areaName;
-				searchSiteCondition.page.curPage = 1;
-				getListByCondition(searchSiteCondition);
+				g_SearchSiteCondition.areaName = areaName;
+				g_SearchSiteCondition.page.curPage = 1;
+				getListByCondition(g_SearchSiteCondition);
 			}
 			
 			
@@ -566,12 +572,12 @@
 			protected function getPageResult_resultHandler(event:ResultEvent):void
 			{
 				var rePage:Page = event.result as Page;
-				searchSiteCondition.page.totalPage = rePage.totalPage;
-				searchSiteCondition.page.curPage = rePage.curPage;
-				searchSiteCondition.page.totalRecords = rePage.totalRecords;
-				pagedetail.text = "第" + searchSiteCondition.page.curPage + "页/共" + searchSiteCondition.page.totalPage + "页";
+				g_SearchSiteCondition.page.totalPage = rePage.totalPage;
+				g_SearchSiteCondition.page.curPage = rePage.curPage;
+				g_SearchSiteCondition.page.totalRecords = rePage.totalRecords;
+				pagedetail.text = "第" + g_SearchSiteCondition.page.curPage + "页/共" + g_SearchSiteCondition.page.totalPage + "页";
 				inputpage.maximum = rePage.totalPage;
-				siteTotalRecords.text = "共 " + searchSiteCondition.page.totalRecords + " 个结果";
+				siteTotalRecords.text = "共 " + g_SearchSiteCondition.page.totalRecords + " 个结果";
 				if(rePage.curPage==1){
 					prePage.enabled = false;
 					firstPage.enabled = false;
@@ -590,7 +596,7 @@
 			
 			protected function siteDataGrid_creationCompleteHandler(event:FlexEvent):void
 			{
-				getListByCondition(searchSiteCondition);
+				getListByCondition(g_SearchSiteCondition);
 			}
 			/**
 			 * 页面跳转
@@ -598,44 +604,44 @@
 			protected function gotoPage(event:MouseEvent):void
 			{
 				if(event.currentTarget.id=="firstPage"){
-					searchSiteCondition.page.curPage = 1;
+					g_SearchSiteCondition.page.curPage = 1;
 				}else if(event.currentTarget.id=="lastPage"){
-					searchSiteCondition.page.curPage = searchSiteCondition.page.totalPage;
+					g_SearchSiteCondition.page.curPage = g_SearchSiteCondition.page.totalPage;
 				}else if(event.currentTarget.id=="prePage"){
-					if(searchSiteCondition.page.curPage>1){
-						searchSiteCondition.page.curPage = searchSiteCondition.page.curPage-1;
+					if(g_SearchSiteCondition.page.curPage>1){
+						g_SearchSiteCondition.page.curPage = g_SearchSiteCondition.page.curPage-1;
 					}
 				}else if(event.currentTarget.id=="nextPage"){
-					if(searchSiteCondition.page.curPage<searchSiteCondition.page.totalPage){
-						searchSiteCondition.page.curPage = searchSiteCondition.page.curPage+1;
+					if(g_SearchSiteCondition.page.curPage<g_SearchSiteCondition.page.totalPage){
+						g_SearchSiteCondition.page.curPage = g_SearchSiteCondition.page.curPage+1;
 					}
 				}else if(event.currentTarget.id=="jumpTo"){
-					if(inputpage.value<=searchSiteCondition.page.totalPage && inputpage.value >0){
-						searchSiteCondition.page.curPage = inputpage.value;
+					if(inputpage.value<=g_SearchSiteCondition.page.totalPage && inputpage.value >0){
+						g_SearchSiteCondition.page.curPage = inputpage.value;
 					}
 				}
 				//Alert.show(searchSiteCondition.page.totalPage+'');
 				//Alert.show(searchSiteCondition.page.curPage + "/" + searchSiteCondition.page.numPerPage);
-				getListByCondition(searchSiteCondition);
+				getListByCondition(g_SearchSiteCondition);
 			}
 			
 			protected function searchSiteListKeyBtn_clickHandler(event:MouseEvent):void
 			{
-				searchSiteCondition.keyWord = searchSiteListKey.text;
-				if(searchSiteCondition.keyWord.length>0){
+				g_SearchSiteCondition.keyWord = searchSiteListKey.text;
+				if(g_SearchSiteCondition.keyWord.length>0){
 					if(scope_sitename.selected){
-						searchSiteCondition.searchField = "siteName";
+						g_SearchSiteCondition.searchField = "siteName";
 					}else if(scope_siteAddress.selected){
-						searchSiteCondition.searchField = "siteAdress";
+						g_SearchSiteCondition.searchField = "siteAdress";
 					}else if(scope_contact.selected){
-						searchSiteCondition.searchField = "connactName";
+						g_SearchSiteCondition.searchField = "connactName";
 					}
-					searchSiteCondition.page.curPage = 1;
-					getListByCondition(searchSiteCondition);
+					g_SearchSiteCondition.page.curPage = 1;
+					getListByCondition(g_SearchSiteCondition);
 				}else{
-					searchSiteCondition.searchField = "";
-					searchSiteCondition.page.curPage = 1;
-					getListByCondition(searchSiteCondition);
+					g_SearchSiteCondition.searchField = "";
+					g_SearchSiteCondition.page.curPage = 1;
+					getListByCondition(g_SearchSiteCondition);
 					
 				}
 			}
@@ -644,9 +650,9 @@
 			{
 				scope_sitename.selected = true;
 				searchSiteListKey.text = "";
-				searchSiteCondition.searchField = "";
-				searchSiteCondition.page.curPage = 1;
-				getListByCondition(searchSiteCondition);
+				g_SearchSiteCondition.searchField = "";
+				g_SearchSiteCondition.page.curPage = 1;
+				getListByCondition(g_SearchSiteCondition);
 			}
 			
 			protected function searchSiteListKeyBtn_keyUpHandler(event:KeyboardEvent):void
@@ -908,9 +914,9 @@
 			
 			public function onMouseDownMaps(event:MouseEvent):void{
 				var areaContainer:BorderContainer = event.currentTarget as BorderContainer;
-				areaName = areaContainer.id;
-				getSchemaVOByAreaName(areaName);
-				searchSite(areaName);
+				g_areaName = areaContainer.id;
+				getSchemaVOByAreaName(g_areaName);
+				searchSite(g_areaName);
 				//areaMapsOutlineContainer.title = "福州市" +  areaName;
 				toggleMap();
 			}
@@ -938,7 +944,7 @@
 			protected function curAreaName_clickHandler(event:MouseEvent):void
 			{
 				searchRelationKey.text = '';
-				getSchemaVOByAreaName(areaName);
+				getSchemaVOByAreaName(g_areaName);
 			}
 			
 			/**
@@ -989,7 +995,7 @@
 			}
 			
 			[Bindable]
-			public var complexDP:ArrayCollection;
+			public var allArea:ArrayCollection;
 			private function myLabelToItemFunction(input:String):*
 			{
 				<!-- Returns object that matches items in dataProvider -->
@@ -1003,13 +1009,13 @@
 			
 			protected function getAllAreaResult_resultHandler(event:ResultEvent):void
 			{
-				complexDP = event.result as ArrayCollection;
+				allArea = event.result as ArrayCollection;
 				
 				areaComboBox.selectedIndex = 0;
-				for (var i:int = 0; i < complexDP.source.length; i++) 
+				for (var i:int = 0; i < allArea.source.length; i++) 
 				{
-					var area:Area = complexDP.source[i] as Area;
-					if(area.areaName == areaName){
+					var area:Area = allArea.source[i] as Area;
+					if(area.areaName == g_areaName){
 						areaComboBox.selectedIndex = i;
 						break;
 					}
@@ -1026,11 +1032,11 @@
 			protected function areaComboBox_changeHandler(event:IndexChangeEvent):void
 			{
 				var newIndex:int = event.newIndex;
-				areaName = complexDP.source[newIndex].areaName;
+				g_areaName = allArea.source[newIndex].areaName;
 				searchRelationKey.text = '';
-				searchSiteCondition.keyWord = searchSiteListKey.text = '';
-				searchSite(areaName);
-				getSchemaVOByAreaName(areaName);
+				g_SearchSiteCondition.keyWord = searchSiteListKey.text = '';
+				searchSite(g_areaName);
+				getSchemaVOByAreaName(g_areaName);
 			}
 			
 		]]>
@@ -1071,11 +1077,11 @@
 							labelField="areaName" creationComplete="areaComboBox_creationCompleteHandler(event)"  />   
 						-->
 						<s:Label text="福州市" fontSize="14" toolTip="福州市" fontFamily="Times New Roman" />	
-						<s:DropDownList id="areaComboBox" prompt="Select One"
-										 dataProvider="{complexDP}"
+						<s:DropDownList id="areaComboBox" prompt="Select One" toolTip="辖区"
+										 dataProvider="{allArea}"
 										labelField="areaName"
 										change="areaComboBox_changeHandler(event);" creationComplete="areaComboBox_creationCompleteHandler(event)"  />
-						<mx:LinkButton label ="关注站点" click="searchRelationKey.text = '';getSchemaVOByAreaName(areaName)" toolTip="区域关注视图" />
+						<mx:LinkButton label ="关注站点" click="searchRelationKey.text = '';getSchemaVOByAreaName(g_areaName)" toolTip="区域关注视图" />
 						<mx:Image source="@Embed('assets/btn_info_48.png')" width="18" height="18" toolTip="视图信息">
 						</mx:Image>
 						<s:Label id="schemaNameLabel" text="" fontSize="14" toolTip="视图名称" fontFamily="Times New Roman" >			
