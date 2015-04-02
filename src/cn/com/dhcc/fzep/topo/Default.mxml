@@ -78,6 +78,10 @@
 		<s:CallResponder id="getSiteInfoByIdResult2" result="getSiteInfoByIdResult2_resultHandler(event)"/>
 		<s:CallResponder id="getDefaultSchemaResult"  result="getSchemaResult_resultHandler(event)"/>
 		<s:CallResponder id="getSchemaVOByAreaNameResult" result="getSchemaResult_resultHandler(event)" fault="getSchemaVOByAreaNameResult_faultHandler(event)" />
+		<s:CallResponder id="getAllAreaResult" result="getAllAreaResult_resultHandler(event)"/>
+		<services:AreaSchema id="areaSchema"
+							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							 showBusyCursor="true"/>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
 	<fx:Script>
@@ -99,6 +103,8 @@
 			import mx.rpc.events.ResultEvent;
 			import mx.utils.ObjectUtil;
 			
+			import spark.events.IndexChangeEvent;
+			
 			import cn.com.dhcc.fzep.topo.common.EquipConstants;
 			import cn.com.dhcc.fzep.topo.components.SchemaElementComponent;
 			import cn.com.dhcc.fzep.topo.components.SiteComponent;
@@ -106,6 +112,7 @@
 			import cn.com.dhcc.fzep.topo.utils.ScriptUtils;
 			import cn.com.dhcc.fzep.topo.utils.TopoUtils;
 			
+			import valueObjects.Area;
 			import valueObjects.Cable;
 			import valueObjects.Page;
 			import valueObjects.SchemaVO;
@@ -298,7 +305,15 @@
 				}else{
 					Alert.okLabel = "知道了";
 					Root.instance.sceneManager.clearScene();
-					Alert.show("无该区域站点视图。\n要添加站点图，请到视图管理页面操作。", "提示");
+					Alert.show("无该区域站点视图。\n请到视图管理页面添加。", "提示");
+				}
+				for (var i:int = 0; i < complexDP.source.length; i++) 
+				{
+					var area:Area = complexDP.source[i] as Area;
+					if(area.areaName == areaName){
+						areaComboBox.selectedIndex = i;
+						break;
+					}
 				}
 				
 			}
@@ -553,8 +568,10 @@
 				var rePage:Page = event.result as Page;
 				searchSiteCondition.page.totalPage = rePage.totalPage;
 				searchSiteCondition.page.curPage = rePage.curPage;
-				pagedetail.text = "第" + searchSiteCondition.page.curPage + "页/共" + searchSiteCondition.page.totalPage + "页"
+				searchSiteCondition.page.totalRecords = rePage.totalRecords;
+				pagedetail.text = "第" + searchSiteCondition.page.curPage + "页/共" + searchSiteCondition.page.totalPage + "页";
 				inputpage.maximum = rePage.totalPage;
+				siteTotalRecords.text = "共 " + searchSiteCondition.page.totalRecords + " 个结果";
 				if(rePage.curPage==1){
 					prePage.enabled = false;
 					firstPage.enabled = false;
@@ -892,7 +909,6 @@
 			public function onMouseDownMaps(event:MouseEvent):void{
 				var areaContainer:BorderContainer = event.currentTarget as BorderContainer;
 				areaName = areaContainer.id;
-				//Alert.show(areaContainer.id);
 				getSchemaVOByAreaName(areaName);
 				searchSite(areaName);
 				//areaMapsOutlineContainer.title = "福州市" +  areaName;
@@ -972,6 +988,50 @@
 				Alert.show("获取视图失败","出错啦");
 			}
 			
+			[Bindable]
+			public var complexDP:ArrayCollection;
+			private function myLabelToItemFunction(input:String):*
+			{
+				<!-- Returns object that matches items in dataProvider -->
+				return {ingredient:input, category:"mystery"};
+			}   
+			
+			protected function getAllArea():void
+			{
+				getAllAreaResult.token = areaSchema.getAllArea();
+			}
+			
+			protected function getAllAreaResult_resultHandler(event:ResultEvent):void
+			{
+				complexDP = event.result as ArrayCollection;
+				
+				areaComboBox.selectedIndex = 0;
+				for (var i:int = 0; i < complexDP.source.length; i++) 
+				{
+					var area:Area = complexDP.source[i] as Area;
+					if(area.areaName == areaName){
+						areaComboBox.selectedIndex = i;
+						break;
+					}
+				}
+				
+				
+			}
+			
+			protected function areaComboBox_creationCompleteHandler(event:FlexEvent):void
+			{
+				getAllArea();
+			}
+			
+			protected function areaComboBox_changeHandler(event:IndexChangeEvent):void
+			{
+				var newIndex:int = event.newIndex;
+				areaName = complexDP.source[newIndex].areaName;
+				searchRelationKey.text = '';
+				searchSite(areaName);
+				getSchemaVOByAreaName(areaName);
+			}
+			
 		]]>
 	</fx:Script>
 		<s:layout>
@@ -995,12 +1055,26 @@
 				
 				<mx:HBox id="xToolBar" backgroundAlpha="0" width="100%" paddingBottom="10" paddingLeft="10" paddingTop="10" paddingRight="10">
 					<mx:Image source="@Embed('assets/buttons/btn_maptag.png')"  buttonMode="true" click="toggleMap()" width="20" height="20" 
-							  toolTip="选择区域"></mx:Image>
+							  toolTip="地图选区"></mx:Image>
 					<s:Group toolTip="网络提示">
 						<s:layout>
 							<s:HorizontalLayout  verticalAlign="middle"/>
 						</s:layout>
+						<!--
 						<s:Label id="curAreaName"  text="{'〖'+ areaName+'〗'}" fontSize="14" toolTip="默认视图 " click="curAreaName_clickHandler(event)" fontFamily="Times New Roman" buttonMode="true" > </s:Label>
+						
+						<s:ComboBox id="areaComboBox" 
+							dataProvider="{complexDP}" 
+							labelToItemFunction="{myLabelToItemFunction}"
+							selectedIndex="0" change="areaComboBox_changeHandler(event)"
+							labelField="areaName" creationComplete="areaComboBox_creationCompleteHandler(event)"  />   
+						-->
+						<s:Label text="福州市" fontSize="14" toolTip="福州市" fontFamily="Times New Roman" />	
+						<s:DropDownList id="areaComboBox" prompt="Select One"
+										 dataProvider="{complexDP}"
+										labelField="areaName"
+										change="areaComboBox_changeHandler(event);" creationComplete="areaComboBox_creationCompleteHandler(event)"  />
+						<mx:LinkButton label ="关注站点" click="getSchemaVOByAreaName(areaName)" toolTip="区域关注视图" />
 						<mx:Image source="@Embed('assets/btn_info_48.png')" width="18" height="18" toolTip="视图信息">
 						</mx:Image>
 						<s:Label id="schemaNameLabel" text="" fontSize="14" toolTip="视图名称" fontFamily="Times New Roman" >			
@@ -1089,7 +1163,9 @@
 					</s:TextInput>
 					<mx:LinkButton id="searchSiteListKeyBtn" fontWeight="bold" label="搜索" click="searchSiteListKeyBtn_clickHandler(event)" />   
 					<mx:LinkButton id="searchSiteListAllBtn"  label="重置" click="searchSiteListAllBtn_clickHandler(event)"   />   
-					<mx:Spacer width="100%"/>
+					<s:Label id="siteTotalRecords" paddingTop="5" paddingLeft="5">
+					</s:Label>
+					<mx:Spacer  width="100%"/>
 					<s:Label  paddingTop="5" paddingLeft="5" text="拖动站点到 ↑视图窗口↑，搜索站点关系。" />
 				</mx:HBox>  
 				<mx:DataGrid id="siteDataGrid" paddingTop="0" width="100%" dataProvider="{getListByConditionResult.lastResult}"
