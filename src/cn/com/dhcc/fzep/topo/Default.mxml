@@ -897,7 +897,7 @@
 			}
 
 			protected function toggleMap():void{
-				areaMapsOutlineContainer.visible = areaMapsOutlineContainer.visible?false:true;
+				areaMapsOutlineContainer.visible = !areaMapsOutlineContainer.visible;
 			}
 			
 			/**
@@ -1081,7 +1081,7 @@
 										 dataProvider="{allArea}"
 										labelField="areaName"
 										change="areaComboBox_changeHandler(event);" creationComplete="areaComboBox_creationCompleteHandler(event)"  />
-						<mx:LinkButton label ="关注站点" click="searchRelationKey.text = '';getSchemaVOByAreaName(g_areaName)" toolTip="区域关注视图" />
+						<mx:LinkButton label ="默认视图" click="searchRelationKey.text = '';getSchemaVOByAreaName(g_areaName)" toolTip="区域关注视图" />
 						<mx:Image source="@Embed('assets/btn_info_48.png')" width="18" height="18" toolTip="视图信息">
 						</mx:Image>
 						<s:Label id="schemaNameLabel" text="" fontSize="14" toolTip="视图名称" fontFamily="Times New Roman" >			
@@ -1135,8 +1135,56 @@
 						<mx:Image source="@Embed('assets/buttons/btn_full_screen_24.png')" toolTip="全屏" buttonMode="true"  width="20" height="20" >
 						</mx:Image>
 						-->
+						<mx:Image id="expandBtn" source="@Embed('assets/buttons/btn_more_24.png')" toolTip="更多操作" buttonMode="true"   width="20" height="20"
+								  click="moreOperate.visible = !moreOperate.visible;">
+						</mx:Image>
 					</s:Group>
 				</mx:HBox>
+				
+				<s:BorderContainer id="moreOperate" visible="false" 
+						 y="{xToolBar.height}" x="{xToolBar.width-moreOperate.width}" borderAlpha="0.7" >
+					<s:layout>
+						<s:VerticalLayout paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" />
+					</s:layout>
+					<!--
+					<mx:Image id="expandBtn" source="@Embed('assets/buttons/btn_expand_24.png')" toolTip="其它" buttonMode="true"  width="24" height="24"
+					click="expandBtn_clickHandler(event)">
+					</mx:Image>
+					-->
+					<!--
+					<s:BorderContainer borderVisible="false">
+						<s:layout>
+							<s:HorizontalLayout  />
+						</s:layout>
+						<s:Label text="连接关系" paddingTop="5" paddingLeft="5" />
+						<mx:Image id="siteBetween" source="@Embed('assets/buttons/btn_connector_24.png')" toolTip="站点连接" buttonMode="true"  width="20" height="20" >
+						</mx:Image>
+						<s:TextInput id="searchRelationStart" keyDown="searchKey_keyDownHandler(event)" maxChars="15" toolTip="站点">
+						</s:TextInput>
+						<s:TextInput id="searchRelationEnd" keyDown="searchKey_keyDownHandler(event)" maxChars="15" toolTip="站点">
+						</s:TextInput>
+						<mx:LinkButton label="查询" />
+					</s:BorderContainer>
+					-->
+					<s:BorderContainer borderVisible="false">
+						<mx:Form width="100%" height="100%">
+							<mx:FormHeading label="站点连接情况查询"/>
+							
+							<mx:FormItem label="站点1">
+								<mx:TextInput id="fname" width="200"/>
+							</mx:FormItem>
+							
+							<mx:FormItem label="站点2">
+								<mx:TextInput id="phone" width="200"/>
+							</mx:FormItem>
+						</mx:Form>
+					</s:BorderContainer>
+					<mx:HBox width="100%" >
+						<mx:Spacer width="100%" />
+						<mx:LinkButton label="搜索" fontWeight="bold" />
+						<mx:LinkButton label="隐藏" click="moreOperate.visible=false;" />
+					</mx:HBox>
+				</s:BorderContainer>
 				
 				<s:BorderContainer id="areaMapsOutlineContainer"   borderAlpha="1" width="40%" height="100%" dropShadowVisible="false" visible="false"  >
 					<s:BorderContainer id="areaSvgContainer" backgroundAlpha="1" borderVisible="false" width="100%"  height="100%"
@@ -1149,6 +1197,7 @@
 							  toolTip="隐藏地图"></mx:Image>
 					</mx:HBox>
 				</s:BorderContainer>
+				
 			</s:BorderContainer>
 		</s:BorderContainer>	
 		<s:BorderContainer id="siteGrid" borderAlpha="1"   borderVisible="false" backgroundAlpha="0.0" width="100%"  dropShadowVisible="false">
@@ -1178,8 +1227,6 @@
 				<mx:DataGrid id="siteDataGrid" paddingTop="0" width="100%" dataProvider="{getListByConditionResult.lastResult}"
 							contextMenu="{SiteListCntMenu}" dragEnabled="true" 
 							dragStart="siteDataGrid_dragStartHandler(event,'siteInfo')">
-					
-					<!-- creationComplete="siteDataGrid_creationCompleteHandler(event)" --> 
 					<mx:columns>
 						<!--<mx:DataGridColumn dataField="siteId" headerText="站点编码" />-->
 						<mx:DataGridColumn dataField="siteName" headerText="站点名称" />
