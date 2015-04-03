@@ -1191,7 +1191,6 @@
 									   creationComplete="areaSvgContainer.contentGroup.clipAndEnableScrolling = true"  >
 						<cedomaps:FZMapsOutline id="fzoutline" clickHander="{onMouseDownMaps}"  creationComplete="fzoutline_creationCompleteHandler(event)" />
 					</s:BorderContainer>
-					
 					<mx:HBox backgroundAlpha="0" width="100%" paddingBottom="10" paddingLeft="10" paddingTop="10" paddingRight="10">
 						<mx:Image source="@Embed('assets/buttons/btn_hide_32.png')"  buttonMode="true" click="toggleMap()" width="32" height="32" 
 							  toolTip="隐藏地图"></mx:Image>
