@@ -176,6 +176,7 @@
 				sName.editable =  true;
 				sNote.editable =  true;
 			}
+			
 			protected function editSchema_clickHandler(event:MouseEvent):void
 			{
 				if(sId.text){
@@ -248,6 +249,7 @@
 				}
 				defaultSchemaBtn.label = defautlSettable?"设置成默认视图":"默认视图";
 			}
+			
 			private function alertClickHandler(evt:CloseEvent):void {
 				var item:SchemaTreeNode = schemaTree.selectedItem as SchemaTreeNode;
 				if (evt.detail == Alert.YES) {

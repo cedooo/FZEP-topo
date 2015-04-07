@@ -130,7 +130,7 @@
 			import xtreme.scene.entity.Entity;
 			import xtreme.scene.entity.shapes.DynamicConnector;
 			import xtreme.scene.entity.shapes.FlexComponent;
-			
+			 
 			[Bindable]
 			public var g_areaName:String;    //区域名称
 			protected var siteContextMenu:ContextMenu = new ContextMenu();    //站点 右键 菜单
