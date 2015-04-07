@@ -1065,9 +1065,83 @@
 				}
 			}
 			
+			protected var _siteRelationIdOne:String;
+			protected var _siteRelationIdTwo:String;
+			protected function set siteRelationIdOne(str:String):void{
+				_siteRelationIdOne = str;
+			}
+			[Bindable]
+			protected function get siteRelationIdOne():String{
+				return _siteRelationIdOne;
+			}
+			
+			protected function set siteRelationIdTwo(str:String):void{
+				_siteRelationIdTwo = str;
+			}
+			[Bindable]
+			protected function get siteRelationIdTwo():String{
+				return _siteRelationIdTwo;
+			}
 			protected function searchSiteRelationsBtn_clickHandler(event:MouseEvent):void
 			{
-				siteRelations(siteRelationIdOne.text, siteRelationIdTwo.text);
+				if(siteRelationIdOne!=siteRelationIdTwo && siteRelationIdOne.length>0 && siteRelationIdTwo.length >0){
+					siteRelations(siteRelationIdOne, siteRelationIdTwo);
+				}else if(siteRelationIdOne.length<1||siteRelationIdTwo.length<1){
+					Alert.show("请选择两个站点");
+				}else if(siteRelationIdOne==siteRelationIdTwo){
+					Alert.show("请选择两个不同的站点");
+				}
+			}
+			
+			protected function siteRelationSite_dragEnterHandler(event:DragEvent):void
+			{
+				DragManager.acceptDragDrop(IUIComponent(event.target));//允许List接收释放  
+			}
+			
+			protected function siteRelationSiteOne_dragDropHandler(event:DragEvent):void
+			{
+				var site:Site  = siteDataGrid.selectedItem as Site;
+				var siteName:String  = site.siteName;
+				siteRelationSiteOne.title = siteName;
+				siteRelationIdOne = site.siteId;
+				
+				siteRelationSiteOneEquipInfoGrid.dataProvider = new Array(
+					//{name: area.areaId},
+					{name: site.siteName },
+					{name: site.siteAdress},
+					{name: site.connactName},
+					{name: site.connactNumber},
+					{name: site.descp}
+				);
+				searchSiteRelationsResultInfo.setStyle("color","black");
+				searchSiteRelationsResultInfo.text = "";
+				if(siteRelationIdTwo==site.siteId){
+					searchSiteRelationsResultInfo.text = "注意：请选择两个不同的站点";
+					searchSiteRelationsResultInfo.setStyle("color","red");
+				}
+			}
+			
+			protected function siteRelationSiteTwo_dragDropHandler(event:DragEvent):void
+			{
+				var site:Site  = siteDataGrid.selectedItem as Site;
+				
+				var siteName:String  = site.siteName;
+				siteRelationSiteTwo.title = siteName;
+				siteRelationIdTwo = site.siteId;
+				siteRelationSiteTwoEquipInfoGrid.dataProvider = new Array(
+					//{name: area.areaId},
+					{name: site.siteName },
+					{name: site.siteAdress},
+					{name: site.connactName},
+					{name: site.connactNumber},
+					{name: site.descp}
+				);
+				searchSiteRelationsResultInfo.setStyle("color","black");
+				searchSiteRelationsResultInfo.text = "";
+				if(siteRelationIdOne==site.siteId){
+					searchSiteRelationsResultInfo.text = "注意：请选择两个不同的站点";
+					searchSiteRelationsResultInfo.setStyle("color","red");
+				}
 			}
 			
 		]]>
@@ -1197,18 +1271,69 @@
 						<mx:LinkButton label="查询" />
 					</s:BorderContainer>
 					-->
-					<s:BorderContainer borderVisible="false">
-						<mx:Form width="100%" height="100%">
-							<mx:FormHeading label="站点连接情况查询"/>
-							
-							<mx:FormItem label="站点1">
-								<mx:TextInput text="2335" id="siteRelationIdOne" width="200"/>
-							</mx:FormItem>
-							
-							<mx:FormItem label="站点2">
-								<mx:TextInput text="2345" id="siteRelationIdTwo" width="200"/>
-							</mx:FormItem>
-						</mx:Form>
+					<s:BorderContainer borderVisible="false" width="500">
+						<s:layout>
+							<s:VerticalLayout  paddingBottom="10" paddingLeft="10" paddingTop="10" paddingRight="10"></s:VerticalLayout>
+						</s:layout>
+							<s:Label text="站点连接情况查询,请从列表中拖拽站点到下面方框中"/>
+							<s:BorderContainer width="100%" borderVisible="false">
+								<s:layout>
+									<s:HorizontalLayout />
+								</s:layout>
+								<s:Panel id="siteRelationSiteOne" width="50%" borderAlpha="0.5" dragEnter="siteRelationSite_dragEnterHandler(event)" 
+												   dragDrop="siteRelationSiteOne_dragDropHandler(event)" dropShadowVisible="false"
+												   title="请拖拽选择站点">
+									<mx:DataGrid id="headerSiteRelationSiteOne" showHeaders="false" width="30%"  
+												 borderVisible="false" textAlign="right" rowCount="5">
+										<mx:dataProvider>
+											<fx:Object name="名        称" />
+											<fx:Object name="地        址" />
+											<fx:Object name="负  责  人" />
+											<fx:Object name="联系电话" />
+											<fx:Object name="备        注" />
+										</mx:dataProvider>
+										<mx:columns >
+											<mx:DataGridColumn dataField="name" fontWeight="normal" />
+										</mx:columns>
+									</mx:DataGrid>
+									<mx:DataGrid id="siteRelationSiteOneEquipInfoGrid" x="{headerSiteRelationSiteOne.width}" showHeaders="false" width="75%"
+												 borderVisible="false" rowCount="5">
+										<mx:dataProvider>
+											<fx:Object name=" " />
+										</mx:dataProvider>
+										
+										<mx:columns>
+											<mx:DataGridColumn dataField="name" wordWrap="false" />
+										</mx:columns>
+									</mx:DataGrid>
+								</s:Panel>
+								<s:Panel  id="siteRelationSiteTwo" width="50%"  borderAlpha="0.5" dragEnter="siteRelationSite_dragEnterHandler(event)"
+										  dragDrop="siteRelationSiteTwo_dragDropHandler(event)" dropShadowVisible="false"
+										  title="请拖拽选择站点">
+									<mx:DataGrid id="headerSiteRelationSiteTwo" showHeaders="false" width="30%"  
+												 borderVisible="false" textAlign="right" rowCount="5">
+										<mx:dataProvider>
+											<fx:Object name="名        称" />
+											<fx:Object name="地        址" />
+											<fx:Object name="负  责  人" />
+											<fx:Object name="联系电话" />
+											<fx:Object name="备        注" />
+										</mx:dataProvider>
+										<mx:columns >
+											<mx:DataGridColumn dataField="name" fontWeight="normal" />
+										</mx:columns>
+									</mx:DataGrid>
+									<mx:DataGrid id="siteRelationSiteTwoEquipInfoGrid" x="{headerSiteRelationSiteOne.width}" showHeaders="false" width="75%"
+												 borderVisible="false" rowCount="5">
+										<mx:dataProvider>
+											<fx:Object name=" " />
+										</mx:dataProvider>
+										<mx:columns>
+											<mx:DataGridColumn dataField="name" wordWrap="false" />
+										</mx:columns>
+									</mx:DataGrid>
+								</s:Panel>
+							</s:BorderContainer>
 					</s:BorderContainer>
 					<mx:HBox width="100%" >
 						<s:Label text="" id="searchSiteRelationsResultInfo" paddingTop="5" paddingLeft="5" />
