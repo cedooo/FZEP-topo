@@ -1332,7 +1332,7 @@
         <item name="returnType">Cable</item>
       </annotation>
       <annotation name="ValidProperties">
-        <item name="propertySpecifier">fiberId,cableStartId,cableId,constructionUnitId,runTime,cableName,cableType,isMainRoad,descp,layingType,delFlg,bizType,cableLength,cableEndId</item>
+        <item name="propertySpecifier">cableStartId,cableId,fiberId,constructionUnitId,runTime,cableName,cableType,isMainRoad,descp,layingType,delFlg,cableLength,bizType,cableEndId</item>
       </annotation>
       <parameter name="arg0" type="string"/>
       <parameter name="arg1" type="string"/>
@@ -1373,7 +1373,7 @@
         <item name="returnType">Site</item>
       </annotation>
       <annotation name="ValidProperties">
-        <item name="propertySpecifier">descp,siteId,siteAdress,delFlg,connactNumber,areaId,connactName,siteName</item>
+        <item name="propertySpecifier">descp,siteId,siteAdress,delFlg,connactNumber,siteName,connactName,areaId</item>
       </annotation>
       <parameter name="arg0" type="string"/>
     </function>
@@ -1384,6 +1384,20 @@
       <annotation name="original signature">
         <item name="inputParams">string,string</item>
         <item name="returnType">CableVO</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">cableStartId,cableId,fiberId,constructionUnitId,runTime,cableType,cableName,isMainRoad,descp,layingType,listFibeCoreNumber,delFlg,cableLength,bizType,cableEndId</item>
+      </annotation>
+      <parameter name="arg0" type="string"/>
+      <parameter name="arg1" type="string"/>
+    </function>
+    <function name="siteRelations" return-type="SiteRelations">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">string,string</item>
+        <item name="returnType">SiteRelations</item>
       </annotation>
       <parameter name="arg0" type="string"/>
       <parameter name="arg1" type="string"/>
@@ -1418,7 +1432,7 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">AssetsRelation,Dummy</item>
+      <item name="service">AssetsRelation,Dummy,SiteSchema,SiteEquip,SiteSearch</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
@@ -1439,16 +1453,16 @@
       <item name="propertySpecifier">descp,siteId,siteAdress,delFlg,connactNumber,connactName,areaId,siteName</item>
     </annotation>
     <annotation name="siteInfo">
-      <item name="propertySpecifier">descp,siteId,siteAdress,delFlg,connactNumber,areaId,connactName,siteName</item>
+      <item name="propertySpecifier">descp,siteId,siteAdress,delFlg,connactNumber,siteName,connactName,areaId</item>
     </annotation>
     <property name="descp" type="string"/>
     <property name="siteId" type="string"/>
     <property name="siteAdress" type="string"/>
     <property name="delFlg" type="string"/>
     <property name="connactNumber" type="string"/>
-    <property name="areaId" type="string"/>
-    <property name="connactName" type="string"/>
     <property name="siteName" type="string"/>
+    <property name="connactName" type="string"/>
+    <property name="areaId" type="string"/>
   </entity>
   <entity name="EquipmentVO">
     <annotation name="EntityProperties">
@@ -1459,7 +1473,7 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">AssetsRelation,Dummy</item>
+      <item name="service">AssetsRelation,Dummy,SiteEquip</item>
     </annotation>
     <annotation name="getEquipmentListBySiteId">
       <item name="propertySpecifier">typeName,id,name,img,type,jsonData</item>
@@ -1483,13 +1497,13 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">AssetsRelation,Dummy</item>
+      <item name="service">AssetsRelation,Dummy,SiteSchema,Equip,EquipSchema</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
     </annotation>
     <annotation name="listCable">
-      <item name="propertySpecifier">fiberId,cableStartId,cableId,constructionUnitId,runTime,cableName,cableType,isMainRoad,descp,layingType,delFlg,bizType,cableLength,cableEndId</item>
+      <item name="propertySpecifier">cableStartId,cableId,fiberId,constructionUnitId,runTime,cableName,cableType,isMainRoad,descp,layingType,delFlg,cableLength,bizType,cableEndId</item>
     </annotation>
     <annotation name="getCableById">
       <item name="propertySpecifier">fiberId,cableId,cableStartId,constructionUnitId,runTime,cableName,cableType,isMainRoad,descp,layingType,delFlg,cableLength,bizType,cableEndId</item>
@@ -1503,9 +1517,9 @@
     <property name="constructionUnit" type="string"/>
     <property name="fibreCoreNumber" type="string"/>
     <property name="showName" type="string"/>
-    <property name="fiberId" type="string"/>
     <property name="cableStartId" type="string"/>
     <property name="cableId" type="string"/>
+    <property name="fiberId" type="string"/>
     <property name="constructionUnitId" type="string"/>
     <property name="runTime" type="string"/>
     <property name="cableName" type="string"/>
@@ -1514,9 +1528,26 @@
     <property name="descp" type="string"/>
     <property name="layingType" type="string"/>
     <property name="delFlg" type="string"/>
-    <property name="bizType" type="string"/>
     <property name="cableLength" type="string"/>
+    <property name="bizType" type="string"/>
     <property name="cableEndId" type="string"/>
+  </entity>
+  <entity name="SiteRelations">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">SiteRelations</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">cn.com.dhcc.fzep.topo.pojo.assets.SiteRelations</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">Dummy,AssetsRelation</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="listCable" type="Cable[]"/>
+    <property name="listSite" type="Site[]"/>
   </entity>
   <entity name="CableVO">
     <annotation name="EntityProperties">
@@ -1532,8 +1563,11 @@
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
     </annotation>
-    <property name="cableId" type="string"/>
+    <annotation name="listCableVO">
+      <item name="propertySpecifier">cableStartId,cableId,fiberId,constructionUnitId,runTime,cableType,cableName,isMainRoad,descp,layingType,listFibeCoreNumber,delFlg,cableLength,bizType,cableEndId</item>
+    </annotation>
     <property name="cableStartId" type="string"/>
+    <property name="cableId" type="string"/>
     <property name="fiberId" type="string"/>
     <property name="constructionUnitId" type="string"/>
     <property name="runTime" type="string"/>
@@ -1544,8 +1578,8 @@
     <property name="layingType" type="string"/>
     <property name="listFibeCoreNumber" type="FiberCoreNumber[]"/>
     <property name="delFlg" type="string"/>
-    <property name="bizType" type="string"/>
     <property name="cableLength" type="string"/>
+    <property name="bizType" type="string"/>
     <property name="cableEndId" type="string"/>
   </entity>
   <entity name="SiteVO">
@@ -1557,7 +1591,7 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">AssetsRelation</item>
+      <item name="service">AssetsRelation,Dummy</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
@@ -1565,14 +1599,14 @@
     <property name="listEquip" type="EquipmentVO[]"/>
     <property name="descp" type="string"/>
     <property name="siteId" type="string"/>
-    <property name="listCable" type="Cable[]"/>
     <property name="siteAdress" type="string"/>
+    <property name="listCable" type="Cable[]"/>
     <property name="delFlg" type="string"/>
     <property name="listFCN" type="FiberCoreNumber[]"/>
     <property name="connactNumber" type="string"/>
     <property name="connactName" type="string"/>
-    <property name="areaId" type="string"/>
     <property name="siteName" type="string"/>
+    <property name="areaId" type="string"/>
   </entity>
   <entity name="FiberCoreNumber">
     <annotation name="EntityProperties">

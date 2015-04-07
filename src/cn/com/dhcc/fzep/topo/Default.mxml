@@ -82,6 +82,10 @@
 		<services:AreaSchema id="areaSchema"
 							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 							 showBusyCursor="true"/>
+		<s:CallResponder id="siteRelationsResult" result="siteRelationsResult_resultHandler(event)"/>
+		<services:AssetsRelation id="assetsRelation"
+								 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+								 showBusyCursor="true"/>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
 	<fx:Script>
@@ -119,6 +123,7 @@
 			import valueObjects.SearchSite;
 			import valueObjects.Site;
 			import valueObjects.SiteRelation;
+			import valueObjects.SiteRelations;
 			
 			import xtreme.core.Root;
 			import xtreme.scene.SceneManager;
@@ -1039,6 +1044,32 @@
 				getSchemaVOByAreaName(g_areaName);
 			}
 			
+			
+			protected function siteRelations(arg0:String, arg1:String):void
+			{
+				siteRelationsResult.token = assetsRelation.siteRelations(arg0, arg1);
+			}
+			
+			protected function siteRelationsResult_resultHandler(event:ResultEvent):void
+			{
+				var siteRelation:SiteRelations = event.result as SiteRelations;
+				if(siteRelation){
+					var loadSuccess:Boolean = TopoUtils.loadSiteRelation(Root.instance.sceneManager, siteRelation,siteContextMenu, cableContextMenu, siteComponent_doubleClickHandler);
+					if(!loadSuccess){
+						Alert.show("数据加载失败");
+					}
+					var cableNum:Number = siteRelation.listCable.length;
+					searchSiteRelationsResultInfo.text = siteRelation.listCable.length>0?"一共"+cableNum+"条光缆连接":"站点间无直接连接关系";
+				}else{
+					Alert.show("数据加载失败,查询站点连接情况失败.");
+				}
+			}
+			
+			protected function searchSiteRelationsBtn_clickHandler(event:MouseEvent):void
+			{
+				siteRelations(siteRelationIdOne.text, siteRelationIdTwo.text);
+			}
+			
 		]]>
 	</fx:Script>
 		<s:layout>
@@ -1171,17 +1202,18 @@
 							<mx:FormHeading label="站点连接情况查询"/>
 							
 							<mx:FormItem label="站点1">
-								<mx:TextInput id="fname" width="200"/>
+								<mx:TextInput text="2335" id="siteRelationIdOne" width="200"/>
 							</mx:FormItem>
 							
 							<mx:FormItem label="站点2">
-								<mx:TextInput id="phone" width="200"/>
+								<mx:TextInput text="2345" id="siteRelationIdTwo" width="200"/>
 							</mx:FormItem>
 						</mx:Form>
 					</s:BorderContainer>
 					<mx:HBox width="100%" >
+						<s:Label text="" id="searchSiteRelationsResultInfo" paddingTop="5" paddingLeft="5" />
 						<mx:Spacer width="100%" />
-						<mx:LinkButton label="搜索" fontWeight="bold" />
+						<mx:LinkButton id="searchSiteRelationsBtn" click="searchSiteRelationsBtn_clickHandler(event)" label="搜索" fontWeight="bold" />
 						<mx:LinkButton label="隐藏" click="moreOperate.visible=false;" />
 					</mx:HBox>
 				</s:BorderContainer>

@@ -22,14 +22,14 @@ internal class _CableVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("cableId", "cableStartId", "fiberId", "constructionUnitId", "runTime", "cableType", "cableName", "isMainRoad", "descp", "layingType", "listFibeCoreNumber", "delFlg", "bizType", "cableLength", "cableEndId");
+    model_internal static var allProperties:Array = new Array("cableStartId", "cableId", "fiberId", "constructionUnitId", "runTime", "cableType", "cableName", "isMainRoad", "descp", "layingType", "listFibeCoreNumber", "delFlg", "cableLength", "bizType", "cableEndId");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("cableId", "cableStartId", "fiberId", "constructionUnitId", "runTime", "cableType", "cableName", "isMainRoad", "descp", "layingType", "listFibeCoreNumber", "delFlg", "bizType", "cableLength", "cableEndId");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("cableStartId", "cableId", "fiberId", "constructionUnitId", "runTime", "cableType", "cableName", "isMainRoad", "descp", "layingType", "listFibeCoreNumber", "delFlg", "cableLength", "bizType", "cableEndId");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("cableId", "cableStartId", "fiberId", "constructionUnitId", "runTime", "cableType", "cableName", "isMainRoad", "descp", "layingType", "listFibeCoreNumber", "delFlg", "bizType", "cableLength", "cableEndId");
+    model_internal static var dataProperties:Array = new Array("cableStartId", "cableId", "fiberId", "constructionUnitId", "runTime", "cableType", "cableName", "isMainRoad", "descp", "layingType", "listFibeCoreNumber", "delFlg", "cableLength", "bizType", "cableEndId");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("cableId", "cableStartId", "fiberId", "constructionUnitId", "runTime", "cableType", "cableName", "isMainRoad", "descp", "layingType", "listFibeCoreNumber", "delFlg", "bizType", "cableLength", "cableEndId");
+    model_internal static var nonDerivedProperties:Array = new Array("cableStartId", "cableId", "fiberId", "constructionUnitId", "runTime", "cableType", "cableName", "isMainRoad", "descp", "layingType", "listFibeCoreNumber", "delFlg", "cableLength", "bizType", "cableEndId");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array("listFibeCoreNumber");
     model_internal static var collectionBaseMap:Object;
@@ -49,8 +49,8 @@ internal class _CableVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["cableId"] = new Array();
             model_internal::dependentsOnMap["cableStartId"] = new Array();
+            model_internal::dependentsOnMap["cableId"] = new Array();
             model_internal::dependentsOnMap["fiberId"] = new Array();
             model_internal::dependentsOnMap["constructionUnitId"] = new Array();
             model_internal::dependentsOnMap["runTime"] = new Array();
@@ -61,8 +61,8 @@ internal class _CableVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
             model_internal::dependentsOnMap["layingType"] = new Array();
             model_internal::dependentsOnMap["listFibeCoreNumber"] = new Array();
             model_internal::dependentsOnMap["delFlg"] = new Array();
-            model_internal::dependentsOnMap["bizType"] = new Array();
             model_internal::dependentsOnMap["cableLength"] = new Array();
+            model_internal::dependentsOnMap["bizType"] = new Array();
             model_internal::dependentsOnMap["cableEndId"] = new Array();
 
             // collection base map
@@ -72,8 +72,8 @@ internal class _CableVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["cableId"] = "String";
         model_internal::propertyTypeMap["cableStartId"] = "String";
+        model_internal::propertyTypeMap["cableId"] = "String";
         model_internal::propertyTypeMap["fiberId"] = "String";
         model_internal::propertyTypeMap["constructionUnitId"] = "String";
         model_internal::propertyTypeMap["runTime"] = "String";
@@ -84,8 +84,8 @@ internal class _CableVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
         model_internal::propertyTypeMap["layingType"] = "String";
         model_internal::propertyTypeMap["listFibeCoreNumber"] = "ArrayCollection";
         model_internal::propertyTypeMap["delFlg"] = "String";
-        model_internal::propertyTypeMap["bizType"] = "String";
         model_internal::propertyTypeMap["cableLength"] = "String";
+        model_internal::propertyTypeMap["bizType"] = "String";
         model_internal::propertyTypeMap["cableEndId"] = "String";
 
         model_internal::_instance = value;
@@ -316,13 +316,13 @@ internal class _CableVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
     }
 
     [Bindable(event="propertyChange")]
-    public function get isCableIdAvailable():Boolean
+    public function get isCableStartIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isCableStartIdAvailable():Boolean
+    public function get isCableIdAvailable():Boolean
     {
         return true;
     }
@@ -388,13 +388,13 @@ internal class _CableVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
     }
 
     [Bindable(event="propertyChange")]
-    public function get isBizTypeAvailable():Boolean
+    public function get isCableLengthAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isCableLengthAvailable():Boolean
+    public function get isBizTypeAvailable():Boolean
     {
         return true;
     }
@@ -416,13 +416,13 @@ internal class _CableVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
     }
 
     [Bindable(event="propertyChange")]   
-    public function get cableIdStyle():com.adobe.fiber.styles.Style
+    public function get cableStartIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get cableStartIdStyle():com.adobe.fiber.styles.Style
+    public function get cableIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
@@ -488,13 +488,13 @@ internal class _CableVOEntityMetadata extends com.adobe.fiber.valueobjects.Abstr
     }
 
     [Bindable(event="propertyChange")]   
-    public function get bizTypeStyle():com.adobe.fiber.styles.Style
+    public function get cableLengthStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get cableLengthStyle():com.adobe.fiber.styles.Style
+    public function get bizTypeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

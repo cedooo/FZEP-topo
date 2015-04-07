@@ -6,6 +6,7 @@ package cn.com.dhcc.fzep.topo.utils
 	import flash.ui.ContextMenu;
 	
 	import mx.collections.ArrayCollection;
+	import mx.collections.IList;
 	import mx.controls.Alert;
 	import mx.utils.ObjectUtil;
 	
@@ -27,6 +28,7 @@ package cn.com.dhcc.fzep.topo.utils
 	import valueObjects.OLT;
 	import valueObjects.ONU;
 	import valueObjects.Site;
+	import valueObjects.SiteRelations;
 	import valueObjects.ThreeLayerSwitch;
 	import valueObjects.TwoLayerSwitch;
 	
@@ -164,7 +166,7 @@ package cn.com.dhcc.fzep.topo.utils
 		 * <b>工具：</b>
 		 * 将光缆加入到图中
 		 */
-		public static function addCableToSchema(sceneMgr:SceneManager,cable:Cable, cableContextMenu:ContextMenu):void{
+		public static function addCableToSchema(sceneMgr:SceneManager, cable:Cable, cableContextMenu:ContextMenu):void{
 			var startID:String = cable.cableStartId;
 			var endID:String = cable.cableEndId;
 			var fName:String = ObjectUtil.getClassInfo(Site).name + startID ;
@@ -202,7 +204,8 @@ package cn.com.dhcc.fzep.topo.utils
 		/**
 		 * 加载视图数据
 		 */
-		public static function loadSchema(sceneMgr:SceneManager, data:String, siteContextMenu:ContextMenu, cableContextMenu:ContextMenu, siteComponent_doubleClickHandler:Function, draggable:Boolean=false):void {
+		public static function loadSchema(sceneMgr:SceneManager, data:String, siteContextMenu:ContextMenu, cableContextMenu:ContextMenu, 
+										  siteComponent_doubleClickHandler:Function, draggable:Boolean=false):void {
 			Root.instance.sceneManager.clearScene();
 			var rawData:String = String(data);  
 			var arr:Array = (JSON.decode(rawData) as Array);  
@@ -278,6 +281,42 @@ package cn.com.dhcc.fzep.topo.utils
 			sceneMgr.addEntity(eqOri);
 			*/
 		}
+		/**
+		 * 加载站点之间关系图
+		 */
+		public static function loadSiteRelation(sceneMgr:SceneManager, siteRelations:SiteRelations, siteContextMenu:ContextMenu, cableContextMenu:ContextMenu, 
+												siteComponent_doubleClickHandler:Function, draggable:Boolean=false):Boolean {
+			sceneMgr.clearScene();
+			//将对象集合转换成组件集合)
+			var listSite:Array = siteRelations.listSite.source;
+			var listSiteComponent:Array = new Array();
+			for (var i:int = 0; i < listSite.length; i++) 
+			{
+				var equip:SiteComponent = new SiteComponent();
+				equip.site = listSite[i];
+				equip.contextMenu = siteContextMenu;
+				fcName = ObjectUtil.getClassInfo(Site).name + equip.site.siteId;
+				var fcName:String;
+				if(!sceneMgr.existsEntity(fcName)){
+					var equipFC:FlexComponent = new FlexComponent(fcName, equip);
+					equipFC.draggable = true;
+					equipFC.editable = false;
+					equipFC.x = sceneMgr.viewport.x + sceneMgr.viewport.width*(i+1)/4;
+					equipFC.y = sceneMgr.viewport.y + sceneMgr.viewport.height/2;
+					equipFC.width = 60;
+					equipFC.height = 60;
+					listSiteComponent.push(equipFC);
+				}else{
+					Alert.show("设备已存在,不能重复添加。");
+				}
+			}
+			
+			TopoUtils.loadSchema(sceneMgr,TopoUtils.generateJSON(listSiteComponent), siteContextMenu,cableContextMenu, siteComponent_doubleClickHandler,draggable);
+			for each (var cables:Cable in siteRelations.listCable) 
+			{
+				TopoUtils.addCableToSchema(sceneMgr, cables, cableContextMenu);
+			}
+			return true;
+		}
 	}
-	
 }

@@ -90,7 +90,6 @@
 							line3.yTo = pointE.y + rightSiteAssetsContainer.y + offsetY ;
 							line3.stroke = strokes;
 							assetsContainer.addElement(line3);
-							
 							break;
 						}else{
 							continue;

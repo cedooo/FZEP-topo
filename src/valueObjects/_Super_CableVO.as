@@ -60,8 +60,8 @@ public class _Super_CableVO extends flash.events.EventDispatcher implements com.
     /**
      * properties
      */
-    private var _internal_cableId : String;
     private var _internal_cableStartId : String;
+    private var _internal_cableId : String;
     private var _internal_fiberId : String;
     private var _internal_constructionUnitId : String;
     private var _internal_runTime : String;
@@ -73,8 +73,8 @@ public class _Super_CableVO extends flash.events.EventDispatcher implements com.
     private var _internal_listFibeCoreNumber : ArrayCollection;
     model_internal var _internal_listFibeCoreNumber_leaf:valueObjects.FiberCoreNumber;
     private var _internal_delFlg : String;
-    private var _internal_bizType : String;
     private var _internal_cableLength : String;
+    private var _internal_bizType : String;
     private var _internal_cableEndId : String;
 
     private static var emptyArray:Array = new Array();
@@ -100,15 +100,15 @@ public class _Super_CableVO extends flash.events.EventDispatcher implements com.
      */
 
     [Bindable(event="propertyChange")]
-    public function get cableId() : String
-    {
-        return _internal_cableId;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get cableStartId() : String
     {
         return _internal_cableStartId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get cableId() : String
+    {
+        return _internal_cableId;
     }
 
     [Bindable(event="propertyChange")]
@@ -172,15 +172,15 @@ public class _Super_CableVO extends flash.events.EventDispatcher implements com.
     }
 
     [Bindable(event="propertyChange")]
-    public function get bizType() : String
-    {
-        return _internal_bizType;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get cableLength() : String
     {
         return _internal_cableLength;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get bizType() : String
+    {
+        return _internal_bizType;
     }
 
     [Bindable(event="propertyChange")]
@@ -197,16 +197,6 @@ public class _Super_CableVO extends flash.events.EventDispatcher implements com.
      * data/source property setters
      */
 
-    public function set cableId(value:String) : void
-    {
-        var oldValue:String = _internal_cableId;
-        if (oldValue !== value)
-        {
-            _internal_cableId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableId", oldValue, _internal_cableId));
-        }
-    }
-
     public function set cableStartId(value:String) : void
     {
         var oldValue:String = _internal_cableStartId;
@@ -214,6 +204,16 @@ public class _Super_CableVO extends flash.events.EventDispatcher implements com.
         {
             _internal_cableStartId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableStartId", oldValue, _internal_cableStartId));
+        }
+    }
+
+    public function set cableId(value:String) : void
+    {
+        var oldValue:String = _internal_cableId;
+        if (oldValue !== value)
+        {
+            _internal_cableId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableId", oldValue, _internal_cableId));
         }
     }
 
@@ -332,16 +332,6 @@ public class _Super_CableVO extends flash.events.EventDispatcher implements com.
         }
     }
 
-    public function set bizType(value:String) : void
-    {
-        var oldValue:String = _internal_bizType;
-        if (oldValue !== value)
-        {
-            _internal_bizType = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "bizType", oldValue, _internal_bizType));
-        }
-    }
-
     public function set cableLength(value:String) : void
     {
         var oldValue:String = _internal_cableLength;
@@ -349,6 +339,16 @@ public class _Super_CableVO extends flash.events.EventDispatcher implements com.
         {
             _internal_cableLength = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableLength", oldValue, _internal_cableLength));
+        }
+    }
+
+    public function set bizType(value:String) : void
+    {
+        var oldValue:String = _internal_bizType;
+        if (oldValue !== value)
+        {
+            _internal_bizType = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "bizType", oldValue, _internal_bizType));
         }
     }
 
