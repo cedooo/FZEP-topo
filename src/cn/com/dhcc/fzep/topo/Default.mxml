@@ -6,6 +6,17 @@
 			   xmlns:services="services.*"  minWidth="955" minHeight="600" 
 			   xmlns:cedomaps="cn.com.dhcc.fzep.topo.maps.*"
 			   width="100%"  applicationComplete="applicationComplete()" >
+		<fx:Style>
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		
+		mx|ToolTip {
+			fontFamily: "Times New Roman,Georgia,Serif,Arial,Verdana,Sans-serif";
+			fontSize: 12;
+			fontStyle: "normal";
+			color: #FFFFFF;
+			backgroundColor: #33CC99;
+		}
+	</fx:Style>
 	<fx:Declarations>
 		<s:TitleWindow id="showInfoWin" width="280" title="详细信息" close="showInfoWin_closeHandler(event)" >
 			<mx:DataGrid id="headerShowInfo" showHeaders="false" width="30%"  
@@ -1231,7 +1242,7 @@
 							<s:RadioButton groupName="paymentType"  id="degreeThree" enabled="false"   value="credit"    label="3层"   />
 							-->
 						</s:HGroup>
-						<s:TextInput id="searchRelationKey" keyDown="searchKey_keyDownHandler(event)" maxChars="15" toolTip="关键字">
+						<s:TextInput id="searchRelationKey" keyDown="searchKey_keyDownHandler(event)" maxChars="15" toolTip="站点全称">
 						</s:TextInput>
 						<mx:LinkButton label="刷新" click="searchBtn_clickHandler(event)" fontWeight="bold"   />
 						<!--
