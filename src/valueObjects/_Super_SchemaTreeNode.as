@@ -61,8 +61,8 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
      * properties
      */
     private var _internal_id : String;
-    private var _internal_parentNode : String;
     private var _internal_treeLevel : String;
+    private var _internal_parentNode : String;
     private var _internal_name : String;
     private var _internal_children : ArrayCollection;
     model_internal var _internal_children_leaf:valueObjects.SchemaTreeNode;
@@ -97,15 +97,15 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
     }
 
     [Bindable(event="propertyChange")]
-    public function get parentNode() : String
-    {
-        return _internal_parentNode;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get treeLevel() : String
     {
         return _internal_treeLevel;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get parentNode() : String
+    {
+        return _internal_parentNode;
     }
 
     [Bindable(event="propertyChange")]
@@ -144,16 +144,6 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
         }
     }
 
-    public function set parentNode(value:String) : void
-    {
-        var oldValue:String = _internal_parentNode;
-        if (oldValue !== value)
-        {
-            _internal_parentNode = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "parentNode", oldValue, _internal_parentNode));
-        }
-    }
-
     public function set treeLevel(value:String) : void
     {
         var oldValue:String = _internal_treeLevel;
@@ -161,6 +151,16 @@ public class _Super_SchemaTreeNode extends flash.events.EventDispatcher implemen
         {
             _internal_treeLevel = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "treeLevel", oldValue, _internal_treeLevel));
+        }
+    }
+
+    public function set parentNode(value:String) : void
+    {
+        var oldValue:String = _internal_parentNode;
+        if (oldValue !== value)
+        {
+            _internal_parentNode = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "parentNode", oldValue, _internal_parentNode));
         }
     }
 

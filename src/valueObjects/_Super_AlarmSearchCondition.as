@@ -1,6 +1,6 @@
 /**
  * This is a generated class and is not intended for modification.  To customize behavior
- * of this value object you may modify the generated sub-class of this class - Schema.as.
+ * of this value object you may modify the generated sub-class of this class - AlarmSearchCondition.as.
  */
 
 package valueObjects
@@ -10,6 +10,7 @@ import com.adobe.fiber.valueobjects.IValueObject;
 import flash.events.EventDispatcher;
 import mx.collections.ArrayCollection;
 import mx.events.PropertyChangeEvent;
+import valueObjects.Page;
 
 import flash.net.registerClassAlias;
 import flash.net.getClassByAlias;
@@ -20,28 +21,29 @@ import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 use namespace model_internal;
 
 [ExcludeClass]
-public class _Super_Schema extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
+public class _Super_AlarmSearchCondition extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
         try
         {
-            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.pojo.Schema") == null)
+            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.alarm.common.AlarmSearchCondition") == null)
             {
-                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.Schema", cz);
+                flash.net.registerClassAlias("cn.com.dhcc.fzep.alarm.common.AlarmSearchCondition", cz);
             }
         }
         catch (e:Error)
         {
-            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.pojo.Schema", cz);
+            flash.net.registerClassAlias("cn.com.dhcc.fzep.alarm.common.AlarmSearchCondition", cz);
         }
     }
 
     model_internal static function initRemoteClassAliasAllRelated() : void
     {
+        valueObjects.Page.initRemoteClassAliasSingleChild();
     }
 
-    model_internal var _dminternal_model : _SchemaEntityMetadata;
+    model_internal var _dminternal_model : _AlarmSearchConditionEntityMetadata;
     model_internal var _changedObjects:mx.collections.ArrayCollection = new ArrayCollection();
 
     public function getChangedObjects() : Array
@@ -58,17 +60,11 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
     /**
      * properties
      */
-    private var _internal_schemaArgs : String;
-    private var _internal_schemaType : String;
-    private var _internal_siteId : String;
-    private var _internal_schemaName : String;
-    private var _internal_isDefault : String;
-    private var _internal_schemaAddTime : String;
-    private var _internal_schemaId : String;
-    private var _internal_schemaDelTime : String;
-    private var _internal_schemaData : String;
-    private var _internal_schemaNote : String;
-    private var _internal_areaId : String;
+    private var _internal_alarmClazz : String;
+    private var _internal_page : valueObjects.Page;
+    private var _internal_alarmLevel : String;
+    private var _internal_confirmState : String;
+    private var _internal_alarmType : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -80,9 +76,9 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
 
     model_internal var _changeWatcherArray:Array = new Array();
 
-    public function _Super_Schema()
+    public function _Super_AlarmSearchCondition()
     {
-        _model = new _SchemaEntityMetadata(this);
+        _model = new _AlarmSearchConditionEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
 
@@ -93,69 +89,33 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
      */
 
     [Bindable(event="propertyChange")]
-    public function get schemaArgs() : String
+    public function get alarmClazz() : String
     {
-        return _internal_schemaArgs;
+        return _internal_alarmClazz;
     }
 
     [Bindable(event="propertyChange")]
-    public function get schemaType() : String
+    public function get page() : valueObjects.Page
     {
-        return _internal_schemaType;
+        return _internal_page;
     }
 
     [Bindable(event="propertyChange")]
-    public function get siteId() : String
+    public function get alarmLevel() : String
     {
-        return _internal_siteId;
+        return _internal_alarmLevel;
     }
 
     [Bindable(event="propertyChange")]
-    public function get schemaName() : String
+    public function get confirmState() : String
     {
-        return _internal_schemaName;
+        return _internal_confirmState;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isDefault() : String
+    public function get alarmType() : String
     {
-        return _internal_isDefault;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get schemaAddTime() : String
-    {
-        return _internal_schemaAddTime;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get schemaId() : String
-    {
-        return _internal_schemaId;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get schemaDelTime() : String
-    {
-        return _internal_schemaDelTime;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get schemaData() : String
-    {
-        return _internal_schemaData;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get schemaNote() : String
-    {
-        return _internal_schemaNote;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get areaId() : String
-    {
-        return _internal_areaId;
+        return _internal_alarmType;
     }
 
     public function clearAssociations() : void
@@ -166,113 +126,53 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
      * data/source property setters
      */
 
-    public function set schemaArgs(value:String) : void
+    public function set alarmClazz(value:String) : void
     {
-        var oldValue:String = _internal_schemaArgs;
+        var oldValue:String = _internal_alarmClazz;
         if (oldValue !== value)
         {
-            _internal_schemaArgs = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaArgs", oldValue, _internal_schemaArgs));
+            _internal_alarmClazz = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmClazz", oldValue, _internal_alarmClazz));
         }
     }
 
-    public function set schemaType(value:String) : void
+    public function set page(value:valueObjects.Page) : void
     {
-        var oldValue:String = _internal_schemaType;
+        var oldValue:valueObjects.Page = _internal_page;
         if (oldValue !== value)
         {
-            _internal_schemaType = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaType", oldValue, _internal_schemaType));
+            _internal_page = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "page", oldValue, _internal_page));
         }
     }
 
-    public function set siteId(value:String) : void
+    public function set alarmLevel(value:String) : void
     {
-        var oldValue:String = _internal_siteId;
+        var oldValue:String = _internal_alarmLevel;
         if (oldValue !== value)
         {
-            _internal_siteId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "siteId", oldValue, _internal_siteId));
+            _internal_alarmLevel = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmLevel", oldValue, _internal_alarmLevel));
         }
     }
 
-    public function set schemaName(value:String) : void
+    public function set confirmState(value:String) : void
     {
-        var oldValue:String = _internal_schemaName;
+        var oldValue:String = _internal_confirmState;
         if (oldValue !== value)
         {
-            _internal_schemaName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaName", oldValue, _internal_schemaName));
+            _internal_confirmState = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "confirmState", oldValue, _internal_confirmState));
         }
     }
 
-    public function set isDefault(value:String) : void
+    public function set alarmType(value:String) : void
     {
-        var oldValue:String = _internal_isDefault;
+        var oldValue:String = _internal_alarmType;
         if (oldValue !== value)
         {
-            _internal_isDefault = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "isDefault", oldValue, _internal_isDefault));
-        }
-    }
-
-    public function set schemaAddTime(value:String) : void
-    {
-        var oldValue:String = _internal_schemaAddTime;
-        if (oldValue !== value)
-        {
-            _internal_schemaAddTime = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaAddTime", oldValue, _internal_schemaAddTime));
-        }
-    }
-
-    public function set schemaId(value:String) : void
-    {
-        var oldValue:String = _internal_schemaId;
-        if (oldValue !== value)
-        {
-            _internal_schemaId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaId", oldValue, _internal_schemaId));
-        }
-    }
-
-    public function set schemaDelTime(value:String) : void
-    {
-        var oldValue:String = _internal_schemaDelTime;
-        if (oldValue !== value)
-        {
-            _internal_schemaDelTime = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaDelTime", oldValue, _internal_schemaDelTime));
-        }
-    }
-
-    public function set schemaData(value:String) : void
-    {
-        var oldValue:String = _internal_schemaData;
-        if (oldValue !== value)
-        {
-            _internal_schemaData = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaData", oldValue, _internal_schemaData));
-        }
-    }
-
-    public function set schemaNote(value:String) : void
-    {
-        var oldValue:String = _internal_schemaNote;
-        if (oldValue !== value)
-        {
-            _internal_schemaNote = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "schemaNote", oldValue, _internal_schemaNote));
-        }
-    }
-
-    public function set areaId(value:String) : void
-    {
-        var oldValue:String = _internal_areaId;
-        if (oldValue !== value)
-        {
-            _internal_areaId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "areaId", oldValue, _internal_areaId));
+            _internal_alarmType = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmType", oldValue, _internal_alarmType));
         }
     }
 
@@ -336,14 +236,14 @@ public class _Super_Schema extends flash.events.EventDispatcher implements com.a
 
     [Transient]
     [Bindable(event="propertyChange")]
-    public function get _model() : _SchemaEntityMetadata
+    public function get _model() : _AlarmSearchConditionEntityMetadata
     {
         return model_internal::_dminternal_model;
     }
 
-    public function set _model(value : _SchemaEntityMetadata) : void
+    public function set _model(value : _AlarmSearchConditionEntityMetadata) : void
     {
-        var oldValue : _SchemaEntityMetadata = model_internal::_dminternal_model;
+        var oldValue : _AlarmSearchConditionEntityMetadata = model_internal::_dminternal_model;
         if (oldValue !== value)
         {
             model_internal::_dminternal_model = value;

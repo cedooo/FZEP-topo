@@ -61,8 +61,8 @@ public class _Super_CableVO extends flash.events.EventDispatcher implements com.
      * properties
      */
     private var _internal_cableStartId : String;
-    private var _internal_cableId : String;
     private var _internal_fiberId : String;
+    private var _internal_cableId : String;
     private var _internal_constructionUnitId : String;
     private var _internal_runTime : String;
     private var _internal_cableType : String;
@@ -106,15 +106,15 @@ public class _Super_CableVO extends flash.events.EventDispatcher implements com.
     }
 
     [Bindable(event="propertyChange")]
-    public function get cableId() : String
-    {
-        return _internal_cableId;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get fiberId() : String
     {
         return _internal_fiberId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get cableId() : String
+    {
+        return _internal_cableId;
     }
 
     [Bindable(event="propertyChange")]
@@ -207,16 +207,6 @@ public class _Super_CableVO extends flash.events.EventDispatcher implements com.
         }
     }
 
-    public function set cableId(value:String) : void
-    {
-        var oldValue:String = _internal_cableId;
-        if (oldValue !== value)
-        {
-            _internal_cableId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableId", oldValue, _internal_cableId));
-        }
-    }
-
     public function set fiberId(value:String) : void
     {
         var oldValue:String = _internal_fiberId;
@@ -224,6 +214,16 @@ public class _Super_CableVO extends flash.events.EventDispatcher implements com.
         {
             _internal_fiberId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "fiberId", oldValue, _internal_fiberId));
+        }
+    }
+
+    public function set cableId(value:String) : void
+    {
+        var oldValue:String = _internal_cableId;
+        if (oldValue !== value)
+        {
+            _internal_cableId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "cableId", oldValue, _internal_cableId));
         }
     }
 

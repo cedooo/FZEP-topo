@@ -67,8 +67,8 @@ public class _Super_OLT extends flash.events.EventDispatcher implements com.adob
     private var _internal_projectId : String;
     private var _internal_vlanId : String;
     private var _internal_vpnNumber : String;
-    private var _internal_oSPFNumber : String;
     private var _internal_oltName : String;
+    private var _internal_oSPFNumber : String;
     private var _internal_descp : String;
     private var _internal_lookbackLocation : String;
     private var _internal_typeSpecification : String;
@@ -154,15 +154,15 @@ public class _Super_OLT extends flash.events.EventDispatcher implements com.adob
     }
 
     [Bindable(event="propertyChange")]
-    public function get oSPFNumber() : String
-    {
-        return _internal_oSPFNumber;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get oltName() : String
     {
         return _internal_oltName;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get oSPFNumber() : String
+    {
+        return _internal_oSPFNumber;
     }
 
     [Bindable(event="propertyChange")]
@@ -305,16 +305,6 @@ public class _Super_OLT extends flash.events.EventDispatcher implements com.adob
         }
     }
 
-    public function set oSPFNumber(value:String) : void
-    {
-        var oldValue:String = _internal_oSPFNumber;
-        if (oldValue !== value)
-        {
-            _internal_oSPFNumber = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "oSPFNumber", oldValue, _internal_oSPFNumber));
-        }
-    }
-
     public function set oltName(value:String) : void
     {
         var oldValue:String = _internal_oltName;
@@ -322,6 +312,16 @@ public class _Super_OLT extends flash.events.EventDispatcher implements com.adob
         {
             _internal_oltName = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "oltName", oldValue, _internal_oltName));
+        }
+    }
+
+    public function set oSPFNumber(value:String) : void
+    {
+        var oldValue:String = _internal_oSPFNumber;
+        if (oldValue !== value)
+        {
+            _internal_oSPFNumber = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "oSPFNumber", oldValue, _internal_oSPFNumber));
         }
     }
 

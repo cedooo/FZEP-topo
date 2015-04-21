@@ -69,9 +69,9 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     private var _internal_twoLayerSwitchName : String;
     private var _internal_installationSite : String;
     private var _internal_runTime : String;
+    private var _internal_VLANID : String;
     private var _internal_flow : String;
     private var _internal_projectId : String;
-    private var _internal_VLANID : String;
     private var _internal_ownedBusiness : String;
     private var _internal_twoLayerSwitchId : String;
     private var _internal_vlanDescp : String;
@@ -81,8 +81,8 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     private var _internal_typeSpecification : String;
     private var _internal_siteId : String;
     private var _internal_delFlg : String;
-    private var _internal_manufacturersId : String;
     private var _internal_debugging : String;
+    private var _internal_manufacturersId : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -173,6 +173,12 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     }
 
     [Bindable(event="propertyChange")]
+    public function get VLANID() : String
+    {
+        return _internal_VLANID;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get flow() : String
     {
         return _internal_flow;
@@ -182,12 +188,6 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     public function get projectId() : String
     {
         return _internal_projectId;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get VLANID() : String
-    {
-        return _internal_VLANID;
     }
 
     [Bindable(event="propertyChange")]
@@ -245,15 +245,15 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
     }
 
     [Bindable(event="propertyChange")]
-    public function get manufacturersId() : String
-    {
-        return _internal_manufacturersId;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get debugging() : String
     {
         return _internal_debugging;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get manufacturersId() : String
+    {
+        return _internal_manufacturersId;
     }
 
     public function clearAssociations() : void
@@ -374,6 +374,16 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         }
     }
 
+    public function set VLANID(value:String) : void
+    {
+        var oldValue:String = _internal_VLANID;
+        if (oldValue !== value)
+        {
+            _internal_VLANID = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "VLANID", oldValue, _internal_VLANID));
+        }
+    }
+
     public function set flow(value:String) : void
     {
         var oldValue:String = _internal_flow;
@@ -391,16 +401,6 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         {
             _internal_projectId = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "projectId", oldValue, _internal_projectId));
-        }
-    }
-
-    public function set VLANID(value:String) : void
-    {
-        var oldValue:String = _internal_VLANID;
-        if (oldValue !== value)
-        {
-            _internal_VLANID = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "VLANID", oldValue, _internal_VLANID));
         }
     }
 
@@ -494,16 +494,6 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         }
     }
 
-    public function set manufacturersId(value:String) : void
-    {
-        var oldValue:String = _internal_manufacturersId;
-        if (oldValue !== value)
-        {
-            _internal_manufacturersId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "manufacturersId", oldValue, _internal_manufacturersId));
-        }
-    }
-
     public function set debugging(value:String) : void
     {
         var oldValue:String = _internal_debugging;
@@ -511,6 +501,16 @@ public class _Super_TwoLayerSwitch extends flash.events.EventDispatcher implemen
         {
             _internal_debugging = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "debugging", oldValue, _internal_debugging));
+        }
+    }
+
+    public function set manufacturersId(value:String) : void
+    {
+        var oldValue:String = _internal_manufacturersId;
+        if (oldValue !== value)
+        {
+            _internal_manufacturersId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "manufacturersId", oldValue, _internal_manufacturersId));
         }
     }
 

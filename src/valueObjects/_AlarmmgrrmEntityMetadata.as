@@ -16,58 +16,58 @@ import mx.events.PropertyChangeEvent;
 use namespace model_internal;
 
 [ExcludeClass]
-internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
+internal class _AlarmmgrrmEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "flow", "projectId", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
+    model_internal static var allProperties:Array = new Array("ONUId", "userIdClear", "monitorEntityId", "alarmId", "reasonForClear", "VCI", "clearTime", "VPI", "userIdAffirmer", "portType", "genTime", "affirmState", "RMid", "oltId", "alarmLevel", "PONIfId", "slotId", "alarmKind", "affirmTime", "nodeType", "alarmType");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "flow", "projectId", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("ONUId", "userIdClear", "monitorEntityId", "alarmId", "reasonForClear", "VCI", "clearTime", "VPI", "userIdAffirmer", "portType", "genTime", "affirmState", "RMid", "oltId", "alarmLevel", "PONIfId", "slotId", "alarmKind", "affirmTime", "nodeType", "alarmType");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "flow", "projectId", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
+    model_internal static var dataProperties:Array = new Array("ONUId", "userIdClear", "monitorEntityId", "alarmId", "reasonForClear", "VCI", "clearTime", "VPI", "userIdAffirmer", "portType", "genTime", "affirmState", "RMid", "oltId", "alarmLevel", "PONIfId", "slotId", "alarmKind", "affirmTime", "nodeType", "alarmType");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "manufacturers", "switchName", "switchId", "showName", "portNumber", "constructionUnitId", "threeLayerSwitchId", "installationSite", "threeLayerSwitchName", "runTime", "flow", "projectId", "vlanId", "ip", "vlanDescp", "descp", "typeSpecification", "siteId", "delFlg", "manufacturersId");
+    model_internal static var nonDerivedProperties:Array = new Array("ONUId", "userIdClear", "monitorEntityId", "alarmId", "reasonForClear", "VCI", "clearTime", "VPI", "userIdAffirmer", "portType", "genTime", "affirmState", "RMid", "oltId", "alarmLevel", "PONIfId", "slotId", "alarmKind", "affirmTime", "nodeType", "alarmType");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
-    model_internal static var entityName:String = "ThreeLayerSwitch";
+    model_internal static var entityName:String = "Alarmmgrrm";
     model_internal static var dependentsOnMap:Object;
     model_internal static var dependedOnServices:Array = new Array();
     model_internal static var propertyTypeMap:Object;
 
 
-    model_internal var _instance:_Super_ThreeLayerSwitch;
+    model_internal var _instance:_Super_Alarmmgrrm;
     model_internal static var _nullStyle:com.adobe.fiber.styles.Style = new com.adobe.fiber.styles.Style();
 
-    public function _ThreeLayerSwitchEntityMetadata(value : _Super_ThreeLayerSwitch)
+    public function _AlarmmgrrmEntityMetadata(value : _Super_Alarmmgrrm)
     {
         // initialize property maps
         if (model_internal::dependentsOnMap == null)
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["constructionUnit"] = new Array();
-            model_internal::dependentsOnMap["manufacturers"] = new Array();
-            model_internal::dependentsOnMap["switchName"] = new Array();
-            model_internal::dependentsOnMap["switchId"] = new Array();
-            model_internal::dependentsOnMap["showName"] = new Array();
-            model_internal::dependentsOnMap["portNumber"] = new Array();
-            model_internal::dependentsOnMap["constructionUnitId"] = new Array();
-            model_internal::dependentsOnMap["threeLayerSwitchId"] = new Array();
-            model_internal::dependentsOnMap["installationSite"] = new Array();
-            model_internal::dependentsOnMap["threeLayerSwitchName"] = new Array();
-            model_internal::dependentsOnMap["runTime"] = new Array();
-            model_internal::dependentsOnMap["flow"] = new Array();
-            model_internal::dependentsOnMap["projectId"] = new Array();
-            model_internal::dependentsOnMap["vlanId"] = new Array();
-            model_internal::dependentsOnMap["ip"] = new Array();
-            model_internal::dependentsOnMap["vlanDescp"] = new Array();
-            model_internal::dependentsOnMap["descp"] = new Array();
-            model_internal::dependentsOnMap["typeSpecification"] = new Array();
-            model_internal::dependentsOnMap["siteId"] = new Array();
-            model_internal::dependentsOnMap["delFlg"] = new Array();
-            model_internal::dependentsOnMap["manufacturersId"] = new Array();
+            model_internal::dependentsOnMap["ONUId"] = new Array();
+            model_internal::dependentsOnMap["userIdClear"] = new Array();
+            model_internal::dependentsOnMap["monitorEntityId"] = new Array();
+            model_internal::dependentsOnMap["alarmId"] = new Array();
+            model_internal::dependentsOnMap["reasonForClear"] = new Array();
+            model_internal::dependentsOnMap["VCI"] = new Array();
+            model_internal::dependentsOnMap["clearTime"] = new Array();
+            model_internal::dependentsOnMap["VPI"] = new Array();
+            model_internal::dependentsOnMap["userIdAffirmer"] = new Array();
+            model_internal::dependentsOnMap["portType"] = new Array();
+            model_internal::dependentsOnMap["genTime"] = new Array();
+            model_internal::dependentsOnMap["affirmState"] = new Array();
+            model_internal::dependentsOnMap["RMid"] = new Array();
+            model_internal::dependentsOnMap["oltId"] = new Array();
+            model_internal::dependentsOnMap["alarmLevel"] = new Array();
+            model_internal::dependentsOnMap["PONIfId"] = new Array();
+            model_internal::dependentsOnMap["slotId"] = new Array();
+            model_internal::dependentsOnMap["alarmKind"] = new Array();
+            model_internal::dependentsOnMap["affirmTime"] = new Array();
+            model_internal::dependentsOnMap["nodeType"] = new Array();
+            model_internal::dependentsOnMap["alarmType"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
@@ -75,27 +75,27 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["constructionUnit"] = "String";
-        model_internal::propertyTypeMap["manufacturers"] = "String";
-        model_internal::propertyTypeMap["switchName"] = "String";
-        model_internal::propertyTypeMap["switchId"] = "String";
-        model_internal::propertyTypeMap["showName"] = "String";
-        model_internal::propertyTypeMap["portNumber"] = "String";
-        model_internal::propertyTypeMap["constructionUnitId"] = "String";
-        model_internal::propertyTypeMap["threeLayerSwitchId"] = "String";
-        model_internal::propertyTypeMap["installationSite"] = "String";
-        model_internal::propertyTypeMap["threeLayerSwitchName"] = "String";
-        model_internal::propertyTypeMap["runTime"] = "String";
-        model_internal::propertyTypeMap["flow"] = "String";
-        model_internal::propertyTypeMap["projectId"] = "String";
-        model_internal::propertyTypeMap["vlanId"] = "String";
-        model_internal::propertyTypeMap["ip"] = "String";
-        model_internal::propertyTypeMap["vlanDescp"] = "String";
-        model_internal::propertyTypeMap["descp"] = "String";
-        model_internal::propertyTypeMap["typeSpecification"] = "String";
-        model_internal::propertyTypeMap["siteId"] = "String";
-        model_internal::propertyTypeMap["delFlg"] = "String";
-        model_internal::propertyTypeMap["manufacturersId"] = "String";
+        model_internal::propertyTypeMap["ONUId"] = "String";
+        model_internal::propertyTypeMap["userIdClear"] = "String";
+        model_internal::propertyTypeMap["monitorEntityId"] = "String";
+        model_internal::propertyTypeMap["alarmId"] = "String";
+        model_internal::propertyTypeMap["reasonForClear"] = "String";
+        model_internal::propertyTypeMap["VCI"] = "String";
+        model_internal::propertyTypeMap["clearTime"] = "String";
+        model_internal::propertyTypeMap["VPI"] = "String";
+        model_internal::propertyTypeMap["userIdAffirmer"] = "String";
+        model_internal::propertyTypeMap["portType"] = "String";
+        model_internal::propertyTypeMap["genTime"] = "String";
+        model_internal::propertyTypeMap["affirmState"] = "String";
+        model_internal::propertyTypeMap["RMid"] = "String";
+        model_internal::propertyTypeMap["oltId"] = "String";
+        model_internal::propertyTypeMap["alarmLevel"] = "String";
+        model_internal::propertyTypeMap["PONIfId"] = "String";
+        model_internal::propertyTypeMap["slotId"] = "String";
+        model_internal::propertyTypeMap["alarmKind"] = "String";
+        model_internal::propertyTypeMap["affirmTime"] = "String";
+        model_internal::propertyTypeMap["nodeType"] = "String";
+        model_internal::propertyTypeMap["alarmType"] = "String";
 
         model_internal::_instance = value;
     }
@@ -148,7 +148,7 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     override public function getDependants(propertyName:String):Array
     {
        if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a data property of entity ThreeLayerSwitch");
+            throw new Error(propertyName + " is not a data property of entity Alarmmgrrm");
             
        return model_internal::dependentsOnMap[propertyName] as Array;  
     }
@@ -166,7 +166,7 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     override public function getCollectionBase(propertyName:String):String
     {
         if (model_internal::collectionProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a collection property of entity ThreeLayerSwitch");
+            throw new Error(propertyName + " is not a collection property of entity Alarmmgrrm");
 
         return model_internal::collectionBaseMap[propertyName];
     }
@@ -174,7 +174,7 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     override public function getPropertyType(propertyName:String):String
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a property of ThreeLayerSwitch");
+            throw new Error(propertyName + " is not a property of Alarmmgrrm");
 
         return model_internal::propertyTypeMap[propertyName];
     }
@@ -188,7 +188,7 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity ThreeLayerSwitch");
+            throw new Error(propertyName + " does not exist for entity Alarmmgrrm");
         }
 
         return model_internal::_instance[propertyName];
@@ -198,7 +198,7 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     {
         if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " is not a modifiable property of entity ThreeLayerSwitch");
+            throw new Error(propertyName + " is not a modifiable property of entity Alarmmgrrm");
         }
 
         model_internal::_instance[propertyName] = value;
@@ -230,7 +230,7 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity ThreeLayerSwitch");
+            throw new Error(propertyName + " does not exist for entity Alarmmgrrm");
         }
 
         if (model_internal::allAlwaysAvailableProperties.indexOf(propertyName) != -1)
@@ -325,127 +325,127 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     }
 
     [Bindable(event="propertyChange")]
-    public function get isConstructionUnitAvailable():Boolean
+    public function get isONUIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isManufacturersAvailable():Boolean
+    public function get isUserIdClearAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSwitchNameAvailable():Boolean
+    public function get isMonitorEntityIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSwitchIdAvailable():Boolean
+    public function get isAlarmIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isShowNameAvailable():Boolean
+    public function get isReasonForClearAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isPortNumberAvailable():Boolean
+    public function get isVCIAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isConstructionUnitIdAvailable():Boolean
+    public function get isClearTimeAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isThreeLayerSwitchIdAvailable():Boolean
+    public function get isVPIAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isInstallationSiteAvailable():Boolean
+    public function get isUserIdAffirmerAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isThreeLayerSwitchNameAvailable():Boolean
+    public function get isPortTypeAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isRunTimeAvailable():Boolean
+    public function get isGenTimeAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isFlowAvailable():Boolean
+    public function get isAffirmStateAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isProjectIdAvailable():Boolean
+    public function get isRMidAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isVlanIdAvailable():Boolean
+    public function get isOltIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isIpAvailable():Boolean
+    public function get isAlarmLevelAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isVlanDescpAvailable():Boolean
+    public function get isPONIfIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isDescpAvailable():Boolean
+    public function get isSlotIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isTypeSpecificationAvailable():Boolean
+    public function get isAlarmKindAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isSiteIdAvailable():Boolean
+    public function get isAffirmTimeAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isDelFlgAvailable():Boolean
+    public function get isNodeTypeAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isManufacturersIdAvailable():Boolean
+    public function get isAlarmTypeAvailable():Boolean
     {
         return true;
     }
@@ -461,127 +461,127 @@ internal class _ThreeLayerSwitchEntityMetadata extends com.adobe.fiber.valueobje
     }
 
     [Bindable(event="propertyChange")]   
-    public function get constructionUnitStyle():com.adobe.fiber.styles.Style
+    public function get ONUIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get manufacturersStyle():com.adobe.fiber.styles.Style
+    public function get userIdClearStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get switchNameStyle():com.adobe.fiber.styles.Style
+    public function get monitorEntityIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get switchIdStyle():com.adobe.fiber.styles.Style
+    public function get alarmIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get showNameStyle():com.adobe.fiber.styles.Style
+    public function get reasonForClearStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get portNumberStyle():com.adobe.fiber.styles.Style
+    public function get VCIStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get constructionUnitIdStyle():com.adobe.fiber.styles.Style
+    public function get clearTimeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get threeLayerSwitchIdStyle():com.adobe.fiber.styles.Style
+    public function get VPIStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get installationSiteStyle():com.adobe.fiber.styles.Style
+    public function get userIdAffirmerStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get threeLayerSwitchNameStyle():com.adobe.fiber.styles.Style
+    public function get portTypeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get runTimeStyle():com.adobe.fiber.styles.Style
+    public function get genTimeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get flowStyle():com.adobe.fiber.styles.Style
+    public function get affirmStateStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get projectIdStyle():com.adobe.fiber.styles.Style
+    public function get RMidStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get vlanIdStyle():com.adobe.fiber.styles.Style
+    public function get oltIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get ipStyle():com.adobe.fiber.styles.Style
+    public function get alarmLevelStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get vlanDescpStyle():com.adobe.fiber.styles.Style
+    public function get PONIfIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get descpStyle():com.adobe.fiber.styles.Style
+    public function get slotIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get typeSpecificationStyle():com.adobe.fiber.styles.Style
+    public function get alarmKindStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get siteIdStyle():com.adobe.fiber.styles.Style
+    public function get affirmTimeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get delFlgStyle():com.adobe.fiber.styles.Style
+    public function get nodeTypeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get manufacturersIdStyle():com.adobe.fiber.styles.Style
+    public function get alarmTypeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

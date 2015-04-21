@@ -8,7 +8,6 @@
 			   width="100%"  applicationComplete="applicationComplete()" >
 		<fx:Style>
 		@namespace mx "library://ns.adobe.com/flex/mx";
-		
 		mx|ToolTip {
 			fontFamily: "Times New Roman,Georgia,Serif,Arial,Verdana,Sans-serif";
 			fontSize: 12;

@@ -20,14 +20,14 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "lookbackLocation", "typeSpecification", "siteId", "oltId", "delFlg", "manufacturersId");
+    model_internal static var allProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oltName", "oSPFNumber", "descp", "lookbackLocation", "typeSpecification", "siteId", "oltId", "delFlg", "manufacturersId");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "lookbackLocation", "typeSpecification", "siteId", "oltId", "delFlg", "manufacturersId");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oltName", "oSPFNumber", "descp", "lookbackLocation", "typeSpecification", "siteId", "oltId", "delFlg", "manufacturersId");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "lookbackLocation", "typeSpecification", "siteId", "oltId", "delFlg", "manufacturersId");
+    model_internal static var dataProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oltName", "oSPFNumber", "descp", "lookbackLocation", "typeSpecification", "siteId", "oltId", "delFlg", "manufacturersId");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oSPFNumber", "oltName", "descp", "lookbackLocation", "typeSpecification", "siteId", "oltId", "delFlg", "manufacturersId");
+    model_internal static var nonDerivedProperties:Array = new Array("constructionUnit", "manufacturers", "showName", "constructionUnitId", "installationSite", "runTime", "projectId", "vlanId", "vpnNumber", "oltName", "oSPFNumber", "descp", "lookbackLocation", "typeSpecification", "siteId", "oltId", "delFlg", "manufacturersId");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -56,8 +56,8 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
             model_internal::dependentsOnMap["projectId"] = new Array();
             model_internal::dependentsOnMap["vlanId"] = new Array();
             model_internal::dependentsOnMap["vpnNumber"] = new Array();
-            model_internal::dependentsOnMap["oSPFNumber"] = new Array();
             model_internal::dependentsOnMap["oltName"] = new Array();
+            model_internal::dependentsOnMap["oSPFNumber"] = new Array();
             model_internal::dependentsOnMap["descp"] = new Array();
             model_internal::dependentsOnMap["lookbackLocation"] = new Array();
             model_internal::dependentsOnMap["typeSpecification"] = new Array();
@@ -81,8 +81,8 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
         model_internal::propertyTypeMap["projectId"] = "String";
         model_internal::propertyTypeMap["vlanId"] = "String";
         model_internal::propertyTypeMap["vpnNumber"] = "String";
-        model_internal::propertyTypeMap["oSPFNumber"] = "String";
         model_internal::propertyTypeMap["oltName"] = "String";
+        model_internal::propertyTypeMap["oSPFNumber"] = "String";
         model_internal::propertyTypeMap["descp"] = "String";
         model_internal::propertyTypeMap["lookbackLocation"] = "String";
         model_internal::propertyTypeMap["typeSpecification"] = "String";
@@ -373,13 +373,13 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     }
 
     [Bindable(event="propertyChange")]
-    public function get isOSPFNumberAvailable():Boolean
+    public function get isOltNameAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isOltNameAvailable():Boolean
+    public function get isOSPFNumberAvailable():Boolean
     {
         return true;
     }
@@ -491,13 +491,13 @@ internal class _OLTEntityMetadata extends com.adobe.fiber.valueobjects.AbstractE
     }
 
     [Bindable(event="propertyChange")]   
-    public function get oSPFNumberStyle():com.adobe.fiber.styles.Style
+    public function get oltNameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get oltNameStyle():com.adobe.fiber.styles.Style
+    public function get oSPFNumberStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

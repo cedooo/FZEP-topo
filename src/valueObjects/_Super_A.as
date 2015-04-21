@@ -61,8 +61,8 @@ public class _Super_A extends flash.events.EventDispatcher implements com.adobe.
      * properties
      */
     private var _internal_b : valueObjects.B;
-    private var _internal_age : int;
     private var _internal_name : String;
+    private var _internal_age : int;
 
     private static var emptyArray:Array = new Array();
 
@@ -93,15 +93,15 @@ public class _Super_A extends flash.events.EventDispatcher implements com.adobe.
     }
 
     [Bindable(event="propertyChange")]
-    public function get age() : int
-    {
-        return _internal_age;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get name() : String
     {
         return _internal_name;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get age() : int
+    {
+        return _internal_age;
     }
 
     public function clearAssociations() : void
@@ -122,16 +122,6 @@ public class _Super_A extends flash.events.EventDispatcher implements com.adobe.
         }
     }
 
-    public function set age(value:int) : void
-    {
-        var oldValue:int = _internal_age;
-        if (oldValue !== value)
-        {
-            _internal_age = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "age", oldValue, _internal_age));
-        }
-    }
-
     public function set name(value:String) : void
     {
         var oldValue:String = _internal_name;
@@ -139,6 +129,16 @@ public class _Super_A extends flash.events.EventDispatcher implements com.adobe.
         {
             _internal_name = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "name", oldValue, _internal_name));
+        }
+    }
+
+    public function set age(value:int) : void
+    {
+        var oldValue:int = _internal_age;
+        if (oldValue !== value)
+        {
+            _internal_age = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "age", oldValue, _internal_age));
         }
     }
 

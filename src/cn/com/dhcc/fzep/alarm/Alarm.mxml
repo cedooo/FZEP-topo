@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:services="services.*"
+			   minWidth="955" minHeight="600">
+	<fx:Declarations>
+		<s:CallResponder id="listAlarmResult"/>
+		<services:Alarm id="alarm"
+						fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+						showBusyCursor="true"/>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			
+			import valueObjects.AlarmSearchCondition;
+			//东土-告警名称
+			[Bindable]
+			public var kylandAlarmName:ArrayCollection = new ArrayCollection(
+				[   
+					{category:"0", ingredient:"全部"},
+					{category:"32769", ingredient:"端口DOWN告警"},
+					{category:"36865", ingredient:"ZY-RING环开"},
+					{category:"40961", ingredient:"温度上限告警"},
+					{category:"45057", ingredient:"温度下限告警"},
+					{category:"53249", ingredient:"IP冲突告警"},
+					{category:"57345", ingredient:"MAC冲突告警"},
+					{category:"100", ingredient:"设备通讯异常"},
+					{category:"4097", ingredient:"交直流告警"},
+					{category:"6006", ingredient:"内存利用率超阈值告警"},
+					{category:"6008", ingredient:"CPU利用率超阈值告警"},
+					{category:"49153", ingredient:"电源告警"},
+					{category:"57349", ingredient:"设备掉电告警"},
+					{category:"32773", ingredient:"端口入方向流量超阈值告警"},
+					{category:"32775", ingredient:"端口出方向流量超阈值告警"},
+					{category:"32777", ingredient:"端口CRC告警"},
+					{category:"36869", ingredient:"ZY-RING2环开"}
+				]                
+			);
+			//东土-告警级别
+			[Bindable]
+			public var kylandAlarmLevel:ArrayCollection = new ArrayCollection(
+				[   
+					{category:"0", ingredient:"全部"},
+					{category:"1", ingredient:"紧急告警"},
+					{category:"2", ingredient:"主要告警"},
+					{category:"3", ingredient:"次要告警"},
+					{category:"4", ingredient:"提示告警"}
+				
+				]                
+			);
+			//东土-告警确认状态
+			[Bindable]
+			public var kylandAlarmConfirmState:ArrayCollection = new ArrayCollection(
+				[   
+					{category:"0", ingredient:"全部"},
+					{category:"1", ingredient:"未确认"},
+					{category:"2", ingredient:"已确认"},
+				]                
+			);
+			
+			protected function listAlarm(arg0:AlarmSearchCondition):void
+			{
+				listAlarmResult.token = alarm.listAlarm(arg0);
+			}
+			
+		]]>
+	</fx:Script>
+	<s:controlBarContent>
+		<s:Label text="告警" />
+	</s:controlBarContent>
+	<s:BorderContainer width="100%" height="100%" borderVisible="false">
+		<mx:TabNavigator id="mynavigator"  width="100%" height="100%" resizeToContent="true" >
+			<s:NavigatorContent label="东土" width="100%" height="100%">
+				<s:BorderContainer width="100%" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout gap="-1" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="0">
+							
+						</s:VerticalLayout>
+					</s:layout>
+					<s:BorderContainer dropShadowVisible="false" width="100%" height="20%" >
+						<s:layout>
+							<s:HorizontalLayout >
+								
+							</s:HorizontalLayout>
+						</s:layout>
+						<mx:Form width="60%" label="告警查询条件" >
+							<s:HGroup >
+								<s:RadioButton groupName="numStops" 
+											   id="nonStop"
+											   label="活动告警" 
+											   selected="true" />
+								<s:RadioButton id="historyAlarm" groupName="numStops" 
+											   label="历史告警"   />
+							</s:HGroup>
+							<s:HGroup >
+								<mx:FormItem label="告警名称">
+									<s:ComboBox dataProvider="{kylandAlarmName}"  selectedIndex="0" 
+												labelField="ingredient">
+									</s:ComboBox>
+								</mx:FormItem>
+								<mx:FormItem label="告警级别">
+									<s:ComboBox dataProvider="{kylandAlarmLevel}"  selectedIndex="0" 
+												labelField="ingredient">
+									</s:ComboBox>
+								</mx:FormItem>
+								<mx:FormItem label="确认状态">
+									<s:ComboBox dataProvider="{kylandAlarmConfirmState}"  selectedIndex="0" 
+												labelField="ingredient">
+									</s:ComboBox>
+								</mx:FormItem>
+							</s:HGroup>
+						</mx:Form>
+						<mx:Form width="40%" height="100%">
+							<mx:FormItem label="告警ID">
+								<mx:Label text="{alarmListDataGrid.selectedItem.name}"/>
+							</mx:FormItem>
+							<mx:FormItem label="告警源">
+								<mx:Label text="{alarmListDataGrid.selectedItem.email}"/>
+							</mx:FormItem>
+							<mx:FormItem label="告警名称">
+								<mx:Label text="{alarmListDataGrid.selectedItem.phone}"/>
+							</mx:FormItem>
+						</mx:Form>
+					</s:BorderContainer>
+					<s:BorderContainer width="100%" height="80%" dropShadowVisible="false" borderVisible="false">
+						<s:layout>
+							<s:HorizontalLayout gap="0">
+								
+							</s:HorizontalLayout>
+						</s:layout>
+						<mx:DataGrid id="alarmListDataGrid"  width="100%" height="100%" dataProvider="{listAlarmResult.lastResult}">
+							<mx:columns>
+								<mx:DataGridColumn dataField="alarmId" headerText="告警ID"/>
+								<mx:DataGridColumn dataField="OltId" headerText="告警源"/>
+								<mx:DataGridColumn dataField="AlarmType" headerText="告警名称"/>
+								<mx:DataGridColumn dataField="GenTime" headerText="发生时间"/>
+								<mx:DataGridColumn dataField="AlarmKind" headerText="告警类别"/>
+								<mx:DataGridColumn dataField="AffirmTime" headerText="确认时间"/>
+								<mx:DataGridColumn dataField="AffirmState" headerText="确认状态"/>
+								<mx:DataGridColumn dataField="UserIdAffirmer" headerText="确认人"/>
+								<mx:DataGridColumn dataField="AlarmLevel" headerText="告警级别"/>
+							</mx:columns>
+						</mx:DataGrid>
+					</s:BorderContainer>
+					<mx:HBox backgroundAlpha="0" verticalAlign="middle" paddingTop="5" horizontalAlign="center" width="100%">
+						<mx:Label   text="第 0 页/共 0 页" id="pagedetail"  />  
+						<mx:LinkButton label="首页" id="firstPage"     />  
+						<mx:LinkButton label="上一页" id="prePage" />  
+						<mx:LinkButton label="下一页" id="nextPage" />  
+						<mx:LinkButton label="末页"  id="lastPage"  />  
+						<mx:NumericStepper id="inputpage" stepSize="1" minimum="1" maximum="1" />  
+						<mx:LinkButton id="jumpTo" label="跳转"  />    
+					</mx:HBox>  
+				</s:BorderContainer>
+			</s:NavigatorContent>
+			<s:NavigatorContent label="科大" width="100%" height="100%" enabled="false">
+				<s:Label text="选项卡2的内容"/>
+			</s:NavigatorContent>
+			<s:NavigatorContent label="H3C" width="100%" height="100%" enabled="false">
+				<s:Label text="选项卡3的内容"/>
+			</s:NavigatorContent>
+		</mx:TabNavigator>
+	</s:BorderContainer>
+</s:Application>
