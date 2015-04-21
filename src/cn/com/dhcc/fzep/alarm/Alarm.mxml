@@ -3,7 +3,7 @@
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:services="services.*"
-			   minWidth="955" minHeight="600">
+			   minWidth="955" minHeight="600" creationComplete="application1_creationCompleteHandler(event)">
 	<fx:Declarations>
 		<s:CallResponder id="listAlarmResult"/>
 		<services:Alarm id="alarm"
@@ -16,8 +16,13 @@
 		<![CDATA[
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
+			import mx.events.FlexEvent;
 			
 			import valueObjects.AlarmSearchCondition;
+			import valueObjects.Page;
+			
+			private var g_kylandAlarmSearchCondition:AlarmSearchCondition = new AlarmSearchCondition();
+			
 			//东土-告警名称
 			[Bindable]
 			public var kylandAlarmName:ArrayCollection = new ArrayCollection(
@@ -66,6 +71,24 @@
 			protected function listAlarm(arg0:AlarmSearchCondition):void
 			{
 				listAlarmResult.token = alarm.listAlarm(arg0);
+			}
+			
+			protected function searchKylandAlarm():void{
+				
+				listAlarm(g_kylandAlarmSearchCondition);
+			}
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				var page:Page = new Page();
+				page.curPage = 1;
+				page.numPerPage = 10;
+				g_kylandAlarmSearchCondition.page = page;
+			}
+			
+			protected function alarmListDataGrid_creationCompleteHandler(event:FlexEvent):void
+			{
+				searchKylandAlarm();
 			}
 			
 		]]>
@@ -133,17 +156,18 @@
 								
 							</s:HorizontalLayout>
 						</s:layout>
-						<mx:DataGrid id="alarmListDataGrid"  width="100%" height="100%" dataProvider="{listAlarmResult.lastResult}">
+						<mx:DataGrid id="alarmListDataGrid"  width="100%" height="100%" dataProvider="{listAlarmResult.lastResult}"
+									 creationComplete="alarmListDataGrid_creationCompleteHandler(event)">
 							<mx:columns>
 								<mx:DataGridColumn dataField="alarmId" headerText="告警ID"/>
-								<mx:DataGridColumn dataField="OltId" headerText="告警源"/>
-								<mx:DataGridColumn dataField="AlarmType" headerText="告警名称"/>
-								<mx:DataGridColumn dataField="GenTime" headerText="发生时间"/>
-								<mx:DataGridColumn dataField="AlarmKind" headerText="告警类别"/>
-								<mx:DataGridColumn dataField="AffirmTime" headerText="确认时间"/>
-								<mx:DataGridColumn dataField="AffirmState" headerText="确认状态"/>
-								<mx:DataGridColumn dataField="UserIdAffirmer" headerText="确认人"/>
-								<mx:DataGridColumn dataField="AlarmLevel" headerText="告警级别"/>
+								<mx:DataGridColumn dataField="oltId" headerText="告警源"/>
+								<mx:DataGridColumn dataField="alarmType" headerText="告警名称"/>
+								<mx:DataGridColumn dataField="genTime" headerText="发生时间"/>
+								<mx:DataGridColumn dataField="alarmKind" headerText="告警类别"/>
+								<mx:DataGridColumn dataField="affirmTime" headerText="确认时间"/>
+								<mx:DataGridColumn dataField="affirmState" headerText="确认状态"/>
+								<mx:DataGridColumn dataField="userIdAffirmer" headerText="确认人"/>
+								<mx:DataGridColumn dataField="alarmLevel" headerText="告警级别"/>
 							</mx:columns>
 						</mx:DataGrid>
 					</s:BorderContainer>
