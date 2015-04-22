@@ -58,8 +58,8 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
     /**
      * properties
      */
-    private var _internal_ONUId : String;
     private var _internal_userIdClear : String;
+    private var _internal_ONUId : String;
     private var _internal_monitorEntityId : String;
     private var _internal_alarmId : String;
     private var _internal_reasonForClear : String;
@@ -68,8 +68,8 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
     private var _internal_VPI : String;
     private var _internal_userIdAffirmer : String;
     private var _internal_portType : String;
-    private var _internal_genTime : String;
     private var _internal_affirmState : String;
+    private var _internal_genTime : String;
     private var _internal_RMid : String;
     private var _internal_oltId : String;
     private var _internal_alarmLevel : String;
@@ -103,15 +103,15 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
      */
 
     [Bindable(event="propertyChange")]
-    public function get ONUId() : String
-    {
-        return _internal_ONUId;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get userIdClear() : String
     {
         return _internal_userIdClear;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get ONUId() : String
+    {
+        return _internal_ONUId;
     }
 
     [Bindable(event="propertyChange")]
@@ -163,15 +163,15 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
     }
 
     [Bindable(event="propertyChange")]
-    public function get genTime() : String
-    {
-        return _internal_genTime;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get affirmState() : String
     {
         return _internal_affirmState;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get genTime() : String
+    {
+        return _internal_genTime;
     }
 
     [Bindable(event="propertyChange")]
@@ -236,16 +236,6 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
      * data/source property setters
      */
 
-    public function set ONUId(value:String) : void
-    {
-        var oldValue:String = _internal_ONUId;
-        if (oldValue !== value)
-        {
-            _internal_ONUId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "ONUId", oldValue, _internal_ONUId));
-        }
-    }
-
     public function set userIdClear(value:String) : void
     {
         var oldValue:String = _internal_userIdClear;
@@ -253,6 +243,16 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
         {
             _internal_userIdClear = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "userIdClear", oldValue, _internal_userIdClear));
+        }
+    }
+
+    public function set ONUId(value:String) : void
+    {
+        var oldValue:String = _internal_ONUId;
+        if (oldValue !== value)
+        {
+            _internal_ONUId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "ONUId", oldValue, _internal_ONUId));
         }
     }
 
@@ -336,16 +336,6 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
         }
     }
 
-    public function set genTime(value:String) : void
-    {
-        var oldValue:String = _internal_genTime;
-        if (oldValue !== value)
-        {
-            _internal_genTime = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "genTime", oldValue, _internal_genTime));
-        }
-    }
-
     public function set affirmState(value:String) : void
     {
         var oldValue:String = _internal_affirmState;
@@ -353,6 +343,16 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
         {
             _internal_affirmState = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "affirmState", oldValue, _internal_affirmState));
+        }
+    }
+
+    public function set genTime(value:String) : void
+    {
+        var oldValue:String = _internal_genTime;
+        if (oldValue !== value)
+        {
+            _internal_genTime = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "genTime", oldValue, _internal_genTime));
         }
     }
 

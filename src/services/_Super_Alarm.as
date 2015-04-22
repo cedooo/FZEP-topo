@@ -12,7 +12,9 @@ import mx.rpc.AsyncToken;
 import mx.rpc.remoting.Operation;
 import mx.rpc.remoting.RemoteObject;
 import valueObjects.AlarmSearchCondition;
+import valueObjects.AlarmStatistics;
 import valueObjects.Alarmmgrrm;
+import valueObjects.Page;
 
 import mx.collections.ItemResponder;
 import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
@@ -36,6 +38,12 @@ internal class _Super_Alarm extends com.adobe.fiber.services.wrapper.RemoteObjec
         operation = new mx.rpc.remoting.Operation(null, "listAlarm");
          operation.resultElementType = valueObjects.Alarmmgrrm;
         operations["listAlarm"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "pageInfo");
+         operation.resultType = valueObjects.Page;
+        operations["pageInfo"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "getAlarmStatisticsInfo");
+         operation.resultType = valueObjects.AlarmStatistics;
+        operations["getAlarmStatisticsInfo"] = operation;
 
         _serviceControl.operations = operations;
         _serviceControl.convertResultHandler = com.adobe.serializers.utility.TypeUtility.convertResultHandler;
@@ -67,6 +75,42 @@ internal class _Super_Alarm extends com.adobe.fiber.services.wrapper.RemoteObjec
     public function listAlarm(arg0:valueObjects.AlarmSearchCondition) : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("listAlarm");
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0) ;
+        return _internal_token;
+    }
+     
+    /**
+      * This method is a generated wrapper used to call the 'pageInfo' operation. It returns an mx.rpc.AsyncToken whose 
+      * result property will be populated with the result of the operation when the server response is received. 
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
+      *
+      * @see mx.rpc.AsyncToken
+      * @see mx.rpc.CallResponder 
+      *
+      * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
+      */
+    public function pageInfo(arg0:valueObjects.AlarmSearchCondition) : mx.rpc.AsyncToken
+    {
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("pageInfo");
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0) ;
+        return _internal_token;
+    }
+     
+    /**
+      * This method is a generated wrapper used to call the 'getAlarmStatisticsInfo' operation. It returns an mx.rpc.AsyncToken whose 
+      * result property will be populated with the result of the operation when the server response is received. 
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
+      *
+      * @see mx.rpc.AsyncToken
+      * @see mx.rpc.CallResponder 
+      *
+      * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
+      */
+    public function getAlarmStatisticsInfo(arg0:valueObjects.AlarmSearchCondition) : mx.rpc.AsyncToken
+    {
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getAlarmStatisticsInfo");
 		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0) ;
         return _internal_token;
     }

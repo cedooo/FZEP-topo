@@ -9,7 +9,8 @@
 		<services:Alarm id="alarm"
 						fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 						showBusyCursor="true"/>
-		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<s:CallResponder id="pageInfoResult" result="pageInfoResult_resultHandler(event)"/>
+		<s:CallResponder id="getAlarmStatisticsInfoResult"/>
 		
 	</fx:Declarations>
 	<fx:Script>
@@ -17,10 +18,14 @@
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
+			import mx.rpc.events.ResultEvent;
+			
+			import spark.events.DropDownEvent;
+			import spark.events.IndexChangeEvent;
 			
 			import valueObjects.AlarmSearchCondition;
 			import valueObjects.Page;
-			
+			[Bindable]
 			private var g_kylandAlarmSearchCondition:AlarmSearchCondition = new AlarmSearchCondition();
 			
 			//东土-告警名称
@@ -50,11 +55,11 @@
 			[Bindable]
 			public var kylandAlarmLevel:ArrayCollection = new ArrayCollection(
 				[   
-					{category:"0", ingredient:"全部"},
-					{category:"1", ingredient:"紧急告警"},
-					{category:"2", ingredient:"主要告警"},
-					{category:"3", ingredient:"次要告警"},
-					{category:"4", ingredient:"提示告警"}
+					{category:"0", ingredient:"全部", color:"0x2F285B"},
+					{category:"1", ingredient:"紧急告警", color:"0xBB6274"},
+					{category:"2", ingredient:"主要告警", color:"0xD4907E"},
+					{category:"3", ingredient:"次要告警", color:"0xE8D6B3"},
+					{category:"4", ingredient:"提示告警", color:"0xBEBDB8"}
 				
 				]                
 			);
@@ -62,9 +67,9 @@
 			[Bindable]
 			public var kylandAlarmConfirmState:ArrayCollection = new ArrayCollection(
 				[   
-					{category:"0", ingredient:"全部"},
-					{category:"1", ingredient:"未确认"},
-					{category:"2", ingredient:"已确认"},
+					{category:"-1", ingredient:"全部"},
+					{category:"0", ingredient:"未确认"},
+					{category:"1", ingredient:"已确认"},
 				]                
 			);
 			
@@ -74,15 +79,16 @@
 			}
 			
 			protected function searchKylandAlarm():void{
-				
 				listAlarm(g_kylandAlarmSearchCondition);
+				pageInfo(g_kylandAlarmSearchCondition);
+				getAlarmStatisticsInfo(g_kylandAlarmSearchCondition);
 			}
 			
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
 				var page:Page = new Page();
 				page.curPage = 1;
-				page.numPerPage = 10;
+				page.numPerPage = 50;
 				g_kylandAlarmSearchCondition.page = page;
 			}
 			
@@ -90,12 +96,159 @@
 			{
 				searchKylandAlarm();
 			}
+			/**
+			 * 东土告警信息格式化
+			 */
+			protected function kylandAlarmTypeColumnFormat(item:Object, column:DataGridColumn):String{
+				var alarmType:String = item.alarmType;
+				var alarmTypeLabel:String = "未知";
+				for each (var o:Object in kylandAlarmName) 
+				{
+					if(	alarmType==o.category){
+						alarmTypeLabel = o.ingredient;
+						break;
+					}else{continue;}
+				}
+				
+				return alarmTypeLabel;
+			}
+			private var zeroTime:String ="1970-01-01 08:00:00";
+			protected function UTCTimeFormat(item:Object, column:DataGridColumn):String{
+				var timeFormated:String="";
+				if(column.dataField == "genTime"){
+					if(item.genTime!=zeroTime){
+						timeFormated = item.genTime;
+					}else{
+						timeFormated = ""; 
+					}
+				}else if(column.dataField == "affirmTime"){
+					if(item.affirmTime!=zeroTime){
+						timeFormated = item.affirmTime;
+					}else{
+						timeFormated = ""; 
+					}
+				}
+				return timeFormated;
+			}
+			protected function formatDate(theDate:Date):String{
+				return theDate.fullYear + "-" + (theDate.month+1) + "-" + theDate.date + " " + theDate.hours +":" + theDate.minutes +":" + theDate.seconds;;
+			}
+			protected function kylandAlarmLevelFormat(item:Object, column:DataGridColumn):String{
+				var alarmLevel:String = item.alarmLevel;
+				var alarmLevelLabel:String = "未知";
+				for each (var o:Object in kylandAlarmLevel) 
+				{
+					if(	alarmLevel==o.category){
+						alarmLevelLabel = o.ingredient;
+						//item.setStyle("color", o.color);
+						break;
+					}else{continue;}
+				}
+				return alarmLevelLabel;
+			}
+			protected function kylandAffirmStateFormat(item:Object, column:DataGridColumn):String{
+				var affirmState:String = item.affirmState;
+				var affirmStateLabel:String = "未知";
+				for each (var o:Object in kylandAlarmConfirmState) 
+				{
+					if(	affirmState==o.category){
+						affirmStateLabel = o.ingredient;
+						break;
+					}else{continue;}
+				}
+				
+				return affirmStateLabel;
+			}
+			protected function kylandAffirmUserFormat(item:Object, column:DataGridColumn):String{
+				if(item.userIdAffirmer=="0"){
+					return "";
+				}else{
+					return item.userIdAffirmer;
+				}
+			}
+			
+			/**
+			 * 分页跳转
+			 */
+			protected function gotoPage(event:MouseEvent):void
+			{
+				if(event.currentTarget.id=="firstPage"){
+					g_kylandAlarmSearchCondition.page.curPage = 1;
+				}else if(event.currentTarget.id=="lastPage"){
+					g_kylandAlarmSearchCondition.page.curPage = g_kylandAlarmSearchCondition.page.totalPage;
+				}else if(event.currentTarget.id=="prePage"){
+					if(g_kylandAlarmSearchCondition.page.curPage>1){
+						g_kylandAlarmSearchCondition.page.curPage = g_kylandAlarmSearchCondition.page.curPage-1;
+					}
+				}else if(event.currentTarget.id=="nextPage"){
+					if(g_kylandAlarmSearchCondition.page.curPage<g_kylandAlarmSearchCondition.page.totalPage){
+						g_kylandAlarmSearchCondition.page.curPage = g_kylandAlarmSearchCondition.page.curPage+1;
+					}
+				}else if(event.currentTarget.id=="jumpTo"){
+					if(inputpage.value<=g_kylandAlarmSearchCondition.page.totalPage && inputpage.value >0){
+						g_kylandAlarmSearchCondition.page.curPage = inputpage.value;
+					}
+				}
+				searchKylandAlarm();
+			}
+			
+			protected function pageInfo(arg0:AlarmSearchCondition):void
+			{
+				pageInfoResult.token = alarm.pageInfo(arg0);
+			}
+			
+			protected function pageInfoResult_resultHandler(event:ResultEvent):void
+			{
+				var pageInfo:Page = event.result as Page;
+				g_kylandAlarmSearchCondition.page.totalPage = pageInfo.totalPage;
+				
+			}
+			
+			
+			protected function getAlarmStatisticsInfo(arg0:AlarmSearchCondition):void
+			{
+				getAlarmStatisticsInfoResult.token = alarm.getAlarmStatisticsInfo(arg0);
+			}
+			
+			protected function alarmLevelForSearch_changeHandler(event:IndexChangeEvent):void
+			{
+				var selected:String = ComboBox(event.target).selectedItem.category;
+				if(selected!=kylandAlarmLevel.getItemAt(0).category){
+					g_kylandAlarmSearchCondition.alarmLevel = selected;
+				}else{
+					g_kylandAlarmSearchCondition.alarmLevel = null;
+				}
+				g_kylandAlarmSearchCondition.page.curPage = 1;
+				searchKylandAlarm();
+			}
+			
+			
+			protected function alarmNameForSearch_changeHandler(event:IndexChangeEvent):void
+			{
+				var selected:String = ComboBox(event.target).selectedItem.category;
+				if(selected!=kylandAlarmName.getItemAt(0).category){
+					g_kylandAlarmSearchCondition.alarmType = selected;
+				}else{
+					g_kylandAlarmSearchCondition.alarmType = null;
+				}
+				g_kylandAlarmSearchCondition.page.curPage = 1;
+				searchKylandAlarm();
+			}
+			
+			protected function alarmConfirmStateForSearch_changeHandler(event:IndexChangeEvent):void
+			{
+				var selected:String = ComboBox(event.target).selectedItem.category;
+				if(selected!=kylandAlarmConfirmState.getItemAt(0).category){
+					g_kylandAlarmSearchCondition.confirmState = selected;
+				}else{
+					g_kylandAlarmSearchCondition.confirmState = null;
+				}
+				g_kylandAlarmSearchCondition.page.curPage = 1;
+				searchKylandAlarm();
+			}
 			
 		]]>
 	</fx:Script>
-	<s:controlBarContent>
-		<s:Label text="告警" />
-	</s:controlBarContent>
 	<s:BorderContainer width="100%" height="100%" borderVisible="false">
 		<mx:TabNavigator id="mynavigator"  width="100%" height="100%" resizeToContent="true" >
 			<s:NavigatorContent label="东土" width="100%" height="100%">
@@ -105,14 +258,14 @@
 							
 						</s:VerticalLayout>
 					</s:layout>
-					<s:BorderContainer dropShadowVisible="false" width="100%" height="20%" >
+					<s:BorderContainer dropShadowVisible="false" width="100%"  height="20%" >
 						<s:layout>
 							<s:HorizontalLayout >
 								
 							</s:HorizontalLayout>
 						</s:layout>
 						<mx:Form width="60%" label="告警查询条件" >
-							<s:HGroup >
+							<s:HGroup visible="false" >
 								<s:RadioButton groupName="numStops" 
 											   id="nonStop"
 											   label="活动告警" 
@@ -122,33 +275,74 @@
 							</s:HGroup>
 							<s:HGroup >
 								<mx:FormItem label="告警名称">
-									<s:ComboBox dataProvider="{kylandAlarmName}"  selectedIndex="0" 
-												labelField="ingredient">
+									<s:ComboBox dataProvider="{kylandAlarmName}"  selectedIndex="0"  id="alarmNameForSearch"
+												labelField="ingredient" change="alarmNameForSearch_changeHandler(event)">
 									</s:ComboBox>
 								</mx:FormItem>
 								<mx:FormItem label="告警级别">
-									<s:ComboBox dataProvider="{kylandAlarmLevel}"  selectedIndex="0" 
-												labelField="ingredient">
+									<s:ComboBox id="alarmLevelForSearch" dataProvider="{kylandAlarmLevel}"  selectedIndex="0" 
+												labelField="ingredient"  change="alarmLevelForSearch_changeHandler(event)" >
 									</s:ComboBox>
 								</mx:FormItem>
 								<mx:FormItem label="确认状态">
-									<s:ComboBox dataProvider="{kylandAlarmConfirmState}"  selectedIndex="0" 
-												labelField="ingredient">
+									<s:ComboBox dataProvider="{kylandAlarmConfirmState}"  selectedIndex="0" id="alarmConfirmStateForSearch"
+												labelField="ingredient" change="alarmConfirmStateForSearch_changeHandler(event)">
 									</s:ComboBox>
 								</mx:FormItem>
 							</s:HGroup>
 						</mx:Form>
-						<mx:Form width="40%" height="100%">
-							<mx:FormItem label="告警ID">
-								<mx:Label text="{alarmListDataGrid.selectedItem.name}"/>
-							</mx:FormItem>
-							<mx:FormItem label="告警源">
-								<mx:Label text="{alarmListDataGrid.selectedItem.email}"/>
-							</mx:FormItem>
-							<mx:FormItem label="告警名称">
-								<mx:Label text="{alarmListDataGrid.selectedItem.phone}"/>
-							</mx:FormItem>
-						</mx:Form>
+						<s:BorderContainer width="40%" borderVisible="false" >
+							<s:layout>
+								<s:HorizontalLayout horizontalAlign="right" verticalAlign="bottom" paddingBottom="10" paddingRight="10"  >
+									
+								</s:HorizontalLayout>
+							</s:layout>
+							<s:BorderContainer height="25" width="50" backgroundColor="{kylandAlarmLevel.getItemAt(0).color}" toolTip="{kylandAlarmLevel.getItemAt(0).ingredient}">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"   >
+										
+									</s:HorizontalLayout>
+								</s:layout>
+								<s:Label text="{getAlarmStatisticsInfoResult.lastResult.statistics.getItemAt(0)}" color="0xffffff" />
+							</s:BorderContainer>
+							<s:BorderContainer height="25" width="50" backgroundColor="{kylandAlarmLevel.getItemAt(1).color}" toolTip="{kylandAlarmLevel.getItemAt(1).ingredient}">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"   >
+										
+									</s:HorizontalLayout>
+								</s:layout>
+								<s:Label text="{getAlarmStatisticsInfoResult.lastResult.statistics.getItemAt(1)}" color="0xffffff" />
+							</s:BorderContainer>
+							<s:BorderContainer height="25" width="50" backgroundColor="{kylandAlarmLevel.getItemAt(2).color}" toolTip="{kylandAlarmLevel.getItemAt(2).ingredient}">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"   >
+										
+									</s:HorizontalLayout>
+								</s:layout>
+								<s:Label text="{getAlarmStatisticsInfoResult.lastResult.statistics.getItemAt(2)}" color="0xffffff" />
+							</s:BorderContainer>
+							<s:BorderContainer height="25" width="50" backgroundColor="{kylandAlarmLevel.getItemAt(3).color}" toolTip="{kylandAlarmLevel.getItemAt(3).ingredient}">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"   >
+										
+									</s:HorizontalLayout>
+								</s:layout>
+								<s:Label text="{getAlarmStatisticsInfoResult.lastResult.statistics.getItemAt(3)}" color="0xffffff" />
+							</s:BorderContainer>
+							<s:BorderContainer height="25" width="50" backgroundColor="{kylandAlarmLevel.getItemAt(4).color}" toolTip="{kylandAlarmLevel.getItemAt(4).ingredient}">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"   >
+										
+									</s:HorizontalLayout>
+								</s:layout>
+								<s:Label text="{getAlarmStatisticsInfoResult.lastResult.statistics.getItemAt(4)}" color="0xffffff" />
+							</s:BorderContainer>
+							<!--
+							<s:BorderContainer height="25" width="50" backgroundColor="0x9F9095" toolTip="{kylandAlarmLevel.getItemAt(0).ingredient}">
+								
+							</s:BorderContainer>
+							-->
+						</s:BorderContainer>
 					</s:BorderContainer>
 					<s:BorderContainer width="100%" height="80%" dropShadowVisible="false" borderVisible="false">
 						<s:layout>
@@ -161,24 +355,24 @@
 							<mx:columns>
 								<mx:DataGridColumn dataField="alarmId" headerText="告警ID"/>
 								<mx:DataGridColumn dataField="oltId" headerText="告警源"/>
-								<mx:DataGridColumn dataField="alarmType" headerText="告警名称"/>
-								<mx:DataGridColumn dataField="genTime" headerText="发生时间"/>
-								<mx:DataGridColumn dataField="alarmKind" headerText="告警类别"/>
-								<mx:DataGridColumn dataField="affirmTime" headerText="确认时间"/>
-								<mx:DataGridColumn dataField="affirmState" headerText="确认状态"/>
-								<mx:DataGridColumn dataField="userIdAffirmer" headerText="确认人"/>
-								<mx:DataGridColumn dataField="alarmLevel" headerText="告警级别"/>
+								<mx:DataGridColumn dataField="alarmType" headerText="告警名称" labelFunction="kylandAlarmTypeColumnFormat" />
+								<mx:DataGridColumn dataField="genTime" headerText="发生时间" labelFunction="UTCTimeFormat" />
+								<mx:DataGridColumn dataField="alarmKind" headerText="告警类别" visible="false" />
+								<mx:DataGridColumn dataField="affirmTime" headerText="确认时间" labelFunction="UTCTimeFormat" />
+								<mx:DataGridColumn dataField="affirmState" headerText="确认状态" labelFunction="kylandAffirmStateFormat"/>
+								<mx:DataGridColumn dataField="userIdAffirmer" headerText="确认人" labelFunction="kylandAffirmUserFormat"/>
+								<mx:DataGridColumn dataField="alarmLevel" headerText="告警级别" labelFunction="kylandAlarmLevelFormat" />
 							</mx:columns>
 						</mx:DataGrid>
 					</s:BorderContainer>
 					<mx:HBox backgroundAlpha="0" verticalAlign="middle" paddingTop="5" horizontalAlign="center" width="100%">
-						<mx:Label   text="第 0 页/共 0 页" id="pagedetail"  />  
-						<mx:LinkButton label="首页" id="firstPage"     />  
-						<mx:LinkButton label="上一页" id="prePage" />  
-						<mx:LinkButton label="下一页" id="nextPage" />  
-						<mx:LinkButton label="末页"  id="lastPage"  />  
-						<mx:NumericStepper id="inputpage" stepSize="1" minimum="1" maximum="1" />  
-						<mx:LinkButton id="jumpTo" label="跳转"  />    
+						<mx:Label   text="第 {pageInfoResult.lastResult.curPage} 页/共 {pageInfoResult.lastResult.totalPage} 页" id="pagedetail"  />  
+						<mx:LinkButton label="首页" id="firstPage"     click="gotoPage(event)"   />   
+						<mx:LinkButton label="上一页" id="prePage" click="gotoPage(event)"   />   
+						<mx:LinkButton label="下一页" id="nextPage" click="gotoPage(event)"   />  
+						<mx:LinkButton label="末页"  id="lastPage" click="gotoPage(event)"   />  
+						<mx:NumericStepper id="inputpage" stepSize="1" minimum="1" maximum="{pageInfoResult.lastResult.totalPage}" />  
+						<mx:LinkButton id="jumpTo" label="跳转"  click="gotoPage(event)"   />     
 					</mx:HBox>  
 				</s:BorderContainer>
 			</s:NavigatorContent>

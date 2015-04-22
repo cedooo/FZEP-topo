@@ -20,14 +20,14 @@ internal class _AlarmmgrrmEntityMetadata extends com.adobe.fiber.valueobjects.Ab
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("ONUId", "userIdClear", "monitorEntityId", "alarmId", "reasonForClear", "VCI", "clearTime", "VPI", "userIdAffirmer", "portType", "genTime", "affirmState", "RMid", "oltId", "alarmLevel", "PONIfId", "slotId", "alarmKind", "affirmTime", "nodeType", "alarmType");
+    model_internal static var allProperties:Array = new Array("userIdClear", "ONUId", "monitorEntityId", "alarmId", "reasonForClear", "VCI", "clearTime", "VPI", "userIdAffirmer", "portType", "affirmState", "genTime", "RMid", "oltId", "alarmLevel", "PONIfId", "slotId", "alarmKind", "affirmTime", "nodeType", "alarmType");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("ONUId", "userIdClear", "monitorEntityId", "alarmId", "reasonForClear", "VCI", "clearTime", "VPI", "userIdAffirmer", "portType", "genTime", "affirmState", "RMid", "oltId", "alarmLevel", "PONIfId", "slotId", "alarmKind", "affirmTime", "nodeType", "alarmType");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("userIdClear", "ONUId", "monitorEntityId", "alarmId", "reasonForClear", "VCI", "clearTime", "VPI", "userIdAffirmer", "portType", "affirmState", "genTime", "RMid", "oltId", "alarmLevel", "PONIfId", "slotId", "alarmKind", "affirmTime", "nodeType", "alarmType");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("ONUId", "userIdClear", "monitorEntityId", "alarmId", "reasonForClear", "VCI", "clearTime", "VPI", "userIdAffirmer", "portType", "genTime", "affirmState", "RMid", "oltId", "alarmLevel", "PONIfId", "slotId", "alarmKind", "affirmTime", "nodeType", "alarmType");
+    model_internal static var dataProperties:Array = new Array("userIdClear", "ONUId", "monitorEntityId", "alarmId", "reasonForClear", "VCI", "clearTime", "VPI", "userIdAffirmer", "portType", "affirmState", "genTime", "RMid", "oltId", "alarmLevel", "PONIfId", "slotId", "alarmKind", "affirmTime", "nodeType", "alarmType");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("ONUId", "userIdClear", "monitorEntityId", "alarmId", "reasonForClear", "VCI", "clearTime", "VPI", "userIdAffirmer", "portType", "genTime", "affirmState", "RMid", "oltId", "alarmLevel", "PONIfId", "slotId", "alarmKind", "affirmTime", "nodeType", "alarmType");
+    model_internal static var nonDerivedProperties:Array = new Array("userIdClear", "ONUId", "monitorEntityId", "alarmId", "reasonForClear", "VCI", "clearTime", "VPI", "userIdAffirmer", "portType", "affirmState", "genTime", "RMid", "oltId", "alarmLevel", "PONIfId", "slotId", "alarmKind", "affirmTime", "nodeType", "alarmType");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -47,8 +47,8 @@ internal class _AlarmmgrrmEntityMetadata extends com.adobe.fiber.valueobjects.Ab
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["ONUId"] = new Array();
             model_internal::dependentsOnMap["userIdClear"] = new Array();
+            model_internal::dependentsOnMap["ONUId"] = new Array();
             model_internal::dependentsOnMap["monitorEntityId"] = new Array();
             model_internal::dependentsOnMap["alarmId"] = new Array();
             model_internal::dependentsOnMap["reasonForClear"] = new Array();
@@ -57,8 +57,8 @@ internal class _AlarmmgrrmEntityMetadata extends com.adobe.fiber.valueobjects.Ab
             model_internal::dependentsOnMap["VPI"] = new Array();
             model_internal::dependentsOnMap["userIdAffirmer"] = new Array();
             model_internal::dependentsOnMap["portType"] = new Array();
-            model_internal::dependentsOnMap["genTime"] = new Array();
             model_internal::dependentsOnMap["affirmState"] = new Array();
+            model_internal::dependentsOnMap["genTime"] = new Array();
             model_internal::dependentsOnMap["RMid"] = new Array();
             model_internal::dependentsOnMap["oltId"] = new Array();
             model_internal::dependentsOnMap["alarmLevel"] = new Array();
@@ -75,8 +75,8 @@ internal class _AlarmmgrrmEntityMetadata extends com.adobe.fiber.valueobjects.Ab
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["ONUId"] = "String";
         model_internal::propertyTypeMap["userIdClear"] = "String";
+        model_internal::propertyTypeMap["ONUId"] = "String";
         model_internal::propertyTypeMap["monitorEntityId"] = "String";
         model_internal::propertyTypeMap["alarmId"] = "String";
         model_internal::propertyTypeMap["reasonForClear"] = "String";
@@ -85,8 +85,8 @@ internal class _AlarmmgrrmEntityMetadata extends com.adobe.fiber.valueobjects.Ab
         model_internal::propertyTypeMap["VPI"] = "String";
         model_internal::propertyTypeMap["userIdAffirmer"] = "String";
         model_internal::propertyTypeMap["portType"] = "String";
-        model_internal::propertyTypeMap["genTime"] = "String";
         model_internal::propertyTypeMap["affirmState"] = "String";
+        model_internal::propertyTypeMap["genTime"] = "String";
         model_internal::propertyTypeMap["RMid"] = "String";
         model_internal::propertyTypeMap["oltId"] = "String";
         model_internal::propertyTypeMap["alarmLevel"] = "String";
@@ -325,13 +325,13 @@ internal class _AlarmmgrrmEntityMetadata extends com.adobe.fiber.valueobjects.Ab
     }
 
     [Bindable(event="propertyChange")]
-    public function get isONUIdAvailable():Boolean
+    public function get isUserIdClearAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isUserIdClearAvailable():Boolean
+    public function get isONUIdAvailable():Boolean
     {
         return true;
     }
@@ -385,13 +385,13 @@ internal class _AlarmmgrrmEntityMetadata extends com.adobe.fiber.valueobjects.Ab
     }
 
     [Bindable(event="propertyChange")]
-    public function get isGenTimeAvailable():Boolean
+    public function get isAffirmStateAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isAffirmStateAvailable():Boolean
+    public function get isGenTimeAvailable():Boolean
     {
         return true;
     }
@@ -461,13 +461,13 @@ internal class _AlarmmgrrmEntityMetadata extends com.adobe.fiber.valueobjects.Ab
     }
 
     [Bindable(event="propertyChange")]   
-    public function get ONUIdStyle():com.adobe.fiber.styles.Style
+    public function get userIdClearStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get userIdClearStyle():com.adobe.fiber.styles.Style
+    public function get ONUIdStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
@@ -521,13 +521,13 @@ internal class _AlarmmgrrmEntityMetadata extends com.adobe.fiber.valueobjects.Ab
     }
 
     [Bindable(event="propertyChange")]   
-    public function get genTimeStyle():com.adobe.fiber.styles.Style
+    public function get affirmStateStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get affirmStateStyle():com.adobe.fiber.styles.Style
+    public function get genTimeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

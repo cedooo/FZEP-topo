@@ -1642,9 +1642,51 @@
         <item name="inputParams">AlarmSearchCondition</item>
         <item name="returnType">Alarmmgrrm</item>
       </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">userIdClear,ONUId,monitorEntityId,alarmId,reasonForClear,VCI,clearTime,VPI,userIdAffirmer,portType,affirmState,genTime,RMid,oltId,alarmLevel,PONIfId,slotId,alarmKind,affirmTime,nodeType,alarmType</item>
+      </annotation>
+      <parameter name="arg0" type="AlarmSearchCondition"/>
+    </function>
+    <function name="pageInfo" return-type="Page">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">AlarmSearchCondition</item>
+        <item name="returnType">Page</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
+      </annotation>
+      <parameter name="arg0" type="AlarmSearchCondition"/>
+    </function>
+    <function name="getAlarmStatisticsInfo" return-type="AlarmStatistics">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">AlarmSearchCondition</item>
+        <item name="returnType">AlarmStatistics</item>
+      </annotation>
       <parameter name="arg0" type="AlarmSearchCondition"/>
     </function>
   </service>
+  <entity name="AlarmStatistics">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">AlarmStatistics</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">cn.com.dhcc.fzep.alarm.common.AlarmStatistics</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">Dummy,Alarm</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="statistics" type="integer[]"/>
+  </entity>
   <entity name="Page">
     <annotation name="EntityProperties">
       <item name="EntityOriginalName">Page</item>
@@ -1654,7 +1696,7 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">Alarm</item>
+      <item name="service">Dummy</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
@@ -1665,8 +1707,11 @@
     <annotation name="getPageAvalibleSite">
       <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
     </annotation>
-    <property name="curPage" type="integer"/>
+    <annotation name="pageInfo">
+      <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
+    </annotation>
     <property name="numPerPage" type="integer"/>
+    <property name="curPage" type="integer"/>
     <property name="totalRecords" type="integer"/>
     <property name="totalPage" type="integer"/>
   </entity>
@@ -1679,7 +1724,7 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">Alarm</item>
+      <item name="service">Alarm,Dummy</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
@@ -1699,13 +1744,16 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">Alarm</item>
+      <item name="service">Alarm,Dummy</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
     </annotation>
-    <property name="ONUId" type="string"/>
+    <annotation name="listAlarm">
+      <item name="propertySpecifier">userIdClear,ONUId,monitorEntityId,alarmId,reasonForClear,VCI,clearTime,VPI,userIdAffirmer,portType,affirmState,genTime,RMid,oltId,alarmLevel,PONIfId,slotId,alarmKind,affirmTime,nodeType,alarmType</item>
+    </annotation>
     <property name="userIdClear" type="string"/>
+    <property name="ONUId" type="string"/>
     <property name="monitorEntityId" type="string"/>
     <property name="alarmId" type="string"/>
     <property name="reasonForClear" type="string"/>
@@ -1714,8 +1762,8 @@
     <property name="VPI" type="string"/>
     <property name="userIdAffirmer" type="string"/>
     <property name="portType" type="string"/>
-    <property name="genTime" type="string"/>
     <property name="affirmState" type="string"/>
+    <property name="genTime" type="string"/>
     <property name="RMid" type="string"/>
     <property name="oltId" type="string"/>
     <property name="alarmLevel" type="string"/>
