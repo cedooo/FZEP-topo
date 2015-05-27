@@ -33,7 +33,7 @@ package cn.com.dhcc.fzep.topo.utils
 			jsString+="    win.resizeTo(screenWidth*0.85,screenHeight*0.85);"; 
 			jsString+="    win.outerWidth = screenWidth;"; 
 			jsString+="    win.outerHeight = screenHeight;"; 
-			jsString+="    win.moveTo(screenWidth*0.075,screenHeight*0.075);"; 
+			jsString+="    win.moveTo(screenWidth*0.075,screenHeight*0.15);"; 
 			jsString+=" }"; 
 			ExternalInterface.call("function(){"+jsString+"}"); 
 		} 

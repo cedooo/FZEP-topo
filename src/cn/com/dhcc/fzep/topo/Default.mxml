@@ -167,10 +167,6 @@
 				g_SearchSiteCondition.page = page;
 				g_SearchSiteCondition.areaName = g_areaName;
 				g_areaName =  fzoutline.defaultAreaName;
-				/*
-				schemaNameLabel.text = "【" + searchSiteCondition.areaName + "】";
-				getSchemaByAreaName(areaName);
-				*/
 				getDefaultSchema();
 				
 				var gotoGIS:ContextMenuItem = new ContextMenuItem("跳转到科大GIS", false); 
@@ -209,7 +205,6 @@
 					}
 				});
 				siteContextMenu.customItems.push(detail); 
-				
 				//siteContextMenu.customItems.push(gotoGIS); 
 				/**
 				 * 光缆右键菜单

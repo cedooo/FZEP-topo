@@ -22,6 +22,8 @@
 			
 			import spark.events.IndexChangeEvent;
 			
+			import cn.com.dhcc.fzep.topo.utils.ScriptUtils;
+			
 			import valueObjects.AlarmSearchCondition;
 			import valueObjects.Page;
 			[Bindable]
@@ -245,6 +247,14 @@
 				g_kylandAlarmSearchCondition.page.curPage = 1;
 				searchKylandAlarm();
 			}
+			/**
+			 * 跳转到科大GIS
+			 */
+			protected function gotoUSTCGIS_clickHandler(event:MouseEvent):void
+			{
+				var pageUrl:String = ScriptUtils.getRoot(root.loaderInfo.url) + "gis.jsp";
+				ScriptUtils.openPopupWindow(pageUrl, "科大GIS");
+			}
 			
 		]]>
 	</fx:Script>
@@ -375,10 +385,22 @@
 					</mx:HBox>  
 				</s:BorderContainer>
 			</s:NavigatorContent>
-			<s:NavigatorContent label="科大" width="100%" height="100%" enabled="false">
-				<s:Label text="选项卡2的内容"/>
+			<s:NavigatorContent label="科大" width="100%" height="100%" enabled="true">
+				<s:BorderContainer dropShadowVisible="false" width="100%"  height="100%" borderVisible="false" >
+					<s:layout>
+						<s:HorizontalLayout paddingLeft="10" paddingTop="10" paddingBottom="10" paddingRight="10" >
+						</s:HorizontalLayout>
+					</s:layout>
+					<s:BorderContainer dropShadowVisible="false" width="100%"  height="100%" >
+						<s:layout>
+							<s:HorizontalLayout >
+							</s:HorizontalLayout>
+						</s:layout>
+						<s:Button id="gotoUSTCGIS" click="gotoUSTCGIS_clickHandler(event)" label="科大GIS" />		
+					</s:BorderContainer>	
+				</s:BorderContainer>
 			</s:NavigatorContent>
-			<s:NavigatorContent label="H3C" width="100%" height="100%" enabled="false">
+			<s:NavigatorContent label="H3C" width="100%" height="100%" enabled="false" >
 				<s:Label text="选项卡3的内容"/>
 			</s:NavigatorContent>
 		</mx:TabNavigator>
