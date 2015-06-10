@@ -252,7 +252,7 @@
 			 */
 			protected function gotoUSTCGIS_clickHandler(event:MouseEvent):void
 			{
-				var pageUrl:String = ScriptUtils.getRoot(root.loaderInfo.url) + "gis.jsp";
+				var pageUrl:String = ScriptUtils.getRoot(root.loaderInfo.url) + "gisc.jsp";
 				ScriptUtils.openPopupWindow(pageUrl, "科大GIS");
 			}
 			
