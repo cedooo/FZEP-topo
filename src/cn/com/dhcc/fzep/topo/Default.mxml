@@ -328,7 +328,6 @@
 					}
 				}
 			}
-			
 			private var elementList:Array=new Array();
 			/**
 			 * 加载视图附加信息
@@ -493,7 +492,6 @@
 			protected function searchKey_focusInHandler(event:FocusEvent):void
 			{
 				// TODO 自动补全 搜索  站点名称  关键字
-				
 			}
 			
 			protected function searchKey_keyDownHandler(event:KeyboardEvent):void
@@ -551,7 +549,6 @@
 					Alert.show("搜索参数错误","错误");
 				}
 			}
-			
 			
 			protected function getListByCondition(arg0:SearchSite):void
 			{
