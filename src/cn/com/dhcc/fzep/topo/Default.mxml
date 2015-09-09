@@ -569,7 +569,6 @@
 				getListByCondition(g_SearchSiteCondition);
 			}
 			
-			
 			protected function getPage(arg0:SearchSite):void
 			{
 				getPageResult.token = siteSchema.getPage(arg0);
