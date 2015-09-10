@@ -9,6 +9,7 @@ import com.adobe.fiber.styles.Style;
 import com.adobe.fiber.valueobjects.AbstractEntityMetadata;
 import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 import com.adobe.fiber.valueobjects.IPropertyIterator;
+import valueObjects.Page;
 import com.adobe.fiber.core.model_internal;
 import com.adobe.fiber.valueobjects.IModelType;
 import mx.events.PropertyChangeEvent;
@@ -16,41 +17,40 @@ import mx.events.PropertyChangeEvent;
 use namespace model_internal;
 
 [ExcludeClass]
-internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
+internal class _USTCAlarmSearchConditionEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("totalRecords", "curPage", "totalPage", "numPerPage");
+    model_internal static var allProperties:Array = new Array("confirmState", "alarmLevel", "page");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("totalRecords", "curPage", "totalPage", "numPerPage");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("confirmState", "alarmLevel", "page");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("totalRecords", "curPage", "totalPage", "numPerPage");
+    model_internal static var dataProperties:Array = new Array("confirmState", "alarmLevel", "page");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("totalRecords", "curPage", "totalPage", "numPerPage");
+    model_internal static var nonDerivedProperties:Array = new Array("confirmState", "alarmLevel", "page");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
-    model_internal static var entityName:String = "Page";
+    model_internal static var entityName:String = "USTCAlarmSearchCondition";
     model_internal static var dependentsOnMap:Object;
     model_internal static var dependedOnServices:Array = new Array();
     model_internal static var propertyTypeMap:Object;
 
 
-    model_internal var _instance:_Super_Page;
+    model_internal var _instance:_Super_USTCAlarmSearchCondition;
     model_internal static var _nullStyle:com.adobe.fiber.styles.Style = new com.adobe.fiber.styles.Style();
 
-    public function _PageEntityMetadata(value : _Super_Page)
+    public function _USTCAlarmSearchConditionEntityMetadata(value : _Super_USTCAlarmSearchCondition)
     {
         // initialize property maps
         if (model_internal::dependentsOnMap == null)
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["totalRecords"] = new Array();
-            model_internal::dependentsOnMap["curPage"] = new Array();
-            model_internal::dependentsOnMap["totalPage"] = new Array();
-            model_internal::dependentsOnMap["numPerPage"] = new Array();
+            model_internal::dependentsOnMap["confirmState"] = new Array();
+            model_internal::dependentsOnMap["alarmLevel"] = new Array();
+            model_internal::dependentsOnMap["page"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
@@ -58,10 +58,9 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["totalRecords"] = "int";
-        model_internal::propertyTypeMap["curPage"] = "int";
-        model_internal::propertyTypeMap["totalPage"] = "int";
-        model_internal::propertyTypeMap["numPerPage"] = "int";
+        model_internal::propertyTypeMap["confirmState"] = "String";
+        model_internal::propertyTypeMap["alarmLevel"] = "String";
+        model_internal::propertyTypeMap["page"] = "valueObjects.Page";
 
         model_internal::_instance = value;
     }
@@ -114,7 +113,7 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     override public function getDependants(propertyName:String):Array
     {
        if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a data property of entity Page");
+            throw new Error(propertyName + " is not a data property of entity USTCAlarmSearchCondition");
             
        return model_internal::dependentsOnMap[propertyName] as Array;  
     }
@@ -132,7 +131,7 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     override public function getCollectionBase(propertyName:String):String
     {
         if (model_internal::collectionProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a collection property of entity Page");
+            throw new Error(propertyName + " is not a collection property of entity USTCAlarmSearchCondition");
 
         return model_internal::collectionBaseMap[propertyName];
     }
@@ -140,7 +139,7 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     override public function getPropertyType(propertyName:String):String
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a property of Page");
+            throw new Error(propertyName + " is not a property of USTCAlarmSearchCondition");
 
         return model_internal::propertyTypeMap[propertyName];
     }
@@ -154,7 +153,7 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity Page");
+            throw new Error(propertyName + " does not exist for entity USTCAlarmSearchCondition");
         }
 
         return model_internal::_instance[propertyName];
@@ -164,7 +163,7 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     {
         if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " is not a modifiable property of entity Page");
+            throw new Error(propertyName + " is not a modifiable property of entity USTCAlarmSearchCondition");
         }
 
         model_internal::_instance[propertyName] = value;
@@ -196,7 +195,7 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity Page");
+            throw new Error(propertyName + " does not exist for entity USTCAlarmSearchCondition");
         }
 
         if (model_internal::allAlwaysAvailableProperties.indexOf(propertyName) != -1)
@@ -291,25 +290,19 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     }
 
     [Bindable(event="propertyChange")]
-    public function get isTotalRecordsAvailable():Boolean
+    public function get isConfirmStateAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isCurPageAvailable():Boolean
+    public function get isAlarmLevelAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isTotalPageAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isNumPerPageAvailable():Boolean
+    public function get isPageAvailable():Boolean
     {
         return true;
     }
@@ -325,25 +318,19 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     }
 
     [Bindable(event="propertyChange")]   
-    public function get totalRecordsStyle():com.adobe.fiber.styles.Style
+    public function get confirmStateStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get curPageStyle():com.adobe.fiber.styles.Style
+    public function get alarmLevelStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get totalPageStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get numPerPageStyle():com.adobe.fiber.styles.Style
+    public function get pageStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

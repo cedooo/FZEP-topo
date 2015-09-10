@@ -11,6 +11,10 @@
 						showBusyCursor="true"/>
 		<s:CallResponder id="pageInfoResult" result="pageInfoResult_resultHandler(event)"/>
 		<s:CallResponder id="getAlarmStatisticsInfoResult"/>
+		<s:CallResponder id="getUSTCAlarmResult"/>
+		<services:USTCAlarm1 id="uSTCAlarm1"
+							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							 showBusyCursor="true"/>
 		
 	</fx:Declarations>
 	<fx:Script>
@@ -26,6 +30,7 @@
 			
 			import valueObjects.AlarmSearchCondition;
 			import valueObjects.Page;
+			import valueObjects.USTCAlarmSearchCondition;
 			[Bindable]
 			private var g_kylandAlarmSearchCondition:AlarmSearchCondition = new AlarmSearchCondition();
 			
@@ -70,9 +75,11 @@
 				[   
 					{category:"-1", ingredient:"全部"},
 					{category:"0", ingredient:"未确认"},
-					{category:"1", ingredient:"已确认"},
+					{category:"1", ingredient:"已确认"}
 				]                
 			);
+			
+//-----------------------------------------------	
 			
 			//科大-告警级别
 			[Bindable]
@@ -87,16 +94,18 @@
 					
 				]                
 			);
-			
-			//东土-告警确认状态
+			//科大-告警确认状态
 			[Bindable]
 			public var ustcAlarmConfirmState:ArrayCollection = new ArrayCollection(
 				[   
 					{category:"-1", ingredient:"全部"},
 					{category:"0", ingredient:"无效"},
-					{category:"1", ingredient:"有效"},
+					{category:"1", ingredient:"有效"}
 				]                
 			);
+			//科大-搜索告警条件
+			[Bindable]
+			private var g_ustcAlarmSearchCondition:USTCAlarmSearchCondition = new USTCAlarmSearchCondition();
 			
 			protected function listAlarm(arg0:AlarmSearchCondition):void
 			{
@@ -111,10 +120,17 @@
 			
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
-				var page:Page = new Page();
-				page.curPage = 1;
-				page.numPerPage = 50;
-				g_kylandAlarmSearchCondition.page = page;
+				//东土分页
+				var pagekyland:Page = new Page();
+				pagekyland.curPage = 1;
+				pagekyland.numPerPage = 50;
+				g_kylandAlarmSearchCondition.page = pagekyland;
+				
+				//科大分页
+				var pageustc:Page = new Page();
+				pageustc.curPage = 1;
+				pageustc.numPerPage = 50;
+				g_ustcAlarmSearchCondition.page = pageustc;
 			}
 			
 			protected function alarmListDataGrid_creationCompleteHandler(event:FlexEvent):void
@@ -271,6 +287,9 @@
 				g_kylandAlarmSearchCondition.page.curPage = 1;
 				searchKylandAlarm();
 			}
+			
+//----------------------------------------------------------			
+			
 			/**
 			 * 跳转到科大GIS
 			 */
@@ -280,6 +299,23 @@
 				ScriptUtils.openPopupWindow(pageUrl, "科大GIS");
 			}
 			
+			protected function getUSTCAlarm(arg0:USTCAlarmSearchCondition):void
+			{
+				getUSTCAlarmResult.token = uSTCAlarm1.getUSTCAlarm(arg0);
+			}
+			
+			protected function ustcAlarmListDataGrid_creationCompleteHandler(event:FlexEvent):void
+			{
+				searchUSTCAlarm();
+			}
+			/**
+			 * 搜索科大告警
+			 */
+			protected function searchUSTCAlarm():void{
+				getUSTCAlarm(g_ustcAlarmSearchCondition);
+				//pageInfo(g_kylandAlarmSearchCondition);
+			}
+
 		]]>
 	</fx:Script>
 	<s:BorderContainer width="100%" height="100%" borderVisible="false">
@@ -411,39 +447,51 @@
 			</s:NavigatorContent>
 			<!--科大告警 -->
 			<s:NavigatorContent label="科大" width="100%" height="100%" enabled="true">
-				<s:BorderContainer dropShadowVisible="false" width="100%"  height="100%" borderVisible="false" >
+				<s:BorderContainer width="100%" height="100%" borderVisible="false">
 					<s:layout>
-						<s:HorizontalLayout paddingLeft="10" paddingTop="10" paddingBottom="10" paddingRight="10" >
-						</s:HorizontalLayout>
+						<s:VerticalLayout gap="-1" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="0">
+							
+						</s:VerticalLayout>
 					</s:layout>
-					<s:BorderContainer dropShadowVisible="false" width="100%"  height="100%" >
+					<s:BorderContainer dropShadowVisible="false" width="100%"  height="20%" >
 						<s:layout>
 							<s:HorizontalLayout >
 							</s:HorizontalLayout>
 						</s:layout>
-						<s:Button id="gotoUSTCGIS" click="gotoUSTCGIS_clickHandler(event)" label="科大GIS" />		
-					</s:BorderContainer>	
-				</s:BorderContainer>
-				
-				<s:BorderContainer dropShadowVisible="false" width="100%"  height="20%" >
-					<s:layout>
-						<s:HorizontalLayout >
-						</s:HorizontalLayout>
-					</s:layout>
-					<mx:Form width="100%" label="告警查询条件" >
-						<s:HGroup >
-							<mx:FormItem label="告警级别">
-								<s:ComboBox  id="ustcAlarmLevelForSearch" dataProvider="{ustcAlarmLevel}"  selectedIndex="0" 
-											labelField="ingredient"  change="alarmLevelForSearch_changeHandler(event)" >
-								</s:ComboBox>
-							</mx:FormItem>
-							<mx:FormItem label="确认状态">
-								<s:ComboBox dataProvider="{ustcAlarmConfirmState}"  selectedIndex="0" id="ustcAlarmConfirmStateForSearch"
-											labelField="ingredient" change="alarmConfirmStateForSearch_changeHandler(event)">
-								</s:ComboBox>
-							</mx:FormItem>
-						</s:HGroup>
-					</mx:Form>
+						<mx:Form width="100%" label="告警查询条件" >
+							<s:HGroup >
+								
+								<s:Button id="gotoUSTCGIS" click="gotoUSTCGIS_clickHandler(event)" label="科大GIS" />	
+								<mx:FormItem label="告警级别">
+									<s:ComboBox  id="ustcAlarmLevelForSearch" dataProvider="{ustcAlarmLevel}"  selectedIndex="0" 
+												labelField="ingredient"  change="alarmLevelForSearch_changeHandler(event)" >
+									</s:ComboBox>
+								</mx:FormItem>
+								<mx:FormItem label="确认状态">
+									<s:ComboBox dataProvider="{ustcAlarmConfirmState}"  selectedIndex="0" id="ustcAlarmConfirmStateForSearch"
+												labelField="ingredient" change="alarmConfirmStateForSearch_changeHandler(event)">
+									</s:ComboBox>
+								</mx:FormItem>
+							</s:HGroup>
+						</mx:Form>
+					</s:BorderContainer>
+					<s:BorderContainer width="100%" height="80%" dropShadowVisible="false" borderVisible="false">
+						<s:layout>
+							<s:HorizontalLayout gap="0">
+								
+							</s:HorizontalLayout>
+						</s:layout>
+						<mx:DataGrid id="ustcAlarmListDataGrid"  width="100%" height="100%" dataProvider="{getUSTCAlarmResult.lastResult}"
+									 creationComplete="ustcAlarmListDataGrid_creationCompleteHandler(event)">
+							<mx:columns>
+								<mx:DataGridColumn dataField="id" headerText="告警ID" width="10"/>
+								<mx:DataGridColumn dataField="equipName" headerText="设备名称"  width="15"/>
+								<mx:DataGridColumn dataField="level" headerText="告警级别"   width="5"/>
+								<mx:DataGridColumn dataField="alarmContent" headerText="告警内容"   width="50"/>
+								<mx:DataGridColumn dataField="occourTime" headerText="发生时间"  width="20"/>
+							</mx:columns>
+						</mx:DataGrid>
+					</s:BorderContainer>
 				</s:BorderContainer>
 			</s:NavigatorContent>
 			<s:NavigatorContent label="H3C" width="100%" height="100%" enabled="false" hide="true" >

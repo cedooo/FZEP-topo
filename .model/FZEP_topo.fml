@@ -549,34 +549,6 @@
     <property name="areaId" type="integer"/>
     <property name="keyWord" type="string"/>
   </entity>
-  <entity name="Page">
-    <annotation name="EntityProperties">
-      <item name="EntityOriginalName">Page</item>
-    </annotation>
-    <annotation name="ServerProperties">
-      <item name="RemoteClass">cn.com.dhcc.fzep.topo.common.search.Page</item>
-      <item name="IncludeRemoteClass">nonempty</item>
-    </annotation>
-    <annotation name="service Group">
-      <item name="service">Dummy,SiteSchema,SiteSearch,Alarm</item>
-    </annotation>
-    <annotation name="ActionScriptGeneration">
-      <item name="Package">valueObjects</item>
-    </annotation>
-    <annotation name="getPage">
-      <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
-    </annotation>
-    <annotation name="getPageAvalibleSite">
-      <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
-    </annotation>
-    <annotation name="pageInfo">
-      <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
-    </annotation>
-    <property name="numPerPage" type="integer"/>
-    <property name="curPage" type="integer"/>
-    <property name="totalRecords" type="integer"/>
-    <property name="totalPage" type="integer"/>
-  </entity>
   <service name="ShowSchema">
     <annotation name="ActionScriptGeneration">
       <item name="ServiceType">RemoteObject</item>
@@ -1773,5 +1745,132 @@
     <property name="manufacturersId" type="string"/>
     <property name="debugging" type="string"/>
     <property name="cardNumber" type="string"/>
+  </entity>
+  <service name="USTCAlarm1">
+    <annotation name="ActionScriptGeneration">
+      <item name="ServiceType">RemoteObject</item>
+      <item name="Package">services</item>
+      <item name="Destination">USTCAlarm</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="contextRoot">/fuzhou</item>
+      <item name="rootUrl">http://localhost:8080/fuzhou</item>
+      <item name="LINKED_FILE"></item>
+      <item name="ABSOLUTE_ENDPOINT">http://localhost:8080/fuzhou/messagebroker/amf</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">BlazeDS</item>
+    </annotation>
+    <function name="getAlarm" return-type="AlarmDetail[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">AlarmDetail</item>
+      </annotation>
+    </function>
+    <function name="getUSTCAlarm" return-type="USTCAlarm[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">USTCAlarmSearchCondition</item>
+        <item name="returnType">USTCAlarm</item>
+      </annotation>
+      <parameter name="arg0" type="USTCAlarmSearchCondition"/>
+    </function>
+  </service>
+  <entity name="AlarmDetail">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">AlarmDetail</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">cn.com.dhcc.fzep.alarm.data.ustc.AlarmDetail</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">USTCAlarm1</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="alarmContent" type="string"/>
+    <property name="devId" type="string"/>
+    <property name="alarmLocation" type="string"/>
+    <property name="alarmTime" type="string"/>
+    <property name="alarmId" type="string"/>
+    <property name="alarmLevel" type="string"/>
+    <property name="state" type="string"/>
+  </entity>
+  <entity name="USTCAlarmSearchCondition">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">USTCAlarmSearchCondition</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">cn.com.dhcc.fzep.alarm.common.ustc.USTCAlarmSearchCondition</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">USTCAlarm1</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="confirmState" type="string"/>
+    <property name="alarmLevel" type="string"/>
+    <property name="page" type="Page"/>
+  </entity>
+  <entity name="Page">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Page</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">cn.com.dhcc.fzep.topo.common.search.Page</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">USTCAlarm1</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <annotation name="getPage">
+      <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
+    </annotation>
+    <annotation name="getPageAvalibleSite">
+      <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
+    </annotation>
+    <annotation name="pageInfo">
+      <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
+    </annotation>
+    <property name="totalRecords" type="integer"/>
+    <property name="curPage" type="integer"/>
+    <property name="totalPage" type="integer"/>
+    <property name="numPerPage" type="integer"/>
+  </entity>
+  <entity name="USTCAlarm">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">USTCAlarm</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">cn.com.dhcc.fzep.alarm.data.ustc.USTCAlarm</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">USTCAlarm1</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="alarmContent" type="string"/>
+    <property name="note" type="string"/>
+    <property name="equipName" type="string"/>
+    <property name="currentUser" type="string"/>
+    <property name="dealTime" type="string"/>
+    <property name="delUser" type="string"/>
+    <property name="level" type="string"/>
+    <property name="occourTime" type="string"/>
+    <property name="id" type="string"/>
   </entity>
 </model>

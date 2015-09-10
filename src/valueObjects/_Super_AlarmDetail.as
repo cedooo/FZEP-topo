@@ -1,6 +1,6 @@
 /**
  * This is a generated class and is not intended for modification.  To customize behavior
- * of this value object you may modify the generated sub-class of this class - Page.as.
+ * of this value object you may modify the generated sub-class of this class - AlarmDetail.as.
  */
 
 package valueObjects
@@ -20,20 +20,20 @@ import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 use namespace model_internal;
 
 [ExcludeClass]
-public class _Super_Page extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
+public class _Super_AlarmDetail extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
         try
         {
-            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.common.search.Page") == null)
+            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.alarm.data.ustc.AlarmDetail") == null)
             {
-                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.common.search.Page", cz);
+                flash.net.registerClassAlias("cn.com.dhcc.fzep.alarm.data.ustc.AlarmDetail", cz);
             }
         }
         catch (e:Error)
         {
-            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.common.search.Page", cz);
+            flash.net.registerClassAlias("cn.com.dhcc.fzep.alarm.data.ustc.AlarmDetail", cz);
         }
     }
 
@@ -41,7 +41,7 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
     {
     }
 
-    model_internal var _dminternal_model : _PageEntityMetadata;
+    model_internal var _dminternal_model : _AlarmDetailEntityMetadata;
     model_internal var _changedObjects:mx.collections.ArrayCollection = new ArrayCollection();
 
     public function getChangedObjects() : Array
@@ -58,10 +58,13 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
     /**
      * properties
      */
-    private var _internal_totalRecords : int;
-    private var _internal_curPage : int;
-    private var _internal_totalPage : int;
-    private var _internal_numPerPage : int;
+    private var _internal_alarmContent : String;
+    private var _internal_devId : String;
+    private var _internal_alarmLocation : String;
+    private var _internal_alarmTime : String;
+    private var _internal_alarmId : String;
+    private var _internal_alarmLevel : String;
+    private var _internal_state : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -73,9 +76,9 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
 
     model_internal var _changeWatcherArray:Array = new Array();
 
-    public function _Super_Page()
+    public function _Super_AlarmDetail()
     {
-        _model = new _PageEntityMetadata(this);
+        _model = new _AlarmDetailEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
 
@@ -86,27 +89,45 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
      */
 
     [Bindable(event="propertyChange")]
-    public function get totalRecords() : int
+    public function get alarmContent() : String
     {
-        return _internal_totalRecords;
+        return _internal_alarmContent;
     }
 
     [Bindable(event="propertyChange")]
-    public function get curPage() : int
+    public function get devId() : String
     {
-        return _internal_curPage;
+        return _internal_devId;
     }
 
     [Bindable(event="propertyChange")]
-    public function get totalPage() : int
+    public function get alarmLocation() : String
     {
-        return _internal_totalPage;
+        return _internal_alarmLocation;
     }
 
     [Bindable(event="propertyChange")]
-    public function get numPerPage() : int
+    public function get alarmTime() : String
     {
-        return _internal_numPerPage;
+        return _internal_alarmTime;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get alarmId() : String
+    {
+        return _internal_alarmId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get alarmLevel() : String
+    {
+        return _internal_alarmLevel;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get state() : String
+    {
+        return _internal_state;
     }
 
     public function clearAssociations() : void
@@ -117,43 +138,73 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
      * data/source property setters
      */
 
-    public function set totalRecords(value:int) : void
+    public function set alarmContent(value:String) : void
     {
-        var oldValue:int = _internal_totalRecords;
+        var oldValue:String = _internal_alarmContent;
         if (oldValue !== value)
         {
-            _internal_totalRecords = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "totalRecords", oldValue, _internal_totalRecords));
+            _internal_alarmContent = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmContent", oldValue, _internal_alarmContent));
         }
     }
 
-    public function set curPage(value:int) : void
+    public function set devId(value:String) : void
     {
-        var oldValue:int = _internal_curPage;
+        var oldValue:String = _internal_devId;
         if (oldValue !== value)
         {
-            _internal_curPage = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "curPage", oldValue, _internal_curPage));
+            _internal_devId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "devId", oldValue, _internal_devId));
         }
     }
 
-    public function set totalPage(value:int) : void
+    public function set alarmLocation(value:String) : void
     {
-        var oldValue:int = _internal_totalPage;
+        var oldValue:String = _internal_alarmLocation;
         if (oldValue !== value)
         {
-            _internal_totalPage = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "totalPage", oldValue, _internal_totalPage));
+            _internal_alarmLocation = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmLocation", oldValue, _internal_alarmLocation));
         }
     }
 
-    public function set numPerPage(value:int) : void
+    public function set alarmTime(value:String) : void
     {
-        var oldValue:int = _internal_numPerPage;
+        var oldValue:String = _internal_alarmTime;
         if (oldValue !== value)
         {
-            _internal_numPerPage = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "numPerPage", oldValue, _internal_numPerPage));
+            _internal_alarmTime = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmTime", oldValue, _internal_alarmTime));
+        }
+    }
+
+    public function set alarmId(value:String) : void
+    {
+        var oldValue:String = _internal_alarmId;
+        if (oldValue !== value)
+        {
+            _internal_alarmId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmId", oldValue, _internal_alarmId));
+        }
+    }
+
+    public function set alarmLevel(value:String) : void
+    {
+        var oldValue:String = _internal_alarmLevel;
+        if (oldValue !== value)
+        {
+            _internal_alarmLevel = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmLevel", oldValue, _internal_alarmLevel));
+        }
+    }
+
+    public function set state(value:String) : void
+    {
+        var oldValue:String = _internal_state;
+        if (oldValue !== value)
+        {
+            _internal_state = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "state", oldValue, _internal_state));
         }
     }
 
@@ -217,14 +268,14 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
 
     [Transient]
     [Bindable(event="propertyChange")]
-    public function get _model() : _PageEntityMetadata
+    public function get _model() : _AlarmDetailEntityMetadata
     {
         return model_internal::_dminternal_model;
     }
 
-    public function set _model(value : _PageEntityMetadata) : void
+    public function set _model(value : _AlarmDetailEntityMetadata) : void
     {
-        var oldValue : _PageEntityMetadata = model_internal::_dminternal_model;
+        var oldValue : _AlarmDetailEntityMetadata = model_internal::_dminternal_model;
         if (oldValue !== value)
         {
             model_internal::_dminternal_model = value;
