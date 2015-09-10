@@ -433,7 +433,7 @@
 					<mx:Form width="100%" label="告警查询条件" >
 						<s:HGroup >
 							<mx:FormItem label="告警级别">
-								<s:ComboBox id="ustcAlarmLevelForSearch" dataProvider="{ustcAlarmLevel}"  selectedIndex="0" 
+								<s:ComboBox  id="ustcAlarmLevelForSearch" dataProvider="{ustcAlarmLevel}"  selectedIndex="0" 
 											labelField="ingredient"  change="alarmLevelForSearch_changeHandler(event)" >
 								</s:ComboBox>
 							</mx:FormItem>
