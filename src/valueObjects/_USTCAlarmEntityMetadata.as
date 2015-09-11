@@ -20,14 +20,14 @@ internal class _USTCAlarmEntityMetadata extends com.adobe.fiber.valueobjects.Abs
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("alarmContent", "note", "equipName", "currentUser", "dealTime", "delUser", "level", "occourTime", "id");
+    model_internal static var allProperties:Array = new Array("alarmContent", "note", "currentUser", "equipName", "dealTime", "delUser", "level", "occourTime", "id", "state");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("alarmContent", "note", "equipName", "currentUser", "dealTime", "delUser", "level", "occourTime", "id");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("alarmContent", "note", "currentUser", "equipName", "dealTime", "delUser", "level", "occourTime", "id", "state");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("alarmContent", "note", "equipName", "currentUser", "dealTime", "delUser", "level", "occourTime", "id");
+    model_internal static var dataProperties:Array = new Array("alarmContent", "note", "currentUser", "equipName", "dealTime", "delUser", "level", "occourTime", "id", "state");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("alarmContent", "note", "equipName", "currentUser", "dealTime", "delUser", "level", "occourTime", "id");
+    model_internal static var nonDerivedProperties:Array = new Array("alarmContent", "note", "currentUser", "equipName", "dealTime", "delUser", "level", "occourTime", "id", "state");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -49,13 +49,14 @@ internal class _USTCAlarmEntityMetadata extends com.adobe.fiber.valueobjects.Abs
             model_internal::dependentsOnMap = new Object();
             model_internal::dependentsOnMap["alarmContent"] = new Array();
             model_internal::dependentsOnMap["note"] = new Array();
-            model_internal::dependentsOnMap["equipName"] = new Array();
             model_internal::dependentsOnMap["currentUser"] = new Array();
+            model_internal::dependentsOnMap["equipName"] = new Array();
             model_internal::dependentsOnMap["dealTime"] = new Array();
             model_internal::dependentsOnMap["delUser"] = new Array();
             model_internal::dependentsOnMap["level"] = new Array();
             model_internal::dependentsOnMap["occourTime"] = new Array();
             model_internal::dependentsOnMap["id"] = new Array();
+            model_internal::dependentsOnMap["state"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
@@ -65,13 +66,14 @@ internal class _USTCAlarmEntityMetadata extends com.adobe.fiber.valueobjects.Abs
         model_internal::propertyTypeMap = new Object();
         model_internal::propertyTypeMap["alarmContent"] = "String";
         model_internal::propertyTypeMap["note"] = "String";
-        model_internal::propertyTypeMap["equipName"] = "String";
         model_internal::propertyTypeMap["currentUser"] = "String";
+        model_internal::propertyTypeMap["equipName"] = "String";
         model_internal::propertyTypeMap["dealTime"] = "String";
         model_internal::propertyTypeMap["delUser"] = "String";
         model_internal::propertyTypeMap["level"] = "String";
         model_internal::propertyTypeMap["occourTime"] = "String";
         model_internal::propertyTypeMap["id"] = "String";
+        model_internal::propertyTypeMap["state"] = "String";
 
         model_internal::_instance = value;
     }
@@ -313,13 +315,13 @@ internal class _USTCAlarmEntityMetadata extends com.adobe.fiber.valueobjects.Abs
     }
 
     [Bindable(event="propertyChange")]
-    public function get isEquipNameAvailable():Boolean
+    public function get isCurrentUserAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isCurrentUserAvailable():Boolean
+    public function get isEquipNameAvailable():Boolean
     {
         return true;
     }
@@ -354,6 +356,12 @@ internal class _USTCAlarmEntityMetadata extends com.adobe.fiber.valueobjects.Abs
         return true;
     }
 
+    [Bindable(event="propertyChange")]
+    public function get isStateAvailable():Boolean
+    {
+        return true;
+    }
+
 
     /**
      * derived property recalculation
@@ -377,13 +385,13 @@ internal class _USTCAlarmEntityMetadata extends com.adobe.fiber.valueobjects.Abs
     }
 
     [Bindable(event="propertyChange")]   
-    public function get equipNameStyle():com.adobe.fiber.styles.Style
+    public function get currentUserStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get currentUserStyle():com.adobe.fiber.styles.Style
+    public function get equipNameStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
@@ -414,6 +422,12 @@ internal class _USTCAlarmEntityMetadata extends com.adobe.fiber.valueobjects.Abs
 
     [Bindable(event="propertyChange")]   
     public function get idStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get stateStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

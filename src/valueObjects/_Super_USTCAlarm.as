@@ -60,13 +60,14 @@ public class _Super_USTCAlarm extends flash.events.EventDispatcher implements co
      */
     private var _internal_alarmContent : String;
     private var _internal_note : String;
-    private var _internal_equipName : String;
     private var _internal_currentUser : String;
+    private var _internal_equipName : String;
     private var _internal_dealTime : String;
     private var _internal_delUser : String;
     private var _internal_level : String;
     private var _internal_occourTime : String;
     private var _internal_id : String;
+    private var _internal_state : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -103,15 +104,15 @@ public class _Super_USTCAlarm extends flash.events.EventDispatcher implements co
     }
 
     [Bindable(event="propertyChange")]
-    public function get equipName() : String
-    {
-        return _internal_equipName;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get currentUser() : String
     {
         return _internal_currentUser;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get equipName() : String
+    {
+        return _internal_equipName;
     }
 
     [Bindable(event="propertyChange")]
@@ -144,6 +145,12 @@ public class _Super_USTCAlarm extends flash.events.EventDispatcher implements co
         return _internal_id;
     }
 
+    [Bindable(event="propertyChange")]
+    public function get state() : String
+    {
+        return _internal_state;
+    }
+
     public function clearAssociations() : void
     {
     }
@@ -172,16 +179,6 @@ public class _Super_USTCAlarm extends flash.events.EventDispatcher implements co
         }
     }
 
-    public function set equipName(value:String) : void
-    {
-        var oldValue:String = _internal_equipName;
-        if (oldValue !== value)
-        {
-            _internal_equipName = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "equipName", oldValue, _internal_equipName));
-        }
-    }
-
     public function set currentUser(value:String) : void
     {
         var oldValue:String = _internal_currentUser;
@@ -189,6 +186,16 @@ public class _Super_USTCAlarm extends flash.events.EventDispatcher implements co
         {
             _internal_currentUser = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "currentUser", oldValue, _internal_currentUser));
+        }
+    }
+
+    public function set equipName(value:String) : void
+    {
+        var oldValue:String = _internal_equipName;
+        if (oldValue !== value)
+        {
+            _internal_equipName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "equipName", oldValue, _internal_equipName));
         }
     }
 
@@ -239,6 +246,16 @@ public class _Super_USTCAlarm extends flash.events.EventDispatcher implements co
         {
             _internal_id = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "id", oldValue, _internal_id));
+        }
+    }
+
+    public function set state(value:String) : void
+    {
+        var oldValue:String = _internal_state;
+        if (oldValue !== value)
+        {
+            _internal_state = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "state", oldValue, _internal_state));
         }
     }
 

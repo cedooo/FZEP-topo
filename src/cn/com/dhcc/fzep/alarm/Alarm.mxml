@@ -15,6 +15,7 @@
 		<services:USTCAlarm1 id="uSTCAlarm1"
 							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 							 showBusyCursor="true"/>
+		<s:CallResponder id="ustcPageInfoResult" result="ustcPageInfoResult_resultHandler(event)"/>
 		
 	</fx:Declarations>
 	<fx:Script>
@@ -213,24 +214,46 @@
 			 */
 			protected function gotoPage(event:MouseEvent):void
 			{
-				if(event.currentTarget.id=="firstPage"){
-					g_kylandAlarmSearchCondition.page.curPage = 1;
-				}else if(event.currentTarget.id=="lastPage"){
-					g_kylandAlarmSearchCondition.page.curPage = g_kylandAlarmSearchCondition.page.totalPage;
-				}else if(event.currentTarget.id=="prePage"){
-					if(g_kylandAlarmSearchCondition.page.curPage>1){
-						g_kylandAlarmSearchCondition.page.curPage = g_kylandAlarmSearchCondition.page.curPage-1;
+				if(mynavigator.selectedIndex==0){    //东土
+					if(event.currentTarget.id=="firstPage"){
+						g_kylandAlarmSearchCondition.page.curPage = 1;
+					}else if(event.currentTarget.id=="lastPage"){
+						g_kylandAlarmSearchCondition.page.curPage = g_kylandAlarmSearchCondition.page.totalPage;
+					}else if(event.currentTarget.id=="prePage"){
+						if(g_kylandAlarmSearchCondition.page.curPage>1){
+							g_kylandAlarmSearchCondition.page.curPage = g_kylandAlarmSearchCondition.page.curPage-1;
+						}
+					}else if(event.currentTarget.id=="nextPage"){
+						if(g_kylandAlarmSearchCondition.page.curPage<g_kylandAlarmSearchCondition.page.totalPage){
+							g_kylandAlarmSearchCondition.page.curPage = g_kylandAlarmSearchCondition.page.curPage+1;
+						}
+					}else if(event.currentTarget.id=="jumpTo"){
+						if(inputpage.value<=g_kylandAlarmSearchCondition.page.totalPage && inputpage.value >0){
+							g_kylandAlarmSearchCondition.page.curPage = inputpage.value;
+						}
 					}
-				}else if(event.currentTarget.id=="nextPage"){
-					if(g_kylandAlarmSearchCondition.page.curPage<g_kylandAlarmSearchCondition.page.totalPage){
-						g_kylandAlarmSearchCondition.page.curPage = g_kylandAlarmSearchCondition.page.curPage+1;
+					searchKylandAlarm();
+				}else if (mynavigator.selectedIndex==1){    //科大
+					if(event.currentTarget.id=="firstPage"){
+						g_ustcAlarmSearchCondition.page.curPage = 1;
+					}else if(event.currentTarget.id=="lastPage"){
+						g_ustcAlarmSearchCondition.page.curPage = g_ustcAlarmSearchCondition.page.totalPage;
+					}else if(event.currentTarget.id=="prePage"){
+						if(g_ustcAlarmSearchCondition.page.curPage>1){
+							g_ustcAlarmSearchCondition.page.curPage = g_ustcAlarmSearchCondition.page.curPage-1;
+						}
+					}else if(event.currentTarget.id=="nextPage"){
+						if(g_ustcAlarmSearchCondition.page.curPage<g_ustcAlarmSearchCondition.page.totalPage){
+							g_ustcAlarmSearchCondition.page.curPage = g_ustcAlarmSearchCondition.page.curPage+1;
+						}
+					}else if(event.currentTarget.id=="jumpTo"){
+						if(inputpage.value<=g_ustcAlarmSearchCondition.page.totalPage && inputpage.value >0){
+							g_ustcAlarmSearchCondition.page.curPage = inputpage.value;
+						}
 					}
-				}else if(event.currentTarget.id=="jumpTo"){
-					if(inputpage.value<=g_kylandAlarmSearchCondition.page.totalPage && inputpage.value >0){
-						g_kylandAlarmSearchCondition.page.curPage = inputpage.value;
-					}
+					searchUSTCAlarm();
+					
 				}
-				searchKylandAlarm();
 			}
 			
 			protected function pageInfo(arg0:AlarmSearchCondition):void
@@ -242,6 +265,8 @@
 			{
 				var pageInfo:Page = event.result as Page;
 				g_kylandAlarmSearchCondition.page.totalPage = pageInfo.totalPage;
+				pagedetail.text = "第 " + pageInfo.curPage + " 页/共 " + pageInfo.totalPage + " 页";
+				inputpage.maximum = pageInfo.totalPage;
 				
 			}
 			
@@ -313,14 +338,84 @@
 			 */
 			protected function searchUSTCAlarm():void{
 				getUSTCAlarm(g_ustcAlarmSearchCondition);
-				//pageInfo(g_kylandAlarmSearchCondition);
+				ustcPageInfo(g_ustcAlarmSearchCondition);
 			}
-
+			
+			/**
+			 * 科大告警分页信息
+			 */
+			protected function ustcPageInfo(arg0:USTCAlarmSearchCondition):void
+			{
+				ustcPageInfoResult.token = uSTCAlarm1.ustcPageInfo(arg0);
+			}
+			//更新分页信息
+			protected function ustcPageInfoResult_resultHandler(event:ResultEvent):void
+			{
+				var pageInfo:Page = event.result as Page;
+				g_ustcAlarmSearchCondition.page.totalPage = pageInfo.totalPage;
+				pagedetail.text = "第 " + pageInfo.curPage + " 页/共 " + pageInfo.totalPage + " 页";
+				inputpage.maximum = pageInfo.totalPage;
+			}
+			//告警状态转换
+			protected function ustcConffirmStateFormat(item:Object, column:DataGridColumn):String{
+				var affirmState:String = item.state;
+				var affirmStateLabel:String = "未知";
+				for each (var o:Object in ustcAlarmConfirmState) 
+				{
+					if(	affirmState==o.category){
+						affirmStateLabel = o.ingredient;
+						break;
+					}else{continue;}
+				}
+				
+				return affirmStateLabel;
+			}
+			//-------------搜索条件设置------------------------------
+			protected function ustcAlarmLevelForSearch_changeHandler(event:IndexChangeEvent):void
+			{
+				var selected:String = ComboBox(event.target).selectedItem.category;
+				if(selected!=ustcAlarmLevel.getItemAt(0).category){
+					g_ustcAlarmSearchCondition.alarmLevel = selected;
+				}else{
+					g_ustcAlarmSearchCondition.alarmLevel = null;
+				}
+				g_ustcAlarmSearchCondition.page.curPage = 1;
+				searchUSTCAlarm();
+			}
+			protected function ustcAlarmConfirmStateForSearch_changeHandler(event:IndexChangeEvent):void
+			{
+				var selected:String = ComboBox(event.target).selectedItem.category;
+				if(selected!=ustcAlarmConfirmState.getItemAt(0).category){
+					g_ustcAlarmSearchCondition.confirmState = selected;
+				}else{
+					g_ustcAlarmSearchCondition.confirmState = null;
+				}
+				g_ustcAlarmSearchCondition.page.curPage = 1;
+				searchUSTCAlarm();
+			}
+			
+			//-------------更新结果----------------------
+			protected function navigatorcontent1_showHandler(event:FlexEvent):void
+			{
+				searchKylandAlarm();
+			}
+			
+			protected function navigatorcontent2_showHandler(event:FlexEvent):void
+			{
+				searchUSTCAlarm();
+			}
+			//-----------------------------------------
+			
+			
+			
 		]]>
 	</fx:Script>
 	<s:BorderContainer width="100%" height="100%" borderVisible="false">
+		<s:layout>
+			<s:VerticalLayout gap="0" />
+		</s:layout>
 		<mx:TabNavigator id="mynavigator"  width="100%" height="100%" resizeToContent="true" >
-			<s:NavigatorContent label="东土" width="100%" height="100%">
+			<s:NavigatorContent label="东土" width="100%" height="100%" show="navigatorcontent1_showHandler(event)" >
 				<s:BorderContainer width="100%" height="100%" borderVisible="false">
 					<s:layout>
 						<s:VerticalLayout gap="-1" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="0">
@@ -434,19 +529,10 @@
 							</mx:columns>
 						</mx:DataGrid>
 					</s:BorderContainer>
-					<mx:HBox backgroundAlpha="0" verticalAlign="middle" paddingTop="5" horizontalAlign="center" width="100%">
-						<mx:Label   text="第 {pageInfoResult.lastResult.curPage} 页/共 {pageInfoResult.lastResult.totalPage} 页" id="pagedetail"  />  
-						<mx:LinkButton label="首页" id="firstPage"     click="gotoPage(event)"   />   
-						<mx:LinkButton label="上一页" id="prePage" click="gotoPage(event)"   />   
-						<mx:LinkButton label="下一页" id="nextPage" click="gotoPage(event)"   />  
-						<mx:LinkButton label="末页"  id="lastPage" click="gotoPage(event)"   />  
-						<mx:NumericStepper id="inputpage" stepSize="1" minimum="1" maximum="{pageInfoResult.lastResult.totalPage}" />  
-						<mx:LinkButton id="jumpTo" label="跳转"  click="gotoPage(event)"   />     
-					</mx:HBox>  
 				</s:BorderContainer>
 			</s:NavigatorContent>
 			<!--科大告警 -->
-			<s:NavigatorContent label="科大" width="100%" height="100%" enabled="true">
+			<s:NavigatorContent label="科大" width="100%" height="100%" enabled="true" show="navigatorcontent2_showHandler(event)" >
 				<s:BorderContainer width="100%" height="100%" borderVisible="false">
 					<s:layout>
 						<s:VerticalLayout gap="-1" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="0">
@@ -460,25 +546,23 @@
 						</s:layout>
 						<mx:Form width="100%" label="告警查询条件" >
 							<s:HGroup >
-								
-								<s:Button id="gotoUSTCGIS" click="gotoUSTCGIS_clickHandler(event)" label="科大GIS" />	
 								<mx:FormItem label="告警级别">
 									<s:ComboBox  id="ustcAlarmLevelForSearch" dataProvider="{ustcAlarmLevel}"  selectedIndex="0" 
-												labelField="ingredient"  change="alarmLevelForSearch_changeHandler(event)" >
+												labelField="ingredient" change="ustcAlarmLevelForSearch_changeHandler(event)" >
 									</s:ComboBox>
 								</mx:FormItem>
 								<mx:FormItem label="确认状态">
 									<s:ComboBox dataProvider="{ustcAlarmConfirmState}"  selectedIndex="0" id="ustcAlarmConfirmStateForSearch"
-												labelField="ingredient" change="alarmConfirmStateForSearch_changeHandler(event)">
+												labelField="ingredient" change="ustcAlarmConfirmStateForSearch_changeHandler(event)">
 									</s:ComboBox>
 								</mx:FormItem>
+								<s:Button id="gotoUSTCGIS" click="gotoUSTCGIS_clickHandler(event)" label="GIS" />	
 							</s:HGroup>
 						</mx:Form>
 					</s:BorderContainer>
 					<s:BorderContainer width="100%" height="80%" dropShadowVisible="false" borderVisible="false">
 						<s:layout>
 							<s:HorizontalLayout gap="0">
-								
 							</s:HorizontalLayout>
 						</s:layout>
 						<mx:DataGrid id="ustcAlarmListDataGrid"  width="100%" height="100%" dataProvider="{getUSTCAlarmResult.lastResult}"
@@ -488,7 +572,8 @@
 								<mx:DataGridColumn dataField="equipName" headerText="设备名称"  width="15"/>
 								<mx:DataGridColumn dataField="level" headerText="告警级别"   width="5"/>
 								<mx:DataGridColumn dataField="alarmContent" headerText="告警内容"   width="50"/>
-								<mx:DataGridColumn dataField="occourTime" headerText="发生时间"  width="20"/>
+								<mx:DataGridColumn dataField="occourTime" headerText="发生时间"  width="10"/>
+								<mx:DataGridColumn dataField="state" headerText="状态"  width="10" labelFunction="ustcConffirmStateFormat"/>
 							</mx:columns>
 						</mx:DataGrid>
 					</s:BorderContainer>
@@ -498,5 +583,14 @@
 				<s:Label text="选项卡3的内容"/>
 			</s:NavigatorContent>
 		</mx:TabNavigator>
+		<mx:HBox backgroundAlpha="0" verticalAlign="middle" paddingTop="5" horizontalAlign="center" width="100%" paddingBottom="5">
+			<mx:Label   text="第 {pageInfoResult.lastResult.curPage} 页/共 {pageInfoResult.lastResult.totalPage} 页" id="pagedetail"  />  
+			<mx:LinkButton label="首页" id="firstPage"     click="gotoPage(event)"   />   
+			<mx:LinkButton label="上一页" id="prePage" click="gotoPage(event)"   />   
+			<mx:LinkButton label="下一页" id="nextPage" click="gotoPage(event)"   />  
+			<mx:LinkButton label="末页"  id="lastPage" click="gotoPage(event)"   />  
+			<mx:NumericStepper id="inputpage" stepSize="1" minimum="1" maximum="{pageInfoResult.lastResult.totalPage}" />  
+			<mx:LinkButton id="jumpTo" label="跳转"  click="gotoPage(event)"   />     
+		</mx:HBox>  
 	</s:BorderContainer>
 </s:Application>
