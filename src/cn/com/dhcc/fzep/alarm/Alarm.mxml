@@ -512,11 +512,11 @@
 												labelField="ingredient" change="alarmConfirmStateForSearch_changeHandler(event)">
 									</s:ComboBox>
 								</mx:FormItem>
-								<mx:FormItem label="起始时间" >
+								<mx:FormItem label="起始日期" >
 									<mx:DateField formatString="YYYY-MM-DD"  id="kylandStartDate"  change="kylandStartDate_changeHandler(event)"
 												  dayNames="[日,一,二,三,四,五,六]"    monthNames="[一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月]" />
 								</mx:FormItem>
-								<mx:FormItem label="截止时间">
+								<mx:FormItem label="截止日期">
 									<mx:DateField formatString="YYYY-MM-DD" id="kylandEndDate" change="kylandEndDate_changeHandler(event)"
 												  dayNames="[日,一,二,三,四,五,六]"   monthNames="[一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月]" />
 								</mx:FormItem>
@@ -623,11 +623,11 @@
 												labelField="ingredient" change="ustcAlarmConfirmStateForSearch_changeHandler(event)">
 									</s:ComboBox>
 								</mx:FormItem>
-								<mx:FormItem label="起始时间" >
+								<mx:FormItem label="起始日期" >
 									<mx:DateField formatString="YYYY-MM-DD"  id="ustcStartDate" change="ustcStartDate_changeHandler(event)"
 												  dayNames="[日,一,二,三,四,五,六]"    monthNames="[一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月]" />
 								</mx:FormItem>
-								<mx:FormItem label="截止时间">
+								<mx:FormItem label="截止日期">
 									<mx:DateField formatString="YYYY-MM-DD" id="ustcEndDate" change="ustcEndDate_changeHandler(event)"
 												  dayNames="[日,一,二,三,四,五,六]"   monthNames="[一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月]" />
 								</mx:FormItem>
