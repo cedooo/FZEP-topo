@@ -326,7 +326,7 @@
 						(((date.getMonth()+1)>9)?(date.getMonth()+1).toString() : ('0' +(date.getMonth()+1) ))
 						+ '-' + date.getDate();
 				}
-				Alert.show(g_kylandAlarmSearchCondition.startTime);
+				//Alert.show(g_kylandAlarmSearchCondition.startTime);
 				searchKylandAlarm();
 				
 			}
