@@ -654,9 +654,11 @@
 					</s:BorderContainer>
 				</s:BorderContainer>
 			</s:NavigatorContent>
+			<!--
 			<s:NavigatorContent label="H3C" width="100%" height="100%" enabled="false" hide="true" >
 				<s:Label text="选项卡3的内容"/>
 			</s:NavigatorContent>
+			-->
 		</mx:TabNavigator>
 		<mx:HBox backgroundAlpha="0" verticalAlign="middle" paddingTop="5" horizontalAlign="center" width="100%" paddingBottom="5">
 			<mx:Label   text="第 {pageInfoResult.lastResult.curPage} 页/共 {pageInfoResult.lastResult.totalPage} 页" id="pagedetail"  />  
