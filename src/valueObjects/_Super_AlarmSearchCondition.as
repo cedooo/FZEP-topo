@@ -60,11 +60,13 @@ public class _Super_AlarmSearchCondition extends flash.events.EventDispatcher im
     /**
      * properties
      */
-    private var _internal_alarmClazz : String;
-    private var _internal_page : valueObjects.Page;
-    private var _internal_alarmLevel : String;
-    private var _internal_confirmState : String;
     private var _internal_alarmType : String;
+    private var _internal_confirmState : String;
+    private var _internal_alarmClazz : String;
+    private var _internal_alarmLevel : String;
+    private var _internal_startTime : String;
+    private var _internal_page : valueObjects.Page;
+    private var _internal_endTime : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -89,21 +91,9 @@ public class _Super_AlarmSearchCondition extends flash.events.EventDispatcher im
      */
 
     [Bindable(event="propertyChange")]
-    public function get alarmClazz() : String
+    public function get alarmType() : String
     {
-        return _internal_alarmClazz;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get page() : valueObjects.Page
-    {
-        return _internal_page;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get alarmLevel() : String
-    {
-        return _internal_alarmLevel;
+        return _internal_alarmType;
     }
 
     [Bindable(event="propertyChange")]
@@ -113,9 +103,33 @@ public class _Super_AlarmSearchCondition extends flash.events.EventDispatcher im
     }
 
     [Bindable(event="propertyChange")]
-    public function get alarmType() : String
+    public function get alarmClazz() : String
     {
-        return _internal_alarmType;
+        return _internal_alarmClazz;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get alarmLevel() : String
+    {
+        return _internal_alarmLevel;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get startTime() : String
+    {
+        return _internal_startTime;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get page() : valueObjects.Page
+    {
+        return _internal_page;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get endTime() : String
+    {
+        return _internal_endTime;
     }
 
     public function clearAssociations() : void
@@ -126,33 +140,13 @@ public class _Super_AlarmSearchCondition extends flash.events.EventDispatcher im
      * data/source property setters
      */
 
-    public function set alarmClazz(value:String) : void
+    public function set alarmType(value:String) : void
     {
-        var oldValue:String = _internal_alarmClazz;
+        var oldValue:String = _internal_alarmType;
         if (oldValue !== value)
         {
-            _internal_alarmClazz = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmClazz", oldValue, _internal_alarmClazz));
-        }
-    }
-
-    public function set page(value:valueObjects.Page) : void
-    {
-        var oldValue:valueObjects.Page = _internal_page;
-        if (oldValue !== value)
-        {
-            _internal_page = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "page", oldValue, _internal_page));
-        }
-    }
-
-    public function set alarmLevel(value:String) : void
-    {
-        var oldValue:String = _internal_alarmLevel;
-        if (oldValue !== value)
-        {
-            _internal_alarmLevel = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmLevel", oldValue, _internal_alarmLevel));
+            _internal_alarmType = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmType", oldValue, _internal_alarmType));
         }
     }
 
@@ -166,13 +160,53 @@ public class _Super_AlarmSearchCondition extends flash.events.EventDispatcher im
         }
     }
 
-    public function set alarmType(value:String) : void
+    public function set alarmClazz(value:String) : void
     {
-        var oldValue:String = _internal_alarmType;
+        var oldValue:String = _internal_alarmClazz;
         if (oldValue !== value)
         {
-            _internal_alarmType = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmType", oldValue, _internal_alarmType));
+            _internal_alarmClazz = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmClazz", oldValue, _internal_alarmClazz));
+        }
+    }
+
+    public function set alarmLevel(value:String) : void
+    {
+        var oldValue:String = _internal_alarmLevel;
+        if (oldValue !== value)
+        {
+            _internal_alarmLevel = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmLevel", oldValue, _internal_alarmLevel));
+        }
+    }
+
+    public function set startTime(value:String) : void
+    {
+        var oldValue:String = _internal_startTime;
+        if (oldValue !== value)
+        {
+            _internal_startTime = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "startTime", oldValue, _internal_startTime));
+        }
+    }
+
+    public function set page(value:valueObjects.Page) : void
+    {
+        var oldValue:valueObjects.Page = _internal_page;
+        if (oldValue !== value)
+        {
+            _internal_page = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "page", oldValue, _internal_page));
+        }
+    }
+
+    public function set endTime(value:String) : void
+    {
+        var oldValue:String = _internal_endTime;
+        if (oldValue !== value)
+        {
+            _internal_endTime = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "endTime", oldValue, _internal_endTime));
         }
     }
 

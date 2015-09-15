@@ -26,14 +26,14 @@ public class _Super_AlarmStatistics extends flash.events.EventDispatcher impleme
     {
         try
         {
-            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.alarm.common.AlarmStatistics") == null)
+            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.alarm.service.kyland.AlarmStatistics") == null)
             {
-                flash.net.registerClassAlias("cn.com.dhcc.fzep.alarm.common.AlarmStatistics", cz);
+                flash.net.registerClassAlias("cn.com.dhcc.fzep.alarm.service.kyland.AlarmStatistics", cz);
             }
         }
         catch (e:Error)
         {
-            flash.net.registerClassAlias("cn.com.dhcc.fzep.alarm.common.AlarmStatistics", cz);
+            flash.net.registerClassAlias("cn.com.dhcc.fzep.alarm.service.kyland.AlarmStatistics", cz);
         }
     }
 

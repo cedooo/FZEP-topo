@@ -23,134 +23,6 @@
     <property name="type" type="string"/>
     <property name="jsonData" type="string"/>
   </entity>
-  <service name="Alarm">
-    <annotation name="ActionScriptGeneration">
-      <item name="ServiceType">RemoteObject</item>
-      <item name="Package">services</item>
-      <item name="Destination">Alarm</item>
-    </annotation>
-    <annotation name="ServiceConfig">
-      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
-      <item name="contextRoot">/fuzhou</item>
-      <item name="rootUrl">http://localhost:8080/fuzhou</item>
-      <item name="LINKED_FILE"></item>
-      <item name="ABSOLUTE_ENDPOINT">http://localhost:8080/fuzhou/messagebroker/amf</item>
-    </annotation>
-    <annotation name="ServiceTypeGroup">
-      <item name="ServiceBackendType">BlazeDS</item>
-    </annotation>
-    <function name="listAlarm" return-type="Alarmmgrrm[]">
-      <annotation name="analyze group">
-        <item name="analyzed">true</item>
-      </annotation>
-      <annotation name="original signature">
-        <item name="inputParams">AlarmSearchCondition</item>
-        <item name="returnType">Alarmmgrrm</item>
-      </annotation>
-      <annotation name="ValidProperties">
-        <item name="propertySpecifier">userIdClear,ONUId,monitorEntityId,alarmId,reasonForClear,VCI,clearTime,VPI,userIdAffirmer,portType,affirmState,genTime,RMid,oltId,alarmLevel,PONIfId,slotId,alarmKind,affirmTime,nodeType,alarmType</item>
-      </annotation>
-      <parameter name="arg0" type="AlarmSearchCondition"/>
-    </function>
-    <function name="pageInfo" return-type="Page">
-      <annotation name="analyze group">
-        <item name="analyzed">true</item>
-      </annotation>
-      <annotation name="original signature">
-        <item name="inputParams">AlarmSearchCondition</item>
-        <item name="returnType">Page</item>
-      </annotation>
-      <annotation name="ValidProperties">
-        <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
-      </annotation>
-      <parameter name="arg0" type="AlarmSearchCondition"/>
-    </function>
-    <function name="getAlarmStatisticsInfo" return-type="AlarmStatistics">
-      <annotation name="analyze group">
-        <item name="analyzed">true</item>
-      </annotation>
-      <annotation name="original signature">
-        <item name="inputParams">AlarmSearchCondition</item>
-        <item name="returnType">AlarmStatistics</item>
-      </annotation>
-      <parameter name="arg0" type="AlarmSearchCondition"/>
-    </function>
-  </service>
-  <entity name="AlarmStatistics">
-    <annotation name="EntityProperties">
-      <item name="EntityOriginalName">AlarmStatistics</item>
-    </annotation>
-    <annotation name="ServerProperties">
-      <item name="RemoteClass">cn.com.dhcc.fzep.alarm.common.AlarmStatistics</item>
-      <item name="IncludeRemoteClass">nonempty</item>
-    </annotation>
-    <annotation name="service Group">
-      <item name="service">Dummy,Alarm</item>
-    </annotation>
-    <annotation name="ActionScriptGeneration">
-      <item name="Package">valueObjects</item>
-    </annotation>
-    <property name="statistics" type="integer[]"/>
-  </entity>
-  <entity name="AlarmSearchCondition">
-    <annotation name="EntityProperties">
-      <item name="EntityOriginalName">AlarmSearchCondition</item>
-    </annotation>
-    <annotation name="ServerProperties">
-      <item name="RemoteClass">cn.com.dhcc.fzep.alarm.common.AlarmSearchCondition</item>
-      <item name="IncludeRemoteClass">nonempty</item>
-    </annotation>
-    <annotation name="service Group">
-      <item name="service">Alarm,Dummy</item>
-    </annotation>
-    <annotation name="ActionScriptGeneration">
-      <item name="Package">valueObjects</item>
-    </annotation>
-    <property name="alarmClazz" type="string"/>
-    <property name="page" type="Page"/>
-    <property name="alarmLevel" type="string"/>
-    <property name="confirmState" type="string"/>
-    <property name="alarmType" type="string"/>
-  </entity>
-  <entity name="Alarmmgrrm">
-    <annotation name="EntityProperties">
-      <item name="EntityOriginalName">Alarmmgrrm</item>
-    </annotation>
-    <annotation name="ServerProperties">
-      <item name="RemoteClass">cn.com.dhcc.fzep.alarm.data.kyland.Alarmmgrrm</item>
-      <item name="IncludeRemoteClass">nonempty</item>
-    </annotation>
-    <annotation name="service Group">
-      <item name="service">Alarm,Dummy</item>
-    </annotation>
-    <annotation name="ActionScriptGeneration">
-      <item name="Package">valueObjects</item>
-    </annotation>
-    <annotation name="listAlarm">
-      <item name="propertySpecifier">userIdClear,ONUId,monitorEntityId,alarmId,reasonForClear,VCI,clearTime,VPI,userIdAffirmer,portType,affirmState,genTime,RMid,oltId,alarmLevel,PONIfId,slotId,alarmKind,affirmTime,nodeType,alarmType</item>
-    </annotation>
-    <property name="userIdClear" type="string"/>
-    <property name="ONUId" type="string"/>
-    <property name="monitorEntityId" type="string"/>
-    <property name="alarmId" type="string"/>
-    <property name="reasonForClear" type="string"/>
-    <property name="VCI" type="string"/>
-    <property name="clearTime" type="string"/>
-    <property name="VPI" type="string"/>
-    <property name="userIdAffirmer" type="string"/>
-    <property name="portType" type="string"/>
-    <property name="affirmState" type="string"/>
-    <property name="genTime" type="string"/>
-    <property name="RMid" type="string"/>
-    <property name="oltId" type="string"/>
-    <property name="alarmLevel" type="string"/>
-    <property name="PONIfId" type="string"/>
-    <property name="slotId" type="string"/>
-    <property name="alarmKind" type="string"/>
-    <property name="affirmTime" type="string"/>
-    <property name="nodeType" type="string"/>
-    <property name="alarmType" type="string"/>
-  </entity>
   <service name="SiteSchema">
     <annotation name="ActionScriptGeneration">
       <item name="ServiceType">RemoteObject</item>
@@ -1762,14 +1634,6 @@
     <annotation name="ServiceTypeGroup">
       <item name="ServiceBackendType">BlazeDS</item>
     </annotation>
-    <function name="getAlarm" return-type="AlarmDetail[]">
-      <annotation name="analyze group">
-        <item name="analyzed">true</item>
-      </annotation>
-      <annotation name="original signature">
-        <item name="returnType">AlarmDetail</item>
-      </annotation>
-    </function>
     <function name="getUSTCAlarm" return-type="USTCAlarm[]">
       <annotation name="analyze group">
         <item name="analyzed">true</item>
@@ -1790,6 +1654,9 @@
       <annotation name="original signature">
         <item name="inputParams">USTCAlarmSearchCondition</item>
         <item name="returnType">Page</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">totalRecords,curPage,totalPage,numPerPage</item>
       </annotation>
       <parameter name="arg0" type="USTCAlarmSearchCondition"/>
     </function>
@@ -1825,13 +1692,15 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">USTCAlarm1</item>
+      <item name="service">USTCAlarm1,Dummy</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
     </annotation>
     <property name="confirmState" type="string"/>
+    <property name="startTime" type="string"/>
     <property name="alarmLevel" type="string"/>
+    <property name="endTime" type="string"/>
     <property name="page" type="Page"/>
   </entity>
   <entity name="USTCAlarm">
@@ -1862,6 +1731,69 @@
     <property name="id" type="string"/>
     <property name="state" type="string"/>
   </entity>
+  <service name="KylandAlarm">
+    <annotation name="ActionScriptGeneration">
+      <item name="ServiceType">RemoteObject</item>
+      <item name="Package">services</item>
+      <item name="Destination">kylandAlarm</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="contextRoot">/fuzhou</item>
+      <item name="rootUrl">http://localhost:8080/fuzhou</item>
+      <item name="LINKED_FILE"></item>
+      <item name="ABSOLUTE_ENDPOINT">http://localhost:8080/fuzhou/messagebroker/amf</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">BlazeDS</item>
+    </annotation>
+    <function name="pageInfo" return-type="Page">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">AlarmSearchCondition</item>
+        <item name="returnType">Page</item>
+      </annotation>
+      <parameter name="arg0" type="AlarmSearchCondition"/>
+    </function>
+    <function name="listAlarm" return-type="Alarmmgrrm[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">AlarmSearchCondition</item>
+        <item name="returnType">Alarmmgrrm</item>
+      </annotation>
+      <parameter name="arg0" type="AlarmSearchCondition"/>
+    </function>
+    <function name="getAlarmStatisticsInfo" return-type="AlarmStatistics">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">AlarmSearchCondition</item>
+        <item name="returnType">AlarmStatistics</item>
+      </annotation>
+      <parameter name="arg0" type="AlarmSearchCondition"/>
+    </function>
+  </service>
+  <entity name="AlarmStatistics">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">AlarmStatistics</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">cn.com.dhcc.fzep.alarm.service.kyland.AlarmStatistics</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">KylandAlarm</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="statistics" type="integer[]"/>
+  </entity>
   <entity name="Page">
     <annotation name="EntityProperties">
       <item name="EntityOriginalName">Page</item>
@@ -1871,7 +1803,7 @@
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">USTCAlarm1,Alarm,SiteSchema,SiteSearch</item>
+      <item name="service">Dummy,KylandAlarm</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
@@ -1883,11 +1815,72 @@
       <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
     </annotation>
     <annotation name="pageInfo">
-      <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
+      <item name="propertySpecifier">totalRecords,curPage,totalPage,numPerPage</item>
+    </annotation>
+    <annotation name="ustcPageInfo">
+      <item name="propertySpecifier">totalRecords,curPage,totalPage,numPerPage</item>
     </annotation>
     <property name="totalRecords" type="integer"/>
     <property name="curPage" type="integer"/>
     <property name="totalPage" type="integer"/>
     <property name="numPerPage" type="integer"/>
+  </entity>
+  <entity name="AlarmSearchCondition">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">AlarmSearchCondition</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">cn.com.dhcc.fzep.alarm.common.AlarmSearchCondition</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">KylandAlarm</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="alarmType" type="string"/>
+    <property name="confirmState" type="string"/>
+    <property name="alarmClazz" type="string"/>
+    <property name="alarmLevel" type="string"/>
+    <property name="startTime" type="string"/>
+    <property name="page" type="Page"/>
+    <property name="endTime" type="string"/>
+  </entity>
+  <entity name="Alarmmgrrm">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Alarmmgrrm</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">cn.com.dhcc.fzep.alarm.data.kyland.Alarmmgrrm</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">KylandAlarm</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="clearTime" type="string"/>
+    <property name="PONIfId" type="string"/>
+    <property name="genTime" type="string"/>
+    <property name="nodeType" type="string"/>
+    <property name="ONUId" type="string"/>
+    <property name="VPI" type="string"/>
+    <property name="userIdClear" type="string"/>
+    <property name="alarmKind" type="string"/>
+    <property name="userIdAffirmer" type="string"/>
+    <property name="RMid" type="string"/>
+    <property name="portType" type="string"/>
+    <property name="alarmType" type="string"/>
+    <property name="affirmState" type="string"/>
+    <property name="alarmId" type="string"/>
+    <property name="monitorEntityId" type="string"/>
+    <property name="reasonForClear" type="string"/>
+    <property name="alarmLevel" type="string"/>
+    <property name="slotId" type="string"/>
+    <property name="oltId" type="string"/>
+    <property name="VCI" type="string"/>
+    <property name="affirmTime" type="string"/>
   </entity>
 </model>

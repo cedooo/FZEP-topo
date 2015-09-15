@@ -5,10 +5,6 @@
 			   xmlns:services="services.*"
 			   minWidth="955" minHeight="600" creationComplete="application1_creationCompleteHandler(event)">
 	<fx:Declarations>
-		<s:CallResponder id="listAlarmResult"/>
-		<services:Alarm id="alarm"
-						fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
-						showBusyCursor="true"/>
 		<s:CallResponder id="pageInfoResult" result="pageInfoResult_resultHandler(event)"/>
 		<s:CallResponder id="getAlarmStatisticsInfoResult"/>
 		<s:CallResponder id="getUSTCAlarmResult"/>
@@ -17,11 +13,17 @@
 							 showBusyCursor="true"/>
 		<s:CallResponder id="ustcPageInfoResult" result="ustcPageInfoResult_resultHandler(event)"/>
 		
+		<s:CallResponder id="listAlarmResult"/>
+		<services:KylandAlarm id="kylandAlarm"
+							  fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+							  showBusyCursor="true"/>
+		
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
+			import mx.events.CalendarLayoutChangeEvent;
 			import mx.events.FlexEvent;
 			import mx.rpc.events.ResultEvent;
 			
@@ -110,7 +112,7 @@
 			
 			protected function listAlarm(arg0:AlarmSearchCondition):void
 			{
-				listAlarmResult.token = alarm.listAlarm(arg0);
+				listAlarmResult.token = kylandAlarm.listAlarm(arg0);
 			}
 			
 			protected function searchKylandAlarm():void{
@@ -258,7 +260,7 @@
 			
 			protected function pageInfo(arg0:AlarmSearchCondition):void
 			{
-				pageInfoResult.token = alarm.pageInfo(arg0);
+				pageInfoResult.token = kylandAlarm.pageInfo(arg0);
 			}
 			
 			protected function pageInfoResult_resultHandler(event:ResultEvent):void
@@ -273,7 +275,7 @@
 			
 			protected function getAlarmStatisticsInfo(arg0:AlarmSearchCondition):void
 			{
-				getAlarmStatisticsInfoResult.token = alarm.getAlarmStatisticsInfo(arg0);
+				getAlarmStatisticsInfoResult.token = kylandAlarm.getAlarmStatisticsInfo(arg0);
 			}
 			
 			protected function alarmLevelForSearch_changeHandler(event:IndexChangeEvent):void
@@ -311,6 +313,36 @@
 				}
 				g_kylandAlarmSearchCondition.page.curPage = 1;
 				searchKylandAlarm();
+			}
+			
+			//-----------------东土告警时间段------------------------------
+			protected function kylandStartDate_changeHandler(event:CalendarLayoutChangeEvent):void
+			{
+				var date:Date = DateField(event.target).selectedDate;
+				if (date == null) {
+					g_kylandAlarmSearchCondition.startTime = null;
+				} else {
+					g_kylandAlarmSearchCondition.startTime =  date.getFullYear().toString() + '-' + 
+						(((date.getMonth()+1)>9)?(date.getMonth()+1).toString() : ('0' +(date.getMonth()+1) ))
+						+ '-' + date.getDate();
+				}
+				Alert.show(g_kylandAlarmSearchCondition.startTime);
+				searchKylandAlarm();
+				
+			}
+			
+			protected function kylandEndDate_changeHandler(event:CalendarLayoutChangeEvent):void
+			{
+				var date:Date = DateField(event.target).selectedDate;
+				if (date == null) {
+					g_kylandAlarmSearchCondition.endTime = null;
+				} else {
+					g_kylandAlarmSearchCondition.endTime =  date.getFullYear().toString() + '-' + 
+						(((date.getMonth()+1)>9)?(date.getMonth()+1).toString() : ('0' +(date.getMonth()+1) ))
+						+ '-' + date.getDate();
+				}
+				searchKylandAlarm();
+				
 			}
 			
 //----------------------------------------------------------			
@@ -407,6 +439,33 @@
 			//-----------------------------------------
 			
 			
+			//-----------科大时间搜索条件--------------------
+			protected function ustcStartDate_changeHandler(event:CalendarLayoutChangeEvent):void
+			{
+				var date:Date = DateField(event.target).selectedDate;
+				if (date == null) {
+					g_ustcAlarmSearchCondition.startTime = null;
+				} else {
+					g_ustcAlarmSearchCondition.startTime =  date.getFullYear().toString() + '-' + 
+						(((date.getMonth()+1)>9)?(date.getMonth()+1).toString() : ('0' +(date.getMonth()+1) ))
+						+ '-' + date.getDate();
+				}
+				searchUSTCAlarm();
+			}
+			
+			protected function ustcEndDate_changeHandler(event:CalendarLayoutChangeEvent):void
+			{
+				var date:Date = DateField(event.target).selectedDate;
+				if (date == null) {
+					g_ustcAlarmSearchCondition.endTime = null;
+				} else {
+					g_ustcAlarmSearchCondition.endTime =  date.getFullYear().toString() + '-' + 
+						(((date.getMonth()+1)>9)?(date.getMonth()+1).toString() : ('0' +(date.getMonth()+1) ))
+						+ '-' + date.getDate();
+				}
+				searchUSTCAlarm();
+			}
+			
 			
 		]]>
 	</fx:Script>
@@ -452,6 +511,14 @@
 									<s:ComboBox dataProvider="{kylandAlarmConfirmState}"  selectedIndex="0" id="alarmConfirmStateForSearch"
 												labelField="ingredient" change="alarmConfirmStateForSearch_changeHandler(event)">
 									</s:ComboBox>
+								</mx:FormItem>
+								<mx:FormItem label="起始时间" >
+									<mx:DateField formatString="YYYY-MM-DD"  id="kylandStartDate"  change="kylandStartDate_changeHandler(event)"
+												  dayNames="[日,一,二,三,四,五,六]"    monthNames="[一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月]" />
+								</mx:FormItem>
+								<mx:FormItem label="截止时间">
+									<mx:DateField formatString="YYYY-MM-DD" id="kylandEndDate" change="kylandEndDate_changeHandler(event)"
+												  dayNames="[日,一,二,三,四,五,六]"   monthNames="[一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月]" />
 								</mx:FormItem>
 							</s:HGroup>
 						</mx:Form>
@@ -555,6 +622,14 @@
 									<s:ComboBox dataProvider="{ustcAlarmConfirmState}"  selectedIndex="0" id="ustcAlarmConfirmStateForSearch"
 												labelField="ingredient" change="ustcAlarmConfirmStateForSearch_changeHandler(event)">
 									</s:ComboBox>
+								</mx:FormItem>
+								<mx:FormItem label="起始时间" >
+									<mx:DateField formatString="YYYY-MM-DD"  id="ustcStartDate" change="ustcStartDate_changeHandler(event)"
+												  dayNames="[日,一,二,三,四,五,六]"    monthNames="[一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月]" />
+								</mx:FormItem>
+								<mx:FormItem label="截止时间">
+									<mx:DateField formatString="YYYY-MM-DD" id="ustcEndDate" change="ustcEndDate_changeHandler(event)"
+												  dayNames="[日,一,二,三,四,五,六]"   monthNames="[一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月]" />
 								</mx:FormItem>
 								<s:Button id="gotoUSTCGIS" click="gotoUSTCGIS_clickHandler(event)" label="GIS" />	
 							</s:HGroup>

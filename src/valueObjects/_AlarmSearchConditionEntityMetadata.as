@@ -21,14 +21,14 @@ internal class _AlarmSearchConditionEntityMetadata extends com.adobe.fiber.value
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("alarmClazz", "page", "alarmLevel", "confirmState", "alarmType");
+    model_internal static var allProperties:Array = new Array("alarmType", "confirmState", "alarmClazz", "alarmLevel", "startTime", "page", "endTime");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("alarmClazz", "page", "alarmLevel", "confirmState", "alarmType");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("alarmType", "confirmState", "alarmClazz", "alarmLevel", "startTime", "page", "endTime");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("alarmClazz", "page", "alarmLevel", "confirmState", "alarmType");
+    model_internal static var dataProperties:Array = new Array("alarmType", "confirmState", "alarmClazz", "alarmLevel", "startTime", "page", "endTime");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("alarmClazz", "page", "alarmLevel", "confirmState", "alarmType");
+    model_internal static var nonDerivedProperties:Array = new Array("alarmType", "confirmState", "alarmClazz", "alarmLevel", "startTime", "page", "endTime");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -48,11 +48,13 @@ internal class _AlarmSearchConditionEntityMetadata extends com.adobe.fiber.value
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["alarmClazz"] = new Array();
-            model_internal::dependentsOnMap["page"] = new Array();
-            model_internal::dependentsOnMap["alarmLevel"] = new Array();
-            model_internal::dependentsOnMap["confirmState"] = new Array();
             model_internal::dependentsOnMap["alarmType"] = new Array();
+            model_internal::dependentsOnMap["confirmState"] = new Array();
+            model_internal::dependentsOnMap["alarmClazz"] = new Array();
+            model_internal::dependentsOnMap["alarmLevel"] = new Array();
+            model_internal::dependentsOnMap["startTime"] = new Array();
+            model_internal::dependentsOnMap["page"] = new Array();
+            model_internal::dependentsOnMap["endTime"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
@@ -60,11 +62,13 @@ internal class _AlarmSearchConditionEntityMetadata extends com.adobe.fiber.value
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["alarmClazz"] = "String";
-        model_internal::propertyTypeMap["page"] = "valueObjects.Page";
-        model_internal::propertyTypeMap["alarmLevel"] = "String";
-        model_internal::propertyTypeMap["confirmState"] = "String";
         model_internal::propertyTypeMap["alarmType"] = "String";
+        model_internal::propertyTypeMap["confirmState"] = "String";
+        model_internal::propertyTypeMap["alarmClazz"] = "String";
+        model_internal::propertyTypeMap["alarmLevel"] = "String";
+        model_internal::propertyTypeMap["startTime"] = "String";
+        model_internal::propertyTypeMap["page"] = "valueObjects.Page";
+        model_internal::propertyTypeMap["endTime"] = "String";
 
         model_internal::_instance = value;
     }
@@ -294,19 +298,7 @@ internal class _AlarmSearchConditionEntityMetadata extends com.adobe.fiber.value
     }
 
     [Bindable(event="propertyChange")]
-    public function get isAlarmClazzAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isPageAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isAlarmLevelAvailable():Boolean
+    public function get isAlarmTypeAvailable():Boolean
     {
         return true;
     }
@@ -318,7 +310,31 @@ internal class _AlarmSearchConditionEntityMetadata extends com.adobe.fiber.value
     }
 
     [Bindable(event="propertyChange")]
-    public function get isAlarmTypeAvailable():Boolean
+    public function get isAlarmClazzAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isAlarmLevelAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isStartTimeAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isPageAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isEndTimeAvailable():Boolean
     {
         return true;
     }
@@ -334,19 +350,7 @@ internal class _AlarmSearchConditionEntityMetadata extends com.adobe.fiber.value
     }
 
     [Bindable(event="propertyChange")]   
-    public function get alarmClazzStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get pageStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get alarmLevelStyle():com.adobe.fiber.styles.Style
+    public function get alarmTypeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
@@ -358,7 +362,31 @@ internal class _AlarmSearchConditionEntityMetadata extends com.adobe.fiber.value
     }
 
     [Bindable(event="propertyChange")]   
-    public function get alarmTypeStyle():com.adobe.fiber.styles.Style
+    public function get alarmClazzStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get alarmLevelStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get startTimeStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get pageStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get endTimeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

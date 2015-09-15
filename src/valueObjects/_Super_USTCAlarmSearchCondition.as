@@ -61,7 +61,9 @@ public class _Super_USTCAlarmSearchCondition extends flash.events.EventDispatche
      * properties
      */
     private var _internal_confirmState : String;
+    private var _internal_startTime : String;
     private var _internal_alarmLevel : String;
+    private var _internal_endTime : String;
     private var _internal_page : valueObjects.Page;
 
     private static var emptyArray:Array = new Array();
@@ -93,9 +95,21 @@ public class _Super_USTCAlarmSearchCondition extends flash.events.EventDispatche
     }
 
     [Bindable(event="propertyChange")]
+    public function get startTime() : String
+    {
+        return _internal_startTime;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get alarmLevel() : String
     {
         return _internal_alarmLevel;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get endTime() : String
+    {
+        return _internal_endTime;
     }
 
     [Bindable(event="propertyChange")]
@@ -122,6 +136,16 @@ public class _Super_USTCAlarmSearchCondition extends flash.events.EventDispatche
         }
     }
 
+    public function set startTime(value:String) : void
+    {
+        var oldValue:String = _internal_startTime;
+        if (oldValue !== value)
+        {
+            _internal_startTime = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "startTime", oldValue, _internal_startTime));
+        }
+    }
+
     public function set alarmLevel(value:String) : void
     {
         var oldValue:String = _internal_alarmLevel;
@@ -129,6 +153,16 @@ public class _Super_USTCAlarmSearchCondition extends flash.events.EventDispatche
         {
             _internal_alarmLevel = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmLevel", oldValue, _internal_alarmLevel));
+        }
+    }
+
+    public function set endTime(value:String) : void
+    {
+        var oldValue:String = _internal_endTime;
+        if (oldValue !== value)
+        {
+            _internal_endTime = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "endTime", oldValue, _internal_endTime));
         }
     }
 

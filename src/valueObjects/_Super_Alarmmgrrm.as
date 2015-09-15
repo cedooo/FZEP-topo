@@ -58,27 +58,27 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
     /**
      * properties
      */
-    private var _internal_userIdClear : String;
-    private var _internal_ONUId : String;
-    private var _internal_monitorEntityId : String;
-    private var _internal_alarmId : String;
-    private var _internal_reasonForClear : String;
-    private var _internal_VCI : String;
     private var _internal_clearTime : String;
-    private var _internal_VPI : String;
-    private var _internal_userIdAffirmer : String;
-    private var _internal_portType : String;
-    private var _internal_affirmState : String;
-    private var _internal_genTime : String;
-    private var _internal_RMid : String;
-    private var _internal_oltId : String;
-    private var _internal_alarmLevel : String;
     private var _internal_PONIfId : String;
-    private var _internal_slotId : String;
-    private var _internal_alarmKind : String;
-    private var _internal_affirmTime : String;
+    private var _internal_genTime : String;
     private var _internal_nodeType : String;
+    private var _internal_ONUId : String;
+    private var _internal_VPI : String;
+    private var _internal_userIdClear : String;
+    private var _internal_alarmKind : String;
+    private var _internal_userIdAffirmer : String;
+    private var _internal_RMid : String;
+    private var _internal_portType : String;
     private var _internal_alarmType : String;
+    private var _internal_affirmState : String;
+    private var _internal_alarmId : String;
+    private var _internal_monitorEntityId : String;
+    private var _internal_reasonForClear : String;
+    private var _internal_alarmLevel : String;
+    private var _internal_slotId : String;
+    private var _internal_oltId : String;
+    private var _internal_VCI : String;
+    private var _internal_affirmTime : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -103,93 +103,9 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
      */
 
     [Bindable(event="propertyChange")]
-    public function get userIdClear() : String
-    {
-        return _internal_userIdClear;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get ONUId() : String
-    {
-        return _internal_ONUId;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get monitorEntityId() : String
-    {
-        return _internal_monitorEntityId;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get alarmId() : String
-    {
-        return _internal_alarmId;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get reasonForClear() : String
-    {
-        return _internal_reasonForClear;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get VCI() : String
-    {
-        return _internal_VCI;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get clearTime() : String
     {
         return _internal_clearTime;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get VPI() : String
-    {
-        return _internal_VPI;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get userIdAffirmer() : String
-    {
-        return _internal_userIdAffirmer;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get portType() : String
-    {
-        return _internal_portType;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get affirmState() : String
-    {
-        return _internal_affirmState;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get genTime() : String
-    {
-        return _internal_genTime;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get RMid() : String
-    {
-        return _internal_RMid;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get oltId() : String
-    {
-        return _internal_oltId;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get alarmLevel() : String
-    {
-        return _internal_alarmLevel;
     }
 
     [Bindable(event="propertyChange")]
@@ -199,21 +115,9 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
     }
 
     [Bindable(event="propertyChange")]
-    public function get slotId() : String
+    public function get genTime() : String
     {
-        return _internal_slotId;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get alarmKind() : String
-    {
-        return _internal_alarmKind;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get affirmTime() : String
-    {
-        return _internal_affirmTime;
+        return _internal_genTime;
     }
 
     [Bindable(event="propertyChange")]
@@ -223,9 +127,105 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
     }
 
     [Bindable(event="propertyChange")]
+    public function get ONUId() : String
+    {
+        return _internal_ONUId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get VPI() : String
+    {
+        return _internal_VPI;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get userIdClear() : String
+    {
+        return _internal_userIdClear;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get alarmKind() : String
+    {
+        return _internal_alarmKind;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get userIdAffirmer() : String
+    {
+        return _internal_userIdAffirmer;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get RMid() : String
+    {
+        return _internal_RMid;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get portType() : String
+    {
+        return _internal_portType;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get alarmType() : String
     {
         return _internal_alarmType;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get affirmState() : String
+    {
+        return _internal_affirmState;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get alarmId() : String
+    {
+        return _internal_alarmId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get monitorEntityId() : String
+    {
+        return _internal_monitorEntityId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get reasonForClear() : String
+    {
+        return _internal_reasonForClear;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get alarmLevel() : String
+    {
+        return _internal_alarmLevel;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get slotId() : String
+    {
+        return _internal_slotId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get oltId() : String
+    {
+        return _internal_oltId;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get VCI() : String
+    {
+        return _internal_VCI;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get affirmTime() : String
+    {
+        return _internal_affirmTime;
     }
 
     public function clearAssociations() : void
@@ -236,66 +236,6 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
      * data/source property setters
      */
 
-    public function set userIdClear(value:String) : void
-    {
-        var oldValue:String = _internal_userIdClear;
-        if (oldValue !== value)
-        {
-            _internal_userIdClear = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "userIdClear", oldValue, _internal_userIdClear));
-        }
-    }
-
-    public function set ONUId(value:String) : void
-    {
-        var oldValue:String = _internal_ONUId;
-        if (oldValue !== value)
-        {
-            _internal_ONUId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "ONUId", oldValue, _internal_ONUId));
-        }
-    }
-
-    public function set monitorEntityId(value:String) : void
-    {
-        var oldValue:String = _internal_monitorEntityId;
-        if (oldValue !== value)
-        {
-            _internal_monitorEntityId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "monitorEntityId", oldValue, _internal_monitorEntityId));
-        }
-    }
-
-    public function set alarmId(value:String) : void
-    {
-        var oldValue:String = _internal_alarmId;
-        if (oldValue !== value)
-        {
-            _internal_alarmId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmId", oldValue, _internal_alarmId));
-        }
-    }
-
-    public function set reasonForClear(value:String) : void
-    {
-        var oldValue:String = _internal_reasonForClear;
-        if (oldValue !== value)
-        {
-            _internal_reasonForClear = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "reasonForClear", oldValue, _internal_reasonForClear));
-        }
-    }
-
-    public function set VCI(value:String) : void
-    {
-        var oldValue:String = _internal_VCI;
-        if (oldValue !== value)
-        {
-            _internal_VCI = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "VCI", oldValue, _internal_VCI));
-        }
-    }
-
     public function set clearTime(value:String) : void
     {
         var oldValue:String = _internal_clearTime;
@@ -303,86 +243,6 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
         {
             _internal_clearTime = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "clearTime", oldValue, _internal_clearTime));
-        }
-    }
-
-    public function set VPI(value:String) : void
-    {
-        var oldValue:String = _internal_VPI;
-        if (oldValue !== value)
-        {
-            _internal_VPI = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "VPI", oldValue, _internal_VPI));
-        }
-    }
-
-    public function set userIdAffirmer(value:String) : void
-    {
-        var oldValue:String = _internal_userIdAffirmer;
-        if (oldValue !== value)
-        {
-            _internal_userIdAffirmer = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "userIdAffirmer", oldValue, _internal_userIdAffirmer));
-        }
-    }
-
-    public function set portType(value:String) : void
-    {
-        var oldValue:String = _internal_portType;
-        if (oldValue !== value)
-        {
-            _internal_portType = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "portType", oldValue, _internal_portType));
-        }
-    }
-
-    public function set affirmState(value:String) : void
-    {
-        var oldValue:String = _internal_affirmState;
-        if (oldValue !== value)
-        {
-            _internal_affirmState = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "affirmState", oldValue, _internal_affirmState));
-        }
-    }
-
-    public function set genTime(value:String) : void
-    {
-        var oldValue:String = _internal_genTime;
-        if (oldValue !== value)
-        {
-            _internal_genTime = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "genTime", oldValue, _internal_genTime));
-        }
-    }
-
-    public function set RMid(value:String) : void
-    {
-        var oldValue:String = _internal_RMid;
-        if (oldValue !== value)
-        {
-            _internal_RMid = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "RMid", oldValue, _internal_RMid));
-        }
-    }
-
-    public function set oltId(value:String) : void
-    {
-        var oldValue:String = _internal_oltId;
-        if (oldValue !== value)
-        {
-            _internal_oltId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "oltId", oldValue, _internal_oltId));
-        }
-    }
-
-    public function set alarmLevel(value:String) : void
-    {
-        var oldValue:String = _internal_alarmLevel;
-        if (oldValue !== value)
-        {
-            _internal_alarmLevel = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmLevel", oldValue, _internal_alarmLevel));
         }
     }
 
@@ -396,33 +256,13 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
         }
     }
 
-    public function set slotId(value:String) : void
+    public function set genTime(value:String) : void
     {
-        var oldValue:String = _internal_slotId;
+        var oldValue:String = _internal_genTime;
         if (oldValue !== value)
         {
-            _internal_slotId = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "slotId", oldValue, _internal_slotId));
-        }
-    }
-
-    public function set alarmKind(value:String) : void
-    {
-        var oldValue:String = _internal_alarmKind;
-        if (oldValue !== value)
-        {
-            _internal_alarmKind = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmKind", oldValue, _internal_alarmKind));
-        }
-    }
-
-    public function set affirmTime(value:String) : void
-    {
-        var oldValue:String = _internal_affirmTime;
-        if (oldValue !== value)
-        {
-            _internal_affirmTime = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "affirmTime", oldValue, _internal_affirmTime));
+            _internal_genTime = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "genTime", oldValue, _internal_genTime));
         }
     }
 
@@ -436,6 +276,76 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
         }
     }
 
+    public function set ONUId(value:String) : void
+    {
+        var oldValue:String = _internal_ONUId;
+        if (oldValue !== value)
+        {
+            _internal_ONUId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "ONUId", oldValue, _internal_ONUId));
+        }
+    }
+
+    public function set VPI(value:String) : void
+    {
+        var oldValue:String = _internal_VPI;
+        if (oldValue !== value)
+        {
+            _internal_VPI = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "VPI", oldValue, _internal_VPI));
+        }
+    }
+
+    public function set userIdClear(value:String) : void
+    {
+        var oldValue:String = _internal_userIdClear;
+        if (oldValue !== value)
+        {
+            _internal_userIdClear = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "userIdClear", oldValue, _internal_userIdClear));
+        }
+    }
+
+    public function set alarmKind(value:String) : void
+    {
+        var oldValue:String = _internal_alarmKind;
+        if (oldValue !== value)
+        {
+            _internal_alarmKind = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmKind", oldValue, _internal_alarmKind));
+        }
+    }
+
+    public function set userIdAffirmer(value:String) : void
+    {
+        var oldValue:String = _internal_userIdAffirmer;
+        if (oldValue !== value)
+        {
+            _internal_userIdAffirmer = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "userIdAffirmer", oldValue, _internal_userIdAffirmer));
+        }
+    }
+
+    public function set RMid(value:String) : void
+    {
+        var oldValue:String = _internal_RMid;
+        if (oldValue !== value)
+        {
+            _internal_RMid = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "RMid", oldValue, _internal_RMid));
+        }
+    }
+
+    public function set portType(value:String) : void
+    {
+        var oldValue:String = _internal_portType;
+        if (oldValue !== value)
+        {
+            _internal_portType = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "portType", oldValue, _internal_portType));
+        }
+    }
+
     public function set alarmType(value:String) : void
     {
         var oldValue:String = _internal_alarmType;
@@ -443,6 +353,96 @@ public class _Super_Alarmmgrrm extends flash.events.EventDispatcher implements c
         {
             _internal_alarmType = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmType", oldValue, _internal_alarmType));
+        }
+    }
+
+    public function set affirmState(value:String) : void
+    {
+        var oldValue:String = _internal_affirmState;
+        if (oldValue !== value)
+        {
+            _internal_affirmState = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "affirmState", oldValue, _internal_affirmState));
+        }
+    }
+
+    public function set alarmId(value:String) : void
+    {
+        var oldValue:String = _internal_alarmId;
+        if (oldValue !== value)
+        {
+            _internal_alarmId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmId", oldValue, _internal_alarmId));
+        }
+    }
+
+    public function set monitorEntityId(value:String) : void
+    {
+        var oldValue:String = _internal_monitorEntityId;
+        if (oldValue !== value)
+        {
+            _internal_monitorEntityId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "monitorEntityId", oldValue, _internal_monitorEntityId));
+        }
+    }
+
+    public function set reasonForClear(value:String) : void
+    {
+        var oldValue:String = _internal_reasonForClear;
+        if (oldValue !== value)
+        {
+            _internal_reasonForClear = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "reasonForClear", oldValue, _internal_reasonForClear));
+        }
+    }
+
+    public function set alarmLevel(value:String) : void
+    {
+        var oldValue:String = _internal_alarmLevel;
+        if (oldValue !== value)
+        {
+            _internal_alarmLevel = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "alarmLevel", oldValue, _internal_alarmLevel));
+        }
+    }
+
+    public function set slotId(value:String) : void
+    {
+        var oldValue:String = _internal_slotId;
+        if (oldValue !== value)
+        {
+            _internal_slotId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "slotId", oldValue, _internal_slotId));
+        }
+    }
+
+    public function set oltId(value:String) : void
+    {
+        var oldValue:String = _internal_oltId;
+        if (oldValue !== value)
+        {
+            _internal_oltId = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "oltId", oldValue, _internal_oltId));
+        }
+    }
+
+    public function set VCI(value:String) : void
+    {
+        var oldValue:String = _internal_VCI;
+        if (oldValue !== value)
+        {
+            _internal_VCI = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "VCI", oldValue, _internal_VCI));
+        }
+    }
+
+    public function set affirmTime(value:String) : void
+    {
+        var oldValue:String = _internal_affirmTime;
+        if (oldValue !== value)
+        {
+            _internal_affirmTime = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "affirmTime", oldValue, _internal_affirmTime));
         }
     }
 
