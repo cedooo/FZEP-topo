@@ -17,6 +17,8 @@
 		<services:KylandAlarm id="kylandAlarm"
 							  fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 							  showBusyCursor="true"/>
+		<!--格式化日期-->
+		<mx:DateFormatter id="dateFormatter" formatString="YYYY-MM-DD" />
 		
 	</fx:Declarations>
 	<fx:Script>
@@ -319,14 +321,8 @@
 			protected function kylandStartDate_changeHandler(event:CalendarLayoutChangeEvent):void
 			{
 				var date:Date = DateField(event.target).selectedDate;
-				if (date == null) {
-					g_kylandAlarmSearchCondition.startTime = null;
-				} else {
-					g_kylandAlarmSearchCondition.startTime =  date.getFullYear().toString() + '-' + 
-						(((date.getMonth()+1)>9)?(date.getMonth()+1).toString() : ('0' +(date.getMonth()+1) ))
-						+ '-' + date.getDate();
-				}
-				//Alert.show(g_kylandAlarmSearchCondition.startTime);
+				g_kylandAlarmSearchCondition.startTime = 
+					date==null?null: dateFormatter.format(date);
 				searchKylandAlarm();
 				
 			}
@@ -334,13 +330,8 @@
 			protected function kylandEndDate_changeHandler(event:CalendarLayoutChangeEvent):void
 			{
 				var date:Date = DateField(event.target).selectedDate;
-				if (date == null) {
-					g_kylandAlarmSearchCondition.endTime = null;
-				} else {
-					g_kylandAlarmSearchCondition.endTime =  date.getFullYear().toString() + '-' + 
-						(((date.getMonth()+1)>9)?(date.getMonth()+1).toString() : ('0' +(date.getMonth()+1) ))
-						+ '-' + date.getDate();
-				}
+				g_kylandAlarmSearchCondition.endTime = 
+					date==null?null: dateFormatter.format(date);
 				searchKylandAlarm();
 				
 			}
@@ -443,26 +434,16 @@
 			protected function ustcStartDate_changeHandler(event:CalendarLayoutChangeEvent):void
 			{
 				var date:Date = DateField(event.target).selectedDate;
-				if (date == null) {
-					g_ustcAlarmSearchCondition.startTime = null;
-				} else {
-					g_ustcAlarmSearchCondition.startTime =  date.getFullYear().toString() + '-' + 
-						(((date.getMonth()+1)>9)?(date.getMonth()+1).toString() : ('0' +(date.getMonth()+1) ))
-						+ '-' + date.getDate();
-				}
+				g_ustcAlarmSearchCondition.startTime = 
+					date==null?null:dateFormatter.format(date);
 				searchUSTCAlarm();
 			}
 			
 			protected function ustcEndDate_changeHandler(event:CalendarLayoutChangeEvent):void
 			{
 				var date:Date = DateField(event.target).selectedDate;
-				if (date == null) {
-					g_ustcAlarmSearchCondition.endTime = null;
-				} else {
-					g_ustcAlarmSearchCondition.endTime =  date.getFullYear().toString() + '-' + 
-						(((date.getMonth()+1)>9)?(date.getMonth()+1).toString() : ('0' +(date.getMonth()+1) ))
-						+ '-' + date.getDate();
-				}
+				g_ustcAlarmSearchCondition.endTime = 
+					date==null?null:dateFormatter.format(date);
 				searchUSTCAlarm();
 			}
 			
