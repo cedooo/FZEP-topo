@@ -476,7 +476,6 @@
 				searchSite(grup.name);
 			} 
 			
-			
 			protected function getListByAreaNameResult_faultHandler(event:FaultEvent):void
 			{
 				Alert.show("获取站点信息失败", "提示");
