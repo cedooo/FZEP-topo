@@ -1761,6 +1761,31 @@
     <property name="type" type="string"/>
     <property name="jsonData" type="string"/>
   </entity>
+  <entity name="USTCAlarm">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">USTCAlarm</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">cn.com.dhcc.fzep.alarm.data.ustc.USTCAlarm</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">USTCAlarm1,Dummy</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="alarmContent" type="string"/>
+    <property name="note" type="string"/>
+    <property name="currentUser" type="string"/>
+    <property name="equipName" type="string"/>
+    <property name="dealTime" type="string"/>
+    <property name="delUser" type="string"/>
+    <property name="level" type="string"/>
+    <property name="occourTime" type="string"/>
+    <property name="id" type="string"/>
+    <property name="state" type="string"/>
+  </entity>
   <service name="USTCAlarm1">
     <annotation name="ActionScriptGeneration">
       <item name="ServiceType">RemoteObject</item>
@@ -1785,6 +1810,9 @@
         <item name="inputParams">USTCAlarmSearchCondition</item>
         <item name="returnType">Page</item>
       </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
+      </annotation>
       <parameter name="arg0" type="USTCAlarmSearchCondition"/>
     </function>
     <function name="ustcHistoryAlarm" return-type="HistoryAlarm[]">
@@ -1795,9 +1823,63 @@
         <item name="inputParams">USTCAlarmSearchCondition</item>
         <item name="returnType">HistoryAlarm</item>
       </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">id,dealTime,occurTime,equipName,level,alarmContent,currentUser,dealUser,note</item>
+      </annotation>
       <parameter name="arg0" type="USTCAlarmSearchCondition"/>
     </function>
+    <function name="ustcCurrentAlarmPageInfo" return-type="Page">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">USTCAlarmSearchCondition</item>
+        <item name="returnType">Page</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
+      </annotation>
+      <parameter name="arg0" type="USTCAlarmSearchCondition"/>
+    </function>
+    <function name="ustcCurrentAlarm" return-type="CurrentAlarm[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">USTCAlarmSearchCondition</item>
+        <item name="returnType">CurrentAlarm</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">id,dealTime,occurTime,alarmContent,level,equipName,currentUser,dealUser,note</item>
+      </annotation>
+      <parameter name="arg0" type="USTCAlarmSearchCondition"/>
+    </function>
+    <function name="ustcUsers" return-type="User[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">User</item>
+      </annotation>
+    </function>
   </service>
+  <entity name="User">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">User</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">cn.com.dhcc.fzep.alarm.data.ustc.vo.User</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">Dummy,USTCAlarm1</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="ID" type="string"/>
+    <property name="userName" type="string"/>
+  </entity>
   <entity name="HistoryAlarm">
     <annotation name="EntityProperties">
       <item name="EntityOriginalName">HistoryAlarm</item>
@@ -1811,6 +1893,9 @@
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
+    </annotation>
+    <annotation name="ustcHistoryAlarm">
+      <item name="propertySpecifier">id,dealTime,occurTime,equipName,level,alarmContent,currentUser,dealUser,note</item>
     </annotation>
     <property name="id" type="string"/>
     <property name="dealTime" type="string"/>
@@ -1844,31 +1929,6 @@
     <property name="device" type="string"/>
     <property name="endTime" type="string"/>
   </entity>
-  <entity name="USTCAlarm">
-    <annotation name="EntityProperties">
-      <item name="EntityOriginalName">USTCAlarm</item>
-    </annotation>
-    <annotation name="ServerProperties">
-      <item name="RemoteClass">cn.com.dhcc.fzep.alarm.data.ustc.USTCAlarm</item>
-      <item name="IncludeRemoteClass">nonempty</item>
-    </annotation>
-    <annotation name="service Group">
-      <item name="service">USTCAlarm1,Dummy</item>
-    </annotation>
-    <annotation name="ActionScriptGeneration">
-      <item name="Package">valueObjects</item>
-    </annotation>
-    <property name="alarmContent" type="string"/>
-    <property name="note" type="string"/>
-    <property name="currentUser" type="string"/>
-    <property name="equipName" type="string"/>
-    <property name="dealTime" type="string"/>
-    <property name="delUser" type="string"/>
-    <property name="level" type="string"/>
-    <property name="occourTime" type="string"/>
-    <property name="id" type="string"/>
-    <property name="state" type="string"/>
-  </entity>
   <entity name="Page">
     <annotation name="EntityProperties">
       <item name="EntityOriginalName">Page</item>
@@ -1892,9 +1952,42 @@
     <annotation name="pageInfo">
       <item name="propertySpecifier">totalRecords,curPage,totalPage,numPerPage</item>
     </annotation>
-    <property name="curPage" type="integer"/>
+    <annotation name="ustcHistoryAlarmPageInfo">
+      <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
+    </annotation>
+    <annotation name="ustcCurrentAlarmPageInfo">
+      <item name="propertySpecifier">numPerPage,curPage,totalRecords,totalPage</item>
+    </annotation>
     <property name="numPerPage" type="integer"/>
+    <property name="curPage" type="integer"/>
     <property name="totalRecords" type="integer"/>
     <property name="totalPage" type="integer"/>
+  </entity>
+  <entity name="CurrentAlarm">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">CurrentAlarm</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">cn.com.dhcc.fzep.alarm.data.ustc.vo.CurrentAlarm</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">Dummy,USTCAlarm1</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <annotation name="ustcCurrentAlarm">
+      <item name="propertySpecifier">id,dealTime,occurTime,alarmContent,level,equipName,currentUser,dealUser,note</item>
+    </annotation>
+    <property name="id" type="string"/>
+    <property name="dealTime" type="string"/>
+    <property name="occurTime" type="string"/>
+    <property name="alarmContent" type="string"/>
+    <property name="level" type="string"/>
+    <property name="equipName" type="string"/>
+    <property name="currentUser" type="string"/>
+    <property name="dealUser" type="string"/>
+    <property name="note" type="string"/>
   </entity>
 </model>

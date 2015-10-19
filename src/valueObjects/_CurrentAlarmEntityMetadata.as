@@ -16,41 +16,46 @@ import mx.events.PropertyChangeEvent;
 use namespace model_internal;
 
 [ExcludeClass]
-internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
+internal class _CurrentAlarmEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("numPerPage", "curPage", "totalRecords", "totalPage");
+    model_internal static var allProperties:Array = new Array("id", "dealTime", "occurTime", "alarmContent", "level", "equipName", "currentUser", "dealUser", "note");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("numPerPage", "curPage", "totalRecords", "totalPage");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("id", "dealTime", "occurTime", "alarmContent", "level", "equipName", "currentUser", "dealUser", "note");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("numPerPage", "curPage", "totalRecords", "totalPage");
+    model_internal static var dataProperties:Array = new Array("id", "dealTime", "occurTime", "alarmContent", "level", "equipName", "currentUser", "dealUser", "note");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("numPerPage", "curPage", "totalRecords", "totalPage");
+    model_internal static var nonDerivedProperties:Array = new Array("id", "dealTime", "occurTime", "alarmContent", "level", "equipName", "currentUser", "dealUser", "note");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
-    model_internal static var entityName:String = "Page";
+    model_internal static var entityName:String = "CurrentAlarm";
     model_internal static var dependentsOnMap:Object;
     model_internal static var dependedOnServices:Array = new Array();
     model_internal static var propertyTypeMap:Object;
 
 
-    model_internal var _instance:_Super_Page;
+    model_internal var _instance:_Super_CurrentAlarm;
     model_internal static var _nullStyle:com.adobe.fiber.styles.Style = new com.adobe.fiber.styles.Style();
 
-    public function _PageEntityMetadata(value : _Super_Page)
+    public function _CurrentAlarmEntityMetadata(value : _Super_CurrentAlarm)
     {
         // initialize property maps
         if (model_internal::dependentsOnMap == null)
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["numPerPage"] = new Array();
-            model_internal::dependentsOnMap["curPage"] = new Array();
-            model_internal::dependentsOnMap["totalRecords"] = new Array();
-            model_internal::dependentsOnMap["totalPage"] = new Array();
+            model_internal::dependentsOnMap["id"] = new Array();
+            model_internal::dependentsOnMap["dealTime"] = new Array();
+            model_internal::dependentsOnMap["occurTime"] = new Array();
+            model_internal::dependentsOnMap["alarmContent"] = new Array();
+            model_internal::dependentsOnMap["level"] = new Array();
+            model_internal::dependentsOnMap["equipName"] = new Array();
+            model_internal::dependentsOnMap["currentUser"] = new Array();
+            model_internal::dependentsOnMap["dealUser"] = new Array();
+            model_internal::dependentsOnMap["note"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
@@ -58,10 +63,15 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["numPerPage"] = "int";
-        model_internal::propertyTypeMap["curPage"] = "int";
-        model_internal::propertyTypeMap["totalRecords"] = "int";
-        model_internal::propertyTypeMap["totalPage"] = "int";
+        model_internal::propertyTypeMap["id"] = "String";
+        model_internal::propertyTypeMap["dealTime"] = "String";
+        model_internal::propertyTypeMap["occurTime"] = "String";
+        model_internal::propertyTypeMap["alarmContent"] = "String";
+        model_internal::propertyTypeMap["level"] = "String";
+        model_internal::propertyTypeMap["equipName"] = "String";
+        model_internal::propertyTypeMap["currentUser"] = "String";
+        model_internal::propertyTypeMap["dealUser"] = "String";
+        model_internal::propertyTypeMap["note"] = "String";
 
         model_internal::_instance = value;
     }
@@ -114,7 +124,7 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     override public function getDependants(propertyName:String):Array
     {
        if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a data property of entity Page");
+            throw new Error(propertyName + " is not a data property of entity CurrentAlarm");
             
        return model_internal::dependentsOnMap[propertyName] as Array;  
     }
@@ -132,7 +142,7 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     override public function getCollectionBase(propertyName:String):String
     {
         if (model_internal::collectionProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a collection property of entity Page");
+            throw new Error(propertyName + " is not a collection property of entity CurrentAlarm");
 
         return model_internal::collectionBaseMap[propertyName];
     }
@@ -140,7 +150,7 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     override public function getPropertyType(propertyName:String):String
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a property of Page");
+            throw new Error(propertyName + " is not a property of CurrentAlarm");
 
         return model_internal::propertyTypeMap[propertyName];
     }
@@ -154,7 +164,7 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity Page");
+            throw new Error(propertyName + " does not exist for entity CurrentAlarm");
         }
 
         return model_internal::_instance[propertyName];
@@ -164,7 +174,7 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     {
         if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " is not a modifiable property of entity Page");
+            throw new Error(propertyName + " is not a modifiable property of entity CurrentAlarm");
         }
 
         model_internal::_instance[propertyName] = value;
@@ -196,7 +206,7 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity Page");
+            throw new Error(propertyName + " does not exist for entity CurrentAlarm");
         }
 
         if (model_internal::allAlwaysAvailableProperties.indexOf(propertyName) != -1)
@@ -291,25 +301,55 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     }
 
     [Bindable(event="propertyChange")]
-    public function get isNumPerPageAvailable():Boolean
+    public function get isIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isCurPageAvailable():Boolean
+    public function get isDealTimeAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isTotalRecordsAvailable():Boolean
+    public function get isOccurTimeAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isTotalPageAvailable():Boolean
+    public function get isAlarmContentAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isLevelAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isEquipNameAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isCurrentUserAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isDealUserAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isNoteAvailable():Boolean
     {
         return true;
     }
@@ -325,25 +365,55 @@ internal class _PageEntityMetadata extends com.adobe.fiber.valueobjects.Abstract
     }
 
     [Bindable(event="propertyChange")]   
-    public function get numPerPageStyle():com.adobe.fiber.styles.Style
+    public function get idStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get curPageStyle():com.adobe.fiber.styles.Style
+    public function get dealTimeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get totalRecordsStyle():com.adobe.fiber.styles.Style
+    public function get occurTimeStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get totalPageStyle():com.adobe.fiber.styles.Style
+    public function get alarmContentStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get levelStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get equipNameStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get currentUserStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get dealUserStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get noteStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

@@ -1,6 +1,6 @@
 /**
  * This is a generated class and is not intended for modification.  To customize behavior
- * of this value object you may modify the generated sub-class of this class - Page.as.
+ * of this value object you may modify the generated sub-class of this class - User.as.
  */
 
 package valueObjects
@@ -20,20 +20,20 @@ import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 use namespace model_internal;
 
 [ExcludeClass]
-public class _Super_Page extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
+public class _Super_User extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
         try
         {
-            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.topo.common.search.Page") == null)
+            if (flash.net.getClassByAlias("cn.com.dhcc.fzep.alarm.data.ustc.vo.User") == null)
             {
-                flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.common.search.Page", cz);
+                flash.net.registerClassAlias("cn.com.dhcc.fzep.alarm.data.ustc.vo.User", cz);
             }
         }
         catch (e:Error)
         {
-            flash.net.registerClassAlias("cn.com.dhcc.fzep.topo.common.search.Page", cz);
+            flash.net.registerClassAlias("cn.com.dhcc.fzep.alarm.data.ustc.vo.User", cz);
         }
     }
 
@@ -41,7 +41,7 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
     {
     }
 
-    model_internal var _dminternal_model : _PageEntityMetadata;
+    model_internal var _dminternal_model : _UserEntityMetadata;
     model_internal var _changedObjects:mx.collections.ArrayCollection = new ArrayCollection();
 
     public function getChangedObjects() : Array
@@ -58,10 +58,8 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
     /**
      * properties
      */
-    private var _internal_numPerPage : int;
-    private var _internal_curPage : int;
-    private var _internal_totalRecords : int;
-    private var _internal_totalPage : int;
+    private var _internal_ID : String;
+    private var _internal_userName : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -73,9 +71,9 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
 
     model_internal var _changeWatcherArray:Array = new Array();
 
-    public function _Super_Page()
+    public function _Super_User()
     {
-        _model = new _PageEntityMetadata(this);
+        _model = new _UserEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
 
@@ -86,27 +84,15 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
      */
 
     [Bindable(event="propertyChange")]
-    public function get numPerPage() : int
+    public function get ID() : String
     {
-        return _internal_numPerPage;
+        return _internal_ID;
     }
 
     [Bindable(event="propertyChange")]
-    public function get curPage() : int
+    public function get userName() : String
     {
-        return _internal_curPage;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get totalRecords() : int
-    {
-        return _internal_totalRecords;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get totalPage() : int
-    {
-        return _internal_totalPage;
+        return _internal_userName;
     }
 
     public function clearAssociations() : void
@@ -117,43 +103,23 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
      * data/source property setters
      */
 
-    public function set numPerPage(value:int) : void
+    public function set ID(value:String) : void
     {
-        var oldValue:int = _internal_numPerPage;
+        var oldValue:String = _internal_ID;
         if (oldValue !== value)
         {
-            _internal_numPerPage = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "numPerPage", oldValue, _internal_numPerPage));
+            _internal_ID = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "ID", oldValue, _internal_ID));
         }
     }
 
-    public function set curPage(value:int) : void
+    public function set userName(value:String) : void
     {
-        var oldValue:int = _internal_curPage;
+        var oldValue:String = _internal_userName;
         if (oldValue !== value)
         {
-            _internal_curPage = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "curPage", oldValue, _internal_curPage));
-        }
-    }
-
-    public function set totalRecords(value:int) : void
-    {
-        var oldValue:int = _internal_totalRecords;
-        if (oldValue !== value)
-        {
-            _internal_totalRecords = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "totalRecords", oldValue, _internal_totalRecords));
-        }
-    }
-
-    public function set totalPage(value:int) : void
-    {
-        var oldValue:int = _internal_totalPage;
-        if (oldValue !== value)
-        {
-            _internal_totalPage = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "totalPage", oldValue, _internal_totalPage));
+            _internal_userName = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "userName", oldValue, _internal_userName));
         }
     }
 
@@ -217,14 +183,14 @@ public class _Super_Page extends flash.events.EventDispatcher implements com.ado
 
     [Transient]
     [Bindable(event="propertyChange")]
-    public function get _model() : _PageEntityMetadata
+    public function get _model() : _UserEntityMetadata
     {
         return model_internal::_dminternal_model;
     }
 
-    public function set _model(value : _PageEntityMetadata) : void
+    public function set _model(value : _UserEntityMetadata) : void
     {
-        var oldValue : _PageEntityMetadata = model_internal::_dminternal_model;
+        var oldValue : _UserEntityMetadata = model_internal::_dminternal_model;
         if (oldValue !== value)
         {
             model_internal::_dminternal_model = value;
