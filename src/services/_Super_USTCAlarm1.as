@@ -11,8 +11,8 @@ import mx.rpc.AbstractOperation;
 import mx.rpc.AsyncToken;
 import mx.rpc.remoting.Operation;
 import mx.rpc.remoting.RemoteObject;
+import valueObjects.HistoryAlarm;
 import valueObjects.Page;
-import valueObjects.USTCAlarm;
 import valueObjects.USTCAlarmSearchCondition;
 
 import mx.collections.ItemResponder;
@@ -29,17 +29,17 @@ internal class _Super_USTCAlarm1 extends com.adobe.fiber.services.wrapper.Remote
         _serviceControl = new mx.rpc.remoting.RemoteObject();
 
         // initialize RemoteClass alias for all entities returned by functions of this service
-        valueObjects.USTCAlarm._initRemoteClassAlias();
+        valueObjects.HistoryAlarm._initRemoteClassAlias();
 
         var operations:Object = new Object();
         var operation:mx.rpc.remoting.Operation;
 
-        operation = new mx.rpc.remoting.Operation(null, "getUSTCAlarm");
-         operation.resultElementType = valueObjects.USTCAlarm;
-        operations["getUSTCAlarm"] = operation;
-        operation = new mx.rpc.remoting.Operation(null, "ustcPageInfo");
+        operation = new mx.rpc.remoting.Operation(null, "ustcHistoryAlarmPageInfo");
          operation.resultType = valueObjects.Page;
-        operations["ustcPageInfo"] = operation;
+        operations["ustcHistoryAlarmPageInfo"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "ustcHistoryAlarm");
+         operation.resultElementType = valueObjects.HistoryAlarm;
+        operations["ustcHistoryAlarm"] = operation;
 
         _serviceControl.operations = operations;
         _serviceControl.convertResultHandler = com.adobe.serializers.utility.TypeUtility.convertResultHandler;
@@ -58,7 +58,7 @@ internal class _Super_USTCAlarm1 extends com.adobe.fiber.services.wrapper.Remote
     
 
     /**
-      * This method is a generated wrapper used to call the 'getUSTCAlarm' operation. It returns an mx.rpc.AsyncToken whose 
+      * This method is a generated wrapper used to call the 'ustcHistoryAlarmPageInfo' operation. It returns an mx.rpc.AsyncToken whose 
       * result property will be populated with the result of the operation when the server response is received. 
       * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
@@ -68,15 +68,15 @@ internal class _Super_USTCAlarm1 extends com.adobe.fiber.services.wrapper.Remote
       *
       * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
       */
-    public function getUSTCAlarm(arg0:valueObjects.USTCAlarmSearchCondition) : mx.rpc.AsyncToken
+    public function ustcHistoryAlarmPageInfo(arg0:valueObjects.USTCAlarmSearchCondition) : mx.rpc.AsyncToken
     {
-        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getUSTCAlarm");
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("ustcHistoryAlarmPageInfo");
 		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0) ;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'ustcPageInfo' operation. It returns an mx.rpc.AsyncToken whose 
+      * This method is a generated wrapper used to call the 'ustcHistoryAlarm' operation. It returns an mx.rpc.AsyncToken whose 
       * result property will be populated with the result of the operation when the server response is received. 
       * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
@@ -86,9 +86,9 @@ internal class _Super_USTCAlarm1 extends com.adobe.fiber.services.wrapper.Remote
       *
       * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
       */
-    public function ustcPageInfo(arg0:valueObjects.USTCAlarmSearchCondition) : mx.rpc.AsyncToken
+    public function ustcHistoryAlarm(arg0:valueObjects.USTCAlarmSearchCondition) : mx.rpc.AsyncToken
     {
-        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("ustcPageInfo");
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("ustcHistoryAlarm");
 		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(arg0) ;
         return _internal_token;
     }

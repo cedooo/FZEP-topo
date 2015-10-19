@@ -7,11 +7,10 @@
 	<fx:Declarations>
 		<s:CallResponder id="pageInfoResult" result="pageInfoResult_resultHandler(event)"/>
 		<s:CallResponder id="getAlarmStatisticsInfoResult"/>
-		<s:CallResponder id="getUSTCAlarmResult"/>
+		<s:CallResponder id="getUSTCHistoryAlarmResult"/>
 		<services:USTCAlarm1 id="uSTCAlarm1"
 							 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 							 showBusyCursor="true"/>
-		<s:CallResponder id="ustcPageInfoResult" result="ustcPageInfoResult_resultHandler(event)"/>
 		
 		<s:CallResponder id="listAlarmResult"/>
 		<services:KylandAlarm id="kylandAlarm"
@@ -19,6 +18,8 @@
 							  showBusyCursor="true"/>
 		<!--格式化日期-->
 		<mx:DateFormatter id="dateFormatter" formatString="YYYY-MM-DD" />
+		<s:CallResponder id="ustcHistoryAlarmPageInfoResult" result="ustcPageInfoResult_resultHandler(event)" />
+		<s:CallResponder id="ustcHistoryAlarmResult"/>
 		
 	</fx:Declarations>
 	<fx:Script>
@@ -108,6 +109,14 @@
 					{category:"1", ingredient:"有效"}
 				]                
 			);
+			[Bindable]
+			public var ustcAlarmType:ArrayCollection = new ArrayCollection(
+				[   
+					{category:"0", ingredient:"当前告警"},
+					{category:"1", ingredient:"历史告警"}
+				]                
+			);
+			
 			//科大-搜索告警条件
 			[Bindable]
 			private var g_ustcAlarmSearchCondition:USTCAlarmSearchCondition = new USTCAlarmSearchCondition();
@@ -349,7 +358,7 @@
 			
 			protected function getUSTCAlarm(arg0:USTCAlarmSearchCondition):void
 			{
-				getUSTCAlarmResult.token = uSTCAlarm1.getUSTCAlarm(arg0);
+				getUSTCHistoryAlarmResult.token = uSTCAlarm1.ustcHistoryAlarm(arg0);
 			}
 			
 			protected function ustcAlarmListDataGrid_creationCompleteHandler(event:FlexEvent):void
@@ -361,16 +370,10 @@
 			 */
 			protected function searchUSTCAlarm():void{
 				getUSTCAlarm(g_ustcAlarmSearchCondition);
-				ustcPageInfo(g_ustcAlarmSearchCondition);
+				ustcHistoryAlarmPageInfo(g_ustcAlarmSearchCondition);
 			}
 			
-			/**
-			 * 科大告警分页信息
-			 */
-			protected function ustcPageInfo(arg0:USTCAlarmSearchCondition):void
-			{
-				ustcPageInfoResult.token = uSTCAlarm1.ustcPageInfo(arg0);
-			}
+			
 			//更新分页信息
 			protected function ustcPageInfoResult_resultHandler(event:ResultEvent):void
 			{
@@ -447,6 +450,32 @@
 				searchUSTCAlarm();
 			}
 			
+			
+			protected function ustcAlarmDealUserForSearch_changeHandler(event:IndexChangeEvent):void
+			{
+				
+			}
+			
+			/**
+			 * 科大告警分页信息
+			 */
+			protected function ustcHistoryAlarmPageInfo(arg0:USTCAlarmSearchCondition):void
+			{
+				ustcHistoryAlarmPageInfoResult.token = uSTCAlarm1.ustcHistoryAlarmPageInfo(arg0);
+			}
+			
+			
+			protected function ustcHistoryAlarm(arg0:USTCAlarmSearchCondition):void
+			{
+				ustcHistoryAlarmResult.token = uSTCAlarm1.ustcHistoryAlarm(arg0);
+			}
+			
+			
+			protected function ustcAlarmTypeForSearch_changeHandler(event:IndexChangeEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
 			
 		]]>
 	</fx:Script>
@@ -565,7 +594,7 @@
 						<mx:DataGrid id="alarmListDataGrid"  width="100%" height="100%" dataProvider="{listAlarmResult.lastResult}"
 									 creationComplete="alarmListDataGrid_creationCompleteHandler(event)">
 							<mx:columns>
-								<mx:DataGridColumn dataField="alarmId" headerText="告警ID"/>
+								<mx:DataGridColumn dataField="alarmId" headerText="告警ID" visible="false"/>
 								<mx:DataGridColumn dataField="oltId" headerText="告警源"/>
 								<mx:DataGridColumn dataField="alarmType" headerText="告警名称" labelFunction="kylandAlarmTypeColumnFormat" />
 								<mx:DataGridColumn dataField="genTime" headerText="发生时间" labelFunction="UTCTimeFormat" />
@@ -594,16 +623,30 @@
 						</s:layout>
 						<mx:Form width="100%" label="告警查询条件" >
 							<s:HGroup >
+								
+								<mx:FormItem label="告警类型">
+									<s:ComboBox  id="ustcAlarmTypeForSearch" dataProvider="{ustcAlarmType}"  selectedIndex="0" 
+												 labelField="ingredient" change="ustcAlarmTypeForSearch_changeHandler(event)" >
+									</s:ComboBox>
+								</mx:FormItem>
 								<mx:FormItem label="告警级别">
 									<s:ComboBox  id="ustcAlarmLevelForSearch" dataProvider="{ustcAlarmLevel}"  selectedIndex="0" 
 												labelField="ingredient" change="ustcAlarmLevelForSearch_changeHandler(event)" >
 									</s:ComboBox>
 								</mx:FormItem>
+								
+								<mx:FormItem label="处理用户">
+									<s:ComboBox   selectedIndex="0" id="ustcAlarmDealUserForSearch"
+												labelField="ingredient" change="ustcAlarmDealUserForSearch_changeHandler(event)">
+									</s:ComboBox>
+								</mx:FormItem>
+								<!--
 								<mx:FormItem label="确认状态">
 									<s:ComboBox dataProvider="{ustcAlarmConfirmState}"  selectedIndex="0" id="ustcAlarmConfirmStateForSearch"
 												labelField="ingredient" change="ustcAlarmConfirmStateForSearch_changeHandler(event)">
 									</s:ComboBox>
 								</mx:FormItem>
+								-->
 								<mx:FormItem label="起始日期" >
 									<mx:DateField formatString="YYYY-MM-DD"  id="ustcStartDate" change="ustcStartDate_changeHandler(event)"
 												  dayNames="[日,一,二,三,四,五,六]"    monthNames="[一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月]" />
@@ -621,25 +664,26 @@
 							<s:HorizontalLayout gap="0">
 							</s:HorizontalLayout>
 						</s:layout>
-						<mx:DataGrid id="ustcAlarmListDataGrid"  width="100%" height="100%" dataProvider="{getUSTCAlarmResult.lastResult}"
+						<mx:DataGrid id="ustcAlarmListDataGrid"  width="100%" height="100%" dataProvider="{getUSTCHistoryAlarmResult.lastResult}"
 									 creationComplete="ustcAlarmListDataGrid_creationCompleteHandler(event)">
 							<mx:columns>
-								<mx:DataGridColumn dataField="id" headerText="告警ID" width="10"/>
-								<mx:DataGridColumn dataField="equipName" headerText="设备名称"  width="15"/>
-								<mx:DataGridColumn dataField="level" headerText="告警级别"   width="5"/>
+								<mx:DataGridColumn dataField="id" headerText="告警ID" width="10" visible="false" />
+								<mx:DataGridColumn dataField="equipName" headerText="设备名称"  width="10"/>
+								<mx:DataGridColumn dataField="level" headerText="告警级别"   width="10"/>
 								<mx:DataGridColumn dataField="alarmContent" headerText="告警内容"   width="50"/>
+								<mx:DataGridColumn dataField="currentUser" headerText="当前用户"  width="10"/>
 								<mx:DataGridColumn dataField="occourTime" headerText="发生时间"  width="10"/>
-								<mx:DataGridColumn dataField="state" headerText="状态"  width="10" labelFunction="ustcConffirmStateFormat"/>
+								<mx:DataGridColumn dataField="dealTime" headerText="处理时间"  width="10"/>
+								<mx:DataGridColumn dataField="dealUser" headerText="处理用户"  width="10"/>
+								<mx:DataGridColumn dataField="note" headerText="备注"  width="10"/>
 							</mx:columns>
 						</mx:DataGrid>
 					</s:BorderContainer>
 				</s:BorderContainer>
 			</s:NavigatorContent>
-			<!--
-			<s:NavigatorContent label="H3C" width="100%" height="100%" enabled="false" hide="true" >
+			<s:NavigatorContent label="H3C" width="100%" height="100%" enabled="true" >
 				<s:Label text="选项卡3的内容"/>
 			</s:NavigatorContent>
-			-->
 		</mx:TabNavigator>
 		<mx:HBox backgroundAlpha="0" verticalAlign="middle" paddingTop="5" horizontalAlign="center" width="100%" paddingBottom="5">
 			<mx:Label   text="第 {pageInfoResult.lastResult.curPage} 页/共 {pageInfoResult.lastResult.totalPage} 页" id="pagedetail"  />  

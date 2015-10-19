@@ -60,11 +60,13 @@ public class _Super_USTCAlarmSearchCondition extends flash.events.EventDispatche
     /**
      * properties
      */
-    private var _internal_confirmState : String;
     private var _internal_startTime : String;
-    private var _internal_alarmLevel : String;
-    private var _internal_endTime : String;
     private var _internal_page : valueObjects.Page;
+    private var _internal_dealUser : String;
+    private var _internal_alarmLevel : String;
+    private var _internal_confirmState : String;
+    private var _internal_device : String;
+    private var _internal_endTime : String;
 
     private static var emptyArray:Array = new Array();
 
@@ -89,15 +91,21 @@ public class _Super_USTCAlarmSearchCondition extends flash.events.EventDispatche
      */
 
     [Bindable(event="propertyChange")]
-    public function get confirmState() : String
-    {
-        return _internal_confirmState;
-    }
-
-    [Bindable(event="propertyChange")]
     public function get startTime() : String
     {
         return _internal_startTime;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get page() : valueObjects.Page
+    {
+        return _internal_page;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get dealUser() : String
+    {
+        return _internal_dealUser;
     }
 
     [Bindable(event="propertyChange")]
@@ -107,15 +115,21 @@ public class _Super_USTCAlarmSearchCondition extends flash.events.EventDispatche
     }
 
     [Bindable(event="propertyChange")]
-    public function get endTime() : String
+    public function get confirmState() : String
     {
-        return _internal_endTime;
+        return _internal_confirmState;
     }
 
     [Bindable(event="propertyChange")]
-    public function get page() : valueObjects.Page
+    public function get device() : String
     {
-        return _internal_page;
+        return _internal_device;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get endTime() : String
+    {
+        return _internal_endTime;
     }
 
     public function clearAssociations() : void
@@ -126,16 +140,6 @@ public class _Super_USTCAlarmSearchCondition extends flash.events.EventDispatche
      * data/source property setters
      */
 
-    public function set confirmState(value:String) : void
-    {
-        var oldValue:String = _internal_confirmState;
-        if (oldValue !== value)
-        {
-            _internal_confirmState = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "confirmState", oldValue, _internal_confirmState));
-        }
-    }
-
     public function set startTime(value:String) : void
     {
         var oldValue:String = _internal_startTime;
@@ -143,6 +147,26 @@ public class _Super_USTCAlarmSearchCondition extends flash.events.EventDispatche
         {
             _internal_startTime = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "startTime", oldValue, _internal_startTime));
+        }
+    }
+
+    public function set page(value:valueObjects.Page) : void
+    {
+        var oldValue:valueObjects.Page = _internal_page;
+        if (oldValue !== value)
+        {
+            _internal_page = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "page", oldValue, _internal_page));
+        }
+    }
+
+    public function set dealUser(value:String) : void
+    {
+        var oldValue:String = _internal_dealUser;
+        if (oldValue !== value)
+        {
+            _internal_dealUser = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "dealUser", oldValue, _internal_dealUser));
         }
     }
 
@@ -156,6 +180,26 @@ public class _Super_USTCAlarmSearchCondition extends flash.events.EventDispatche
         }
     }
 
+    public function set confirmState(value:String) : void
+    {
+        var oldValue:String = _internal_confirmState;
+        if (oldValue !== value)
+        {
+            _internal_confirmState = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "confirmState", oldValue, _internal_confirmState));
+        }
+    }
+
+    public function set device(value:String) : void
+    {
+        var oldValue:String = _internal_device;
+        if (oldValue !== value)
+        {
+            _internal_device = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "device", oldValue, _internal_device));
+        }
+    }
+
     public function set endTime(value:String) : void
     {
         var oldValue:String = _internal_endTime;
@@ -163,16 +207,6 @@ public class _Super_USTCAlarmSearchCondition extends flash.events.EventDispatche
         {
             _internal_endTime = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "endTime", oldValue, _internal_endTime));
-        }
-    }
-
-    public function set page(value:valueObjects.Page) : void
-    {
-        var oldValue:valueObjects.Page = _internal_page;
-        if (oldValue !== value)
-        {
-            _internal_page = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "page", oldValue, _internal_page));
         }
     }
 

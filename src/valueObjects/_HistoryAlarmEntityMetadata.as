@@ -9,7 +9,6 @@ import com.adobe.fiber.styles.Style;
 import com.adobe.fiber.valueobjects.AbstractEntityMetadata;
 import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 import com.adobe.fiber.valueobjects.IPropertyIterator;
-import valueObjects.Page;
 import com.adobe.fiber.core.model_internal;
 import com.adobe.fiber.valueobjects.IModelType;
 import mx.events.PropertyChangeEvent;
@@ -17,44 +16,46 @@ import mx.events.PropertyChangeEvent;
 use namespace model_internal;
 
 [ExcludeClass]
-internal class _USTCAlarmSearchConditionEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
+internal class _HistoryAlarmEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("startTime", "page", "dealUser", "alarmLevel", "confirmState", "device", "endTime");
+    model_internal static var allProperties:Array = new Array("id", "dealTime", "occurTime", "equipName", "level", "alarmContent", "currentUser", "dealUser", "note");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("startTime", "page", "dealUser", "alarmLevel", "confirmState", "device", "endTime");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("id", "dealTime", "occurTime", "equipName", "level", "alarmContent", "currentUser", "dealUser", "note");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("startTime", "page", "dealUser", "alarmLevel", "confirmState", "device", "endTime");
+    model_internal static var dataProperties:Array = new Array("id", "dealTime", "occurTime", "equipName", "level", "alarmContent", "currentUser", "dealUser", "note");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("startTime", "page", "dealUser", "alarmLevel", "confirmState", "device", "endTime");
+    model_internal static var nonDerivedProperties:Array = new Array("id", "dealTime", "occurTime", "equipName", "level", "alarmContent", "currentUser", "dealUser", "note");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
-    model_internal static var entityName:String = "USTCAlarmSearchCondition";
+    model_internal static var entityName:String = "HistoryAlarm";
     model_internal static var dependentsOnMap:Object;
     model_internal static var dependedOnServices:Array = new Array();
     model_internal static var propertyTypeMap:Object;
 
 
-    model_internal var _instance:_Super_USTCAlarmSearchCondition;
+    model_internal var _instance:_Super_HistoryAlarm;
     model_internal static var _nullStyle:com.adobe.fiber.styles.Style = new com.adobe.fiber.styles.Style();
 
-    public function _USTCAlarmSearchConditionEntityMetadata(value : _Super_USTCAlarmSearchCondition)
+    public function _HistoryAlarmEntityMetadata(value : _Super_HistoryAlarm)
     {
         // initialize property maps
         if (model_internal::dependentsOnMap == null)
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
-            model_internal::dependentsOnMap["startTime"] = new Array();
-            model_internal::dependentsOnMap["page"] = new Array();
+            model_internal::dependentsOnMap["id"] = new Array();
+            model_internal::dependentsOnMap["dealTime"] = new Array();
+            model_internal::dependentsOnMap["occurTime"] = new Array();
+            model_internal::dependentsOnMap["equipName"] = new Array();
+            model_internal::dependentsOnMap["level"] = new Array();
+            model_internal::dependentsOnMap["alarmContent"] = new Array();
+            model_internal::dependentsOnMap["currentUser"] = new Array();
             model_internal::dependentsOnMap["dealUser"] = new Array();
-            model_internal::dependentsOnMap["alarmLevel"] = new Array();
-            model_internal::dependentsOnMap["confirmState"] = new Array();
-            model_internal::dependentsOnMap["device"] = new Array();
-            model_internal::dependentsOnMap["endTime"] = new Array();
+            model_internal::dependentsOnMap["note"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
@@ -62,13 +63,15 @@ internal class _USTCAlarmSearchConditionEntityMetadata extends com.adobe.fiber.v
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
-        model_internal::propertyTypeMap["startTime"] = "String";
-        model_internal::propertyTypeMap["page"] = "valueObjects.Page";
+        model_internal::propertyTypeMap["id"] = "String";
+        model_internal::propertyTypeMap["dealTime"] = "String";
+        model_internal::propertyTypeMap["occurTime"] = "String";
+        model_internal::propertyTypeMap["equipName"] = "String";
+        model_internal::propertyTypeMap["level"] = "String";
+        model_internal::propertyTypeMap["alarmContent"] = "String";
+        model_internal::propertyTypeMap["currentUser"] = "String";
         model_internal::propertyTypeMap["dealUser"] = "String";
-        model_internal::propertyTypeMap["alarmLevel"] = "String";
-        model_internal::propertyTypeMap["confirmState"] = "String";
-        model_internal::propertyTypeMap["device"] = "String";
-        model_internal::propertyTypeMap["endTime"] = "String";
+        model_internal::propertyTypeMap["note"] = "String";
 
         model_internal::_instance = value;
     }
@@ -121,7 +124,7 @@ internal class _USTCAlarmSearchConditionEntityMetadata extends com.adobe.fiber.v
     override public function getDependants(propertyName:String):Array
     {
        if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a data property of entity USTCAlarmSearchCondition");
+            throw new Error(propertyName + " is not a data property of entity HistoryAlarm");
             
        return model_internal::dependentsOnMap[propertyName] as Array;  
     }
@@ -139,7 +142,7 @@ internal class _USTCAlarmSearchConditionEntityMetadata extends com.adobe.fiber.v
     override public function getCollectionBase(propertyName:String):String
     {
         if (model_internal::collectionProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a collection property of entity USTCAlarmSearchCondition");
+            throw new Error(propertyName + " is not a collection property of entity HistoryAlarm");
 
         return model_internal::collectionBaseMap[propertyName];
     }
@@ -147,7 +150,7 @@ internal class _USTCAlarmSearchConditionEntityMetadata extends com.adobe.fiber.v
     override public function getPropertyType(propertyName:String):String
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a property of USTCAlarmSearchCondition");
+            throw new Error(propertyName + " is not a property of HistoryAlarm");
 
         return model_internal::propertyTypeMap[propertyName];
     }
@@ -161,7 +164,7 @@ internal class _USTCAlarmSearchConditionEntityMetadata extends com.adobe.fiber.v
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity USTCAlarmSearchCondition");
+            throw new Error(propertyName + " does not exist for entity HistoryAlarm");
         }
 
         return model_internal::_instance[propertyName];
@@ -171,7 +174,7 @@ internal class _USTCAlarmSearchConditionEntityMetadata extends com.adobe.fiber.v
     {
         if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " is not a modifiable property of entity USTCAlarmSearchCondition");
+            throw new Error(propertyName + " is not a modifiable property of entity HistoryAlarm");
         }
 
         model_internal::_instance[propertyName] = value;
@@ -203,7 +206,7 @@ internal class _USTCAlarmSearchConditionEntityMetadata extends com.adobe.fiber.v
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity USTCAlarmSearchCondition");
+            throw new Error(propertyName + " does not exist for entity HistoryAlarm");
         }
 
         if (model_internal::allAlwaysAvailableProperties.indexOf(propertyName) != -1)
@@ -298,13 +301,43 @@ internal class _USTCAlarmSearchConditionEntityMetadata extends com.adobe.fiber.v
     }
 
     [Bindable(event="propertyChange")]
-    public function get isStartTimeAvailable():Boolean
+    public function get isIdAvailable():Boolean
     {
         return true;
     }
 
     [Bindable(event="propertyChange")]
-    public function get isPageAvailable():Boolean
+    public function get isDealTimeAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isOccurTimeAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isEquipNameAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isLevelAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isAlarmContentAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isCurrentUserAvailable():Boolean
     {
         return true;
     }
@@ -316,25 +349,7 @@ internal class _USTCAlarmSearchConditionEntityMetadata extends com.adobe.fiber.v
     }
 
     [Bindable(event="propertyChange")]
-    public function get isAlarmLevelAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isConfirmStateAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isDeviceAvailable():Boolean
-    {
-        return true;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get isEndTimeAvailable():Boolean
+    public function get isNoteAvailable():Boolean
     {
         return true;
     }
@@ -350,13 +365,43 @@ internal class _USTCAlarmSearchConditionEntityMetadata extends com.adobe.fiber.v
     }
 
     [Bindable(event="propertyChange")]   
-    public function get startTimeStyle():com.adobe.fiber.styles.Style
+    public function get idStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
 
     [Bindable(event="propertyChange")]   
-    public function get pageStyle():com.adobe.fiber.styles.Style
+    public function get dealTimeStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get occurTimeStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get equipNameStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get levelStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get alarmContentStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get currentUserStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }
@@ -368,25 +413,7 @@ internal class _USTCAlarmSearchConditionEntityMetadata extends com.adobe.fiber.v
     }
 
     [Bindable(event="propertyChange")]   
-    public function get alarmLevelStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get confirmStateStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get deviceStyle():com.adobe.fiber.styles.Style
-    {
-        return model_internal::_nullStyle;
-    }
-
-    [Bindable(event="propertyChange")]   
-    public function get endTimeStyle():com.adobe.fiber.styles.Style
+    public function get noteStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

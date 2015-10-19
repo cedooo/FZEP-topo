@@ -19,7 +19,7 @@
 		<link>
 			<name>bin-debug</name>
 			<type>2</type>
-			<location>G:/apache-tomcat-6.0.41/webapps/fuzhou/topo/fx</location>
+			<location>E:/apache-tomcat-7.0.64-windows-x64/apache-tomcat-7.0.64/me-webapps/fuzhou/topo/fx</location>
 		</link>
 	</linkedResources>
 </projectDescription>
