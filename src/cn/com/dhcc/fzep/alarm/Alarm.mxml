@@ -438,6 +438,7 @@
 			{
 				var dealUser:String =  ComboBox(event.target).selectedItem.userName;
 				g_ustcAlarmSearchCondition.dealUser = dealUser=="全部"?null:dealUser;
+				g_ustcAlarmSearchCondition.page.curPage = 1;
 				searchUSTCAlarm();
 			}
 			
@@ -711,7 +712,7 @@
 					</s:BorderContainer>
 				</s:BorderContainer>
 			</s:NavigatorContent>
-			<s:NavigatorContent label="H3C" width="100%" height="100%" enabled="true" >
+			<s:NavigatorContent label="H3C" width="100%" height="100%" enabled="false" >
 				<s:Label text="选项卡3的内容"/>
 			</s:NavigatorContent>
 		</mx:TabNavigator>
