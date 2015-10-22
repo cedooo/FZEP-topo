@@ -134,13 +134,13 @@
 				//东土分页
 				var pagekyland:Page = new Page();
 				pagekyland.curPage = 1;
-				pagekyland.numPerPage = 20;
+				pagekyland.numPerPage = 30;
 				g_kylandAlarmSearchCondition.page = pagekyland;
 				
 				//科大分页
 				var pageustc:Page = new Page();
 				pageustc.curPage = 1;
-				pageustc.numPerPage = 20;
+				pageustc.numPerPage = 30;
 				g_ustcAlarmSearchCondition.page = pageustc;
 			}
 			
