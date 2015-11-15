@@ -570,6 +570,7 @@
 								</mx:FormItem>
 							</s:HGroup>
 						</mx:Form>
+						<!--
 						<s:BorderContainer width="40%" borderVisible="false" >
 							<s:layout>
 								<s:HorizontalLayout horizontalAlign="right" verticalAlign="bottom" paddingBottom="10" paddingRight="10"  >
@@ -616,12 +617,8 @@
 								</s:layout>
 								<s:Label text="{getAlarmStatisticsInfoResult.lastResult.statistics.getItemAt(4)}" color="0xffffff" />
 							</s:BorderContainer>
-							<!--
-							<s:BorderContainer height="25" width="50" backgroundColor="0x9F9095" toolTip="{kylandAlarmLevel.getItemAt(0).ingredient}">
-								
-							</s:BorderContainer>
-							-->
 						</s:BorderContainer>
+						-->
 					</s:BorderContainer>
 					<s:BorderContainer width="100%" height="80%" dropShadowVisible="false" borderVisible="false">
 						<s:layout>
@@ -687,7 +684,9 @@
 									</s:ComboBox>
 								</mx:FormItem>
 							</s:HGroup>
+							<!--
 							<s:Button id="gotoUSTCGIS" click="gotoUSTCGIS_clickHandler(event)" label="GIS" />	
+							-->
 						</mx:Form>
 					</s:BorderContainer>
 					<s:BorderContainer width="100%" height="80%" dropShadowVisible="false" borderVisible="false">
@@ -712,9 +711,11 @@
 					</s:BorderContainer>
 				</s:BorderContainer>
 			</s:NavigatorContent>
-			<s:NavigatorContent label="H3C" width="100%" height="100%" enabled="false" >
+			<!--
+			<s:NavigatorContent label="H3C" width="100%" height="100%" enabled="false"  >
 				<s:Label text="选项卡3的内容"/>
 			</s:NavigatorContent>
+			-->
 		</mx:TabNavigator>
 		<mx:HBox backgroundAlpha="0" verticalAlign="middle" paddingTop="5" horizontalAlign="center" width="100%" paddingBottom="5">
 			<mx:Label   text="第 {pageInfoResult.lastResult.curPage} 页/共 {pageInfoResult.lastResult.totalPage} 页" id="pagedetail"  />  
